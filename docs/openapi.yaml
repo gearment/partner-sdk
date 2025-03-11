@@ -1,0 +1,2017 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: engineering@gearment.com
+    name: Gearment Engineering Team
+    url: https://gearment.com
+  license: {}
+  termsOfService: https://gearment.com/integration/api-terms-of-service.html
+  title: api.webhook.v1
+  version: 3.0.0
+servers:
+  - url: https://api.dev.geadev.com/{serviceName}
+    description: Staging Server
+    variables:
+      serviceName:
+        default: iam
+        enum:
+          - iam
+          - product
+          - seller
+        description: The service name
+  - url: http://localhost:{servicePort}
+    description: Local Server
+    variables:
+      servicePort:
+        default: '9000'
+        description: The port number
+tags:
+  - name: api.webhook.v1.WebhookAPI
+    x-displayName: api.webhook.v1.WebhookAPI
+  - name: api.order.v1.VendorOrderAPI
+    description: >-
+      ProductListingVendorAPI provide an abstraction to all of read and write
+      data access for order businesses
+    x-displayName: api.order.v1.VendorOrderAPI
+  - name: api.order.v1.OrderAPI
+    x-displayName: api.order.v1.OrderAPI
+  - name: api.health.v1.HealthService
+    x-displayName: api.health.v1.HealthService
+  - name: api.catalog.v1.VendorCatalogAPI
+    description: >-
+      ProductListingVendorAPI provide an abstraction to all of read and write
+      data access for order businesses
+    x-displayName: api.catalog.v1.VendorCatalogAPI
+  - name: api.support.v1.SupportAPI
+    x-displayName: api.support.v1.SupportAPI
+externalDocs:
+  description: Find out more about Gearment API v3
+  url: https://gearment.com/integration/api-docs.html
+paths:
+  /api.webhook.v1.WebhookAPI/RegisterNewWebhook:
+    post:
+      tags:
+        - api.webhook.v1.WebhookAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.webhook.v1.RegisterNewWebhookRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.RegisterNewWebhookResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /api.order.v1.VendorOrderAPI/VendorListOrder:
+    get:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      parameters:
+        - name: message
+          in: query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListOrderRequest'
+            application/proto:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListOrderRequest'
+        - schema:
+            $ref: '#/components/parameters/encoding'
+        - schema:
+            $ref: '#/components/parameters/base64'
+        - schema:
+            $ref: '#/components/parameters/compression'
+        - schema:
+            $ref: '#/components/parameters/connect'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListOrderResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/orders:
+    get:
+      tags:
+        - api.order.v1.OrderAPI
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            maximum: 100
+            additionalProperties: false
+        - name: offset
+          in: query
+          schema:
+            oneOf:
+              - type: string
+              - type: number
+            title: offset
+            additionalProperties: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.ListDraftOrdersResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+    post:
+      tags:
+        - api.order.v1.OrderAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.CreateDraftOrderRequest'
+          application/proto:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.CreateDraftOrderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.CreateDraftOrderResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/orders/{draft_order_id}:
+    get:
+      tags:
+        - api.order.v1.OrderAPI
+      parameters:
+        - name: draftOrderId
+          in: query
+          schema:
+            type: string
+            title: draft_order_id
+            additionalProperties: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.GetDraftOrderResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/orders/{draft_order_id}/place:
+    post:
+      tags:
+        - api.order.v1.OrderAPI
+      parameters:
+        - name: draftOrderId
+          in: query
+          schema:
+            type: string
+            title: draft_order_id
+            additionalProperties: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.PlaceOrderResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/orders/price-quote:
+    post:
+      tags:
+        - api.order.v1.OrderAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest'
+          application/proto:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.GetPriceQuoteResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /health:
+    get:
+      tags:
+        - api.health.v1.HealthService
+      description: 'service: Services'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.health.v1.LivenessResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /ready:
+    get:
+      tags:
+        - api.health.v1.HealthService
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.health.v1.ReadinessResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+    post:
+      tags:
+        - api.health.v1.HealthService
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.health.v1.ToggleReadinessResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /version:
+    get:
+      tags:
+        - api.health.v1.HealthService
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.health.v1.VersionResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/catalog:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      parameters:
+        - name: teamId
+          in: query
+          schema:
+            type: string
+            title: team_id
+            additionalProperties: false
+        - name: filter
+          in: query
+          schema:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogFilter'
+        - name: paging
+          in: query
+          schema:
+            $ref: '#/components/schemas/common.type.v1.Paging'
+        - name: isLegacy
+          in: query
+          schema:
+            type: boolean
+            title: is_legacy
+            additionalProperties: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.catalog.v1.VendorListCatalogResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /v1/vendor/catalog/variant:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      parameters:
+        - name: teamId
+          in: query
+          schema:
+            type: string
+            title: team_id
+            additionalProperties: false
+        - name: filter
+          in: query
+          schema:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantFilter'
+        - name: paging
+          in: query
+          schema:
+            $ref: '#/components/schemas/common.type.v1.Paging'
+        - name: isLegacy
+          in: query
+          schema:
+            type: boolean
+            title: is_legacy
+            additionalProperties: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/api.catalog.v1.VendorListCatalogVariantResponse
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /api.support.v1.SupportAPI/ListSupportRequest:
+    get:
+      tags:
+        - api.support.v1.SupportAPI
+      parameters:
+        - name: message
+          in: query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.ListSupportRequestRequest'
+            application/proto:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.ListSupportRequestRequest'
+        - schema:
+            $ref: '#/components/parameters/encoding'
+        - schema:
+            $ref: '#/components/parameters/base64'
+        - schema:
+            $ref: '#/components/parameters/compression'
+        - schema:
+            $ref: '#/components/parameters/connect'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.ListSupportRequestResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+  /api.support.v1.SupportAPI/CreateSupportRequest:
+    post:
+      tags:
+        - api.support.v1.SupportAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.support.v1.CreateSupportRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.GetSupportRequestResponse'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+      security: []
+components:
+  schemas:
+    api.webhook.v1.Webhook.Event:
+      type: string
+      title: Event
+      enum:
+        - EVENT_UNSPECIFIED
+        - EVENT_ORDER_COMPLETED
+        - EVENT_ORDER_CANCELED
+        - EVENT_TRACKING_UPDATED
+        - EVENT_SHIPPING_ADDRESS_UNVERIFIED
+    api.webhook.v1.RegisterNewWebhookRequest:
+      type: object
+      properties:
+        topic:
+          $ref: '#/components/schemas/api.webhook.v1.Webhook.Event'
+        webhookUrl:
+          type: string
+          title: webhook_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+          additionalProperties: false
+        headers:
+          type: object
+          title: headers
+          additionalProperties:
+            type: string
+            title: value
+            additionalProperties: false
+      title: RegisterNewWebhookRequest
+      additionalProperties: false
+    api.webhook.v1.RegisterNewWebhookRequest.HeadersEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+          additionalProperties: false
+        value:
+          type: string
+          title: value
+          additionalProperties: false
+      title: HeadersEntry
+      additionalProperties: false
+    api.webhook.v1.RegisterNewWebhookResponse:
+      type: object
+      properties:
+        webhookId:
+          type: string
+          title: webhook_id
+          additionalProperties: false
+      title: RegisterNewWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.Webhook:
+      type: object
+      title: Webhook
+      additionalProperties: false
+    connect.error:
+      type: object
+      properties:
+        code:
+          type: string
+          examples:
+            - CodeNotFound
+          enum:
+            - CodeCanceled
+            - CodeUnknown
+            - CodeInvalidArgument
+            - CodeDeadlineExceeded
+            - CodeNotFound
+            - CodeAlreadyExists
+            - CodePermissionDenied
+            - CodeResourceExhausted
+            - CodeFailedPrecondition
+            - CodeAborted
+            - CodeOutOfRange
+            - CodeInternal
+            - CodeUnavailable
+            - CodeDataLoss
+            - CodeUnauthenticated
+          description: >-
+            The status code, which should be an enum value of
+            [google.rpc.Code][google.rpc.Code].
+        message:
+          type: string
+          description: >-
+            A developer-facing error message, which should be in English. Any
+            user-facing error message should be localized and sent in the
+            [google.rpc.Status.details][google.rpc.Status.details] field, or
+            localized by the client.
+        detail:
+          $ref: '#/components/schemas/google.protobuf.Any'
+      title: Connect Error
+      additionalProperties: true
+      description: >-
+        Error type returned by Connect:
+        https://connectrpc.com/docs/go/errors/#http-representation
+    google.protobuf.Any:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: string
+          format: binary
+        debug:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+      description: >-
+        Contains an arbitrary serialized message along with a @type that
+        describes the type of the serialized message.
+    api.order.v1.VendorCreatedMethod:
+      type: string
+      title: VendorCreatedMethod
+      enum:
+        - VENDOR_CREATED_METHOD_UNKNOWN
+        - VENDOR_CREATED_METHOD_SYNC
+        - VENDOR_CREATED_METHOD_MANUAL
+        - VENDOR_CREATED_METHOD_API
+        - VENDOR_CREATED_METHOD_IMPORT
+        - VENDOR_CREATED_METHOD_LABEL
+        - VENDOR_CREATED_METHOD_ALL
+    api.order.v1.VendorOrderStatus:
+      type: string
+      title: VendorOrderStatus
+      enum:
+        - VENDOR_ORDER_STATUS_UNKNOWN
+        - VENDOR_ORDER_STATUS_AWAITING_PAYMENT
+        - VENDOR_ORDER_STATUS_PAYMENT_FAILED
+        - VENDOR_ORDER_STATUS_AWAITING_FULFILLMENT
+        - VENDOR_ORDER_STATUS_IN_PRODUCTION
+        - VENDOR_ORDER_STATUS_PACKED
+        - VENDOR_ORDER_STATUS_SHIPPED
+        - VENDOR_ORDER_STATUS_CANCELLED
+        - VENDOR_ORDER_STATUS_ON_HOLD
+        - VENDOR_ORDER_STATUS_ALL
+    common.platform.v1.MarketplacePlatform:
+      type: string
+      title: MarketplacePlatform
+      enum:
+        - MARKETPLACE_PLATFORM_UNSPECIFIED
+        - MARKETPLACE_PLATFORM_ALL
+        - MARKETPLACE_PLATFORM_EBAY
+        - MARKETPLACE_PLATFORM_AMAZON
+        - MARKETPLACE_PLATFORM_SHOPIFY
+        - MARKETPLACE_PLATFORM_WOOCOMMERCE
+        - MARKETPLACE_PLATFORM_ETSY
+        - MARKETPLACE_PLATFORM_SHOPBASE
+        - MARKETPLACE_PLATFORM_GEARMENT
+        - MARKETPLACE_PLATFORM_ORDERDESK
+        - MARKETPLACE_PLATFORM_TIKTOKSHOP
+        - MARKETPLACE_PLATFORM_POSHMARK
+        - MARKETPLACE_PLATFORM_PRESTASHOP
+        - MARKETPLACE_PLATFORM_INKGO
+        - MARKETPLACE_PLATFORM_WISH
+        - MARKETPLACE_PLATFORM_BIGCOMMERCE
+    api.order.v1.VendorListOrderRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        filter:
+          $ref: '#/components/schemas/api.order.v1.VendorOrderFilter'
+        paging:
+          $ref: '#/components/schemas/common.type.v1.Paging'
+        isLegacy:
+          type: boolean
+          title: is_legacy
+          additionalProperties: false
+      title: VendorListOrderRequest
+      additionalProperties: false
+    api.order.v1.VendorListOrderResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrder'
+      title: VendorListOrderResponse
+      additionalProperties: false
+    api.order.v1.VendorOrder:
+      type: object
+      properties:
+        orderId:
+          type: string
+          title: order_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"order_id"'
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"team_id"'
+        storeId:
+          type: string
+          title: store_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"store_id"'
+        storeName:
+          type: string
+          title: store_name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"store_name"'
+        createdMethod:
+          $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        orderPlatform:
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        platformRef:
+          type: string
+          title: platform_ref
+          additionalProperties: false
+          description: '@gotags: mapstructure:"platform_ref"'
+        orderDate:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        approvedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        paidAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        orderStatus:
+          $ref: '#/components/schemas/api.order.v1.VendorOrderStatus'
+      title: VendorOrder
+      additionalProperties: false
+    api.order.v1.VendorOrderFilter:
+      type: object
+      properties:
+        orderIds:
+          type: array
+          items:
+            type: string
+            title: order_ids
+            additionalProperties: false
+            description: '@gotags: form:"order_ids,omitempty"'
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderStatus'
+        createdMethods:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        createdAtMin:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdAtMax:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: VendorOrderFilter
+      additionalProperties: false
+    common.type.v1.Paging:
+      type: object
+      properties:
+        page:
+          type: integer
+          title: page
+          additionalProperties: false
+          description: '@gotags: form:"page"'
+        limit:
+          type: integer
+          title: limit
+          additionalProperties: false
+          description: '@gotags: form:"limit"'
+      title: Paging
+      additionalProperties: false
+    common.type.v1.PagingResponse:
+      type: object
+      properties:
+        total:
+          oneOf:
+            - type: string
+            - type: number
+          title: total
+          additionalProperties: false
+          description: '@gotags: mapstructure:"total"'
+        totalPage:
+          type: integer
+          title: total_page
+          additionalProperties: false
+          description: '@gotags: mapstructure:"total_page"'
+        page:
+          type: integer
+          title: page
+          additionalProperties: false
+          description: '@gotags: mapstructure:"page"'
+        limit:
+          type: integer
+          title: limit
+          additionalProperties: false
+          description: '@gotags: mapstructure:"limit"'
+      title: PagingResponse
+      additionalProperties: false
+    google.protobuf.Timestamp:
+      type: string
+      format: date-time
+      additionalProperties: false
+      description: >-
+        A Timestamp represents a point in time independent of any time zone or
+        local
+         calendar, encoded as a count of seconds and fractions of seconds at
+         nanosecond resolution. The count is relative to an epoch at UTC midnight on
+         January 1, 1970, in the proleptic Gregorian calendar which extends the
+         Gregorian calendar backwards to year one.
+
+         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+         second table is needed for interpretation, using a [24-hour linear
+         smear](https://developers.google.com/time/smear).
+
+         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+         restricting to that range, we ensure that we can convert to and from [RFC
+         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+
+         # Examples
+
+         Example 1: Compute Timestamp from POSIX `time()`.
+
+             Timestamp timestamp;
+             timestamp.set_seconds(time(NULL));
+             timestamp.set_nanos(0);
+
+         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+
+             struct timeval tv;
+             gettimeofday(&tv, NULL);
+
+             Timestamp timestamp;
+             timestamp.set_seconds(tv.tv_sec);
+             timestamp.set_nanos(tv.tv_usec * 1000);
+
+         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+
+             FILETIME ft;
+             GetSystemTimeAsFileTime(&ft);
+             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+             Timestamp timestamp;
+             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+
+             long millis = System.currentTimeMillis();
+
+             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+         Example 5: Compute Timestamp from Java `Instant.now()`.
+
+             Instant now = Instant.now();
+
+             Timestamp timestamp =
+                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+                     .setNanos(now.getNano()).build();
+
+         Example 6: Compute Timestamp from current time in Python.
+
+             timestamp = Timestamp()
+             timestamp.GetCurrentTime()
+
+         # JSON Mapping
+
+         In JSON format, the Timestamp type is encoded as a string in the
+         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+         where {year} is always expressed using four digits while {month}, {day},
+         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+         is required. A proto3 JSON serializer should always use UTC (as indicated by
+         "Z") when printing the Timestamp type and a proto3 JSON parser should be
+         able to accept both UTC and other timezones (as indicated by an offset).
+
+         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+         01:30 UTC on January 15, 2017.
+
+         In JavaScript, one can convert a Date object to this format using the
+         standard
+         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+         method. In Python, a standard `datetime.datetime` object can be converted
+         to this format using
+         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+         the Joda Time's [`ISODateTimeFormat.dateTime()`](
+         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+         ) to obtain a formatter capable of generating timestamps in this format.
+    encoding:
+      title: encoding
+      enum:
+        - proto
+        - json
+      description: Define which encoding or 'Message-Codec' to use
+    base64:
+      type: boolean
+      title: base64
+      description: >-
+        Specifies if the message query param is base64 encoded, which may be
+        required for binary data
+    compression:
+      title: compression
+      enum:
+        - identity
+        - gzip
+        - br
+        - gzip
+      description: Which compression algorithm to use for this request
+    connect:
+      title: connect
+      enum:
+        - '1'
+      description: Which version of connect to use.
+    api.order.v1.CreateDraftOrderRequest:
+      type: object
+      properties:
+        orderRef:
+          type: string
+          title: order_ref
+          minLength: 1
+          additionalProperties: false
+        externalId:
+          type: string
+          title: external_id
+          minLength: 1
+          additionalProperties: false
+        shippingInfo:
+          $ref: >-
+            #/components/schemas/api.order.v1.CreateDraftOrderRequest.ShippingInfo
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.CreateDraftOrderRequest.LineItem'
+        storeId:
+          type: string
+          title: store_id
+          minLength: 1
+          additionalProperties: false
+        processWithRisk:
+          type: boolean
+          title: process_with_risk
+          additionalProperties: false
+        giftMessageBody:
+          type: string
+          title: gift_message_body
+          additionalProperties: false
+        iossNumber:
+          oneOf:
+            - type: string
+            - type: number
+          title: ioss_number
+          additionalProperties: false
+        iossNumberTotal:
+          oneOf:
+            - type: string
+            - type: number
+          title: ioss_number_total
+          additionalProperties: false
+        taxNumber:
+          type: string
+          title: tax_number
+          additionalProperties: false
+        orderTaxValue:
+          oneOf:
+            - type: string
+            - type: number
+          title: order_tax_value
+          additionalProperties: false
+        shippingServiceType:
+          type: string
+          title: shipping_service_type
+          additionalProperties: false
+        shippingLabelUrl:
+          type: string
+          title: shipping_label_url
+          maxLength: 2048
+          format: uri
+          additionalProperties: false
+      title: CreateDraftOrderRequest
+      additionalProperties: false
+    api.order.v1.CreateDraftOrderRequest.LineItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          title: product_id
+          additionalProperties: false
+        productName:
+          type: string
+          title: product_name
+          additionalProperties: false
+        productStyle:
+          type: string
+          title: product_style
+          additionalProperties: false
+        variantSku:
+          type: string
+          title: variant_sku
+          additionalProperties: false
+        quantity:
+          type: integer
+          title: quantity
+          additionalProperties: false
+        printingOption:
+          $ref: >-
+            #/components/schemas/api.order.v1.CreateDraftOrderRequest.PrintingOption
+      title: LineItem
+      additionalProperties: false
+    api.order.v1.CreateDraftOrderRequest.PrintingOption:
+      type: object
+      properties:
+        frontDesignUrl:
+          type: string
+          title: front_design_url
+          additionalProperties: false
+        backDesignUrl:
+          type: string
+          title: back_design_url
+          additionalProperties: false
+      title: PrintingOption
+      additionalProperties: false
+    api.order.v1.CreateDraftOrderRequest.ShippingInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          title: email
+          format: email
+          additionalProperties: false
+        name:
+          type: string
+          title: name
+          minLength: 1
+          additionalProperties: false
+        phone:
+          type: string
+          title: phone
+          minLength: 1
+          pattern: ^[+]?[0-9]{1}[()\-\s0-9]{6,19}$
+          additionalProperties: false
+        companyName:
+          type: string
+          title: company_name
+          additionalProperties: false
+        address1:
+          type: string
+          title: address1
+          minLength: 1
+          additionalProperties: false
+        address2:
+          type: string
+          title: address2
+          additionalProperties: false
+        city:
+          type: string
+          title: city
+          minLength: 1
+          additionalProperties: false
+        provinceCode:
+          type: string
+          title: province_code
+          minLength: 1
+          additionalProperties: false
+        zipcode:
+          type: string
+          title: zipcode
+          minLength: 1
+          additionalProperties: false
+        countryCode:
+          type: string
+          title: country_code
+          minLength: 1
+          additionalProperties: false
+        method:
+          type: string
+          title: method
+          minLength: 1
+          additionalProperties: false
+      title: ShippingInfo
+      additionalProperties: false
+    api.order.v1.CreateDraftOrderResponse:
+      type: object
+      properties:
+        draftOrder:
+          $ref: '#/components/schemas/api.order.v1.DraftOrder'
+      title: CreateDraftOrderResponse
+      additionalProperties: false
+    api.order.v1.DraftOrder:
+      type: object
+      properties:
+        draftOrderId:
+          type: string
+          title: draft_order_id
+          additionalProperties: false
+        orderRef:
+          type: string
+          title: order_ref
+          additionalProperties: false
+        externalId:
+          type: string
+          title: external_id
+          additionalProperties: false
+        shippingInfo:
+          $ref: '#/components/schemas/api.order.v1.DraftOrder.ShippingInfo'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.DraftOrder.LineItem'
+      title: DraftOrder
+      additionalProperties: false
+    api.order.v1.DraftOrder.LineItem:
+      type: object
+      properties:
+        variantId:
+          type: string
+          title: variant_id
+          additionalProperties: false
+        productName:
+          type: string
+          title: product_name
+          additionalProperties: false
+        productStyle:
+          type: string
+          title: product_style
+          additionalProperties: false
+        productSku:
+          type: string
+          title: product_sku
+          additionalProperties: false
+        quantity:
+          type: integer
+          title: quantity
+          additionalProperties: false
+        printingOption:
+          $ref: '#/components/schemas/api.order.v1.DraftOrder.PrintingOption'
+      title: LineItem
+      additionalProperties: false
+    api.order.v1.DraftOrder.PrintingOption:
+      type: object
+      properties:
+        frontDesignUrl:
+          type: string
+          title: front_design_url
+          additionalProperties: false
+        backDesignUrl:
+          type: string
+          title: back_design_url
+          additionalProperties: false
+      title: PrintingOption
+      additionalProperties: false
+    api.order.v1.DraftOrder.ShippingInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          title: email
+          additionalProperties: false
+        name:
+          type: string
+          title: name
+          additionalProperties: false
+        phone:
+          type: string
+          title: phone
+          additionalProperties: false
+        companyName:
+          type: string
+          title: company_name
+          additionalProperties: false
+        address1:
+          type: string
+          title: address1
+          additionalProperties: false
+        address2:
+          type: string
+          title: address2
+          additionalProperties: false
+        city:
+          type: string
+          title: city
+          additionalProperties: false
+        provinceCode:
+          type: string
+          title: province_code
+          additionalProperties: false
+        zipcode:
+          type: string
+          title: zipcode
+          additionalProperties: false
+        countryCode:
+          type: string
+          title: country_code
+          additionalProperties: false
+        method:
+          type: string
+          title: method
+          additionalProperties: false
+      title: ShippingInfo
+      additionalProperties: false
+    api.order.v1.GetDraftOrderRequest:
+      type: object
+      properties:
+        draftOrderId:
+          type: string
+          title: draft_order_id
+          additionalProperties: false
+      title: GetDraftOrderRequest
+      additionalProperties: false
+    api.order.v1.GetDraftOrderResponse:
+      type: object
+      properties:
+        draftOrder:
+          $ref: '#/components/schemas/api.order.v1.DraftOrder'
+      title: GetDraftOrderResponse
+      additionalProperties: false
+    api.order.v1.GetPriceQuoteRequest:
+      type: object
+      properties:
+        shippingInfo:
+          $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest.ShippingInfo'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.LineItem'
+      title: GetPriceQuoteRequest
+      additionalProperties: false
+    api.order.v1.GetPriceQuoteRequest.ShippingInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          title: email
+          additionalProperties: false
+        name:
+          type: string
+          title: name
+          additionalProperties: false
+        phone:
+          type: string
+          title: phone
+          additionalProperties: false
+        companyName:
+          type: string
+          title: company_name
+          additionalProperties: false
+        address1:
+          type: string
+          title: address1
+          additionalProperties: false
+        address2:
+          type: string
+          title: address2
+          additionalProperties: false
+        city:
+          type: string
+          title: city
+          additionalProperties: false
+        provinceCode:
+          type: string
+          title: province_code
+          additionalProperties: false
+        zipcode:
+          type: string
+          title: zipcode
+          additionalProperties: false
+        countryCode:
+          type: string
+          title: country_code
+          additionalProperties: false
+        method:
+          type: string
+          title: method
+          additionalProperties: false
+      title: ShippingInfo
+      additionalProperties: false
+    api.order.v1.GetPriceQuoteResponse:
+      type: object
+      properties:
+        orderShippingFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderTax:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderSubTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.LineItem'
+      title: GetPriceQuoteResponse
+      additionalProperties: false
+    api.order.v1.LineItem:
+      type: object
+      properties:
+        variantId:
+          type: integer
+          title: variant_id
+          additionalProperties: false
+        productName:
+          type: string
+          title: product_name
+          additionalProperties: false
+        productStyle:
+          type: string
+          title: product_style
+          additionalProperties: false
+        productSku:
+          type: string
+          title: product_sku
+          additionalProperties: false
+        quantity:
+          type: integer
+          title: quantity
+          additionalProperties: false
+        designLink:
+          type: string
+          title: design_link
+          additionalProperties: false
+        designLinkBack:
+          type: string
+          title: design_link_back
+          additionalProperties: false
+        lineItem:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        itemPrice:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineDiscount:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineSubTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        id:
+          oneOf:
+            - type: string
+            - type: number
+          title: id
+          additionalProperties: false
+      title: LineItem
+      additionalProperties: false
+    api.order.v1.ListDraftOrdersRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          additionalProperties: false
+        offset:
+          oneOf:
+            - type: string
+            - type: number
+          title: offset
+          additionalProperties: false
+      title: ListDraftOrdersRequest
+      additionalProperties: false
+    api.order.v1.ListDraftOrdersResponse:
+      type: object
+      properties:
+        draftOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.DraftOrder'
+        nextPageToken:
+          type: string
+          title: next_page_token
+          additionalProperties: false
+      title: ListDraftOrdersResponse
+      additionalProperties: false
+    api.order.v1.PlaceOrderRequest:
+      type: object
+      properties:
+        draftOrderId:
+          type: string
+          title: draft_order_id
+          additionalProperties: false
+      title: PlaceOrderRequest
+      additionalProperties: false
+    api.order.v1.PlaceOrderResponse:
+      type: object
+      properties:
+        orderId:
+          type: string
+          title: order_id
+          additionalProperties: false
+      title: PlaceOrderResponse
+      additionalProperties: false
+    common.type.v1.Money:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          title: currency_code
+          additionalProperties: false
+          description: >-
+            The three-letter currency code defined in ISO 4217. @gotags:
+            mapstructure:"currency_code"
+        units:
+          oneOf:
+            - type: string
+            - type: number
+          title: units
+          additionalProperties: false
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar. @gotags: mapstructure:"units"
+        nanos:
+          type: integer
+          title: nanos
+          additionalProperties: false
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000. @gotags: mapstructure:"nanos"
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
+    api.health.v1.LivenessRequest:
+      type: object
+      title: LivenessRequest
+      additionalProperties: false
+    api.health.v1.LivenessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          title: message
+          additionalProperties: false
+      title: LivenessResponse
+      additionalProperties: false
+    api.health.v1.ReadinessRequest:
+      type: object
+      title: ReadinessRequest
+      additionalProperties: false
+    api.health.v1.ReadinessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          title: message
+          additionalProperties: false
+      title: ReadinessResponse
+      additionalProperties: false
+    api.health.v1.ToggleReadinessRequest:
+      type: object
+      title: ToggleReadinessRequest
+      additionalProperties: false
+    api.health.v1.ToggleReadinessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          title: message
+          additionalProperties: false
+      title: ToggleReadinessResponse
+      additionalProperties: false
+    api.health.v1.VersionRequest:
+      type: object
+      title: VersionRequest
+      additionalProperties: false
+    api.health.v1.VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+          title: version
+          additionalProperties: false
+      title: VersionResponse
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogVariantStockLabel:
+      type: string
+      title: VendorCatalogVariantStockLabel
+      enum:
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_UNKNOWN
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_IN_STOCK
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_OUT_OF_STOCK
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_OUT_OF_STOCK_5D
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_DISCONTINUED
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_ALL
+    api.catalog.v1.LegacyVendorCatalog:
+      type: object
+      properties:
+        productName:
+          type: string
+          title: product_name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_name"'
+        productId:
+          type: string
+          title: product_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_id"'
+        productImg:
+          type: string
+          title: product_img
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_img"'
+        printAreas:
+          type: array
+          items:
+            type: string
+            title: print_areas
+            additionalProperties: false
+            description: '@gotags: mapstructure:"print_areas"'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.LegacyVendorCatalogVariant'
+      title: LegacyVendorCatalog
+      additionalProperties: false
+    api.catalog.v1.LegacyVendorCatalogVariant:
+      type: object
+      properties:
+        variantId:
+          type: string
+          title: variant_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"variant_id"'
+        name:
+          type: string
+          title: name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"name"'
+        size:
+          type: string
+          title: size
+          additionalProperties: false
+          description: '@gotags: mapstructure:"size"'
+        color:
+          type: string
+          title: color
+          additionalProperties: false
+          description: '@gotags: mapstructure:"color"'
+        hexColorCode:
+          type: string
+          title: hex_color_code
+          additionalProperties: false
+          description: '@gotags: mapstructure:"hex_color_code"'
+        price:
+          type: string
+          title: price
+          additionalProperties: false
+          description: '@gotags: mapstructure:"price"'
+        extraPrice:
+          type: string
+          title: extra_price
+          additionalProperties: false
+          description: '@gotags: mapstructure:"extra_price"'
+        netPrice:
+          oneOf:
+            - type: string
+            - type: number
+          title: net_price
+          additionalProperties: false
+          description: '@gotags: mapstructure:"net_price"'
+        availabilityStatus:
+          type: string
+          title: availability_status
+          additionalProperties: false
+          description: '@gotags: mapstructure:"availability_status"'
+        status:
+          type: string
+          title: status
+          additionalProperties: false
+          description: '@gotags: mapstructure:"status"'
+      title: LegacyVendorCatalogVariant
+      additionalProperties: false
+    api.catalog.v1.LegacyVendorListCatalogStockStatusRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        paging:
+          $ref: '#/components/schemas/common.type.v1.Paging'
+        credentials:
+          $ref: '#/components/schemas/common.type.v1.LegacyCredentials'
+        type:
+          type: string
+          title: type
+          additionalProperties: false
+      title: LegacyVendorListCatalogStockStatusRequest
+      additionalProperties: false
+    api.catalog.v1.LegacyVendorListCatalogStockStatusResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.LegacyVendorCatalogVariant'
+      title: LegacyVendorListCatalogStockStatusResponse
+      additionalProperties: false
+    api.catalog.v1.LegacyVendorListCatalogVariantRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        paging:
+          $ref: '#/components/schemas/common.type.v1.Paging'
+        credentials:
+          $ref: '#/components/schemas/common.type.v1.LegacyCredentials'
+      title: LegacyVendorListCatalogVariantRequest
+      additionalProperties: false
+    api.catalog.v1.LegacyVendorListCatalogVariantResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.LegacyVendorCatalog'
+      title: LegacyVendorListCatalogVariantResponse
+      additionalProperties: false
+    api.catalog.v1.VendorCatalog:
+      type: object
+      properties:
+        productId:
+          type: string
+          title: product_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_id"'
+        productName:
+          type: string
+          title: product_name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_name"'
+        productAvatarUrl:
+          type: string
+          title: product_avatar_url
+          additionalProperties: false
+          description: '@gotags: mapstructure:"product_avatar_url"'
+        printLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogPrintLocation'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariant'
+      title: VendorCatalog
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogFilter:
+      type: object
+      properties:
+        productIds:
+          type: array
+          items:
+            type: string
+            title: product_ids
+            additionalProperties: false
+            description: '@gotags: form:"product_ids,omitempty"'
+        searchText:
+          type: string
+          title: search_text
+          maxLength: 100
+          additionalProperties: false
+          description: '@gotags: form:"search_text,omitempty"'
+      title: VendorCatalogFilter
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogPrintLocation:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          additionalProperties: false
+          description: '@gotags: mapstructure:"code"'
+        name:
+          type: string
+          title: name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"name"'
+        locationId:
+          type: integer
+          title: location_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"location_id"'
+      title: VendorCatalogPrintLocation
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogVariant:
+      type: object
+      properties:
+        variantId:
+          type: string
+          title: variant_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"variant_id"'
+        name:
+          type: string
+          title: name
+          additionalProperties: false
+          description: '@gotags: mapstructure:"name"'
+        size:
+          type: string
+          title: size
+          additionalProperties: false
+          description: '@gotags: mapstructure:"size"'
+        color:
+          type: string
+          title: color
+          additionalProperties: false
+          description: '@gotags: mapstructure:"color"'
+        hexColorCode:
+          type: string
+          title: hex_color_code
+          additionalProperties: false
+          description: '@gotags: mapstructure:"hex_color_code"'
+        price:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        recommendedPrice:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        extraPrice:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        stockLabel:
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+        product:
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalog'
+      title: VendorCatalogVariant
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogVariantFilter:
+      type: object
+      properties:
+        productIds:
+          type: array
+          items:
+            type: string
+            title: product_ids
+            additionalProperties: false
+            description: '@gotags: form:"product_ids,omitempty"'
+        variantIds:
+          type: array
+          items:
+            type: string
+            title: variant_ids
+            additionalProperties: false
+            description: '@gotags: form:"variant_ids,omitempty"'
+        skus:
+          type: array
+          items:
+            type: string
+            title: skus
+            additionalProperties: false
+            description: '@gotags: form:"skus,omitempty"'
+        sizes:
+          type: array
+          items:
+            type: string
+            title: sizes
+            additionalProperties: false
+            description: '@gotags: form:"sizes,omitempty"'
+        sizeCodes:
+          type: array
+          items:
+            type: string
+            title: size_codes
+            additionalProperties: false
+            description: '@gotags: form:"size_codes,omitempty"'
+        colors:
+          type: array
+          items:
+            type: string
+            title: colors
+            additionalProperties: false
+            description: '@gotags: form:"colors,omitempty"'
+        colorCodes:
+          type: array
+          items:
+            type: string
+            title: color_codes
+            additionalProperties: false
+            description: '@gotags: form:"colors"'
+        stockLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+        searchText:
+          type: string
+          title: search_text
+          additionalProperties: false
+          description: '@gotags: form:"search_text,omitempty"'
+      title: VendorCatalogVariantFilter
+      additionalProperties: false
+    api.catalog.v1.VendorListCatalogRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        filter:
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalogFilter'
+        paging:
+          $ref: '#/components/schemas/common.type.v1.Paging'
+        isLegacy:
+          type: boolean
+          title: is_legacy
+          additionalProperties: false
+      title: VendorListCatalogRequest
+      additionalProperties: false
+    api.catalog.v1.VendorListCatalogResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalog'
+      title: VendorListCatalogResponse
+      additionalProperties: false
+    api.catalog.v1.VendorListCatalogVariantRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        filter:
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantFilter'
+        paging:
+          $ref: '#/components/schemas/common.type.v1.Paging'
+        isLegacy:
+          type: boolean
+          title: is_legacy
+          additionalProperties: false
+      title: VendorListCatalogVariantRequest
+      additionalProperties: false
+    api.catalog.v1.VendorListCatalogVariantResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariant'
+      title: VendorListCatalogVariantResponse
+      additionalProperties: false
+    common.type.v1.LegacyCredentials:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          title: api_key
+          maxLength: 255
+          minLength: 1
+          additionalProperties: false
+        apiSignature:
+          type: string
+          title: api_signature
+          maxLength: 255
+          minLength: 1
+          additionalProperties: false
+      title: LegacyCredentials
+      additionalProperties: false
+    api.support.v1.SupportRequest.Category:
+      type: string
+      title: Category
+      enum:
+        - SUPPORT_REQUEST_CATEGORY_UNSPECIFIED
+        - SUPPORT_REQUEST_CATEGORY_IMG_QUALITY
+        - SUPPORT_REQUEST_CATEGORY_ITEM_DAMAGED
+        - SUPPORT_REQUEST_CATEGORY_ITEM_MISSING
+        - SUPPORT_REQUEST_CATEGORY_ITEM_NOT_EXPECTED
+        - SUPPORT_REQUEST_CATEGORY_NO_UPDATE_FROM_CARRIER
+        - SUPPORT_REQUEST_CATEGORY_ORDER_LATE_PRODUCTION
+        - SUPPORT_REQUEST_CATEGORY_SHIPPING_PROBLEM
+        - SUPPORT_REQUEST_CATEGORY_WRONG_ITEM_SIZE
+        - SUPPORT_REQUEST_CATEGORY_WRONG_PRINT
+        - SUPPORT_REQUEST_CATEGORY_SHIPPING_TO_WRONG_ADDRESS
+        - SUPPORT_REQUEST_CATEGORY_SIZE_NOT_EXPECTED
+        - SUPPORT_REQUEST_CATEGORY_PRINT_MISSING
+        - SUPPORT_REQUEST_CATEGORY_ANOTHER
+        - SUPPORT_REQUEST_CATEGORY_CANCEL_BY_BUYER
+    api.support.v1.SupportRequest.Status:
+      type: string
+      title: Status
+      enum:
+        - SUPPORT_REQUEST_STATUS_UNSPECIFIED
+        - SUPPORT_REQUEST_STATUS_PENDING
+        - SUPPORT_REQUEST_STATUS_PROCESSING
+        - SUPPORT_REQUEST_STATUS_COMPLETED
+        - SUPPORT_REQUEST_STATUS_REJECTED
+    api.support.v1.CreateSupportRequestRequest:
+      type: object
+      properties:
+        orderId:
+          type: string
+          title: order_id
+          additionalProperties: false
+        issueCategory:
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Category'
+        issueDetail:
+          type: string
+          title: issue_detail
+          additionalProperties: false
+        issuePriority:
+          type: string
+          title: issue_priority
+          additionalProperties: false
+        issueSolution:
+          type: string
+          title: issue_solution
+          additionalProperties: false
+        issueImageUrls:
+          type: array
+          items:
+            type: string
+            title: issue_image_urls
+            additionalProperties: false
+        itemAffected:
+          type: integer
+          title: item_affected
+          minimum: 1
+          additionalProperties: false
+      title: CreateSupportRequestRequest
+      additionalProperties: false
+    api.support.v1.GetSupportRequestResponse:
+      type: object
+      properties:
+        supportRequest:
+          $ref: '#/components/schemas/api.support.v1.SupportRequest'
+      title: GetSupportRequestResponse
+      additionalProperties: false
+    api.support.v1.ListSupportRequestRequest:
+      type: object
+      properties:
+        requestStatus:
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Status'
+        createdFrom:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdTo:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        limit:
+          type: integer
+          title: limit
+          maximum: 100
+          additionalProperties: false
+        offset:
+          oneOf:
+            - type: string
+            - type: number
+          title: offset
+          additionalProperties: false
+      title: ListSupportRequestRequest
+      additionalProperties: false
+    api.support.v1.ListSupportRequestResponse:
+      type: object
+      properties:
+        supportRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.support.v1.SupportRequest'
+        total:
+          type: integer
+          title: total
+          additionalProperties: false
+      title: ListSupportRequestResponse
+      additionalProperties: false
+    api.support.v1.SupportRequest:
+      type: object
+      properties:
+        id:
+          oneOf:
+            - type: string
+            - type: number
+          title: id
+          additionalProperties: false
+        orderId:
+          type: string
+          title: order_id
+          additionalProperties: false
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        status:
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Status'
+        issueCategory:
+          type: string
+          title: issue_category
+          additionalProperties: false
+        issueDetail:
+          type: string
+          title: issue_detail
+          additionalProperties: false
+        issuePriority:
+          type: string
+          title: issue_priority
+          additionalProperties: false
+        issueSolution:
+          type: string
+          title: issue_solution
+          additionalProperties: false
+        issueImageUrls:
+          type: array
+          items:
+            type: string
+            title: issue_image_urls
+            additionalProperties: false
+      title: SupportRequest
+      additionalProperties: false
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+      name: Authorization
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    CookieAuth:
+      type: apiKey
+      scheme: bearer
+      in: cookie
+      name: accessToken
+  parameters:
+    encoding:
+      name: encoding
+      in: query
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/encoding'
+        application/proto:
+          schema:
+            $ref: '#/components/schemas/encoding'
+    base64:
+      name: base64
+      in: query
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/base64'
+        application/proto:
+          schema:
+            $ref: '#/components/schemas/base64'
+    compression:
+      name: compression
+      in: query
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/compression'
+        application/proto:
+          schema:
+            $ref: '#/components/schemas/compression'
+    connect:
+      name: connect
+      in: query
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/connect'
+        application/proto:
+          schema:
+            $ref: '#/components/schemas/connect'
+x-tagGroups:
+  - name: api.webhook.v1
+    tags:
+      - api.webhook.v1.WebhookAPI
+  - name: api.order.v1
+    tags:
+      - api.order.v1.VendorOrderAPI
+      - api.order.v1.OrderAPI
+  - name: api.health.v1
+    tags:
+      - api.health.v1.HealthService
+  - name: api.catalog.v1
+    tags:
+      - api.catalog.v1.VendorCatalogAPI
+  - name: api.support.v1
+    tags:
+      - api.support.v1.SupportAPI
