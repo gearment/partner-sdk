@@ -1,0 +1,17 @@
+{
+  "name": "test-redocly",
+  "version": "1.0.0",
+  "description": "test-redocly",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx @redocly/cli@latest preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@redocly/realm": "0.119.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

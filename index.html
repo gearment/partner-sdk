@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gearment API Documentation</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+    <style>
+      body, html {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="redoc-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@2.4.0/bundles/redoc.standalone.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/redoc-try/dist/try.js"></script>
+    <script>
+        initTry({
+          openApi: `https://raw.githubusercontent.com/gearment/partner-sdk/refs/heads/main/docs/openapi.yaml`,
+          redocOptions: {
+            scrollYOffset: 50, 
+          },
+        })
+      </script>
+  </body>
+</html>
