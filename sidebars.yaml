@@ -1,2 +1,2 @@
-- page: ./openapi.yaml
-  label: Documentations  
+- page: ./vendorsdk/openapi.yaml
+  label: Documentations
