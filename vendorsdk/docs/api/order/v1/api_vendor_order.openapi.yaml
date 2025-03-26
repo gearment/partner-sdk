@@ -59,6 +59,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api.order.v1.VendorListOrderResponse'
+  /v1/vendor/orders/price-quote:
+    post:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorGetPriceQuoteRequest'
+          application/proto:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorGetPriceQuoteRequest'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetPriceQuoteResponse'
 components:
   schemas:
     api.order.v1.VendorCreatedMethod:
@@ -106,6 +130,365 @@ components:
         - MARKETPLACE_PLATFORM_INKGO
         - MARKETPLACE_PLATFORM_WISH
         - MARKETPLACE_PLATFORM_BIGCOMMERCE
+    api.order.v1.LegacyOrderPriceCalculation:
+      type: object
+      properties:
+        total:
+          type: string
+          title: total
+          additionalProperties: false
+          description: '@gotags: mapstructure:"total"'
+        subTotal:
+          type: string
+          title: sub_total
+          additionalProperties: false
+          description: '@gotags: mapstructure:"sub_total"'
+        tax:
+          type: string
+          title: tax
+          additionalProperties: false
+          description: '@gotags: mapstructure:"tax"'
+        shippingFee:
+          type: string
+          title: shipping_fee
+          additionalProperties: false
+          description: '@gotags: mapstructure:"shipping_fee"'
+        giftMessageFee:
+          type: string
+          title: gift_message_fee
+          additionalProperties: false
+          description: '@gotags: mapstructure:"gift_message_fee"'
+        handleFee:
+          type: string
+          title: handle_fee
+          additionalProperties: false
+          description: '@gotags: mapstructure:"handle_fee"'
+        totalDiscount:
+          type: string
+          title: total_discount
+          additionalProperties: false
+          description: '@gotags: mapstructure:"total_discount"'
+        currency:
+          type: string
+          title: currency
+          additionalProperties: false
+          description: '@gotags: mapstructure:"currency"'
+      title: LegacyOrderPriceCalculation
+      additionalProperties: false
+    api.order.v1.LegacyVendorGetPriceQuoteRequest:
+      type: object
+      properties:
+        credentials:
+          $ref: '#/components/schemas/common.type.v1.LegacyCredentials'
+        storeId:
+          type: string
+          title: store_id
+          additionalProperties: false
+        shippingEmail:
+          type: string
+          title: shipping_email
+          additionalProperties: false
+        shippingName:
+          type: string
+          title: shipping_name
+          maxLength: 30
+          minLength: 1
+          additionalProperties: false
+        shippingPhone:
+          type: string
+          title: shipping_phone
+          additionalProperties: false
+        shippingCompanyName:
+          type: string
+          title: shipping_company_name
+          additionalProperties: false
+        shippingAddress1:
+          type: string
+          title: shipping_address1
+          maxLength: 300
+          minLength: 1
+          additionalProperties: false
+        shippingAddress2:
+          type: string
+          title: shipping_address2
+          additionalProperties: false
+        shippingProvinceCode:
+          type: string
+          title: shipping_province_code
+          additionalProperties: false
+        shippingCity:
+          type: string
+          title: shipping_city
+          maxLength: 30
+          minLength: 1
+          additionalProperties: false
+        shippingZipcode:
+          exclusiveMinimum: false
+          type: integer
+          title: shipping_zipcode
+          maximum: 10000000
+          additionalProperties: false
+        shippingCountryCode:
+          type: string
+          title: shipping_country_code
+          maxLength: 30
+          minLength: 1
+          additionalProperties: false
+        shippingMethod:
+          type: integer
+          title: shipping_method
+          maximum: 10
+          additionalProperties: false
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.LineItem'
+      title: LegacyVendorGetPriceQuoteRequest
+      additionalProperties: false
+    api.order.v1.LegacyVendorGetPriceQuoteResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/api.order.v1.LegacyOrderPriceCalculation'
+      title: LegacyVendorGetPriceQuoteResponse
+      additionalProperties: false
+    api.order.v1.LineItem:
+      type: object
+      properties:
+        variantId:
+          exclusiveMinimum: false
+          type: integer
+          title: variant_id
+          maximum: 100000
+          additionalProperties: false
+        quantity:
+          exclusiveMinimum: false
+          type: integer
+          title: quantity
+          additionalProperties: false
+        side:
+          type: string
+          title: side
+          additionalProperties: false
+        designLink:
+          type: string
+          title: design_link
+          additionalProperties: false
+        designLinkBack:
+          type: string
+          title: design_link_back
+          additionalProperties: false
+      title: LineItem
+      additionalProperties: false
+      description: Legacy
+    api.order.v1.OrderPriceCalculation:
+      type: object
+      title: OrderPriceCalculation
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.Address:
+      type: object
+      properties:
+        method:
+          type: string
+          title: method
+          additionalProperties: false
+        stateCode:
+          type: string
+          title: state_code
+          additionalProperties: false
+        countryCode:
+          type: string
+          title: country_code
+          additionalProperties: false
+      title: Address
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.Billing:
+      type: object
+      properties:
+        iossNumber:
+          type: string
+          title: ioss_number
+          additionalProperties: false
+        taxNumber:
+          type: string
+          title: tax_number
+          additionalProperties: false
+      title: Billing
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.FeePriceQuote:
+      type: object
+      properties:
+        orderId:
+          type: string
+          title: order_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"order_id"'
+        lineItemId:
+          type: string
+          title: line_item_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"line_item_id"'
+        feeCode:
+          type: string
+          title: fee_code
+          additionalProperties: false
+          description: '@gotags: mapstructure:"fee_code"'
+        amount:
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: FeePriceQuote
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.GiftMessage:
+      type: object
+      properties:
+        giftMessageId:
+          type: string
+          title: gift_message_id
+          maxLength: 30
+          minLength: 1
+          additionalProperties: false
+        content:
+          type: string
+          title: content
+          maxLength: 300
+          additionalProperties: false
+      title: GiftMessage
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.Label:
+      type: object
+      properties:
+        url:
+          type: string
+          title: url
+          additionalProperties: false
+      title: Label
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.LineItem:
+      type: object
+      properties:
+        variantId:
+          type: string
+          title: variant_id
+          maxLength: 30
+          minLength: 1
+          additionalProperties: false
+        quantity:
+          exclusiveMinimum: false
+          type: integer
+          title: quantity
+          additionalProperties: false
+        printLocations:
+          type: array
+          items:
+            type: string
+            title: print_locations
+            additionalProperties: false
+      title: LineItem
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.LineItemPriceQuote:
+      type: object
+      properties:
+        lineSubTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineTax:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineDiscount:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        itemPrice:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        itemFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        itemDiscount:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        itemQuantity:
+          type: integer
+          title: item_quantity
+          additionalProperties: false
+          description: '@gotags: mapstructure:"item_quantity"'
+        id:
+          oneOf:
+            - type: string
+            - type: number
+          title: id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"id"'
+        unitBasePrice:
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: LineItemPriceQuote
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.OrderPriceQuote:
+      type: object
+      properties:
+        orderShippingFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderTax:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderSubTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderTotal:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderDiscount:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.LineItemPriceQuote'
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.FeePriceQuote'
+        orderGiftMessageFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+        orderHandleFee:
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: OrderPriceQuote
+      additionalProperties: false
+    api.order.v1.OrderPriceCalculation.Shipping:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.Address'
+        label:
+          $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.Label'
+      title: Shipping
+      additionalProperties: false
+    api.order.v1.VendorGetPriceQuoteRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+          title: team_id
+          additionalProperties: false
+        orderPlatform:
+          type: string
+          title: order_platform
+          additionalProperties: false
+        billing:
+          $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.Billing'
+        shipping:
+          $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.Shipping'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.LineItem'
+        giftMessages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.GiftMessage'
+      title: VendorGetPriceQuoteRequest
+      additionalProperties: false
+    api.order.v1.VendorGetPriceQuoteResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/api.order.v1.OrderPriceCalculation.OrderPriceQuote'
+      title: VendorGetPriceQuoteResponse
+      additionalProperties: false
     api.order.v1.VendorListOrderRequest:
       type: object
       properties:
@@ -200,6 +583,54 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: VendorOrderFilter
       additionalProperties: false
+    common.type.v1.LegacyCredentials:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          title: api_key
+          maxLength: 255
+          minLength: 1
+          additionalProperties: false
+        apiSignature:
+          type: string
+          title: api_signature
+          maxLength: 255
+          minLength: 1
+          additionalProperties: false
+      title: LegacyCredentials
+      additionalProperties: false
+    common.type.v1.Money:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          title: currency_code
+          additionalProperties: false
+          description: 'The three-letter currency code defined in ISO 4217. @gotags: mapstructure:"currency_code"'
+        units:
+          oneOf:
+            - type: string
+            - type: number
+          title: units
+          additionalProperties: false
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar. @gotags: mapstructure:"units"
+        nanos:
+          type: integer
+          title: nanos
+          additionalProperties: false
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000. @gotags: mapstructure:"nanos"
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
     common.type.v1.Paging:
       type: object
       properties:

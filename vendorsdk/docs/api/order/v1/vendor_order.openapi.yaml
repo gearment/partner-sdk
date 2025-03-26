@@ -124,30 +124,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api.order.v1.PlaceOrderResponse'
-  /v1/vendor/orders/price-quote:
-    post:
-      tags:
-        - api.order.v1.OrderAPI
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest'
-          application/proto:
-            schema:
-              $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest'
-        required: true
-      responses:
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.order.v1.GetPriceQuoteResponse'
 components:
   schemas:
     api.order.v1.CreateDraftOrderRequest:
@@ -450,136 +426,6 @@ components:
           $ref: '#/components/schemas/api.order.v1.DraftOrder'
       title: GetDraftOrderResponse
       additionalProperties: false
-    api.order.v1.GetPriceQuoteRequest:
-      type: object
-      properties:
-        shippingInfo:
-          $ref: '#/components/schemas/api.order.v1.GetPriceQuoteRequest.ShippingInfo'
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/api.order.v1.LineItem'
-      title: GetPriceQuoteRequest
-      additionalProperties: false
-    api.order.v1.GetPriceQuoteRequest.ShippingInfo:
-      type: object
-      properties:
-        email:
-          type: string
-          title: email
-          additionalProperties: false
-        name:
-          type: string
-          title: name
-          additionalProperties: false
-        phone:
-          type: string
-          title: phone
-          additionalProperties: false
-        companyName:
-          type: string
-          title: company_name
-          additionalProperties: false
-        address1:
-          type: string
-          title: address1
-          additionalProperties: false
-        address2:
-          type: string
-          title: address2
-          additionalProperties: false
-        city:
-          type: string
-          title: city
-          additionalProperties: false
-        provinceCode:
-          type: string
-          title: province_code
-          additionalProperties: false
-        zipcode:
-          type: string
-          title: zipcode
-          additionalProperties: false
-        countryCode:
-          type: string
-          title: country_code
-          additionalProperties: false
-        method:
-          type: string
-          title: method
-          additionalProperties: false
-      title: ShippingInfo
-      additionalProperties: false
-    api.order.v1.GetPriceQuoteResponse:
-      type: object
-      properties:
-        orderShippingFee:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        orderFee:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        orderTax:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        orderSubTotal:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        orderTotal:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        lineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/api.order.v1.LineItem'
-      title: GetPriceQuoteResponse
-      additionalProperties: false
-    api.order.v1.LineItem:
-      type: object
-      properties:
-        variantId:
-          type: integer
-          title: variant_id
-          additionalProperties: false
-        productName:
-          type: string
-          title: product_name
-          additionalProperties: false
-        productStyle:
-          type: string
-          title: product_style
-          additionalProperties: false
-        productSku:
-          type: string
-          title: product_sku
-          additionalProperties: false
-        quantity:
-          type: integer
-          title: quantity
-          additionalProperties: false
-        designLink:
-          type: string
-          title: design_link
-          additionalProperties: false
-        designLinkBack:
-          type: string
-          title: design_link_back
-          additionalProperties: false
-        lineItem:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        itemPrice:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        lineFee:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        lineDiscount:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        lineSubTotal:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        lineTotal:
-          $ref: '#/components/schemas/common.type.v1.Money'
-        id:
-          oneOf:
-            - type: string
-            - type: number
-          title: id
-          additionalProperties: false
-      title: LineItem
-      additionalProperties: false
     api.order.v1.ListDraftOrdersRequest:
       type: object
       properties:
@@ -627,37 +473,6 @@ components:
           additionalProperties: false
       title: PlaceOrderResponse
       additionalProperties: false
-    common.type.v1.Money:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-          title: currency_code
-          additionalProperties: false
-          description: 'The three-letter currency code defined in ISO 4217. @gotags: mapstructure:"currency_code"'
-        units:
-          oneOf:
-            - type: string
-            - type: number
-          title: units
-          additionalProperties: false
-          description: |-
-            The whole units of the amount.
-             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar. @gotags: mapstructure:"units"
-        nanos:
-          type: integer
-          title: nanos
-          additionalProperties: false
-          description: |-
-            Number of nano (10^-9) units of the amount.
-             The value must be between -999,999,999 and +999,999,999 inclusive.
-             If `units` is positive, `nanos` must be positive or zero.
-             If `units` is zero, `nanos` can be positive, zero, or negative.
-             If `units` is negative, `nanos` must be negative or zero.
-             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000. @gotags: mapstructure:"nanos"
-      title: Money
-      additionalProperties: false
-      description: Represents an amount of money with its currency type.
     encoding:
       title: encoding
       enum:

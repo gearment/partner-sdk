@@ -230,6 +230,11 @@ components:
           $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
         product:
           $ref: '#/components/schemas/api.catalog.v1.VendorCatalog'
+        legacyVariantId:
+          type: integer
+          title: legacy_variant_id
+          additionalProperties: false
+          description: '@gotags: mapstructure:"legacy_variant_id"'
       title: VendorCatalogVariant
       additionalProperties: false
     api.catalog.v1.VendorCatalogVariantFilter:
@@ -293,6 +298,13 @@ components:
           title: search_text
           additionalProperties: false
           description: '@gotags: form:"search_text,omitempty"'
+        legacyVariantIds:
+          type: array
+          items:
+            type: integer
+            title: legacy_variant_ids
+            additionalProperties: false
+            description: '@gotags: form:"legacy_variant_ids,omitempty"'
       title: VendorCatalogVariantFilter
       additionalProperties: false
     common.type.v1.Money:

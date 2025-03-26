@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	VendorOrderAPI_VendorListOrder_FullMethodName = "/api.order.v1.VendorOrderAPI/VendorListOrder"
+	VendorOrderAPI_VendorListOrder_FullMethodName     = "/api.order.v1.VendorOrderAPI/VendorListOrder"
+	VendorOrderAPI_VendorGetPriceQuote_FullMethodName = "/api.order.v1.VendorOrderAPI/VendorGetPriceQuote"
 )
 
 // VendorOrderAPIClient is the client API for VendorOrderAPI service.
@@ -29,6 +30,7 @@ const (
 // ProductListingVendorAPI provide an abstraction to all of read and write data access for order businesses
 type VendorOrderAPIClient interface {
 	VendorListOrder(ctx context.Context, in *VendorListOrderRequest, opts ...grpc.CallOption) (*VendorListOrderResponse, error)
+	VendorGetPriceQuote(ctx context.Context, in *VendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
 }
 
 type vendorOrderAPIClient struct {
@@ -49,6 +51,16 @@ func (c *vendorOrderAPIClient) VendorListOrder(ctx context.Context, in *VendorLi
 	return out, nil
 }
 
+func (c *vendorOrderAPIClient) VendorGetPriceQuote(ctx context.Context, in *VendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorGetPriceQuoteResponse)
+	err := c.cc.Invoke(ctx, VendorOrderAPI_VendorGetPriceQuote_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorOrderAPIServer is the server API for VendorOrderAPI service.
 // All implementations should embed UnimplementedVendorOrderAPIServer
 // for forward compatibility.
@@ -56,6 +68,7 @@ func (c *vendorOrderAPIClient) VendorListOrder(ctx context.Context, in *VendorLi
 // ProductListingVendorAPI provide an abstraction to all of read and write data access for order businesses
 type VendorOrderAPIServer interface {
 	VendorListOrder(context.Context, *VendorListOrderRequest) (*VendorListOrderResponse, error)
+	VendorGetPriceQuote(context.Context, *VendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
 }
 
 // UnimplementedVendorOrderAPIServer should be embedded to have
@@ -67,6 +80,9 @@ type UnimplementedVendorOrderAPIServer struct{}
 
 func (UnimplementedVendorOrderAPIServer) VendorListOrder(context.Context, *VendorListOrderRequest) (*VendorListOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorListOrder not implemented")
+}
+func (UnimplementedVendorOrderAPIServer) VendorGetPriceQuote(context.Context, *VendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorGetPriceQuote not implemented")
 }
 func (UnimplementedVendorOrderAPIServer) testEmbeddedByValue() {}
 
@@ -106,6 +122,24 @@ func _VendorOrderAPI_VendorListOrder_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorOrderAPI_VendorGetPriceQuote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorGetPriceQuoteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorOrderAPIServer).VendorGetPriceQuote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorOrderAPI_VendorGetPriceQuote_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorOrderAPIServer).VendorGetPriceQuote(ctx, req.(*VendorGetPriceQuoteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorOrderAPI_ServiceDesc is the grpc.ServiceDesc for VendorOrderAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +150,10 @@ var VendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VendorListOrder",
 			Handler:    _VendorOrderAPI_VendorListOrder_Handler,
+		},
+		{
+			MethodName: "VendorGetPriceQuote",
+			Handler:    _VendorOrderAPI_VendorGetPriceQuote_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

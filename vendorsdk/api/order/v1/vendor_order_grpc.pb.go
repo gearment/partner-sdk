@@ -23,7 +23,6 @@ const (
 	OrderAPI_GetDraftOrder_FullMethodName    = "/api.order.v1.OrderAPI/GetDraftOrder"
 	OrderAPI_PlaceOrder_FullMethodName       = "/api.order.v1.OrderAPI/PlaceOrder"
 	OrderAPI_ListDraftOrders_FullMethodName  = "/api.order.v1.OrderAPI/ListDraftOrders"
-	OrderAPI_GetPriceQuote_FullMethodName    = "/api.order.v1.OrderAPI/GetPriceQuote"
 )
 
 // OrderAPIClient is the client API for OrderAPI service.
@@ -34,7 +33,6 @@ type OrderAPIClient interface {
 	GetDraftOrder(ctx context.Context, in *GetDraftOrderRequest, opts ...grpc.CallOption) (*GetDraftOrderResponse, error)
 	PlaceOrder(ctx context.Context, in *PlaceOrderRequest, opts ...grpc.CallOption) (*PlaceOrderResponse, error)
 	ListDraftOrders(ctx context.Context, in *ListDraftOrdersRequest, opts ...grpc.CallOption) (*ListDraftOrdersResponse, error)
-	GetPriceQuote(ctx context.Context, in *GetPriceQuoteRequest, opts ...grpc.CallOption) (*GetPriceQuoteResponse, error)
 }
 
 type orderAPIClient struct {
@@ -85,16 +83,6 @@ func (c *orderAPIClient) ListDraftOrders(ctx context.Context, in *ListDraftOrder
 	return out, nil
 }
 
-func (c *orderAPIClient) GetPriceQuote(ctx context.Context, in *GetPriceQuoteRequest, opts ...grpc.CallOption) (*GetPriceQuoteResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPriceQuoteResponse)
-	err := c.cc.Invoke(ctx, OrderAPI_GetPriceQuote_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // OrderAPIServer is the server API for OrderAPI service.
 // All implementations should embed UnimplementedOrderAPIServer
 // for forward compatibility.
@@ -103,7 +91,6 @@ type OrderAPIServer interface {
 	GetDraftOrder(context.Context, *GetDraftOrderRequest) (*GetDraftOrderResponse, error)
 	PlaceOrder(context.Context, *PlaceOrderRequest) (*PlaceOrderResponse, error)
 	ListDraftOrders(context.Context, *ListDraftOrdersRequest) (*ListDraftOrdersResponse, error)
-	GetPriceQuote(context.Context, *GetPriceQuoteRequest) (*GetPriceQuoteResponse, error)
 }
 
 // UnimplementedOrderAPIServer should be embedded to have
@@ -124,9 +111,6 @@ func (UnimplementedOrderAPIServer) PlaceOrder(context.Context, *PlaceOrderReques
 }
 func (UnimplementedOrderAPIServer) ListDraftOrders(context.Context, *ListDraftOrdersRequest) (*ListDraftOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDraftOrders not implemented")
-}
-func (UnimplementedOrderAPIServer) GetPriceQuote(context.Context, *GetPriceQuoteRequest) (*GetPriceQuoteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPriceQuote not implemented")
 }
 func (UnimplementedOrderAPIServer) testEmbeddedByValue() {}
 
@@ -220,24 +204,6 @@ func _OrderAPI_ListDraftOrders_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderAPI_GetPriceQuote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPriceQuoteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrderAPIServer).GetPriceQuote(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OrderAPI_GetPriceQuote_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderAPIServer).GetPriceQuote(ctx, req.(*GetPriceQuoteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // OrderAPI_ServiceDesc is the grpc.ServiceDesc for OrderAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -260,10 +226,6 @@ var OrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListDraftOrders",
 			Handler:    _OrderAPI_ListDraftOrders_Handler,
-		},
-		{
-			MethodName: "GetPriceQuote",
-			Handler:    _OrderAPI_GetPriceQuote_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
