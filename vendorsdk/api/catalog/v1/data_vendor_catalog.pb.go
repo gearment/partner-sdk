@@ -84,11 +84,11 @@ func (VendorCatalogVariantStockLabel) EnumDescriptor() ([]byte, []int) {
 
 type VendorCatalog struct {
 	state            protoimpl.MessageState        `protogen:"open.v1"`
-	ProductId        string                        `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`                        // @gotags: mapstructure:"product_id"
-	ProductName      string                        `protobuf:"bytes,2,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"`                  // @gotags: mapstructure:"product_name"
-	ProductAvatarUrl string                        `protobuf:"bytes,3,opt,name=product_avatar_url,json=productAvatarUrl,proto3" json:"product_avatar_url,omitempty"` // @gotags: mapstructure:"product_avatar_url"
-	PrintLocations   []*VendorCatalogPrintLocation `protobuf:"bytes,4,rep,name=print_locations,json=printLocations,proto3" json:"print_locations,omitempty"`         // @gotags: mapstructure:"print_locations"
-	Variants         []*VendorCatalogVariant       `protobuf:"bytes,5,rep,name=variants,proto3" json:"variants,omitempty"`                                           // @gotags: mapstructure:"variants,omitempty"
+	ProductId        string                        `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	ProductName      string                        `protobuf:"bytes,2,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"`
+	ProductAvatarUrl string                        `protobuf:"bytes,3,opt,name=product_avatar_url,json=productAvatarUrl,proto3" json:"product_avatar_url,omitempty"`
+	PrintLocations   []*VendorCatalogPrintLocation `protobuf:"bytes,4,rep,name=print_locations,json=printLocations,proto3" json:"print_locations,omitempty"`
+	Variants         []*VendorCatalogVariant       `protobuf:"bytes,5,rep,name=variants,proto3" json:"variants,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -160,17 +160,17 @@ func (x *VendorCatalog) GetVariants() []*VendorCatalogVariant {
 
 type VendorCatalogVariant struct {
 	state            protoimpl.MessageState         `protogen:"open.v1"`
-	VariantId        string                         `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`                                                        // @gotags: mapstructure:"variant_id"
-	Name             string                         `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                                   // @gotags: mapstructure:"name"
-	Size             string                         `protobuf:"bytes,3,opt,name=size,proto3" json:"size,omitempty"`                                                                                   // @gotags: mapstructure:"size"
-	Color            string                         `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`                                                                                 // @gotags: mapstructure:"color"
-	HexColorCode     string                         `protobuf:"bytes,5,opt,name=hex_color_code,json=hexColorCode,proto3" json:"hex_color_code,omitempty"`                                             // @gotags: mapstructure:"hex_color_code"
-	Price            *v1.Money                      `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`                                                                                 // @gotags: mapstructure:"price"
-	RecommendedPrice *v1.Money                      `protobuf:"bytes,7,opt,name=recommended_price,json=recommendedPrice,proto3" json:"recommended_price,omitempty"`                                   // @gotags: mapstructure:"recommended_price"
-	ExtraPrice       *v1.Money                      `protobuf:"bytes,8,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`                                                     // @gotags: mapstructure:"extra_price"
-	StockLabel       VendorCatalogVariantStockLabel `protobuf:"varint,9,opt,name=stock_label,json=stockLabel,proto3,enum=api.catalog.v1.VendorCatalogVariantStockLabel" json:"stock_label,omitempty"` // @gotags: mapstructure:"stock_label"
-	Product          *VendorCatalog                 `protobuf:"bytes,10,opt,name=product,proto3" json:"product,omitempty"`                                                                            // @gotags: mapstructure:",squash,omitempty"
-	LegacyVariantId  int32                          `protobuf:"varint,11,opt,name=legacy_variant_id,json=legacyVariantId,proto3" json:"legacy_variant_id,omitempty"`                                  // @gotags: mapstructure:"legacy_variant_id"
+	VariantId        string                         `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	Name             string                         `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Size             string                         `protobuf:"bytes,3,opt,name=size,proto3" json:"size,omitempty"`
+	Color            string                         `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`
+	HexColorCode     string                         `protobuf:"bytes,5,opt,name=hex_color_code,json=hexColorCode,proto3" json:"hex_color_code,omitempty"`
+	Price            *v1.Money                      `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
+	RecommendedPrice *v1.Money                      `protobuf:"bytes,7,opt,name=recommended_price,json=recommendedPrice,proto3" json:"recommended_price,omitempty"`
+	ExtraPrice       *v1.Money                      `protobuf:"bytes,8,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
+	StockLabel       VendorCatalogVariantStockLabel `protobuf:"varint,9,opt,name=stock_label,json=stockLabel,proto3,enum=api.catalog.v1.VendorCatalogVariantStockLabel" json:"stock_label,omitempty"`
+	Product          *VendorCatalog                 `protobuf:"bytes,10,opt,name=product,proto3" json:"product,omitempty"` // @gotags: json:",squash,omitempty"
+	LegacyVariantId  int32                          `protobuf:"varint,11,opt,name=legacy_variant_id,json=legacyVariantId,proto3" json:"legacy_variant_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -284,9 +284,9 @@ func (x *VendorCatalogVariant) GetLegacyVariantId() int32 {
 
 type VendorCatalogPrintLocation struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                // @gotags: mapstructure:"code"
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                // @gotags: mapstructure:"name"
-	LocationId    int32                  `protobuf:"varint,3,opt,name=location_id,json=locationId,proto3" json:"location_id,omitempty"` // @gotags: mapstructure:"location_id"
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	LocationId    int32                  `protobuf:"varint,3,opt,name=location_id,json=locationId,proto3" json:"location_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -512,11 +512,11 @@ func (x *VendorCatalogVariantFilter) GetLegacyVariantIds() []int32 {
 
 type LegacyVendorCatalog struct {
 	state         protoimpl.MessageState        `protogen:"open.v1"`
-	ProductName   string                        `protobuf:"bytes,1,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"` // @gotags: mapstructure:"product_name"
-	ProductId     string                        `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`       // @gotags: mapstructure:"product_id"
-	ProductImg    string                        `protobuf:"bytes,3,opt,name=product_img,json=productImg,proto3" json:"product_img,omitempty"`    // @gotags: mapstructure:"product_img"
-	PrintAreas    []string                      `protobuf:"bytes,4,rep,name=print_areas,json=printAreas,proto3" json:"print_areas,omitempty"`    // @gotags: mapstructure:"print_areas"
-	Variants      []*LegacyVendorCatalogVariant `protobuf:"bytes,5,rep,name=variants,proto3" json:"variants,omitempty"`                          // @gotags: mapstructure:"variants"
+	ProductName   string                        `protobuf:"bytes,1,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"`
+	ProductId     string                        `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	ProductImg    string                        `protobuf:"bytes,3,opt,name=product_img,json=productImg,proto3" json:"product_img,omitempty"`
+	PrintAreas    []string                      `protobuf:"bytes,4,rep,name=print_areas,json=printAreas,proto3" json:"print_areas,omitempty"`
+	Variants      []*LegacyVendorCatalogVariant `protobuf:"bytes,5,rep,name=variants,proto3" json:"variants,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -588,16 +588,16 @@ func (x *LegacyVendorCatalog) GetVariants() []*LegacyVendorCatalogVariant {
 
 type LegacyVendorCatalogVariant struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	VariantId          string                 `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`                            // @gotags: mapstructure:"variant_id"
-	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                       // @gotags: mapstructure:"name"
-	Size               string                 `protobuf:"bytes,3,opt,name=size,proto3" json:"size,omitempty"`                                                       // @gotags: mapstructure:"size"
-	Color              string                 `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`                                                     // @gotags: mapstructure:"color"
-	HexColorCode       string                 `protobuf:"bytes,5,opt,name=hex_color_code,json=hexColorCode,proto3" json:"hex_color_code,omitempty"`                 // @gotags: mapstructure:"hex_color_code"
-	Price              string                 `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`                                                     // @gotags: mapstructure:"price"
-	ExtraPrice         string                 `protobuf:"bytes,7,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`                         // @gotags: mapstructure:"extra_price"
-	NetPrice           float64                `protobuf:"fixed64,8,opt,name=net_price,json=netPrice,proto3" json:"net_price,omitempty"`                             // @gotags: mapstructure:"net_price"
-	AvailabilityStatus string                 `protobuf:"bytes,9,opt,name=availability_status,json=availabilityStatus,proto3" json:"availability_status,omitempty"` // @gotags: mapstructure:"availability_status"
-	Status             string                 `protobuf:"bytes,10,opt,name=status,proto3" json:"status,omitempty"`                                                  // @gotags: mapstructure:"status"
+	VariantId          string                 `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Size               string                 `protobuf:"bytes,3,opt,name=size,proto3" json:"size,omitempty"`
+	Color              string                 `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`
+	HexColorCode       string                 `protobuf:"bytes,5,opt,name=hex_color_code,json=hexColorCode,proto3" json:"hex_color_code,omitempty"`
+	Price              string                 `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
+	ExtraPrice         string                 `protobuf:"bytes,7,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
+	NetPrice           float64                `protobuf:"fixed64,8,opt,name=net_price,json=netPrice,proto3" json:"net_price,omitempty"`
+	AvailabilityStatus string                 `protobuf:"bytes,9,opt,name=availability_status,json=availabilityStatus,proto3" json:"availability_status,omitempty"`
+	Status             string                 `protobuf:"bytes,10,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }

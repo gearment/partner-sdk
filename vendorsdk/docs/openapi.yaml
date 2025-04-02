@@ -6,117 +6,84 @@ info:
     title: ""
     version: 0.0.1
 paths:
-    /health:
-        get:
-            tags:
-                - HealthService
-            description: 'service: Services'
-            operationId: HealthService_Liveness
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/LivenessResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /ready:
-        get:
-            tags:
-                - HealthService
-            operationId: HealthService_Readiness
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ReadinessResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+    /api/legacy/catalog/products:
         post:
             tags:
-                - HealthService
-            operationId: HealthService_ToggleReadiness
+                - LegacyVendorCatalogAPI
+            operationId: LegacyVendorCatalogAPI_LegacyVendorListCatalogVariant
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LegacyVendorListCatalogVariantRequest'
+                required: true
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ToggleReadinessResponse'
+                                $ref: '#/components/schemas/LegacyVendorListCatalogVariantResponse'
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/catalog:
-        get:
+    /api/legacy/catalog/stock_status:
+        post:
             tags:
-                - VendorCatalogAPI
-            operationId: VendorCatalogAPI_VendorListCatalog
-            parameters:
-                - name: teamId
-                  in: query
-                  schema:
-                    type: string
-                - name: filter.productIds
-                  in: query
-                  schema:
-                    type: array
-                    items:
-                        type: string
-                - name: filter.searchText
-                  in: query
-                  schema:
-                    type: string
-                - name: paging.page
-                  in: query
-                  schema:
-                    type: integer
-                    format: int32
-                - name: paging.limit
-                  in: query
-                  schema:
-                    type: integer
-                    format: int32
-                - name: isLegacy
-                  in: query
-                  schema:
-                    type: boolean
+                - LegacyVendorCatalogAPI
+            operationId: LegacyVendorCatalogAPI_LegacyVendorListCatalogStockStatus
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LegacyVendorListCatalogStockStatusRequest'
+                required: true
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/VendorListCatalogResponse'
+                                $ref: '#/components/schemas/LegacyVendorListCatalogStockStatusResponse'
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/catalog/variant:
+    /api/legacy/orders/price:
+        post:
+            tags:
+                - LegacyVendorOrderAPI
+            operationId: LegacyVendorOrderAPI_LegacyVendorGetPriceQuote
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LegacyVendorGetPriceQuoteRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LegacyVendorGetPriceQuoteResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v3/catalog/variants:
         get:
             tags:
                 - VendorCatalogAPI
             operationId: VendorCatalogAPI_VendorListCatalogVariant
             parameters:
-                - name: teamId
-                  in: query
-                  schema:
-                    type: string
                 - name: filter.productIds
                   in: query
                   schema:
@@ -187,10 +154,6 @@ paths:
                   schema:
                     type: integer
                     format: int32
-                - name: isLegacy
-                  in: query
-                  schema:
-                    type: boolean
             responses:
                 "200":
                     description: OK
@@ -204,43 +167,223 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/orders:
+    /api/v3/catalog/variants/stock:
         get:
             tags:
-                - OrderAPI
-            operationId: OrderAPI_ListDraftOrders
+                - VendorCatalogAPI
+            operationId: VendorCatalogAPI_VendorGetCatalogStockStatus
             parameters:
-                - name: limit
+                - name: filter.productIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.variantIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.skus
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.sizes
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.sizeCodes
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.colors
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.colorCodes
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.stockLabels
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: enum
+                - name: filter.searchText
+                  in: query
+                  schema:
+                    type: string
+                - name: filter.legacyVariantIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: int32
+                - name: paging.page
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: offset
+                - name: paging.limit
                   in: query
                   schema:
-                    type: string
+                    type: integer
+                    format: int32
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ListDraftOrdersResponse'
+                                $ref: '#/components/schemas/VendorListCatalogVariantResponse'
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/v3/orders:
+        get:
+            tags:
+                - VendorOrderAPI
+            operationId: VendorOrderAPI_VendorListOrder
+            parameters:
+                - name: filter.orderIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.statuses
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: enum
+                - name: filter.createdMethods
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: enum
+                - name: filter.createdAtMin
+                  in: query
+                  schema:
+                    type: string
+                    format: date-time
+                - name: filter.createdAtMax
+                  in: query
+                  schema:
+                    type: string
+                    format: date-time
+                - name: paging.page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: paging.limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VendorListOrderResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v3/orders/draft:
+        get:
+            tags:
+                - VendorOrderAPI
+            operationId: VendorOrderAPI_VendorListOrderDraft
+            parameters:
+                - name: filter.orderIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.statuses
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: enum
+                - name: filter.createdMethods
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: integer
+                        format: enum
+                - name: filter.createdAtMin
+                  in: query
+                  schema:
+                    type: string
+                    format: date-time
+                - name: filter.createdAtMax
+                  in: query
+                  schema:
+                    type: string
+                    format: date-time
+                - name: paging.page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: paging.limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VendorListOrderDraftResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v3/orders/draft/labeled:
         post:
             tags:
-                - OrderAPI
-            operationId: OrderAPI_CreateDraftOrder
+                - VendorOrderAPI
+            operationId: VendorOrderAPI_VendorCreateLabeledOrderDraft
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateDraftOrderRequest'
+                            $ref: '#/components/schemas/VendorCreateLabeledOrderDraftRequest'
                 required: true
             responses:
                 "200":
@@ -248,14 +391,14 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/CreateDraftOrderResponse'
+                                $ref: '#/components/schemas/VendorCreateLabeledOrderDraftResponse'
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/orders/price-quote:
+    /api/v3/orders/price:
         post:
             tags:
                 - VendorOrderAPI
@@ -279,48 +422,93 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/orders/{draftOrderId}:
+    /health:
         get:
             tags:
-                - OrderAPI
-            operationId: OrderAPI_GetDraftOrder
-            parameters:
-                - name: draftOrderId
-                  in: path
-                  required: true
-                  schema:
-                    type: string
+                - HealthService
+            description: 'service: Services'
+            operationId: HealthService_Liveness
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetDraftOrderResponse'
+                                $ref: '#/components/schemas/LivenessResponse'
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/vendor/orders/{draftOrderId}/place:
-        post:
+    /ready:
+        get:
             tags:
-                - OrderAPI
-            operationId: OrderAPI_PlaceOrder
-            parameters:
-                - name: draftOrderId
-                  in: path
-                  required: true
-                  schema:
-                    type: string
+                - HealthService
+            operationId: HealthService_Readiness
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PlaceOrderResponse'
+                                $ref: '#/components/schemas/ReadinessResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - HealthService
+            operationId: HealthService_ToggleReadiness
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ToggleReadinessResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /v1/vendor/catalog:
+        get:
+            tags:
+                - VendorCatalogAPI
+            operationId: VendorCatalogAPI_VendorListCatalog
+            parameters:
+                - name: filter.productIds
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: filter.searchText
+                  in: query
+                  schema:
+                    type: string
+                - name: paging.page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: paging.limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VendorListCatalogResponse'
                 default:
                     description: Default error response
                     content:
@@ -347,158 +535,17 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        CreateDraftOrderRequest:
+        File:
             type: object
             properties:
-                orderRef:
+                fileName:
                     type: string
-                externalId:
+                filePath:
                     type: string
-                shippingInfo:
-                    $ref: '#/components/schemas/CreateDraftOrderRequest_ShippingInfo'
-                lineItems:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/CreateDraftOrderRequest_LineItem'
-                storeId:
+                fileUrl:
                     type: string
-                processWithRisk:
-                    type: boolean
-                giftMessageBody:
+                fileId:
                     type: string
-                iossNumber:
-                    type: string
-                iossNumberTotal:
-                    type: string
-                taxNumber:
-                    type: string
-                orderTaxValue:
-                    type: string
-                shippingServiceType:
-                    type: string
-                shippingLabelUrl:
-                    type: string
-        CreateDraftOrderRequest_LineItem:
-            type: object
-            properties:
-                productId:
-                    type: string
-                productName:
-                    type: string
-                productStyle:
-                    type: string
-                variantSku:
-                    type: string
-                quantity:
-                    type: integer
-                    format: int32
-                printingOption:
-                    $ref: '#/components/schemas/CreateDraftOrderRequest_PrintingOption'
-        CreateDraftOrderRequest_PrintingOption:
-            type: object
-            properties:
-                frontDesignUrl:
-                    type: string
-                backDesignUrl:
-                    type: string
-        CreateDraftOrderRequest_ShippingInfo:
-            type: object
-            properties:
-                email:
-                    type: string
-                name:
-                    type: string
-                phone:
-                    type: string
-                companyName:
-                    type: string
-                address1:
-                    type: string
-                address2:
-                    type: string
-                city:
-                    type: string
-                provinceCode:
-                    type: string
-                zipcode:
-                    type: string
-                countryCode:
-                    type: string
-                method:
-                    type: string
-        CreateDraftOrderResponse:
-            type: object
-            properties:
-                draftOrder:
-                    $ref: '#/components/schemas/DraftOrder'
-        DraftOrder:
-            type: object
-            properties:
-                draftOrderId:
-                    type: string
-                orderRef:
-                    type: string
-                externalId:
-                    type: string
-                shippingInfo:
-                    $ref: '#/components/schemas/DraftOrder_ShippingInfo'
-                lineItems:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/DraftOrder_LineItem'
-        DraftOrder_LineItem:
-            type: object
-            properties:
-                variantId:
-                    type: string
-                productName:
-                    type: string
-                productStyle:
-                    type: string
-                productSku:
-                    type: string
-                quantity:
-                    type: integer
-                    format: int32
-                printingOption:
-                    $ref: '#/components/schemas/DraftOrder_PrintingOption'
-        DraftOrder_PrintingOption:
-            type: object
-            properties:
-                frontDesignUrl:
-                    type: string
-                backDesignUrl:
-                    type: string
-        DraftOrder_ShippingInfo:
-            type: object
-            properties:
-                email:
-                    type: string
-                name:
-                    type: string
-                phone:
-                    type: string
-                companyName:
-                    type: string
-                address1:
-                    type: string
-                address2:
-                    type: string
-                city:
-                    type: string
-                provinceCode:
-                    type: string
-                zipcode:
-                    type: string
-                countryCode:
-                    type: string
-                method:
-                    type: string
-        GetDraftOrderResponse:
-            type: object
-            properties:
-                draftOrder:
-                    $ref: '#/components/schemas/DraftOrder'
         GoogleProtobufAny:
             type: object
             properties:
@@ -507,15 +554,162 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        ListDraftOrdersResponse:
+        LegacyCredentials:
             type: object
             properties:
-                draftOrders:
+                apiKey:
+                    type: string
+                apiSignature:
+                    type: string
+        LegacyVendorCatalog:
+            type: object
+            properties:
+                productName:
+                    type: string
+                productId:
+                    type: string
+                productImg:
+                    type: string
+                printAreas:
                     type: array
                     items:
-                        $ref: '#/components/schemas/DraftOrder'
-                nextPageToken:
+                        type: string
+                variants:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/LegacyVendorCatalogVariant'
+        LegacyVendorCatalogVariant:
+            type: object
+            properties:
+                variantId:
                     type: string
+                name:
+                    type: string
+                size:
+                    type: string
+                color:
+                    type: string
+                hexColorCode:
+                    type: string
+                price:
+                    type: string
+                extraPrice:
+                    type: string
+                netPrice:
+                    type: number
+                    format: double
+                availabilityStatus:
+                    type: string
+                status:
+                    type: string
+        LegacyVendorGetPriceQuoteRequest:
+            type: object
+            properties:
+                credentials:
+                    $ref: '#/components/schemas/LegacyCredentials'
+                storeId:
+                    type: string
+                shippingEmail:
+                    type: string
+                shippingName:
+                    type: string
+                shippingPhone:
+                    type: string
+                shippingCompanyName:
+                    type: string
+                shippingAddress1:
+                    type: string
+                shippingAddress2:
+                    type: string
+                shippingProvinceCode:
+                    type: string
+                shippingCity:
+                    type: string
+                shippingZipcode:
+                    type: integer
+                    format: int32
+                shippingCountryCode:
+                    type: string
+                shippingMethod:
+                    type: integer
+                    format: int32
+                lineItems:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/LegacyVendorGetPriceQuoteRequest_LineItem'
+        LegacyVendorGetPriceQuoteRequest_LineItem:
+            type: object
+            properties:
+                variantId:
+                    type: integer
+                    format: int32
+                quantity:
+                    type: integer
+                    format: int32
+                side:
+                    type: string
+                designLink:
+                    type: string
+                designLinkBack:
+                    type: string
+        LegacyVendorGetPriceQuoteResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/LegacyVendorGetPriceQuoteResponse_PriceCalculation'
+        LegacyVendorGetPriceQuoteResponse_PriceCalculation:
+            type: object
+            properties:
+                total:
+                    type: string
+                subTotal:
+                    type: string
+                tax:
+                    type: string
+                shippingFee:
+                    type: string
+                giftMessageFee:
+                    type: string
+                handleFee:
+                    type: string
+                totalDiscount:
+                    type: string
+                currency:
+                    type: string
+        LegacyVendorListCatalogStockStatusRequest:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/Paging'
+                credentials:
+                    $ref: '#/components/schemas/LegacyCredentials'
+                type:
+                    type: string
+        LegacyVendorListCatalogStockStatusResponse:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/PagingResponse'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/LegacyVendorCatalogVariant'
+        LegacyVendorListCatalogVariantRequest:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/Paging'
+                credentials:
+                    $ref: '#/components/schemas/LegacyCredentials'
+        LegacyVendorListCatalogVariantResponse:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/PagingResponse'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/LegacyVendorCatalog'
         LivenessResponse:
             type: object
             properties:
@@ -543,117 +737,15 @@ components:
                          For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
                     format: int32
             description: Represents an amount of money with its currency type.
-        OrderPriceCalculation_Address:
+        Paging:
             type: object
             properties:
-                method:
-                    type: string
-                stateCode:
-                    type: string
-                countryCode:
-                    type: string
-        OrderPriceCalculation_Billing:
-            type: object
-            properties:
-                iossNumber:
-                    type: string
-                taxNumber:
-                    type: string
-        OrderPriceCalculation_FeePriceQuote:
-            type: object
-            properties:
-                orderId:
-                    type: string
-                lineItemId:
-                    type: string
-                feeCode:
-                    type: string
-                amount:
-                    $ref: '#/components/schemas/Money'
-        OrderPriceCalculation_GiftMessage:
-            type: object
-            properties:
-                giftMessageId:
-                    type: string
-                content:
-                    type: string
-        OrderPriceCalculation_Label:
-            type: object
-            properties:
-                url:
-                    type: string
-        OrderPriceCalculation_LineItem:
-            type: object
-            properties:
-                variantId:
-                    type: string
-                quantity:
+                page:
                     type: integer
                     format: int32
-                printLocations:
-                    type: array
-                    items:
-                        type: string
-        OrderPriceCalculation_LineItemPriceQuote:
-            type: object
-            properties:
-                lineSubTotal:
-                    $ref: '#/components/schemas/Money'
-                lineTax:
-                    $ref: '#/components/schemas/Money'
-                lineFee:
-                    $ref: '#/components/schemas/Money'
-                lineDiscount:
-                    $ref: '#/components/schemas/Money'
-                lineTotal:
-                    $ref: '#/components/schemas/Money'
-                itemPrice:
-                    $ref: '#/components/schemas/Money'
-                itemFee:
-                    $ref: '#/components/schemas/Money'
-                itemDiscount:
-                    $ref: '#/components/schemas/Money'
-                itemQuantity:
+                limit:
                     type: integer
                     format: int32
-                id:
-                    type: string
-                unitBasePrice:
-                    $ref: '#/components/schemas/Money'
-        OrderPriceCalculation_OrderPriceQuote:
-            type: object
-            properties:
-                orderShippingFee:
-                    $ref: '#/components/schemas/Money'
-                orderFee:
-                    $ref: '#/components/schemas/Money'
-                orderTax:
-                    $ref: '#/components/schemas/Money'
-                orderSubTotal:
-                    $ref: '#/components/schemas/Money'
-                orderTotal:
-                    $ref: '#/components/schemas/Money'
-                orderDiscount:
-                    $ref: '#/components/schemas/Money'
-                lineItems:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/OrderPriceCalculation_LineItemPriceQuote'
-                fees:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/OrderPriceCalculation_FeePriceQuote'
-                orderGiftMessageFee:
-                    $ref: '#/components/schemas/Money'
-                orderHandleFee:
-                    $ref: '#/components/schemas/Money'
-        OrderPriceCalculation_Shipping:
-            type: object
-            properties:
-                address:
-                    $ref: '#/components/schemas/OrderPriceCalculation_Address'
-                label:
-                    $ref: '#/components/schemas/OrderPriceCalculation_Label'
         PagingResponse:
             type: object
             properties:
@@ -668,11 +760,6 @@ components:
                 limit:
                     type: integer
                     format: int32
-        PlaceOrderResponse:
-            type: object
-            properties:
-                orderId:
-                    type: string
         ReadinessResponse:
             type: object
             properties:
@@ -699,6 +786,17 @@ components:
             properties:
                 message:
                     type: string
+        VendorBillingOption:
+            type: object
+            properties:
+                iossNumber:
+                    type: string
+                iossValue:
+                    $ref: '#/components/schemas/Money'
+                taxNumber:
+                    type: string
+                taxValue:
+                    $ref: '#/components/schemas/Money'
         VendorCatalog:
             type: object
             properties:
@@ -753,30 +851,67 @@ components:
                 legacyVariantId:
                     type: integer
                     format: int32
+        VendorCreateLabeledOrderDraftRequest:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorCreateLabeledOrderDraftRequest_Data'
+        VendorCreateLabeledOrderDraftRequest_Data:
+            type: object
+            properties:
+                referenceId:
+                    type: string
+                shippingServiceType:
+                    type: integer
+                    format: enum
+                storeId:
+                    type: string
+                agreeAtRisk:
+                    type: boolean
+                shippingLabelLinks:
+                    type: array
+                    items:
+                        type: string
+                giftMessageBody:
+                    type: string
+        VendorCreateLabeledOrderDraftResponse:
+            type: object
+            properties:
+                status:
+                    type: string
+                message:
+                    type: string
+                result:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderDraft'
+        VendorFulfillmentOption:
+            type: object
+            properties: {}
         VendorGetPriceQuoteRequest:
             type: object
             properties:
-                teamId:
-                    type: string
                 orderPlatform:
                     type: string
                 billing:
-                    $ref: '#/components/schemas/OrderPriceCalculation_Billing'
+                    $ref: '#/components/schemas/VendorOrderPriceCalculation_Billing'
                 shipping:
-                    $ref: '#/components/schemas/OrderPriceCalculation_Shipping'
+                    $ref: '#/components/schemas/VendorOrderPriceCalculation_Shipping'
                 lineItems:
                     type: array
                     items:
-                        $ref: '#/components/schemas/OrderPriceCalculation_LineItem'
+                        $ref: '#/components/schemas/VendorOrderPriceCalculation_LineItem'
                 giftMessages:
                     type: array
                     items:
-                        $ref: '#/components/schemas/OrderPriceCalculation_GiftMessage'
+                        $ref: '#/components/schemas/VendorOrderPriceCalculation_GiftMessage'
         VendorGetPriceQuoteResponse:
             type: object
             properties:
                 data:
-                    $ref: '#/components/schemas/OrderPriceCalculation_OrderPriceQuote'
+                    $ref: '#/components/schemas/VendorOrderPriceCalculation_OrderPriceQuote'
         VendorListCatalogResponse:
             type: object
             properties:
@@ -795,6 +930,226 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/VendorCatalogVariant'
+        VendorListOrderDraftResponse:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/PagingResponse'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderDraft'
+        VendorListOrderResponse:
+            type: object
+            properties:
+                paging:
+                    $ref: '#/components/schemas/PagingResponse'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrder'
+        VendorOrder:
+            type: object
+            properties: {}
+        VendorOrderDraft:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                teamId:
+                    type: string
+                storeId:
+                    type: string
+                storeName:
+                    type: string
+                referenceId:
+                    type: string
+                orderPlatform:
+                    type: integer
+                    format: enum
+                importId:
+                    type: string
+                pullId:
+                    type: string
+                requestId:
+                    type: string
+                createdMethod:
+                    type: integer
+                    format: enum
+                fulfillmentVendor:
+                    type: integer
+                    format: enum
+                priority:
+                    type: integer
+                    format: enum
+                fulfillmentOption:
+                    $ref: '#/components/schemas/VendorFulfillmentOption'
+                shippingOption:
+                    $ref: '#/components/schemas/VendorShippingOption'
+                printOption:
+                    $ref: '#/components/schemas/VendorPrintingOption'
+                billingOption:
+                    $ref: '#/components/schemas/VendorBillingOption'
+                orderDate:
+                    type: string
+                    format: date-time
+                status:
+                    type: integer
+                    format: enum
+                orderTrackingCode:
+                    type: string
+                shippingLabels:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorShippingLabel'
+                isLabelAttached:
+                    type: boolean
+                shippingVerificationStatus:
+                    type: integer
+                    format: enum
+                productMatchingStatus:
+                    type: integer
+                    format: enum
+                isShippingVerificationBypassed:
+                    type: boolean
+                isApproved:
+                    type: boolean
+                approvedAt:
+                    type: string
+                    format: date-time
+                originDraftId:
+                    type: string
+                originOrderId:
+                    type: string
+        VendorOrderPriceCalculation_Address:
+            type: object
+            properties:
+                method:
+                    type: string
+                stateCode:
+                    type: string
+                countryCode:
+                    type: string
+        VendorOrderPriceCalculation_Billing:
+            type: object
+            properties:
+                iossNumber:
+                    type: string
+                taxNumber:
+                    type: string
+        VendorOrderPriceCalculation_FeePriceQuote:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                lineItemId:
+                    type: string
+                feeCode:
+                    type: string
+                amount:
+                    $ref: '#/components/schemas/Money'
+        VendorOrderPriceCalculation_GiftMessage:
+            type: object
+            properties:
+                giftMessageId:
+                    type: string
+                content:
+                    type: string
+        VendorOrderPriceCalculation_Label:
+            type: object
+            properties:
+                url:
+                    type: string
+        VendorOrderPriceCalculation_LineItem:
+            type: object
+            properties:
+                variantId:
+                    type: string
+                quantity:
+                    type: integer
+                    format: int32
+                printLocations:
+                    type: array
+                    items:
+                        type: string
+        VendorOrderPriceCalculation_LineItemPriceQuote:
+            type: object
+            properties:
+                lineSubTotal:
+                    $ref: '#/components/schemas/Money'
+                lineTax:
+                    $ref: '#/components/schemas/Money'
+                lineFee:
+                    $ref: '#/components/schemas/Money'
+                lineDiscount:
+                    $ref: '#/components/schemas/Money'
+                lineTotal:
+                    $ref: '#/components/schemas/Money'
+                itemPrice:
+                    $ref: '#/components/schemas/Money'
+                itemFee:
+                    $ref: '#/components/schemas/Money'
+                itemDiscount:
+                    $ref: '#/components/schemas/Money'
+                itemQuantity:
+                    type: integer
+                    format: int32
+                id:
+                    type: string
+                unitBasePrice:
+                    $ref: '#/components/schemas/Money'
+        VendorOrderPriceCalculation_OrderPriceQuote:
+            type: object
+            properties:
+                orderShippingFee:
+                    $ref: '#/components/schemas/Money'
+                orderFee:
+                    $ref: '#/components/schemas/Money'
+                orderTax:
+                    $ref: '#/components/schemas/Money'
+                orderSubTotal:
+                    $ref: '#/components/schemas/Money'
+                orderTotal:
+                    $ref: '#/components/schemas/Money'
+                orderDiscount:
+                    $ref: '#/components/schemas/Money'
+                lineItems:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderPriceCalculation_LineItemPriceQuote'
+                fees:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderPriceCalculation_FeePriceQuote'
+                orderGiftMessageFee:
+                    $ref: '#/components/schemas/Money'
+                orderHandleFee:
+                    $ref: '#/components/schemas/Money'
+        VendorOrderPriceCalculation_Shipping:
+            type: object
+            properties:
+                address:
+                    $ref: '#/components/schemas/VendorOrderPriceCalculation_Address'
+                label:
+                    $ref: '#/components/schemas/VendorOrderPriceCalculation_Label'
+        VendorPrintingOption:
+            type: object
+            properties:
+                printLocationCode:
+                    type: string
+                designFile:
+                    $ref: '#/components/schemas/File'
+        VendorShippingLabel:
+            type: object
+            properties:
+                labelFile:
+                    $ref: '#/components/schemas/File'
+        VendorShippingOption:
+            type: object
+            properties:
+                method:
+                    type: integer
+                    format: enum
         VersionResponse:
             type: object
             properties:
@@ -802,8 +1157,11 @@ components:
                     type: string
 tags:
     - name: HealthService
-    - name: OrderAPI
+    - name: LegacyVendorCatalogAPI
+      description: LegacyVendorCatalogAPI provide an abstraction to support the legacy api call format
+    - name: LegacyVendorOrderAPI
+      description: LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
     - name: VendorCatalogAPI
-      description: ProductListingVendorAPI provide an abstraction to all of read and write data access for order businesses
+      description: VendorCatalogAPI provide an abstraction to all of read data access for catalog businesses
     - name: VendorOrderAPI
-      description: ProductListingVendorAPI provide an abstraction to all of read and write data access for order businesses
+      description: VendorOrderAPI provide an abstraction to all of read and write data access for order businesses

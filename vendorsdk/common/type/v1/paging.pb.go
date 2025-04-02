@@ -23,8 +23,8 @@ const (
 
 type Paging struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`   // @gotags: form:"page"
-	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"` // @gotags: form:"limit"
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`   // @gotags: form:"page,omitempty"
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"` // @gotags: form:"limit,omitempty"
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -75,10 +75,10 @@ func (x *Paging) GetLimit() int32 {
 
 type PagingResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         int64                  `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`                          // @gotags: mapstructure:"total"
-	TotalPage     int32                  `protobuf:"varint,2,opt,name=total_page,json=totalPage,proto3" json:"total_page,omitempty"` // @gotags: mapstructure:"total_page"
-	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`                            // @gotags: mapstructure:"page"
-	Limit         int32                  `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`                          // @gotags: mapstructure:"limit"
+	Total         int64                  `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	TotalPage     int32                  `protobuf:"varint,2,opt,name=total_page,json=totalPage,proto3" json:"total_page,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Limit         int32                  `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
