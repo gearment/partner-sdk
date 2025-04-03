@@ -5,7 +5,7 @@ logo:
 
 apis:
   external@v1:
-    root: ./vendorsdk/openapi.yaml
+    root: ./vendorsdk/docs/openapi.yaml
     labels:
       - external
 
@@ -26,4 +26,4 @@ colorMode:
     - 'light'
 
 footer:
-  copyrightText: GearmentInc © 2024
+  copyrightText: GearmentInc © 2025
