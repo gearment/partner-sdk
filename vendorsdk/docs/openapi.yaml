@@ -6,7 +6,7 @@ info:
     title: ""
     version: 0.0.1
 paths:
-    /api/legacy/catalog/products:
+    /api/legacy/catalog:
         post:
             tags:
                 - LegacyVendorCatalogAPI
@@ -30,7 +30,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /api/legacy/catalog/stock_status:
+    /api/legacy/catalog/variants:
         post:
             tags:
                 - LegacyVendorCatalogAPI
@@ -368,6 +368,29 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/VendorListOrderDraftResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - VendorOrderAPI
+            operationId: VendorOrderAPI_VendorCreateOrderDraft
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/VendorCreateOrderDraftRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VendorCreateOrderDraftResponse'
                 default:
                     description: Default error response
                     content:
@@ -896,6 +919,20 @@ components:
                 legacyVariantId:
                     type: integer
                     format: int32
+        VendorCreateOrderDraftRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/VendorOrderDraftManualCreationParams'
+        VendorCreateOrderDraftResponse:
+            type: object
+            properties:
+                status:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/VendorOrderDraft'
         VendorCreateOrderDraftWithLabelRequest:
             type: object
             properties:
@@ -1188,7 +1225,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/VendorOrderDraftCreationParams_PrintingOption'
-                barcodeLink:
+                barcodeUrl:
                     type: string
         VendorOrderDraftCreationParams_PrintingOption:
             type: object
@@ -1198,6 +1235,29 @@ components:
                     format: enum
                 url:
                     type: string
+        VendorOrderDraftManualCreationParams:
+            type: object
+            properties:
+                referenceId:
+                    type: string
+                platform:
+                    type: integer
+                    format: enum
+                storeId:
+                    type: string
+                agreeAtRisk:
+                    type: boolean
+                address:
+                    $ref: '#/components/schemas/VendorAddress'
+                shippingMethod:
+                    type: integer
+                    format: enum
+                giftMessageBody:
+                    type: string
+                lineItems:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderDraftCreationParams_LineItem'
         VendorOrderDraftWithLabelCreationParams:
             type: object
             properties:
@@ -1210,7 +1270,7 @@ components:
                     type: string
                 agreeAtRisk:
                     type: boolean
-                shippingLabelLinks:
+                shippingLabelUrls:
                     type: array
                     items:
                         type: string
