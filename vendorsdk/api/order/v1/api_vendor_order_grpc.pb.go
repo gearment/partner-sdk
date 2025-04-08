@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	VendorOrderAPI_VendorListOrder_FullMethodName               = "/api.order.v1.VendorOrderAPI/VendorListOrder"
-	VendorOrderAPI_VendorListOrderDraft_FullMethodName          = "/api.order.v1.VendorOrderAPI/VendorListOrderDraft"
-	VendorOrderAPI_VendorCreateLabeledOrderDraft_FullMethodName = "/api.order.v1.VendorOrderAPI/VendorCreateLabeledOrderDraft"
-	VendorOrderAPI_VendorGetPriceQuote_FullMethodName           = "/api.order.v1.VendorOrderAPI/VendorGetPriceQuote"
+	VendorOrderAPI_VendorListOrder_FullMethodName                 = "/api.order.v1.VendorOrderAPI/VendorListOrder"
+	VendorOrderAPI_VendorListOrderDraft_FullMethodName            = "/api.order.v1.VendorOrderAPI/VendorListOrderDraft"
+	VendorOrderAPI_VendorCreateOrderDraftWithLabel_FullMethodName = "/api.order.v1.VendorOrderAPI/VendorCreateOrderDraftWithLabel"
+	VendorOrderAPI_VendorGetPriceQuote_FullMethodName             = "/api.order.v1.VendorOrderAPI/VendorGetPriceQuote"
 )
 
 // VendorOrderAPIClient is the client API for VendorOrderAPI service.
@@ -33,7 +33,7 @@ const (
 type VendorOrderAPIClient interface {
 	VendorListOrder(ctx context.Context, in *VendorListOrderRequest, opts ...grpc.CallOption) (*VendorListOrderResponse, error)
 	VendorListOrderDraft(ctx context.Context, in *VendorListOrderDraftRequest, opts ...grpc.CallOption) (*VendorListOrderDraftResponse, error)
-	VendorCreateLabeledOrderDraft(ctx context.Context, in *VendorCreateLabeledOrderDraftRequest, opts ...grpc.CallOption) (*VendorCreateLabeledOrderDraftResponse, error)
+	VendorCreateOrderDraftWithLabel(ctx context.Context, in *VendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*VendorCreateOrderDraftWithLabelResponse, error)
 	VendorGetPriceQuote(ctx context.Context, in *VendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
 }
 
@@ -65,10 +65,10 @@ func (c *vendorOrderAPIClient) VendorListOrderDraft(ctx context.Context, in *Ven
 	return out, nil
 }
 
-func (c *vendorOrderAPIClient) VendorCreateLabeledOrderDraft(ctx context.Context, in *VendorCreateLabeledOrderDraftRequest, opts ...grpc.CallOption) (*VendorCreateLabeledOrderDraftResponse, error) {
+func (c *vendorOrderAPIClient) VendorCreateOrderDraftWithLabel(ctx context.Context, in *VendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*VendorCreateOrderDraftWithLabelResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VendorCreateLabeledOrderDraftResponse)
-	err := c.cc.Invoke(ctx, VendorOrderAPI_VendorCreateLabeledOrderDraft_FullMethodName, in, out, cOpts...)
+	out := new(VendorCreateOrderDraftWithLabelResponse)
+	err := c.cc.Invoke(ctx, VendorOrderAPI_VendorCreateOrderDraftWithLabel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *vendorOrderAPIClient) VendorGetPriceQuote(ctx context.Context, in *Vend
 type VendorOrderAPIServer interface {
 	VendorListOrder(context.Context, *VendorListOrderRequest) (*VendorListOrderResponse, error)
 	VendorListOrderDraft(context.Context, *VendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error)
-	VendorCreateLabeledOrderDraft(context.Context, *VendorCreateLabeledOrderDraftRequest) (*VendorCreateLabeledOrderDraftResponse, error)
+	VendorCreateOrderDraftWithLabel(context.Context, *VendorCreateOrderDraftWithLabelRequest) (*VendorCreateOrderDraftWithLabelResponse, error)
 	VendorGetPriceQuote(context.Context, *VendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
 }
 
@@ -110,8 +110,8 @@ func (UnimplementedVendorOrderAPIServer) VendorListOrder(context.Context, *Vendo
 func (UnimplementedVendorOrderAPIServer) VendorListOrderDraft(context.Context, *VendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorListOrderDraft not implemented")
 }
-func (UnimplementedVendorOrderAPIServer) VendorCreateLabeledOrderDraft(context.Context, *VendorCreateLabeledOrderDraftRequest) (*VendorCreateLabeledOrderDraftResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VendorCreateLabeledOrderDraft not implemented")
+func (UnimplementedVendorOrderAPIServer) VendorCreateOrderDraftWithLabel(context.Context, *VendorCreateOrderDraftWithLabelRequest) (*VendorCreateOrderDraftWithLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorCreateOrderDraftWithLabel not implemented")
 }
 func (UnimplementedVendorOrderAPIServer) VendorGetPriceQuote(context.Context, *VendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorGetPriceQuote not implemented")
@@ -172,20 +172,20 @@ func _VendorOrderAPI_VendorListOrderDraft_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VendorOrderAPI_VendorCreateLabeledOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VendorCreateLabeledOrderDraftRequest)
+func _VendorOrderAPI_VendorCreateOrderDraftWithLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorCreateOrderDraftWithLabelRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VendorOrderAPIServer).VendorCreateLabeledOrderDraft(ctx, in)
+		return srv.(VendorOrderAPIServer).VendorCreateOrderDraftWithLabel(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VendorOrderAPI_VendorCreateLabeledOrderDraft_FullMethodName,
+		FullMethod: VendorOrderAPI_VendorCreateOrderDraftWithLabel_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VendorOrderAPIServer).VendorCreateLabeledOrderDraft(ctx, req.(*VendorCreateLabeledOrderDraftRequest))
+		return srv.(VendorOrderAPIServer).VendorCreateOrderDraftWithLabel(ctx, req.(*VendorCreateOrderDraftWithLabelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -224,8 +224,8 @@ var VendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _VendorOrderAPI_VendorListOrderDraft_Handler,
 		},
 		{
-			MethodName: "VendorCreateLabeledOrderDraft",
-			Handler:    _VendorOrderAPI_VendorCreateLabeledOrderDraft_Handler,
+			MethodName: "VendorCreateOrderDraftWithLabel",
+			Handler:    _VendorOrderAPI_VendorCreateOrderDraftWithLabel_Handler,
 		},
 		{
 			MethodName: "VendorGetPriceQuote",

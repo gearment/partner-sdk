@@ -378,12 +378,12 @@ paths:
         post:
             tags:
                 - VendorOrderAPI
-            operationId: VendorOrderAPI_VendorCreateLabeledOrderDraft
+            operationId: VendorOrderAPI_VendorCreateOrderDraftWithLabel
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/VendorCreateLabeledOrderDraftRequest'
+                            $ref: '#/components/schemas/VendorCreateOrderDraftWithLabelRequest'
                 required: true
             responses:
                 "200":
@@ -391,7 +391,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/VendorCreateLabeledOrderDraftResponse'
+                                $ref: '#/components/schemas/VendorCreateOrderDraftWithLabelResponse'
                 default:
                     description: Default error response
                     content:
@@ -535,17 +535,6 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        File:
-            type: object
-            properties:
-                fileName:
-                    type: string
-                filePath:
-                    type: string
-                fileUrl:
-                    type: string
-                fileId:
-                    type: string
         GoogleProtobufAny:
             type: object
             properties:
@@ -561,6 +550,20 @@ components:
                     type: string
                 apiSignature:
                     type: string
+        LegacyPagingResponse:
+            type: object
+            properties:
+                total:
+                    type: string
+                totalPage:
+                    type: integer
+                    format: int32
+                offset:
+                    type: integer
+                    format: int32
+                limit:
+                    type: integer
+                    format: int32
         LegacyVendorCatalog:
             type: object
             properties:
@@ -655,7 +658,7 @@ components:
         LegacyVendorGetPriceQuoteResponse:
             type: object
             properties:
-                data:
+                result:
                     $ref: '#/components/schemas/LegacyVendorGetPriceQuoteResponse_PriceCalculation'
         LegacyVendorGetPriceQuoteResponse_PriceCalculation:
             type: object
@@ -688,9 +691,13 @@ components:
         LegacyVendorListCatalogStockStatusResponse:
             type: object
             properties:
+                status:
+                    type: string
+                message:
+                    type: string
                 paging:
-                    $ref: '#/components/schemas/PagingResponse'
-                data:
+                    $ref: '#/components/schemas/LegacyPagingResponse'
+                result:
                     type: array
                     items:
                         $ref: '#/components/schemas/LegacyVendorCatalogVariant'
@@ -704,9 +711,13 @@ components:
         LegacyVendorListCatalogVariantResponse:
             type: object
             properties:
+                status:
+                    type: string
+                message:
+                    type: string
                 paging:
-                    $ref: '#/components/schemas/PagingResponse'
-                data:
+                    $ref: '#/components/schemas/LegacyPagingResponse'
+                result:
                     type: array
                     items:
                         $ref: '#/components/schemas/LegacyVendorCatalog'
@@ -786,6 +797,40 @@ components:
             properties:
                 message:
                     type: string
+        VendorAddress:
+            type: object
+            properties:
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                company:
+                    type: string
+                contactPronoun:
+                    type: string
+                street1:
+                    type: string
+                street2:
+                    type: string
+                stateCode:
+                    type: string
+                stateName:
+                    type: string
+                city:
+                    type: string
+                zipCode:
+                    type: string
+                countryCode:
+                    type: string
+                countryName:
+                    type: string
+                phoneNo:
+                    type: string
+                email:
+                    type: string
+                type:
+                    type: integer
+                    format: enum
         VendorBillingOption:
             type: object
             properties:
@@ -851,42 +896,20 @@ components:
                 legacyVariantId:
                     type: integer
                     format: int32
-        VendorCreateLabeledOrderDraftRequest:
+        VendorCreateOrderDraftWithLabelRequest:
             type: object
             properties:
                 data:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/VendorCreateLabeledOrderDraftRequest_Data'
-        VendorCreateLabeledOrderDraftRequest_Data:
-            type: object
-            properties:
-                referenceId:
-                    type: string
-                shippingServiceType:
-                    type: integer
-                    format: enum
-                storeId:
-                    type: string
-                agreeAtRisk:
-                    type: boolean
-                shippingLabelLinks:
-                    type: array
-                    items:
-                        type: string
-                giftMessageBody:
-                    type: string
-        VendorCreateLabeledOrderDraftResponse:
+                    $ref: '#/components/schemas/VendorOrderDraftWithLabelCreationParams'
+        VendorCreateOrderDraftWithLabelResponse:
             type: object
             properties:
                 status:
                     type: string
                 message:
                     type: string
-                result:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/VendorOrderDraft'
+                data:
+                    $ref: '#/components/schemas/VendorOrderDraft'
         VendorFulfillmentOption:
             type: object
             properties: {}
@@ -912,9 +935,127 @@ components:
             properties:
                 data:
                     $ref: '#/components/schemas/VendorOrderPriceCalculation_OrderPriceQuote'
+        VendorGiftMessage:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                giftMessageId:
+                    type: string
+                type:
+                    type: integer
+                    format: enum
+                content:
+                    type: string
+                avatarUrl:
+                    type: string
+                giftMessageName:
+                    type: string
+        VendorLineItem:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                quantity:
+                    type: integer
+                    format: int32
+                printingOptions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorPrintingOption'
+                originOptions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorLineItem_OriginOption'
+                fulfillmentOption:
+                    $ref: '#/components/schemas/VendorLineItem_FulfillmentOption'
+                variant:
+                    $ref: '#/components/schemas/VendorLineItem_Variant'
+                product:
+                    $ref: '#/components/schemas/VendorLineItem_Product'
+        VendorLineItem_FulfillmentOption:
+            type: object
+            properties:
+                barcodeUrl:
+                    type: string
+        VendorLineItem_OriginOption:
+            type: object
+            properties:
+                name:
+                    type: string
+                key:
+                    type: string
+                value:
+                    type: string
+        VendorLineItem_Product:
+            type: object
+            properties:
+                productId:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                images:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorLineItem_ProductImage'
+                printLocations:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorLineItem_ProductPrintLocation'
+        VendorLineItem_ProductImage:
+            type: object
+            properties:
+                url:
+                    type: string
+                tag:
+                    type: string
+        VendorLineItem_ProductPrintLocation:
+            type: object
+            properties:
+                code:
+                    type: string
+                name:
+                    type: string
+                locationId:
+                    type: integer
+                    format: int32
+        VendorLineItem_Variant:
+            type: object
+            properties:
+                variantId:
+                    type: string
+                sku:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                option1:
+                    type: string
+                option2:
+                    type: string
+                option3:
+                    type: string
+                price:
+                    $ref: '#/components/schemas/Money'
+                priceGm:
+                    $ref: '#/components/schemas/Money'
+                images:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorLineItem_ProductImage'
+                stockLabel:
+                    type: integer
+                    format: enum
         VendorListCatalogResponse:
             type: object
             properties:
+                status:
+                    type: string
+                message:
+                    type: string
                 paging:
                     $ref: '#/components/schemas/PagingResponse'
                 data:
@@ -924,6 +1065,10 @@ components:
         VendorListCatalogVariantResponse:
             type: object
             properties:
+                status:
+                    type: string
+                message:
+                    type: string
                 paging:
                     $ref: '#/components/schemas/PagingResponse'
                 data:
@@ -986,8 +1131,6 @@ components:
                     $ref: '#/components/schemas/VendorFulfillmentOption'
                 shippingOption:
                     $ref: '#/components/schemas/VendorShippingOption'
-                printOption:
-                    $ref: '#/components/schemas/VendorPrintingOption'
                 billingOption:
                     $ref: '#/components/schemas/VendorBillingOption'
                 orderDate:
@@ -1001,7 +1144,7 @@ components:
                 shippingLabels:
                     type: array
                     items:
-                        $ref: '#/components/schemas/VendorShippingLabel'
+                        type: string
                 isLabelAttached:
                     type: boolean
                 shippingVerificationStatus:
@@ -1021,6 +1164,62 @@ components:
                     type: string
                 originOrderId:
                     type: string
+                addresses:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorAddress'
+                lineItems:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorLineItem'
+                giftMessages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorGiftMessage'
+        VendorOrderDraftCreationParams_LineItem:
+            type: object
+            properties:
+                variantId:
+                    type: string
+                quantity:
+                    type: integer
+                    format: int32
+                printingOptions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderDraftCreationParams_PrintingOption'
+                barcodeLink:
+                    type: string
+        VendorOrderDraftCreationParams_PrintingOption:
+            type: object
+            properties:
+                locationCode:
+                    type: integer
+                    format: enum
+                url:
+                    type: string
+        VendorOrderDraftWithLabelCreationParams:
+            type: object
+            properties:
+                referenceId:
+                    type: string
+                platform:
+                    type: integer
+                    format: enum
+                storeId:
+                    type: string
+                agreeAtRisk:
+                    type: boolean
+                shippingLabelLinks:
+                    type: array
+                    items:
+                        type: string
+                giftMessageBody:
+                    type: string
+                lineItems:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/VendorOrderDraftCreationParams_LineItem'
         VendorOrderPriceCalculation_Address:
             type: object
             properties:
@@ -1136,14 +1335,10 @@ components:
             type: object
             properties:
                 printLocationCode:
+                    type: integer
+                    format: enum
+                designUrl:
                     type: string
-                designFile:
-                    $ref: '#/components/schemas/File'
-        VendorShippingLabel:
-            type: object
-            properties:
-                labelFile:
-                    $ref: '#/components/schemas/File'
         VendorShippingOption:
             type: object
             properties:

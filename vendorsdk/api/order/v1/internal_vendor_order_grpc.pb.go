@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InternalVendorOrderAPI_InternalVendorListOrder_FullMethodName               = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrder"
-	InternalVendorOrderAPI_InternalVendorListOrderDraft_FullMethodName          = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrderDraft"
-	InternalVendorOrderAPI_InternalVendorCreateLabeledOrderDraft_FullMethodName = "/api.order.v1.InternalVendorOrderAPI/InternalVendorCreateLabeledOrderDraft"
-	InternalVendorOrderAPI_InternalVendorGetPriceQuote_FullMethodName           = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetPriceQuote"
+	InternalVendorOrderAPI_InternalVendorListOrder_FullMethodName        = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrder"
+	InternalVendorOrderAPI_InternalVendorListOrderDraft_FullMethodName   = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrderDraft"
+	InternalVendorOrderAPI_InternalVendorCreateOrderDraft_FullMethodName = "/api.order.v1.InternalVendorOrderAPI/InternalVendorCreateOrderDraft"
+	InternalVendorOrderAPI_InternalVendorGetPriceQuote_FullMethodName    = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetPriceQuote"
 )
 
 // InternalVendorOrderAPIClient is the client API for InternalVendorOrderAPI service.
@@ -31,7 +31,7 @@ const (
 type InternalVendorOrderAPIClient interface {
 	InternalVendorListOrder(ctx context.Context, in *InternalVendorListOrderRequest, opts ...grpc.CallOption) (*VendorListOrderResponse, error)
 	InternalVendorListOrderDraft(ctx context.Context, in *InternalVendorListOrderDraftRequest, opts ...grpc.CallOption) (*VendorListOrderDraftResponse, error)
-	InternalVendorCreateLabeledOrderDraft(ctx context.Context, in *InternalVendorCreateLabeledOrderDraftRequest, opts ...grpc.CallOption) (*VendorCreateLabeledOrderDraftResponse, error)
+	InternalVendorCreateOrderDraft(ctx context.Context, in *InternalVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*InternalVendorCreateOrderDraftResponse, error)
 	InternalVendorGetPriceQuote(ctx context.Context, in *InternalVendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
 }
 
@@ -63,10 +63,10 @@ func (c *internalVendorOrderAPIClient) InternalVendorListOrderDraft(ctx context.
 	return out, nil
 }
 
-func (c *internalVendorOrderAPIClient) InternalVendorCreateLabeledOrderDraft(ctx context.Context, in *InternalVendorCreateLabeledOrderDraftRequest, opts ...grpc.CallOption) (*VendorCreateLabeledOrderDraftResponse, error) {
+func (c *internalVendorOrderAPIClient) InternalVendorCreateOrderDraft(ctx context.Context, in *InternalVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*InternalVendorCreateOrderDraftResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VendorCreateLabeledOrderDraftResponse)
-	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalVendorCreateLabeledOrderDraft_FullMethodName, in, out, cOpts...)
+	out := new(InternalVendorCreateOrderDraftResponse)
+	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalVendorCreateOrderDraft_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func (c *internalVendorOrderAPIClient) InternalVendorGetPriceQuote(ctx context.C
 type InternalVendorOrderAPIServer interface {
 	InternalVendorListOrder(context.Context, *InternalVendorListOrderRequest) (*VendorListOrderResponse, error)
 	InternalVendorListOrderDraft(context.Context, *InternalVendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error)
-	InternalVendorCreateLabeledOrderDraft(context.Context, *InternalVendorCreateLabeledOrderDraftRequest) (*VendorCreateLabeledOrderDraftResponse, error)
+	InternalVendorCreateOrderDraft(context.Context, *InternalVendorCreateOrderDraftRequest) (*InternalVendorCreateOrderDraftResponse, error)
 	InternalVendorGetPriceQuote(context.Context, *InternalVendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
 }
 
@@ -106,8 +106,8 @@ func (UnimplementedInternalVendorOrderAPIServer) InternalVendorListOrder(context
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorListOrderDraft(context.Context, *InternalVendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorListOrderDraft not implemented")
 }
-func (UnimplementedInternalVendorOrderAPIServer) InternalVendorCreateLabeledOrderDraft(context.Context, *InternalVendorCreateLabeledOrderDraftRequest) (*VendorCreateLabeledOrderDraftResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorCreateLabeledOrderDraft not implemented")
+func (UnimplementedInternalVendorOrderAPIServer) InternalVendorCreateOrderDraft(context.Context, *InternalVendorCreateOrderDraftRequest) (*InternalVendorCreateOrderDraftResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorCreateOrderDraft not implemented")
 }
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorGetPriceQuote(context.Context, *InternalVendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorGetPriceQuote not implemented")
@@ -168,20 +168,20 @@ func _InternalVendorOrderAPI_InternalVendorListOrderDraft_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InternalVendorOrderAPI_InternalVendorCreateLabeledOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InternalVendorCreateLabeledOrderDraftRequest)
+func _InternalVendorOrderAPI_InternalVendorCreateOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalVendorCreateOrderDraftRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InternalVendorOrderAPIServer).InternalVendorCreateLabeledOrderDraft(ctx, in)
+		return srv.(InternalVendorOrderAPIServer).InternalVendorCreateOrderDraft(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InternalVendorOrderAPI_InternalVendorCreateLabeledOrderDraft_FullMethodName,
+		FullMethod: InternalVendorOrderAPI_InternalVendorCreateOrderDraft_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternalVendorOrderAPIServer).InternalVendorCreateLabeledOrderDraft(ctx, req.(*InternalVendorCreateLabeledOrderDraftRequest))
+		return srv.(InternalVendorOrderAPIServer).InternalVendorCreateOrderDraft(ctx, req.(*InternalVendorCreateOrderDraftRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -220,8 +220,8 @@ var InternalVendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InternalVendorOrderAPI_InternalVendorListOrderDraft_Handler,
 		},
 		{
-			MethodName: "InternalVendorCreateLabeledOrderDraft",
-			Handler:    _InternalVendorOrderAPI_InternalVendorCreateLabeledOrderDraft_Handler,
+			MethodName: "InternalVendorCreateOrderDraft",
+			Handler:    _InternalVendorOrderAPI_InternalVendorCreateOrderDraft_Handler,
 		},
 		{
 			MethodName: "InternalVendorGetPriceQuote",
