@@ -84,72 +84,72 @@ paths:
                 - VendorCatalogAPI
             operationId: VendorCatalogAPI_VendorListCatalogVariant
             parameters:
-                - name: '@squash.filter.productIds'
+                - name: 'productIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.variantIds'
+                - name: 'variantIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.skus'
+                - name: 'skus'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.sizes'
+                - name: 'sizes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.sizeCodes'
+                - name: 'sizeCodes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.colors'
+                - name: 'colors'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.colorCodes'
+                - name: 'colorCodes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.stockLabels'
+                - name: 'stockLabels'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.searchText'
+                - name: 'searchText'
                   in: query
                   schema:
                     type: string
-                - name: '@squash.filter.legacyVariantIds'
+                - name: 'legacyVariantIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: int32
-                - name: '@squash.paging.page'
+                - name: 'page'
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: '@squash.paging.limit'
+                - name: 'limit'
                   in: query
                   schema:
                     type: integer
@@ -173,72 +173,72 @@ paths:
                 - VendorCatalogAPI
             operationId: VendorCatalogAPI_VendorGetCatalogStockStatus
             parameters:
-                - name: '@squash.filter.productIds'
+                - name: 'productIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.variantIds'
+                - name: 'variantIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.skus'
+                - name: 'skus'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.sizes'
+                - name: 'sizes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.sizeCodes'
+                - name: 'sizeCodes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.colors'
+                - name: 'colors'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.colorCodes'
+                - name: 'colorCodes'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.stockLabels'
+                - name: 'stockLabels'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.searchText'
+                - name: 'searchText'
                   in: query
                   schema:
                     type: string
-                - name: '@squash.filter.legacyVariantIds'
+                - name: 'legacyVariantIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: int32
-                - name: '@squash.paging.page'
+                - name: 'page'
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: '@squash.paging.limit'
+                - name: 'limit'
                   in: query
                   schema:
                     type: integer
@@ -262,42 +262,42 @@ paths:
                 - VendorOrderAPI
             operationId: VendorOrderAPI_VendorListOrder
             parameters:
-                - name: '@squash.filter.orderIds'
+                - name: 'orderIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.statuses'
+                - name: 'statuses'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.createdMethods'
+                - name: 'createdMethods'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.createdAtMin'
+                - name: 'createdAtMin'
                   in: query
                   schema:
                     type: string
                     format: date-time
-                - name: '@squash.filter.createdAtMax'
+                - name: 'createdAtMax'
                   in: query
                   schema:
                     type: string
                     format: date-time
-                - name: '@squash.paging.page'
+                - name: 'page'
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: '@squash.paging.limit'
+                - name: 'limit'
                   in: query
                   schema:
                     type: integer
@@ -321,42 +321,42 @@ paths:
                 - VendorOrderAPI
             operationId: VendorOrderAPI_VendorListOrderDraft
             parameters:
-                - name: '@squash.filter.orderIds'
+                - name: 'orderIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.statuses'
+                - name: 'statuses'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.createdMethods'
+                - name: 'createdMethods'
                   in: query
                   schema:
                     type: array
                     items:
                         type: integer
                         format: enum
-                - name: '@squash.filter.createdAtMin'
+                - name: 'createdAtMin'
                   in: query
                   schema:
                     type: string
                     format: date-time
-                - name: '@squash.filter.createdAtMax'
+                - name: 'createdAtMax'
                   in: query
                   schema:
                     type: string
                     format: date-time
-                - name: '@squash.paging.page'
+                - name: 'page'
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: '@squash.paging.limit'
+                - name: 'limit'
                   in: query
                   schema:
                     type: integer
@@ -482,22 +482,22 @@ paths:
                 - VendorCatalogAPI
             operationId: VendorCatalogAPI_VendorListCatalog
             parameters:
-                - name: '@squash.filter.productIds'
+                - name: 'productIds'
                   in: query
                   schema:
                     type: array
                     items:
                         type: string
-                - name: '@squash.filter.searchText'
+                - name: 'searchText'
                   in: query
                   schema:
                     type: string
-                - name: '@squash.paging.page'
+                - name: 'page'
                   in: query
                   schema:
                     type: integer
                     format: int32
-                - name: '@squash.paging.limit'
+                - name: 'limit'
                   in: query
                   schema:
                     type: integer
