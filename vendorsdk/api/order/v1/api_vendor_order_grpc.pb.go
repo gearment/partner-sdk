@@ -275,7 +275,9 @@ var VendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	LegacyVendorOrderAPI_LegacyVendorGetPriceQuote_FullMethodName = "/api.order.v1.LegacyVendorOrderAPI/LegacyVendorGetPriceQuote"
+	LegacyVendorOrderAPI_LegacyVendorGetPriceQuote_FullMethodName             = "/api.order.v1.LegacyVendorOrderAPI/LegacyVendorGetPriceQuote"
+	LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft_FullMethodName          = "/api.order.v1.LegacyVendorOrderAPI/LegacyVendorCreateOrderDraft"
+	LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel_FullMethodName = "/api.order.v1.LegacyVendorOrderAPI/LegacyVendorCreateOrderDraftWithLabel"
 )
 
 // LegacyVendorOrderAPIClient is the client API for LegacyVendorOrderAPI service.
@@ -285,6 +287,8 @@ const (
 // LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
 type LegacyVendorOrderAPIClient interface {
 	LegacyVendorGetPriceQuote(ctx context.Context, in *LegacyVendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*LegacyVendorGetPriceQuoteResponse, error)
+	LegacyVendorCreateOrderDraft(ctx context.Context, in *LegacyVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftResponse, error)
+	LegacyVendorCreateOrderDraftWithLabel(ctx context.Context, in *LegacyVendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftWithLabelResponse, error)
 }
 
 type legacyVendorOrderAPIClient struct {
@@ -305,6 +309,26 @@ func (c *legacyVendorOrderAPIClient) LegacyVendorGetPriceQuote(ctx context.Conte
 	return out, nil
 }
 
+func (c *legacyVendorOrderAPIClient) LegacyVendorCreateOrderDraft(ctx context.Context, in *LegacyVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacyVendorCreateOrderDraftResponse)
+	err := c.cc.Invoke(ctx, LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *legacyVendorOrderAPIClient) LegacyVendorCreateOrderDraftWithLabel(ctx context.Context, in *LegacyVendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftWithLabelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacyVendorCreateOrderDraftWithLabelResponse)
+	err := c.cc.Invoke(ctx, LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LegacyVendorOrderAPIServer is the server API for LegacyVendorOrderAPI service.
 // All implementations should embed UnimplementedLegacyVendorOrderAPIServer
 // for forward compatibility.
@@ -312,6 +336,8 @@ func (c *legacyVendorOrderAPIClient) LegacyVendorGetPriceQuote(ctx context.Conte
 // LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
 type LegacyVendorOrderAPIServer interface {
 	LegacyVendorGetPriceQuote(context.Context, *LegacyVendorGetPriceQuoteRequest) (*LegacyVendorGetPriceQuoteResponse, error)
+	LegacyVendorCreateOrderDraft(context.Context, *LegacyVendorCreateOrderDraftRequest) (*LegacyVendorCreateOrderDraftResponse, error)
+	LegacyVendorCreateOrderDraftWithLabel(context.Context, *LegacyVendorCreateOrderDraftWithLabelRequest) (*LegacyVendorCreateOrderDraftWithLabelResponse, error)
 }
 
 // UnimplementedLegacyVendorOrderAPIServer should be embedded to have
@@ -323,6 +349,12 @@ type UnimplementedLegacyVendorOrderAPIServer struct{}
 
 func (UnimplementedLegacyVendorOrderAPIServer) LegacyVendorGetPriceQuote(context.Context, *LegacyVendorGetPriceQuoteRequest) (*LegacyVendorGetPriceQuoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LegacyVendorGetPriceQuote not implemented")
+}
+func (UnimplementedLegacyVendorOrderAPIServer) LegacyVendorCreateOrderDraft(context.Context, *LegacyVendorCreateOrderDraftRequest) (*LegacyVendorCreateOrderDraftResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacyVendorCreateOrderDraft not implemented")
+}
+func (UnimplementedLegacyVendorOrderAPIServer) LegacyVendorCreateOrderDraftWithLabel(context.Context, *LegacyVendorCreateOrderDraftWithLabelRequest) (*LegacyVendorCreateOrderDraftWithLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacyVendorCreateOrderDraftWithLabel not implemented")
 }
 func (UnimplementedLegacyVendorOrderAPIServer) testEmbeddedByValue() {}
 
@@ -362,6 +394,42 @@ func _LegacyVendorOrderAPI_LegacyVendorGetPriceQuote_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacyVendorCreateOrderDraftRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LegacyVendorOrderAPIServer).LegacyVendorCreateOrderDraft(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LegacyVendorOrderAPIServer).LegacyVendorCreateOrderDraft(ctx, req.(*LegacyVendorCreateOrderDraftRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacyVendorCreateOrderDraftWithLabelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LegacyVendorOrderAPIServer).LegacyVendorCreateOrderDraftWithLabel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LegacyVendorOrderAPIServer).LegacyVendorCreateOrderDraftWithLabel(ctx, req.(*LegacyVendorCreateOrderDraftWithLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LegacyVendorOrderAPI_ServiceDesc is the grpc.ServiceDesc for LegacyVendorOrderAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -372,6 +440,14 @@ var LegacyVendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LegacyVendorGetPriceQuote",
 			Handler:    _LegacyVendorOrderAPI_LegacyVendorGetPriceQuote_Handler,
+		},
+		{
+			MethodName: "LegacyVendorCreateOrderDraft",
+			Handler:    _LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft_Handler,
+		},
+		{
+			MethodName: "LegacyVendorCreateOrderDraftWithLabel",
+			Handler:    _LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
