@@ -1,0 +1,1642 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: 0.0.1
+paths:
+  /api/legacy/catalog:
+    post:
+      tags:
+        - LegacyVendorCatalogAPI
+      operationId: LegacyVendorCatalogAPI_LegacyVendorListCatalogVariant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegacyVendorListCatalogVariantRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyVendorListCatalogVariantResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/legacy/catalog/variants:
+    post:
+      tags:
+        - LegacyVendorCatalogAPI
+      operationId: LegacyVendorCatalogAPI_LegacyVendorListCatalogStockStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegacyVendorListCatalogStockStatusRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyVendorListCatalogStockStatusResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/legacy/orders/draft:
+    post:
+      tags:
+        - LegacyVendorOrderAPI
+      operationId: LegacyVendorOrderAPI_LegacyVendorCreateOrderDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegacyVendorCreateOrderDraftRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyVendorCreateOrderDraftResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/legacy/orders/draft/labeled:
+    post:
+      tags:
+        - LegacyVendorOrderAPI
+      operationId: LegacyVendorOrderAPI_LegacyVendorCreateOrderDraftWithLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegacyVendorCreateOrderDraftWithLabelRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyVendorCreateOrderDraftWithLabelResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/legacy/orders/price:
+    post:
+      tags:
+        - LegacyVendorOrderAPI
+      operationId: LegacyVendorOrderAPI_LegacyVendorGetPriceQuote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegacyVendorGetPriceQuoteRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyVendorGetPriceQuoteResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/catalog/variants:
+    get:
+      tags:
+        - VendorCatalogAPI
+      operationId: VendorCatalogAPI_VendorListCatalogVariant
+      parameters:
+        - name: productIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: variantIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: skus
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: sizes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: sizeCodes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: colors
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: colorCodes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: stockLabels
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: searchText
+          in: query
+          schema:
+            type: string
+        - name: legacyVariantIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorListCatalogVariantResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/catalog/variants/stock:
+    get:
+      tags:
+        - VendorCatalogAPI
+      operationId: VendorCatalogAPI_VendorGetCatalogStockStatus
+      parameters:
+        - name: productIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: variantIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: skus
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: sizes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: sizeCodes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: colors
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: colorCodes
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: stockLabels
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: searchText
+          in: query
+          schema:
+            type: string
+        - name: legacyVariantIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorListCatalogVariantResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/orders:
+    get:
+      tags:
+        - VendorOrderAPI
+      operationId: VendorOrderAPI_VendorListOrder
+      parameters:
+        - name: orderIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: statuses
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: createdMethods
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: createdAtMin
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: createdAtMax
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorListOrderResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/orders/draft:
+    get:
+      tags:
+        - VendorOrderAPI
+      operationId: VendorOrderAPI_VendorListOrderDraft
+      parameters:
+        - name: orderIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: statuses
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: createdMethods
+          in: query
+          schema:
+            type: array
+            items:
+              type: integer
+              format: enum
+        - name: createdAtMin
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: createdAtMax
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorListOrderDraftResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+    post:
+      tags:
+        - VendorOrderAPI
+      operationId: VendorOrderAPI_VendorCreateOrderDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorCreateOrderDraftRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorCreateOrderDraftResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/orders/draft/labeled:
+    post:
+      tags:
+        - VendorOrderAPI
+      operationId: VendorOrderAPI_VendorCreateOrderDraftWithLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorCreateOrderDraftWithLabelRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorCreateOrderDraftWithLabelResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /api/v3/orders/price:
+    post:
+      tags:
+        - VendorOrderAPI
+      operationId: VendorOrderAPI_VendorGetPriceQuote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorGetPriceQuoteRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorGetPriceQuoteResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /health:
+    get:
+      tags:
+        - HealthService
+      description: 'service: Services'
+      operationId: HealthService_Liveness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivenessResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /ready:
+    get:
+      tags:
+        - HealthService
+      operationId: HealthService_Readiness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadinessResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+    post:
+      tags:
+        - HealthService
+      operationId: HealthService_ToggleReadiness
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToggleReadinessResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /v1/vendor/catalog:
+    get:
+      tags:
+        - VendorCatalogAPI
+      operationId: VendorCatalogAPI_VendorListCatalog
+      parameters:
+        - name: productIds
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: searchText
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorListCatalogResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /version:
+    get:
+      tags:
+        - HealthService
+      operationId: HealthService_Version
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+components:
+  schemas:
+    GoogleProtobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+          description: The type of the serialized message.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+    LegacyCredentials:
+      type: object
+      properties:
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyPagingResponse:
+      type: object
+      properties:
+        total:
+          type: string
+        totalPage:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    LegacyVendorCatalog:
+      type: object
+      properties:
+        productName:
+          type: string
+        productId:
+          type: string
+        productImg:
+          type: string
+        printAreas:
+          type: array
+          items:
+            type: string
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorCatalogVariant'
+    LegacyVendorCatalogVariant:
+      type: object
+      properties:
+        variantId:
+          type: string
+        name:
+          type: string
+        size:
+          type: string
+        color:
+          type: string
+        hexColorCode:
+          type: string
+        price:
+          type: string
+        extraPrice:
+          type: string
+        netPrice:
+          type: number
+          format: double
+        availabilityStatus:
+          type: string
+        status:
+          type: string
+    LegacyVendorCreateOrderDraftRequest:
+      type: object
+      properties:
+        orderId:
+          type: string
+        externalId:
+          type: string
+        storeId:
+          type: string
+        agreeAtRisk:
+          type: boolean
+        shippingEmail:
+          type: string
+        shippingName:
+          type: string
+        shippingPhone:
+          type: string
+        shippingCompany:
+          type: string
+        shippingAddress1:
+          type: string
+        shippingAddress2:
+          type: string
+        shippingProvinceCode:
+          type: string
+        shippingCity:
+          type: string
+        shippingZipcode:
+          type: string
+        shippingCountryCode:
+          type: string
+        shippingMethod:
+          type: integer
+          format: int32
+        giftMessageBody:
+          type: string
+        iossNumber:
+          type: string
+        iossNumberTotal:
+          type: number
+          format: float
+        taxNumber:
+          type: string
+        orderTaxNumber:
+          type: number
+          format: float
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorLineItemCreationParams'
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyVendorCreateOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        result:
+          $ref: '#/components/schemas/LegacyVendorCreationResult'
+    LegacyVendorCreateOrderDraftWithLabelRequest:
+      type: object
+      properties:
+        orderId:
+          type: string
+        storeId:
+          type: string
+        agreeAtRisk:
+          type: boolean
+        shippingServiceType:
+          type: string
+        shippingLabelLink:
+          type: string
+        giftMessageBody:
+          type: string
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorLineItemCreationParams'
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyVendorCreateOrderDraftWithLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        result:
+          $ref: '#/components/schemas/LegacyVendorCreationResult'
+    LegacyVendorCreationResult:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    LegacyVendorGetPriceQuoteRequest:
+      type: object
+      properties:
+        storeId:
+          type: string
+        shippingEmail:
+          type: string
+        shippingName:
+          type: string
+        shippingPhone:
+          type: string
+        shippingCompanyName:
+          type: string
+        shippingAddress1:
+          type: string
+        shippingAddress2:
+          type: string
+        shippingProvinceCode:
+          type: string
+        shippingCity:
+          type: string
+        shippingZipcode:
+          type: integer
+          format: int32
+        shippingCountryCode:
+          type: string
+        shippingMethod:
+          type: integer
+          format: int32
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorGetPriceQuoteRequest_LineItem'
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyVendorGetPriceQuoteRequest_LineItem:
+      type: object
+      properties:
+        variantId:
+          type: integer
+          format: int32
+        quantity:
+          type: integer
+          format: int32
+        side:
+          type: string
+        designLink:
+          type: string
+        designLinkBack:
+          type: string
+    LegacyVendorGetPriceQuoteResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        result:
+          $ref: '#/components/schemas/LegacyVendorGetPriceQuoteResponse_PriceCalculation'
+    LegacyVendorGetPriceQuoteResponse_PriceCalculation:
+      type: object
+      properties:
+        total:
+          type: string
+        subTotal:
+          type: string
+        tax:
+          type: string
+        shippingFee:
+          type: string
+        giftMessageFee:
+          type: string
+        handleFee:
+          type: string
+        totalDiscount:
+          type: string
+        currency:
+          type: string
+    LegacyVendorLineItemCreationParams:
+      type: object
+      properties:
+        variantId:
+          type: string
+        productName:
+          type: string
+        productStyle:
+          type: string
+        productSku:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        barcodeLink:
+          type: string
+        designs:
+          $ref: '#/components/schemas/LegacyVendorLineItemCreationParams_Designs'
+    LegacyVendorLineItemCreationParams_Designs:
+      type: object
+      properties:
+        front:
+          type: string
+        pocket:
+          type: string
+        back:
+          type: string
+        whole:
+          type: string
+        leftSleeve:
+          type: string
+        rightSleeve:
+          type: string
+    LegacyVendorListCatalogStockStatusRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        page:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyVendorListCatalogStockStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/LegacyPagingResponse'
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorCatalogVariant'
+    LegacyVendorListCatalogVariantRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        apiKey:
+          type: string
+        apiSignature:
+          type: string
+    LegacyVendorListCatalogVariantResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/LegacyPagingResponse'
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyVendorCatalog'
+    LivenessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    Money:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+          description: The three-letter currency code defined in ISO 4217.
+        units:
+          type: string
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+        nanos:
+          type: integer
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+          format: int32
+      description: Represents an amount of money with its currency type.
+    Paging:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    PagingResponse:
+      type: object
+      properties:
+        total:
+          type: string
+        totalPage:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    ReadinessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+        message:
+          type: string
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleProtobufAny'
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+      description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+    ToggleReadinessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    VendorAddress:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        company:
+          type: string
+        contactPronoun:
+          type: string
+        street1:
+          type: string
+        street2:
+          type: string
+        stateCode:
+          type: string
+        stateName:
+          type: string
+        city:
+          type: string
+        zipCode:
+          type: string
+        countryCode:
+          type: string
+        countryName:
+          type: string
+        phoneNo:
+          type: string
+        email:
+          type: string
+        type:
+          type: integer
+          format: enum
+    VendorBillingOption:
+      type: object
+      properties:
+        iossNumber:
+          type: string
+        iossValue:
+          $ref: '#/components/schemas/Money'
+        taxNumber:
+          type: string
+        taxValue:
+          $ref: '#/components/schemas/Money'
+    VendorCatalog:
+      type: object
+      properties:
+        productId:
+          type: string
+        productName:
+          type: string
+        productAvatarUrl:
+          type: string
+        printLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorCatalogPrintLocation'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorCatalogVariant'
+    VendorCatalogPrintLocation:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        locationId:
+          type: integer
+          format: int32
+    VendorCatalogVariant:
+      type: object
+      properties:
+        variantId:
+          type: string
+        name:
+          type: string
+        size:
+          type: string
+        color:
+          type: string
+        hexColorCode:
+          type: string
+        price:
+          $ref: '#/components/schemas/Money'
+        recommendedPrice:
+          $ref: '#/components/schemas/Money'
+        extraPrice:
+          $ref: '#/components/schemas/Money'
+        stockLabel:
+          type: integer
+          format: enum
+        product:
+          $ref: '#/components/schemas/VendorCatalog'
+        legacyVariantId:
+          type: integer
+          format: int32
+    VendorCreateOrderDraftRequest:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VendorOrderDraftManualCreationParams'
+    VendorCreateOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/VendorOrderDraft'
+    VendorCreateOrderDraftWithLabelRequest:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VendorOrderDraftWithLabelCreationParams'
+    VendorCreateOrderDraftWithLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/VendorOrderDraft'
+    VendorFulfillmentOption:
+      type: object
+      properties: {}
+    VendorGetPriceQuoteRequest:
+      type: object
+      properties:
+        orderPlatform:
+          type: string
+        billing:
+          $ref: '#/components/schemas/VendorOrderPriceCalculation_Billing'
+        shipping:
+          $ref: '#/components/schemas/VendorOrderPriceCalculation_Shipping'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderPriceCalculation_LineItem'
+        giftMessages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderPriceCalculation_GiftMessage'
+    VendorGetPriceQuoteResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/VendorOrderPriceCalculation_OrderPriceQuote'
+    VendorGiftMessage:
+      type: object
+      properties:
+        orderId:
+          type: string
+        giftMessageId:
+          type: string
+        type:
+          type: integer
+          format: enum
+        content:
+          type: string
+        avatarUrl:
+          type: string
+        giftMessageName:
+          type: string
+    VendorLineItem:
+      type: object
+      properties:
+        orderId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        printingOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorPrintingOption'
+        originOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorLineItem_OriginOption'
+        fulfillmentOption:
+          $ref: '#/components/schemas/VendorLineItem_FulfillmentOption'
+        variant:
+          $ref: '#/components/schemas/VendorLineItem_Variant'
+        product:
+          $ref: '#/components/schemas/VendorLineItem_Product'
+    VendorLineItem_FulfillmentOption:
+      type: object
+      properties:
+        barcodeUrl:
+          type: string
+    VendorLineItem_OriginOption:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+    VendorLineItem_Product:
+      type: object
+      properties:
+        productId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorLineItem_ProductImage'
+        printLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorLineItem_ProductPrintLocation'
+    VendorLineItem_ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+        tag:
+          type: string
+    VendorLineItem_ProductPrintLocation:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        locationId:
+          type: integer
+          format: int32
+    VendorLineItem_Variant:
+      type: object
+      properties:
+        variantId:
+          type: string
+        legacyId:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        option1:
+          type: string
+        option2:
+          type: string
+        option3:
+          type: string
+        price:
+          $ref: '#/components/schemas/Money'
+        priceGm:
+          $ref: '#/components/schemas/Money'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorLineItem_ProductImage'
+        stockLabel:
+          type: integer
+          format: enum
+    VendorListCatalogResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorCatalog'
+    VendorListCatalogVariantResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorCatalogVariant'
+    VendorListOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderDraft'
+    VendorListOrderResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        paging:
+          $ref: '#/components/schemas/PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrder'
+    VendorOrder:
+      type: object
+      properties: {}
+    VendorOrderDraft:
+      type: object
+      properties:
+        id:
+          type: string
+        orderId:
+          type: string
+        teamId:
+          type: string
+        storeId:
+          type: string
+        storeName:
+          type: string
+        referenceId:
+          type: string
+        orderPlatform:
+          type: integer
+          format: enum
+        importId:
+          type: string
+        pullId:
+          type: string
+        requestId:
+          type: string
+        createdMethod:
+          type: integer
+          format: enum
+        fulfillmentVendor:
+          type: integer
+          format: enum
+        priority:
+          type: integer
+          format: enum
+        fulfillmentOption:
+          $ref: '#/components/schemas/VendorFulfillmentOption'
+        shippingOption:
+          $ref: '#/components/schemas/VendorShippingOption'
+        billingOption:
+          $ref: '#/components/schemas/VendorBillingOption'
+        orderDate:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: enum
+        orderTrackingCode:
+          type: string
+        shippingLabels:
+          type: array
+          items:
+            type: string
+        isLabelAttached:
+          type: boolean
+        shippingVerificationStatus:
+          type: integer
+          format: enum
+        productMatchingStatus:
+          type: integer
+          format: enum
+        isShippingVerificationBypassed:
+          type: boolean
+        isApproved:
+          type: boolean
+        approvedAt:
+          type: string
+          format: date-time
+        originDraftId:
+          type: string
+        originOrderId:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorAddress'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorLineItem'
+        giftMessages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorGiftMessage'
+        legacyExternalId:
+          type: string
+    VendorOrderDraftCreationParams_LineItem:
+      type: object
+      properties:
+        variantId:
+          type: string
+        legacyId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        printingOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderDraftCreationParams_PrintingOption'
+        barcodeUrl:
+          type: string
+    VendorOrderDraftCreationParams_PrintingOption:
+      type: object
+      properties:
+        locationCode:
+          type: integer
+          format: enum
+        url:
+          type: string
+    VendorOrderDraftManualCreationParams:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        platform:
+          type: integer
+          format: enum
+        storeId:
+          type: string
+        agreeAtRisk:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/VendorAddress'
+        shippingMethod:
+          type: integer
+          format: enum
+        billingOption:
+          $ref: '#/components/schemas/VendorBillingOption'
+        giftMessageBody:
+          type: string
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderDraftCreationParams_LineItem'
+    VendorOrderDraftWithLabelCreationParams:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        platform:
+          type: integer
+          format: enum
+        storeId:
+          type: string
+        agreeAtRisk:
+          type: boolean
+        shippingLabelUrls:
+          type: array
+          items:
+            type: string
+        giftMessageBody:
+          type: string
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderDraftCreationParams_LineItem'
+    VendorOrderPriceCalculation_Address:
+      type: object
+      properties:
+        method:
+          type: string
+        stateCode:
+          type: string
+        countryCode:
+          type: string
+    VendorOrderPriceCalculation_Billing:
+      type: object
+      properties:
+        iossNumber:
+          type: string
+        taxNumber:
+          type: string
+    VendorOrderPriceCalculation_FeePriceQuote:
+      type: object
+      properties:
+        orderId:
+          type: string
+        lineItemId:
+          type: string
+        feeCode:
+          type: string
+        amount:
+          $ref: '#/components/schemas/Money'
+    VendorOrderPriceCalculation_GiftMessage:
+      type: object
+      properties:
+        giftMessageId:
+          type: string
+        content:
+          type: string
+    VendorOrderPriceCalculation_Label:
+      type: object
+      properties:
+        url:
+          type: string
+    VendorOrderPriceCalculation_LineItem:
+      type: object
+      properties:
+        variantId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        printLocations:
+          type: array
+          items:
+            type: string
+    VendorOrderPriceCalculation_LineItemPriceQuote:
+      type: object
+      properties:
+        lineSubTotal:
+          $ref: '#/components/schemas/Money'
+        lineTax:
+          $ref: '#/components/schemas/Money'
+        lineFee:
+          $ref: '#/components/schemas/Money'
+        lineDiscount:
+          $ref: '#/components/schemas/Money'
+        lineTotal:
+          $ref: '#/components/schemas/Money'
+        itemPrice:
+          $ref: '#/components/schemas/Money'
+        itemFee:
+          $ref: '#/components/schemas/Money'
+        itemDiscount:
+          $ref: '#/components/schemas/Money'
+        itemQuantity:
+          type: integer
+          format: int32
+        id:
+          type: string
+        unitBasePrice:
+          $ref: '#/components/schemas/Money'
+    VendorOrderPriceCalculation_OrderPriceQuote:
+      type: object
+      properties:
+        orderShippingFee:
+          $ref: '#/components/schemas/Money'
+        orderFee:
+          $ref: '#/components/schemas/Money'
+        orderTax:
+          $ref: '#/components/schemas/Money'
+        orderSubTotal:
+          $ref: '#/components/schemas/Money'
+        orderTotal:
+          $ref: '#/components/schemas/Money'
+        orderDiscount:
+          $ref: '#/components/schemas/Money'
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderPriceCalculation_LineItemPriceQuote'
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorOrderPriceCalculation_FeePriceQuote'
+        orderGiftMessageFee:
+          $ref: '#/components/schemas/Money'
+        orderHandleFee:
+          $ref: '#/components/schemas/Money'
+    VendorOrderPriceCalculation_Shipping:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/VendorOrderPriceCalculation_Address'
+        label:
+          $ref: '#/components/schemas/VendorOrderPriceCalculation_Label'
+    VendorPrintingOption:
+      type: object
+      properties:
+        printLocationCode:
+          type: integer
+          format: enum
+        designUrl:
+          type: string
+    VendorShippingOption:
+      type: object
+      properties:
+        method:
+          type: integer
+          format: enum
+    VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+tags:
+  - name: HealthService
+  - name: LegacyVendorCatalogAPI
+    description: LegacyVendorCatalogAPI provide an abstraction to support the legacy api call format
+  - name: LegacyVendorOrderAPI
+    description: LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
+  - name: VendorCatalogAPI
+    description: VendorCatalogAPI provide an abstraction to all of read data access for catalog businesses
+  - name: VendorOrderAPI
+    description: VendorOrderAPI provide an abstraction to all of read and write data access for order businesses
