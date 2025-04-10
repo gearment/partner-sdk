@@ -131,11 +131,11 @@ func (*VendorOrder) Descriptor() ([]byte, []int) {
 
 type VendorOrderFilter struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	OrderIds       []string               `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`                                                                 // @gotags: form:"order_ids,omitempty"
-	Statuses       []VendorOrderStatus    `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=api.order.v1.VendorOrderStatus" json:"statuses,omitempty"`                                     // @gotags: form:"order_statuses,omitempty"
-	CreatedMethods []VendorCreatedMethod  `protobuf:"varint,3,rep,packed,name=created_methods,json=createdMethods,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_methods,omitempty"` // @gotags: form:"created_methods,omitempty"
-	CreatedAtMin   *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at_min,json=createdAtMin,proto3" json:"created_at_min,omitempty"`                                                   // @gotags: form:"created_at_min,omitempty"
-	CreatedAtMax   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at_max,json=createdAtMax,proto3" json:"created_at_max,omitempty"`                                                   // @gotags: form:"created_at_max,omitempty"
+	OrderIds       []string               `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
+	Statuses       []VendorOrderStatus    `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=api.order.v1.VendorOrderStatus" json:"statuses,omitempty"`
+	CreatedMethods []VendorCreatedMethod  `protobuf:"varint,3,rep,packed,name=created_methods,json=createdMethods,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_methods,omitempty"`
+	CreatedAtMin   *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at_min,json=createdAtMin,proto3" json:"created_at_min,omitempty"`
+	CreatedAtMax   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at_max,json=createdAtMax,proto3" json:"created_at_max,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
