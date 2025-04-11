@@ -690,7 +690,7 @@ components:
           type: string
         shippingPhone:
           type: string
-        shippingCompany:
+        shippingCompanyName:
           type: string
         shippingAddress1:
           type: string
