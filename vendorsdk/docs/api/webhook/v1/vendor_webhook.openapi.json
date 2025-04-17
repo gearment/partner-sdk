@@ -1,0 +1,275 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "contact": {
+      "email": "engineering@gearment.com",
+      "name": "Gearment Engineering Team",
+      "url": "https://gearment.com"
+    },
+    "license": {},
+    "termsOfService": "https://gearment.com/integration/api-terms-of-service.html",
+    "title": "api.webhook.v1",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.dev.geadev.com/{serviceName}",
+      "description": "Staging Server",
+      "variables": {
+        "serviceName": {
+          "default": "iam",
+          "enum": [
+            "iam",
+            "product",
+            "seller"
+          ],
+          "description": "The service name"
+        }
+      }
+    },
+    {
+      "url": "http://localhost:{servicePort}",
+      "description": "Local Server",
+      "variables": {
+        "servicePort": {
+          "default": "9000",
+          "description": "The port number"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/api.webhook.v1.WebhookAPI/RegisterNewWebhook": {
+      "post": {
+        "tags": [
+          "api.webhook.v1.WebhookAPI"
+        ],
+        "summary": "RegisterNewWebhook",
+        "operationId": "api.webhook.v1.WebhookAPI.RegisterNewWebhook",
+        "parameters": [
+          {
+            "name": "Connect-Protocol-Version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/connect-protocol-version"
+            }
+          },
+          {
+            "name": "Connect-Timeout-Ms",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/connect-timeout-header"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api.webhook.v1.RegisterNewWebhookRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/connect.error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.webhook.v1.RegisterNewWebhookResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "api.webhook.v1.Webhook.Event": {
+        "type": "string",
+        "title": "Event",
+        "enum": [
+          "EVENT_UNSPECIFIED",
+          0,
+          "EVENT_ORDER_COMPLETED",
+          1,
+          "EVENT_ORDER_CANCELED",
+          2,
+          "EVENT_TRACKING_UPDATED",
+          3,
+          "EVENT_SHIPPING_ADDRESS_UNVERIFIED",
+          4
+        ]
+      },
+      "api.webhook.v1.RegisterNewWebhookRequest": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "title": "topic",
+            "$ref": "#/components/schemas/api.webhook.v1.Webhook.Event"
+          },
+          "webhook_url": {
+            "type": "string",
+            "title": "webhook_url",
+            "maxLength": 2048,
+            "minLength": 1,
+            "format": "uri"
+          },
+          "headers": {
+            "type": "object",
+            "title": "headers",
+            "additionalProperties": {
+              "type": "string",
+              "title": "value"
+            }
+          }
+        },
+        "title": "RegisterNewWebhookRequest",
+        "additionalProperties": false
+      },
+      "api.webhook.v1.RegisterNewWebhookRequest.HeadersEntry": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "key"
+          },
+          "value": {
+            "type": "string",
+            "title": "value"
+          }
+        },
+        "title": "HeadersEntry",
+        "additionalProperties": false
+      },
+      "api.webhook.v1.RegisterNewWebhookResponse": {
+        "type": "object",
+        "properties": {
+          "webhook_id": {
+            "type": "string",
+            "title": "webhook_id"
+          }
+        },
+        "title": "RegisterNewWebhookResponse",
+        "additionalProperties": false
+      },
+      "connect-protocol-version": {
+        "type": "number",
+        "title": "Connect-Protocol-Version",
+        "enum": [
+          1
+        ],
+        "description": "Define the version of the Connect protocol",
+        "const": 1
+      },
+      "connect-timeout-header": {
+        "type": "number",
+        "title": "Connect-Timeout-Ms",
+        "description": "Define the timeout, in ms"
+      },
+      "connect.error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "examples": [
+              "not_found"
+            ],
+            "enum": [
+              "canceled",
+              "unknown",
+              "invalid_argument",
+              "deadline_exceeded",
+              "not_found",
+              "already_exists",
+              "permission_denied",
+              "resource_exhausted",
+              "failed_precondition",
+              "aborted",
+              "out_of_range",
+              "unimplemented",
+              "internal",
+              "unavailable",
+              "data_loss",
+              "unauthenticated"
+            ],
+            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."
+          },
+          "message": {
+            "type": "string",
+            "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."
+          },
+          "detail": {
+            "$ref": "#/components/schemas/google.protobuf.Any"
+          }
+        },
+        "title": "Connect Error",
+        "additionalProperties": true,
+        "description": "Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation"
+      },
+      "google.protobuf.Any": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string",
+            "format": "binary"
+          },
+          "debug": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header",
+        "name": "Authorization"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      },
+      "CookieAuth": {
+        "type": "apiKey",
+        "scheme": "bearer",
+        "in": "cookie",
+        "name": "accessToken"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "api.webhook.v1.WebhookAPI"
+    }
+  ],
+  "security": [],
+  "externalDocs": {
+    "description": "Find out more about Gearment API v3",
+    "url": "https://gearment.com/integration/api-docs.html"
+  }
+}

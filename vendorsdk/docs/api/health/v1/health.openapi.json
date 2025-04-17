@@ -1,0 +1,336 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "contact": {
+      "email": "engineering@gearment.com",
+      "name": "Gearment Engineering Team",
+      "url": "https://gearment.com"
+    },
+    "license": {},
+    "termsOfService": "https://gearment.com/integration/api-terms-of-service.html",
+    "title": "api.health.v1",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.dev.geadev.com/{serviceName}",
+      "description": "Staging Server",
+      "variables": {
+        "serviceName": {
+          "default": "iam",
+          "enum": [
+            "iam",
+            "product",
+            "seller"
+          ],
+          "description": "The service name"
+        }
+      }
+    },
+    {
+      "url": "http://localhost:{servicePort}",
+      "description": "Local Server",
+      "variables": {
+        "servicePort": {
+          "default": "9000",
+          "description": "The port number"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "api.health.v1.HealthService"
+        ],
+        "summary": "Liveness",
+        "description": "service: Services",
+        "operationId": "api.health.v1.HealthService.Liveness",
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/connect.error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.health.v1.LivenessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "tags": [
+          "api.health.v1.HealthService"
+        ],
+        "summary": "Readiness",
+        "operationId": "api.health.v1.HealthService.Readiness",
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/connect.error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.health.v1.ReadinessResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "api.health.v1.HealthService"
+        ],
+        "summary": "ToggleReadiness",
+        "operationId": "api.health.v1.HealthService.ToggleReadiness",
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/connect.error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.health.v1.ToggleReadinessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "tags": [
+          "api.health.v1.HealthService"
+        ],
+        "summary": "Version",
+        "operationId": "api.health.v1.HealthService.Version",
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/connect.error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.health.v1.VersionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "api.health.v1.LivenessRequest": {
+        "type": "object",
+        "title": "LivenessRequest",
+        "additionalProperties": false
+      },
+      "api.health.v1.LivenessResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "message"
+          }
+        },
+        "title": "LivenessResponse",
+        "additionalProperties": false
+      },
+      "api.health.v1.ReadinessRequest": {
+        "type": "object",
+        "title": "ReadinessRequest",
+        "additionalProperties": false
+      },
+      "api.health.v1.ReadinessResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "message"
+          }
+        },
+        "title": "ReadinessResponse",
+        "additionalProperties": false
+      },
+      "api.health.v1.ToggleReadinessRequest": {
+        "type": "object",
+        "title": "ToggleReadinessRequest",
+        "additionalProperties": false
+      },
+      "api.health.v1.ToggleReadinessResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "message"
+          }
+        },
+        "title": "ToggleReadinessResponse",
+        "additionalProperties": false
+      },
+      "api.health.v1.VersionRequest": {
+        "type": "object",
+        "title": "VersionRequest",
+        "additionalProperties": false
+      },
+      "api.health.v1.VersionResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "version"
+          }
+        },
+        "title": "VersionResponse",
+        "additionalProperties": false
+      },
+      "connect-protocol-version": {
+        "type": "number",
+        "title": "Connect-Protocol-Version",
+        "enum": [
+          1
+        ],
+        "description": "Define the version of the Connect protocol",
+        "const": 1
+      },
+      "connect-timeout-header": {
+        "type": "number",
+        "title": "Connect-Timeout-Ms",
+        "description": "Define the timeout, in ms"
+      },
+      "connect.error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "examples": [
+              "not_found"
+            ],
+            "enum": [
+              "canceled",
+              "unknown",
+              "invalid_argument",
+              "deadline_exceeded",
+              "not_found",
+              "already_exists",
+              "permission_denied",
+              "resource_exhausted",
+              "failed_precondition",
+              "aborted",
+              "out_of_range",
+              "unimplemented",
+              "internal",
+              "unavailable",
+              "data_loss",
+              "unauthenticated"
+            ],
+            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."
+          },
+          "message": {
+            "type": "string",
+            "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."
+          },
+          "detail": {
+            "$ref": "#/components/schemas/google.protobuf.Any"
+          }
+        },
+        "title": "Connect Error",
+        "additionalProperties": true,
+        "description": "Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation"
+      },
+      "google.protobuf.Any": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string",
+            "format": "binary"
+          },
+          "debug": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message."
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header",
+        "name": "Authorization"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      },
+      "CookieAuth": {
+        "type": "apiKey",
+        "scheme": "bearer",
+        "in": "cookie",
+        "name": "accessToken"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "api.health.v1.HealthService"
+    }
+  ],
+  "security": [],
+  "externalDocs": {
+    "description": "Find out more about Gearment API v3",
+    "url": "https://gearment.com/integration/api-docs.html"
+  }
+}
