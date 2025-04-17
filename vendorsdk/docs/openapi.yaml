@@ -1244,8 +1244,8 @@ components:
         message:
           type: string
           title: message
-        result:
-          title: result
+        data:
+          title: data
           $ref: '#/components/schemas/api.order.v1.LegacyVendorGetPriceQuoteResponse.PriceCalculation'
       title: LegacyVendorGetPriceQuoteResponse
       additionalProperties: false
@@ -1759,12 +1759,6 @@ components:
     api.order.v1.VendorOrderDraft:
       type: object
       properties:
-        id:
-          type:
-            - integer
-            - string
-          title: id
-          format: int64
         order_id:
           type: string
           title: order_id
