@@ -168,7 +168,7 @@ type VendorCatalogVariant struct {
 	RecommendedPrice *v1.Money                      `protobuf:"bytes,7,opt,name=recommended_price,json=recommendedPrice,proto3" json:"recommended_price,omitempty"`
 	ExtraPrice       *v1.Money                      `protobuf:"bytes,8,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
 	StockLabel       VendorCatalogVariantStockLabel `protobuf:"varint,9,opt,name=stock_label,json=stockLabel,proto3,enum=api.catalog.v1.VendorCatalogVariantStockLabel" json:"stock_label,omitempty"`
-	Product          *VendorCatalog                 `protobuf:"bytes,10,opt,name=product,proto3" json:"product,omitempty"` // @gotags: json:",squash,omitempty"
+	Product          *VendorCatalog                 `protobuf:"bytes,10,opt,name=product,proto3" json:"product,omitempty"`
 	LegacyVariantId  int32                          `protobuf:"varint,11,opt,name=legacy_variant_id,json=legacyVariantId,proto3" json:"legacy_variant_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
