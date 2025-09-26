@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	InternalVendorOrderAPI_InternalVendorListOrder_FullMethodName                                            = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrder"
 	InternalVendorOrderAPI_InternalVendorListOrderDraft_FullMethodName                                       = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrderDraft"
+	InternalVendorOrderAPI_InternalLegacyVendorListOrder_FullMethodName                                      = "/api.order.v1.InternalVendorOrderAPI/InternalLegacyVendorListOrder"
 	InternalVendorOrderAPI_InternalVendorCreateOrderDraft_FullMethodName                                     = "/api.order.v1.InternalVendorOrderAPI/InternalVendorCreateOrderDraft"
 	InternalVendorOrderAPI_InternalVendorGetPriceQuote_FullMethodName                                        = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetPriceQuote"
 	InternalVendorOrderAPI_InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs_FullMethodName = "/api.order.v1.InternalVendorOrderAPI/InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs"
@@ -35,6 +36,7 @@ const (
 type InternalVendorOrderAPIClient interface {
 	InternalVendorListOrder(ctx context.Context, in *InternalVendorListOrderRequest, opts ...grpc.CallOption) (*VendorListOrderResponse, error)
 	InternalVendorListOrderDraft(ctx context.Context, in *InternalVendorListOrderDraftRequest, opts ...grpc.CallOption) (*VendorListOrderDraftResponse, error)
+	InternalLegacyVendorListOrder(ctx context.Context, in *InternalLegacyVendorListOrderRequest, opts ...grpc.CallOption) (*InternalLegacyVendorListOrderResponse, error)
 	InternalVendorCreateOrderDraft(ctx context.Context, in *InternalVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*InternalVendorCreateOrderDraftResponse, error)
 	InternalVendorGetPriceQuote(ctx context.Context, in *InternalVendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
 	InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs(ctx context.Context, in *InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsResponse, error)
@@ -65,6 +67,16 @@ func (c *internalVendorOrderAPIClient) InternalVendorListOrderDraft(ctx context.
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VendorListOrderDraftResponse)
 	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalVendorListOrderDraft_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internalVendorOrderAPIClient) InternalLegacyVendorListOrder(ctx context.Context, in *InternalLegacyVendorListOrderRequest, opts ...grpc.CallOption) (*InternalLegacyVendorListOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalLegacyVendorListOrderResponse)
+	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalLegacyVendorListOrder_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,6 +149,7 @@ func (c *internalVendorOrderAPIClient) InternalVendorListOrderDraftForCheckout(c
 type InternalVendorOrderAPIServer interface {
 	InternalVendorListOrder(context.Context, *InternalVendorListOrderRequest) (*VendorListOrderResponse, error)
 	InternalVendorListOrderDraft(context.Context, *InternalVendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error)
+	InternalLegacyVendorListOrder(context.Context, *InternalLegacyVendorListOrderRequest) (*InternalLegacyVendorListOrderResponse, error)
 	InternalVendorCreateOrderDraft(context.Context, *InternalVendorCreateOrderDraftRequest) (*InternalVendorCreateOrderDraftResponse, error)
 	InternalVendorGetPriceQuote(context.Context, *InternalVendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
 	InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs(context.Context, *InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsRequest) (*InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsResponse, error)
@@ -157,6 +170,9 @@ func (UnimplementedInternalVendorOrderAPIServer) InternalVendorListOrder(context
 }
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorListOrderDraft(context.Context, *InternalVendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorListOrderDraft not implemented")
+}
+func (UnimplementedInternalVendorOrderAPIServer) InternalLegacyVendorListOrder(context.Context, *InternalLegacyVendorListOrderRequest) (*InternalLegacyVendorListOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalLegacyVendorListOrder not implemented")
 }
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorCreateOrderDraft(context.Context, *InternalVendorCreateOrderDraftRequest) (*InternalVendorCreateOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorCreateOrderDraft not implemented")
@@ -228,6 +244,24 @@ func _InternalVendorOrderAPI_InternalVendorListOrderDraft_Handler(srv interface{
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InternalVendorOrderAPIServer).InternalVendorListOrderDraft(ctx, req.(*InternalVendorListOrderDraftRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternalVendorOrderAPI_InternalLegacyVendorListOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalLegacyVendorListOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalVendorOrderAPIServer).InternalLegacyVendorListOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalVendorOrderAPI_InternalLegacyVendorListOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalVendorOrderAPIServer).InternalLegacyVendorListOrder(ctx, req.(*InternalLegacyVendorListOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -354,6 +388,10 @@ var InternalVendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalVendorListOrderDraft",
 			Handler:    _InternalVendorOrderAPI_InternalVendorListOrderDraft_Handler,
+		},
+		{
+			MethodName: "InternalLegacyVendorListOrder",
+			Handler:    _InternalVendorOrderAPI_InternalLegacyVendorListOrder_Handler,
 		},
 		{
 			MethodName: "InternalVendorCreateOrderDraft",
