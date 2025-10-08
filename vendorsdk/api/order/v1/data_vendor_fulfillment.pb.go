@@ -25,9 +25,9 @@ type VendorFulfillmentVendor int32
 
 const (
 	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_UNKNOWN  VendorFulfillmentVendor = 0
-	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_ALL      VendorFulfillmentVendor = 1
-	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_GEARMENT VendorFulfillmentVendor = 2
-	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_AMAZON   VendorFulfillmentVendor = 3
+	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_ALL      VendorFulfillmentVendor = 1 // All fulfillment vendors (used for filtering)
+	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_GEARMENT VendorFulfillmentVendor = 2 // Fulfilled by Gearment
+	VendorFulfillmentVendor_VENDOR_FULFILLMENT_VENDOR_AMAZON   VendorFulfillmentVendor = 3 // Fulfilled by Amazon (FBA)
 )
 
 // Enum value maps for VendorFulfillmentVendor.
@@ -77,9 +77,9 @@ type VendorFulfillmentPriority int32
 
 const (
 	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_UNKNOWN VendorFulfillmentPriority = 0
-	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_ALL     VendorFulfillmentPriority = 1 // only used for filtering
-	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_NORMAL  VendorFulfillmentPriority = 2
-	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_RUSH    VendorFulfillmentPriority = 3
+	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_ALL     VendorFulfillmentPriority = 1 // All priorities (used for filtering)
+	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_NORMAL  VendorFulfillmentPriority = 2 // Normal processing (3-5 business days)
+	VendorFulfillmentPriority_VENDOR_FULFILLMENT_PRIORITY_RUSH    VendorFulfillmentPriority = 3 // Rush/expedited processing (1-2 business days)
 )
 
 // Enum value maps for VendorFulfillmentPriority.
@@ -129,10 +129,10 @@ type VendorPurchaseTrackingConfig int32
 
 const (
 	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_UNSPECIFIED                        VendorPurchaseTrackingConfig = 0
-	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_DEFAULT                            VendorPurchaseTrackingConfig = 1
-	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_IMMEDIATELY_AFTER_THE_PAYMENT_TIME VendorPurchaseTrackingConfig = 2
-	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_ONCE_ALL_ITEMS_ARE_PRINTED         VendorPurchaseTrackingConfig = 3
-	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_WITHIN_A_SPECIFIC_NUMBER_OF_DAY    VendorPurchaseTrackingConfig = 4
+	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_DEFAULT                            VendorPurchaseTrackingConfig = 1 // Use default tracking purchase timing
+	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_IMMEDIATELY_AFTER_THE_PAYMENT_TIME VendorPurchaseTrackingConfig = 2 // Purchase tracking immediately after payment
+	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_ONCE_ALL_ITEMS_ARE_PRINTED         VendorPurchaseTrackingConfig = 3 // Purchase tracking after all items printed
+	VendorPurchaseTrackingConfig_VENDOR_PURCHASE_TRACKING_TIME_WITHIN_A_SPECIFIC_NUMBER_OF_DAY    VendorPurchaseTrackingConfig = 4 // Purchase tracking within specified days
 )
 
 // Enum value maps for VendorPurchaseTrackingConfig.
@@ -181,7 +181,8 @@ func (VendorPurchaseTrackingConfig) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorFulfillmentOption struct {
-	state                  protoimpl.MessageState       `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Tracking purchase timing configuration
 	PurchaseTrackingConfig VendorPurchaseTrackingConfig `protobuf:"varint,1,opt,name=purchase_tracking_config,json=purchaseTrackingConfig,proto3,enum=api.order.v1.VendorPurchaseTrackingConfig" json:"purchase_tracking_config,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache

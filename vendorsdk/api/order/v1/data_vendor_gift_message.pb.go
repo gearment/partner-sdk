@@ -25,8 +25,8 @@ type VendorGiftMessage_Type int32
 
 const (
 	VendorGiftMessage_TYPE_UNKNOWN      VendorGiftMessage_Type = 0
-	VendorGiftMessage_TYPE_CUSTOM_IMAGE VendorGiftMessage_Type = 1
-	VendorGiftMessage_TYPE_UPLOAD_IMAGE VendorGiftMessage_Type = 2
+	VendorGiftMessage_TYPE_CUSTOM_IMAGE VendorGiftMessage_Type = 1 // Pre-designed gift message card from Gearment templates
+	VendorGiftMessage_TYPE_UPLOAD_IMAGE VendorGiftMessage_Type = 2 // Custom uploaded gift message card image
 )
 
 // Enum value maps for VendorGiftMessage_Type.
@@ -71,13 +71,19 @@ func (VendorGiftMessage_Type) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorGiftMessage struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	OrderId         string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	GiftMessageId   string                 `protobuf:"bytes,2,opt,name=gift_message_id,json=giftMessageId,proto3" json:"gift_message_id,omitempty"`
-	Type            VendorGiftMessage_Type `protobuf:"varint,3,opt,name=type,proto3,enum=api.order.v1.VendorGiftMessage_Type" json:"type,omitempty"`
-	Content         string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
-	AvatarUrl       string                 `protobuf:"bytes,5,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
-	GiftMessageName string                 `protobuf:"bytes,6,opt,name=gift_message_name,json=giftMessageName,proto3" json:"gift_message_name,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Order ID this gift message belongs to
+	OrderId string `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Gift message ID (unique identifier)
+	GiftMessageId string `protobuf:"bytes,2,opt,name=gift_message_id,json=giftMessageId,proto3" json:"gift_message_id,omitempty"`
+	// Gift message type (custom or uploaded image)
+	Type VendorGiftMessage_Type `protobuf:"varint,3,opt,name=type,proto3,enum=api.order.v1.VendorGiftMessage_Type" json:"type,omitempty"`
+	// Gift message text content (max 1000 characters)
+	Content string `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
+	// Avatar/image URL for the gift message card
+	AvatarUrl string `protobuf:"bytes,5,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	// Gift message template/design name
+	GiftMessageName string `protobuf:"bytes,6,opt,name=gift_message_name,json=giftMessageName,proto3" json:"gift_message_name,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }

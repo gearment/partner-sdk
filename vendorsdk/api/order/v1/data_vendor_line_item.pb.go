@@ -27,10 +27,10 @@ type VendorStockLabel int32
 
 const (
 	VendorStockLabel_VENDOR_STOCK_LABEL_UNKNOWN      VendorStockLabel = 0
-	VendorStockLabel_VENDOR_STOCK_LABEL_IN_STOCK     VendorStockLabel = 1
-	VendorStockLabel_VENDOR_STOCK_LABEL_OUT_OF_STOCK VendorStockLabel = 2
-	VendorStockLabel_VENDOR_STOCK_LABEL_AT_RISK      VendorStockLabel = 3
-	VendorStockLabel_VENDOR_STOCK_LABEL_DISCONTINUED VendorStockLabel = 4
+	VendorStockLabel_VENDOR_STOCK_LABEL_IN_STOCK     VendorStockLabel = 1 // Product is in stock and available
+	VendorStockLabel_VENDOR_STOCK_LABEL_OUT_OF_STOCK VendorStockLabel = 2 // Temporarily out of stock
+	VendorStockLabel_VENDOR_STOCK_LABEL_AT_RISK      VendorStockLabel = 3 // Low stock, may run out soon
+	VendorStockLabel_VENDOR_STOCK_LABEL_DISCONTINUED VendorStockLabel = 4 // Product discontinued, no longer available
 )
 
 // Enum value maps for VendorStockLabel.
@@ -79,24 +79,39 @@ func (VendorStockLabel) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorLineItem struct {
-	state             protoimpl.MessageState            `protogen:"open.v1"`
-	OrderId           string                            `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	Quantity          int32                             `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	PrintingOptions   []*VendorPrintingOption           `protobuf:"bytes,3,rep,name=printing_options,json=printingOptions,proto3" json:"printing_options,omitempty"`
-	OriginOptions     []*VendorLineItem_OriginOption    `protobuf:"bytes,4,rep,name=origin_options,json=originOptions,proto3" json:"origin_options,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Order ID this line item belongs to
+	OrderId string `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Quantity ordered (minimum 1)
+	Quantity int32 `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	// Printing options for this line item (design URLs and locations)
+	PrintingOptions []*VendorPrintingOption `protobuf:"bytes,3,rep,name=printing_options,json=printingOptions,proto3" json:"printing_options,omitempty"`
+	// Original product options from marketplace (e.g., color, size selections)
+	OriginOptions []*VendorLineItem_OriginOption `protobuf:"bytes,4,rep,name=origin_options,json=originOptions,proto3" json:"origin_options,omitempty"`
+	// Fulfillment options (barcode, etc.)
 	FulfillmentOption *VendorLineItem_FulfillmentOption `protobuf:"bytes,5,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
-	Variant           *VendorLineItem_Variant           `protobuf:"bytes,6,opt,name=variant,proto3" json:"variant,omitempty"`
-	Product           *VendorLineItem_Product           `protobuf:"bytes,7,opt,name=product,proto3" json:"product,omitempty"`
-	Id                int64                             `protobuf:"varint,8,opt,name=id,proto3" json:"id,omitempty"`
-	ItemPrice         *v1.Money                         `protobuf:"bytes,9,opt,name=item_price,json=itemPrice,proto3" json:"item_price,omitempty"`
-	LineTax           *v1.Money                         `protobuf:"bytes,10,opt,name=line_tax,json=lineTax,proto3" json:"line_tax,omitempty"`
-	LineFee           *v1.Money                         `protobuf:"bytes,11,opt,name=line_fee,json=lineFee,proto3" json:"line_fee,omitempty"`
-	LineDiscount      *v1.Money                         `protobuf:"bytes,12,opt,name=line_discount,json=lineDiscount,proto3" json:"line_discount,omitempty"`
-	LineSubtotal      *v1.Money                         `protobuf:"bytes,13,opt,name=line_subtotal,json=lineSubtotal,proto3" json:"line_subtotal,omitempty"`
-	LineTotal         *v1.Money                         `protobuf:"bytes,14,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
-	LineItemId        string                            `protobuf:"bytes,15,opt,name=line_item_id,json=lineItemId,proto3" json:"line_item_id,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Product variant details
+	Variant *VendorLineItem_Variant `protobuf:"bytes,6,opt,name=variant,proto3" json:"variant,omitempty"`
+	// Product details
+	Product *VendorLineItem_Product `protobuf:"bytes,7,opt,name=product,proto3" json:"product,omitempty"`
+	// Internal line item ID
+	Id int64 `protobuf:"varint,8,opt,name=id,proto3" json:"id,omitempty"`
+	// Unit price per item
+	ItemPrice *v1.Money `protobuf:"bytes,9,opt,name=item_price,json=itemPrice,proto3" json:"item_price,omitempty"`
+	// Tax amount for this line
+	LineTax *v1.Money `protobuf:"bytes,10,opt,name=line_tax,json=lineTax,proto3" json:"line_tax,omitempty"`
+	// Additional fees for this line
+	LineFee *v1.Money `protobuf:"bytes,11,opt,name=line_fee,json=lineFee,proto3" json:"line_fee,omitempty"`
+	// Discount applied to this line
+	LineDiscount *v1.Money `protobuf:"bytes,12,opt,name=line_discount,json=lineDiscount,proto3" json:"line_discount,omitempty"`
+	// Subtotal before tax and fees (item_price × quantity)
+	LineSubtotal *v1.Money `protobuf:"bytes,13,opt,name=line_subtotal,json=lineSubtotal,proto3" json:"line_subtotal,omitempty"`
+	// Total amount for this line (subtotal + tax + fees - discount)
+	LineTotal *v1.Money `protobuf:"bytes,14,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
+	// Line item ID (string format)
+	LineItemId    string `protobuf:"bytes,15,opt,name=line_item_id,json=lineItemId,proto3" json:"line_item_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorLineItem) Reset() {
@@ -235,30 +250,51 @@ func (x *VendorLineItem) GetLineItemId() string {
 }
 
 type VendorOrderLineItem struct {
-	state           protoimpl.MessageState  `protogen:"open.v1"`
-	Id              int64                   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	VariantId       string                  `protobuf:"bytes,2,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
-	Quantity        int32                   `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Internal line item ID
+	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Product variant ID
+	VariantId string `protobuf:"bytes,2,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	// Quantity ordered (minimum 1)
+	Quantity int32 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	// Printing options for this line item
 	PrintingOptions []*VendorPrintingOption `protobuf:"bytes,4,rep,name=printing_options,json=printingOptions,proto3" json:"printing_options,omitempty"`
-	SellerVariantId string                  `protobuf:"bytes,5,opt,name=seller_variant_id,json=sellerVariantId,proto3" json:"seller_variant_id,omitempty"`
-	ProductId       string                  `protobuf:"bytes,7,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	Option_1        string                  `protobuf:"bytes,8,opt,name=option_1,json=option1,proto3" json:"option_1,omitempty"`
-	Option_2        string                  `protobuf:"bytes,9,opt,name=option_2,json=option2,proto3" json:"option_2,omitempty"`
-	ProductName     string                  `protobuf:"bytes,10,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"`
-	ItemPrice       *v1.Money               `protobuf:"bytes,11,opt,name=item_price,json=itemPrice,proto3" json:"item_price,omitempty"`
-	LineTax         *v1.Money               `protobuf:"bytes,12,opt,name=line_tax,json=lineTax,proto3" json:"line_tax,omitempty"`
-	LineFee         *v1.Money               `protobuf:"bytes,13,opt,name=line_fee,json=lineFee,proto3" json:"line_fee,omitempty"`
-	LineDiscount    *v1.Money               `protobuf:"bytes,14,opt,name=line_discount,json=lineDiscount,proto3" json:"line_discount,omitempty"`
-	LineSubtotal    *v1.Money               `protobuf:"bytes,15,opt,name=line_subtotal,json=lineSubtotal,proto3" json:"line_subtotal,omitempty"`
-	LineTotal       *v1.Money               `protobuf:"bytes,16,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
-	VariantName     string                  `protobuf:"bytes,17,opt,name=variant_name,json=variantName,proto3" json:"variant_name,omitempty"`
-	ProductUrl      string                  `protobuf:"bytes,18,opt,name=product_url,json=productUrl,proto3" json:"product_url,omitempty"`
-	VariantSku      string                  `protobuf:"bytes,29,opt,name=variant_sku,json=variantSku,proto3" json:"variant_sku,omitempty"`
-	ProductTypeName string                  `protobuf:"bytes,20,opt,name=product_type_name,json=productTypeName,proto3" json:"product_type_name,omitempty"`
-	OrderId         string                  `protobuf:"bytes,21,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	LineItemId      string                  `protobuf:"bytes,22,opt,name=line_item_id,json=lineItemId,proto3" json:"line_item_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Seller's variant ID (from marketplace)
+	SellerVariantId string `protobuf:"bytes,5,opt,name=seller_variant_id,json=sellerVariantId,proto3" json:"seller_variant_id,omitempty"`
+	// Product ID
+	ProductId string `protobuf:"bytes,7,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	// First option value (e.g., "Black" for color)
+	Option_1 string `protobuf:"bytes,8,opt,name=option_1,json=option1,proto3" json:"option_1,omitempty"`
+	// Second option value (e.g., "Medium" for size)
+	Option_2 string `protobuf:"bytes,9,opt,name=option_2,json=option2,proto3" json:"option_2,omitempty"`
+	// Product name
+	ProductName string `protobuf:"bytes,10,opt,name=product_name,json=productName,proto3" json:"product_name,omitempty"`
+	// Unit price per item
+	ItemPrice *v1.Money `protobuf:"bytes,11,opt,name=item_price,json=itemPrice,proto3" json:"item_price,omitempty"`
+	// Tax amount for this line
+	LineTax *v1.Money `protobuf:"bytes,12,opt,name=line_tax,json=lineTax,proto3" json:"line_tax,omitempty"`
+	// Additional fees for this line
+	LineFee *v1.Money `protobuf:"bytes,13,opt,name=line_fee,json=lineFee,proto3" json:"line_fee,omitempty"`
+	// Discount applied to this line
+	LineDiscount *v1.Money `protobuf:"bytes,14,opt,name=line_discount,json=lineDiscount,proto3" json:"line_discount,omitempty"`
+	// Subtotal before tax and fees
+	LineSubtotal *v1.Money `protobuf:"bytes,15,opt,name=line_subtotal,json=lineSubtotal,proto3" json:"line_subtotal,omitempty"`
+	// Total amount for this line
+	LineTotal *v1.Money `protobuf:"bytes,16,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
+	// Variant name (e.g., "Black / Medium")
+	VariantName string `protobuf:"bytes,17,opt,name=variant_name,json=variantName,proto3" json:"variant_name,omitempty"`
+	// Product URL (link to product page)
+	ProductUrl string `protobuf:"bytes,18,opt,name=product_url,json=productUrl,proto3" json:"product_url,omitempty"`
+	// Variant SKU
+	VariantSku string `protobuf:"bytes,29,opt,name=variant_sku,json=variantSku,proto3" json:"variant_sku,omitempty"`
+	// Product type name (e.g., "T-Shirt", "Hoodie")
+	ProductTypeName string `protobuf:"bytes,20,opt,name=product_type_name,json=productTypeName,proto3" json:"product_type_name,omitempty"`
+	// Order ID this line item belongs to
+	OrderId string `protobuf:"bytes,21,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Line item ID (string format)
+	LineItemId    string `protobuf:"bytes,22,opt,name=line_item_id,json=lineItemId,proto3" json:"line_item_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorOrderLineItem) Reset() {
@@ -439,10 +475,13 @@ func (x *VendorOrderLineItem) GetLineItemId() string {
 }
 
 type VendorLineItem_OriginOption struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Option display name (e.g., "Color", "Size")
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Option key/identifier
+	Key string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	// Option value (e.g., "Black", "Medium")
+	Value         string `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -499,8 +538,9 @@ func (x *VendorLineItem_OriginOption) GetValue() string {
 }
 
 type VendorLineItem_FulfillmentOption struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	BarcodeUrl    string                 `protobuf:"bytes,1,opt,name=barcode_url,json=barcodeUrl,proto3" json:"barcode_url,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Barcode URL for inventory tracking (optional)
+	BarcodeUrl    string `protobuf:"bytes,1,opt,name=barcode_url,json=barcodeUrl,proto3" json:"barcode_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -543,21 +583,35 @@ func (x *VendorLineItem_FulfillmentOption) GetBarcodeUrl() string {
 }
 
 type VendorLineItem_Variant struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	VariantId     string                         `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
-	LegacyId      int32                          `protobuf:"varint,2,opt,name=legacy_id,json=legacyId,proto3" json:"legacy_id,omitempty"`
-	Sku           string                         `protobuf:"bytes,3,opt,name=sku,proto3" json:"sku,omitempty"`
-	Name          string                         `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Description   string                         `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	Option_1      string                         `protobuf:"bytes,6,opt,name=option_1,json=option1,proto3" json:"option_1,omitempty"`
-	Option_2      string                         `protobuf:"bytes,7,opt,name=option_2,json=option2,proto3" json:"option_2,omitempty"`
-	Option_3      string                         `protobuf:"bytes,8,opt,name=option_3,json=option3,proto3" json:"option_3,omitempty"`
-	Option_1Name  string                         `protobuf:"bytes,9,opt,name=option_1_name,json=option1Name,proto3" json:"option_1_name,omitempty"`
-	Option_2Name  string                         `protobuf:"bytes,10,opt,name=option_2_name,json=option2Name,proto3" json:"option_2_name,omitempty"`
-	Price         *v1.Money                      `protobuf:"bytes,11,opt,name=price,proto3" json:"price,omitempty"`
-	PriceGm       *v1.Money                      `protobuf:"bytes,12,opt,name=price_gm,json=priceGm,proto3" json:"price_gm,omitempty"`
-	Images        []*VendorLineItem_ProductImage `protobuf:"bytes,13,rep,name=images,proto3" json:"images,omitempty"`
-	StockLabel    VendorStockLabel               `protobuf:"varint,14,opt,name=stock_label,json=stockLabel,proto3,enum=api.order.v1.VendorStockLabel" json:"stock_label,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Variant ID (string format)
+	VariantId string `protobuf:"bytes,1,opt,name=variant_id,json=variantId,proto3" json:"variant_id,omitempty"`
+	// Legacy variant ID (integer format, for backward compatibility)
+	LegacyId int32 `protobuf:"varint,2,opt,name=legacy_id,json=legacyId,proto3" json:"legacy_id,omitempty"`
+	// SKU (Stock Keeping Unit)
+	Sku string `protobuf:"bytes,3,opt,name=sku,proto3" json:"sku,omitempty"`
+	// Variant name (e.g., "Black / Medium")
+	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	// Variant description
+	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	// First option value (e.g., "Black" for color)
+	Option_1 string `protobuf:"bytes,6,opt,name=option_1,json=option1,proto3" json:"option_1,omitempty"`
+	// Second option value (e.g., "Medium" for size)
+	Option_2 string `protobuf:"bytes,7,opt,name=option_2,json=option2,proto3" json:"option_2,omitempty"`
+	// Third option value (optional)
+	Option_3 string `protobuf:"bytes,8,opt,name=option_3,json=option3,proto3" json:"option_3,omitempty"`
+	// First option name (e.g., "Color")
+	Option_1Name string `protobuf:"bytes,9,opt,name=option_1_name,json=option1Name,proto3" json:"option_1_name,omitempty"`
+	// Second option name (e.g., "Size")
+	Option_2Name string `protobuf:"bytes,10,opt,name=option_2_name,json=option2Name,proto3" json:"option_2_name,omitempty"`
+	// Variant price
+	Price *v1.Money `protobuf:"bytes,11,opt,name=price,proto3" json:"price,omitempty"`
+	// Gearment price (internal)
+	PriceGm *v1.Money `protobuf:"bytes,12,opt,name=price_gm,json=priceGm,proto3" json:"price_gm,omitempty"`
+	// Variant images
+	Images []*VendorLineItem_ProductImage `protobuf:"bytes,13,rep,name=images,proto3" json:"images,omitempty"`
+	// Stock availability status
+	StockLabel    VendorStockLabel `protobuf:"varint,14,opt,name=stock_label,json=stockLabel,proto3,enum=api.order.v1.VendorStockLabel" json:"stock_label,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -691,15 +745,21 @@ func (x *VendorLineItem_Variant) GetStockLabel() VendorStockLabel {
 }
 
 type VendorLineItem_Product struct {
-	state          protoimpl.MessageState                 `protogen:"open.v1"`
-	ProductId      string                                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	Name           string                                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description    string                                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Images         []*VendorLineItem_ProductImage         `protobuf:"bytes,4,rep,name=images,proto3" json:"images,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Product ID
+	ProductId string `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	// Product name (e.g., "Unisex T-Shirt")
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Product description
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Product images
+	Images []*VendorLineItem_ProductImage `protobuf:"bytes,4,rep,name=images,proto3" json:"images,omitempty"`
+	// Available print locations for this product
 	PrintLocations []*VendorLineItem_ProductPrintLocation `protobuf:"bytes,5,rep,name=print_locations,json=printLocations,proto3" json:"print_locations,omitempty"`
-	Sku            string                                 `protobuf:"bytes,6,opt,name=sku,proto3" json:"sku,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Product SKU
+	Sku           string `protobuf:"bytes,6,opt,name=sku,proto3" json:"sku,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorLineItem_Product) Reset() {
@@ -775,10 +835,13 @@ func (x *VendorLineItem_Product) GetSku() string {
 }
 
 type VendorLineItem_ProductPrintLocation struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	LocationId    int32                  `protobuf:"varint,3,opt,name=location_id,json=locationId,proto3" json:"location_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Print location code (e.g., "front", "back")
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	// Print location display name
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Internal location ID
+	LocationId    int32 `protobuf:"varint,3,opt,name=location_id,json=locationId,proto3" json:"location_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -835,9 +898,11 @@ func (x *VendorLineItem_ProductPrintLocation) GetLocationId() int32 {
 }
 
 type VendorLineItem_ProductImage struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	Tag           string                 `protobuf:"bytes,2,opt,name=tag,proto3" json:"tag,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Image URL
+	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	// Image tag/category (e.g., "front", "back", "detail")
+	Tag           string `protobuf:"bytes,2,opt,name=tag,proto3" json:"tag,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

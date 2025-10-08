@@ -25,9 +25,9 @@ type VendorProductMatchingStatus int32
 
 const (
 	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_UNKNOWN   VendorProductMatchingStatus = 0
-	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_ALL       VendorProductMatchingStatus = 1 // only used for filtering
-	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_MATCHED   VendorProductMatchingStatus = 2
-	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_UNMATCHED VendorProductMatchingStatus = 3
+	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_ALL       VendorProductMatchingStatus = 1 // All matching statuses (used for filtering)
+	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_MATCHED   VendorProductMatchingStatus = 2 // Product successfully matched to catalog
+	VendorProductMatchingStatus_VENDOR_PRODUCT_MATCHING_STATUS_UNMATCHED VendorProductMatchingStatus = 3 // Product not matched, requires manual mapping
 )
 
 // Enum value maps for VendorProductMatchingStatus.

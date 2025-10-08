@@ -26,12 +26,12 @@ type VendorShippingServiceType int32
 
 const (
 	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_UNSPECIFIED VendorShippingServiceType = 0
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_ALL         VendorShippingServiceType = 1 // only used for filtering
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_EBAY        VendorShippingServiceType = 2
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_ETSY        VendorShippingServiceType = 3
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_POSHMARK    VendorShippingServiceType = 4
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_TIKTOK      VendorShippingServiceType = 5
-	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_FBA         VendorShippingServiceType = 6
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_ALL         VendorShippingServiceType = 1 // All service types (used for filtering)
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_EBAY        VendorShippingServiceType = 2 // eBay shipping service
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_ETSY        VendorShippingServiceType = 3 // Etsy shipping service
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_POSHMARK    VendorShippingServiceType = 4 // Poshmark shipping service
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_TIKTOK      VendorShippingServiceType = 5 // TikTok Shop shipping service
+	VendorShippingServiceType_VENDOR_SHIPPING_SERVICE_TYPE_FBA         VendorShippingServiceType = 6 // Amazon FBA (Fulfillment by Amazon)
 )
 
 // Enum value maps for VendorShippingServiceType.
@@ -87,12 +87,12 @@ type VendorShippingVerificationStatus int32
 
 const (
 	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_UNKNOWN            VendorShippingVerificationStatus = 0
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ALL                VendorShippingVerificationStatus = 1 // only used for filtering
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_PENDING            VendorShippingVerificationStatus = 2
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_INVALID VendorShippingVerificationStatus = 3
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_VALID   VendorShippingVerificationStatus = 4
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_UNVERIFIED VendorShippingVerificationStatus = 5
-	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_VERIFIED   VendorShippingVerificationStatus = 6
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ALL                VendorShippingVerificationStatus = 1 // All statuses (used for filtering)
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_PENDING            VendorShippingVerificationStatus = 2 // Verification pending
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_INVALID VendorShippingVerificationStatus = 3 // Address constraints invalid
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_VALID   VendorShippingVerificationStatus = 4 // Address constraints valid
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_UNVERIFIED VendorShippingVerificationStatus = 5 // Address unverified
+	VendorShippingVerificationStatus_VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_VERIFIED   VendorShippingVerificationStatus = 6 // Address verified
 )
 
 // Enum value maps for VendorShippingVerificationStatus.
@@ -149,10 +149,10 @@ type VendorShippingOption_Method int32
 const (
 	VendorShippingOption_METHOD_UNKNOWN   VendorShippingOption_Method = 0
 	VendorShippingOption_METHOD_ALL       VendorShippingOption_Method = 1 // only used for filtering
-	VendorShippingOption_METHOD_STANDARD  VendorShippingOption_Method = 2
-	VendorShippingOption_METHOD_GROUND    VendorShippingOption_Method = 3
-	VendorShippingOption_METHOD_FAST_SHIP VendorShippingOption_Method = 4
-	VendorShippingOption_METHOD_STAMP     VendorShippingOption_Method = 5
+	VendorShippingOption_METHOD_STANDARD  VendorShippingOption_Method = 2 // Standard shipping (5-7 business days)
+	VendorShippingOption_METHOD_GROUND    VendorShippingOption_Method = 3 // Ground shipping (3-5 business days)
+	VendorShippingOption_METHOD_FAST_SHIP VendorShippingOption_Method = 4 // Expedited shipping (1-3 business days)
+	VendorShippingOption_METHOD_STAMP     VendorShippingOption_Method = 5 // Stamp/First-class shipping
 )
 
 // Enum value maps for VendorShippingOption_Method.
@@ -203,7 +203,8 @@ func (VendorShippingOption_Method) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorShippingOption struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Shipping method (required)
 	Method        VendorShippingOption_Method `protobuf:"varint,1,opt,name=method,proto3,enum=api.order.v1.VendorShippingOption_Method" json:"method,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

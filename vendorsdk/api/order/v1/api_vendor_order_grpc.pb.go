@@ -33,15 +33,96 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// VendorOrderAPI provide an abstraction to all of read and write data access for order businesses
+// VendorOrderAPI provides comprehensive order management capabilities for vendors.
+// All endpoints require authentication via X-API-Key and X-API-Secret headers.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorOrderAPIClient interface {
+	// List orders with filtering and pagination
+	//
+	// GET /api/v3/orders
+	//
+	// Use cases:
+	//   - Monitor order status changes
+	//   - Sync orders to your system
+	//   - Generate reports on order volumes
 	VendorListOrder(ctx context.Context, in *VendorListOrderRequest, opts ...grpc.CallOption) (*VendorListOrderResponse, error)
+	// List order drafts (pending checkout)
+	//
+	// GET /api/v3/orders/draft
+	//
+	// Use cases:
+	//   - Review drafts before checkout
+	//   - Identify stuck/incomplete orders
 	VendorListOrderDraft(ctx context.Context, in *VendorListOrderDraftRequest, opts ...grpc.CallOption) (*VendorListOrderDraftResponse, error)
+	// Create a new order draft
+	//
+	// POST /api/v3/orders/draft
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Place new orders programmatically
+	//   - Bulk order creation
+	//   - Integration with e-commerce platforms
 	VendorCreateOrderDraft(ctx context.Context, in *VendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*VendorCreateOrderDraftResponse, error)
+	// Create order draft with pre-purchased shipping label
+	//
+	// POST /api/v3/orders/draft/labeled
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Use your own shipping account
+	//   - Consolidate shipping management
 	VendorCreateOrderDraftWithLabel(ctx context.Context, in *VendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*VendorCreateOrderDraftWithLabelResponse, error)
+	// Get price quote before creating order
+	//
+	// POST /api/v3/orders/price
+	// Content-Type: application/json
+	//
+	// Response includes:
+	//   - order_total: Total cost
+	//   - order_subtotal: Product costs
+	//   - order_shipping_fee: Shipping cost
+	//   - order_tax: Tax amount
+	//
+	// Use cases:
+	//   - Show pricing to customers before checkout
+	//   - Compare shipping methods
+	//   - Calculate profit margins
 	VendorGetPriceQuote(ctx context.Context, in *VendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
+	// Update line items in an order draft
+	//
+	// PATCH /api/v3/orders/draft/line-items
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Update quantities before checkout
+	//   - Change designs on line items
+	//   - Fix errors in draft orders
 	VendorUpdateOrderDraftLineItems(ctx context.Context, in *VendorUpdateOrderDraftLineItemsRequest, opts ...grpc.CallOption) (*VendorUpdateOrderDraftLineItemsResponse, error)
+	// Get details of a specific order
+	//
+	// GET /api/v3/orders/{order_id}
+	//
+	// Response includes:
+	//   - Order status and tracking
+	//   - Line items with printing details
+	//   - Shipping information
+	//   - Payment/transaction details
+	//
+	// Use cases:
+	//   - Track order fulfillment
+	//   - Get shipping/tracking info
+	//   - Customer support queries
 	VendorGetOrder(ctx context.Context, in *VendorGetOrderRequest, opts ...grpc.CallOption) (*VendorGetOrderResponse, error)
+	// Get details of a specific order draft
+	//
+	// GET /api/v3/orders/draft/{order_id}
+	//
+	// Use cases:
+	//   - Review draft before checkout
+	//   - Verify pricing and line items
 	VendorGetOrderDraft(ctx context.Context, in *VendorGetOrderDraftRequest, opts ...grpc.CallOption) (*VendorGetOrderDraftResponse, error)
 }
 
@@ -137,15 +218,96 @@ func (c *vendorOrderAPIClient) VendorGetOrderDraft(ctx context.Context, in *Vend
 // All implementations should embed UnimplementedVendorOrderAPIServer
 // for forward compatibility.
 //
-// VendorOrderAPI provide an abstraction to all of read and write data access for order businesses
+// VendorOrderAPI provides comprehensive order management capabilities for vendors.
+// All endpoints require authentication via X-API-Key and X-API-Secret headers.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorOrderAPIServer interface {
+	// List orders with filtering and pagination
+	//
+	// GET /api/v3/orders
+	//
+	// Use cases:
+	//   - Monitor order status changes
+	//   - Sync orders to your system
+	//   - Generate reports on order volumes
 	VendorListOrder(context.Context, *VendorListOrderRequest) (*VendorListOrderResponse, error)
+	// List order drafts (pending checkout)
+	//
+	// GET /api/v3/orders/draft
+	//
+	// Use cases:
+	//   - Review drafts before checkout
+	//   - Identify stuck/incomplete orders
 	VendorListOrderDraft(context.Context, *VendorListOrderDraftRequest) (*VendorListOrderDraftResponse, error)
+	// Create a new order draft
+	//
+	// POST /api/v3/orders/draft
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Place new orders programmatically
+	//   - Bulk order creation
+	//   - Integration with e-commerce platforms
 	VendorCreateOrderDraft(context.Context, *VendorCreateOrderDraftRequest) (*VendorCreateOrderDraftResponse, error)
+	// Create order draft with pre-purchased shipping label
+	//
+	// POST /api/v3/orders/draft/labeled
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Use your own shipping account
+	//   - Consolidate shipping management
 	VendorCreateOrderDraftWithLabel(context.Context, *VendorCreateOrderDraftWithLabelRequest) (*VendorCreateOrderDraftWithLabelResponse, error)
+	// Get price quote before creating order
+	//
+	// POST /api/v3/orders/price
+	// Content-Type: application/json
+	//
+	// Response includes:
+	//   - order_total: Total cost
+	//   - order_subtotal: Product costs
+	//   - order_shipping_fee: Shipping cost
+	//   - order_tax: Tax amount
+	//
+	// Use cases:
+	//   - Show pricing to customers before checkout
+	//   - Compare shipping methods
+	//   - Calculate profit margins
 	VendorGetPriceQuote(context.Context, *VendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
+	// Update line items in an order draft
+	//
+	// PATCH /api/v3/orders/draft/line-items
+	// Content-Type: application/json
+	//
+	// Use cases:
+	//   - Update quantities before checkout
+	//   - Change designs on line items
+	//   - Fix errors in draft orders
 	VendorUpdateOrderDraftLineItems(context.Context, *VendorUpdateOrderDraftLineItemsRequest) (*VendorUpdateOrderDraftLineItemsResponse, error)
+	// Get details of a specific order
+	//
+	// GET /api/v3/orders/{order_id}
+	//
+	// Response includes:
+	//   - Order status and tracking
+	//   - Line items with printing details
+	//   - Shipping information
+	//   - Payment/transaction details
+	//
+	// Use cases:
+	//   - Track order fulfillment
+	//   - Get shipping/tracking info
+	//   - Customer support queries
 	VendorGetOrder(context.Context, *VendorGetOrderRequest) (*VendorGetOrderResponse, error)
+	// Get details of a specific order draft
+	//
+	// GET /api/v3/orders/draft/{order_id}
+	//
+	// Use cases:
+	//   - Review draft before checkout
+	//   - Verify pricing and line items
 	VendorGetOrderDraft(context.Context, *VendorGetOrderDraftRequest) (*VendorGetOrderDraftResponse, error)
 }
 

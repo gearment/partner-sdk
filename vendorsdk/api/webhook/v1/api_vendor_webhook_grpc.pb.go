@@ -28,10 +28,55 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// VendorWebhookAPI provide an abstraction to all of read and write data access for webhook businesses
+// VendorWebhookAPI provides webhook management for real-time event notifications.
+// Register webhooks to receive automated notifications when orders are completed, cancelled, or tracking is updated.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorWebhookAPIClient interface {
+	// List all registered webhooks
+	//
+	// GET /api/v3/webhooks
+	//
+	// Returns:
+	//   - All registered webhooks for your account
+	//   - Webhook status (active/inactive)
+	//   - Event topics subscribed
+	//   - Delivery URLs
+	//
+	// Use cases:
+	//   - Audit webhook configurations
+	//   - Verify webhook setup
+	//   - List active event subscriptions
 	VendorListWebhook(ctx context.Context, in *VendorListWebhookRequest, opts ...grpc.CallOption) (*VendorListWebhookResponse, error)
+	// Register a new webhook for event notifications
+	//
+	// POST /api/v3/webhooks
+	// Content-Type: application/json
+	//
+	// Available topics:
+	//   - VENDOR_WEBHOOK_TOPIC_ORDER_COMPLETED: Order fulfillment completed
+	//   - VENDOR_WEBHOOK_TOPIC_ORDER_CANCELED: Order was cancelled
+	//   - VENDOR_WEBHOOK_TOPIC_TRACKING_UPDATED: Shipping tracking updated
+	//   - VENDOR_WEBHOOK_TOPIC_ADDRESS_UNVERIFIED: Shipping address validation failed
+	//
+	// Security:
+	//   - Webhooks are sent via HTTPS POST
+	//   - Include signature header for verification
+	//   - Must respond with 200 OK within 30 seconds
+	//
+	// Use cases:
+	//   - Automate order status updates
+	//   - Sync tracking information
+	//   - Alert customers of shipment
 	VendorCreateWebhook(ctx context.Context, in *VendorCreateWebhookRequest, opts ...grpc.CallOption) (*VendorCreateWebhookResponse, error)
+	// Delete a webhook subscription
+	//
+	// DELETE /api/v3/webhooks/{webhook_id}
+	//
+	// Use cases:
+	//   - Remove unused webhooks
+	//   - Update webhook configuration (delete + recreate)
 	VendorDeleteWebhook(ctx context.Context, in *VendorDeleteWebhookRequest, opts ...grpc.CallOption) (*VendorDeleteWebhookResponse, error)
 }
 
@@ -77,10 +122,55 @@ func (c *vendorWebhookAPIClient) VendorDeleteWebhook(ctx context.Context, in *Ve
 // All implementations should embed UnimplementedVendorWebhookAPIServer
 // for forward compatibility.
 //
-// VendorWebhookAPI provide an abstraction to all of read and write data access for webhook businesses
+// VendorWebhookAPI provides webhook management for real-time event notifications.
+// Register webhooks to receive automated notifications when orders are completed, cancelled, or tracking is updated.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorWebhookAPIServer interface {
+	// List all registered webhooks
+	//
+	// GET /api/v3/webhooks
+	//
+	// Returns:
+	//   - All registered webhooks for your account
+	//   - Webhook status (active/inactive)
+	//   - Event topics subscribed
+	//   - Delivery URLs
+	//
+	// Use cases:
+	//   - Audit webhook configurations
+	//   - Verify webhook setup
+	//   - List active event subscriptions
 	VendorListWebhook(context.Context, *VendorListWebhookRequest) (*VendorListWebhookResponse, error)
+	// Register a new webhook for event notifications
+	//
+	// POST /api/v3/webhooks
+	// Content-Type: application/json
+	//
+	// Available topics:
+	//   - VENDOR_WEBHOOK_TOPIC_ORDER_COMPLETED: Order fulfillment completed
+	//   - VENDOR_WEBHOOK_TOPIC_ORDER_CANCELED: Order was cancelled
+	//   - VENDOR_WEBHOOK_TOPIC_TRACKING_UPDATED: Shipping tracking updated
+	//   - VENDOR_WEBHOOK_TOPIC_ADDRESS_UNVERIFIED: Shipping address validation failed
+	//
+	// Security:
+	//   - Webhooks are sent via HTTPS POST
+	//   - Include signature header for verification
+	//   - Must respond with 200 OK within 30 seconds
+	//
+	// Use cases:
+	//   - Automate order status updates
+	//   - Sync tracking information
+	//   - Alert customers of shipment
 	VendorCreateWebhook(context.Context, *VendorCreateWebhookRequest) (*VendorCreateWebhookResponse, error)
+	// Delete a webhook subscription
+	//
+	// DELETE /api/v3/webhooks/{webhook_id}
+	//
+	// Use cases:
+	//   - Remove unused webhooks
+	//   - Update webhook configuration (delete + recreate)
 	VendorDeleteWebhook(context.Context, *VendorDeleteWebhookRequest) (*VendorDeleteWebhookResponse, error)
 }
 

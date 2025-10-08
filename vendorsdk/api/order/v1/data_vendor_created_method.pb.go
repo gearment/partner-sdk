@@ -25,12 +25,12 @@ type VendorCreatedMethod int32
 
 const (
 	VendorCreatedMethod_VENDOR_CREATED_METHOD_UNKNOWN VendorCreatedMethod = 0
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_ALL     VendorCreatedMethod = 1 // only used for filtering
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_SYNC    VendorCreatedMethod = 2
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_MANUAL  VendorCreatedMethod = 3
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_API     VendorCreatedMethod = 4
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_IMPORT  VendorCreatedMethod = 5
-	VendorCreatedMethod_VENDOR_CREATED_METHOD_LABEL   VendorCreatedMethod = 6 // only used for filtering
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_ALL     VendorCreatedMethod = 1 // All creation methods (used for filtering)
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_SYNC    VendorCreatedMethod = 2 // Created via store sync (e.g., Shopify, Etsy auto-import)
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_MANUAL  VendorCreatedMethod = 3 // Manually created through dashboard
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_API     VendorCreatedMethod = 4 // Created via API
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_IMPORT  VendorCreatedMethod = 5 // Created via bulk import
+	VendorCreatedMethod_VENDOR_CREATED_METHOD_LABEL   VendorCreatedMethod = 6 // Created with pre-purchased label (used for filtering)
 )
 
 // Enum value maps for VendorCreatedMethod.

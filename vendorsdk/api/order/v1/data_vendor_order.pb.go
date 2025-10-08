@@ -31,16 +31,16 @@ type VendorOrderRefundStatus int32
 const (
 	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_ALL                     VendorOrderRefundStatus = 0
 	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_UNKNOWN                 VendorOrderRefundStatus = 1
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_NOT_REQUESTED           VendorOrderRefundStatus = 2
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_NOT_APPLICABLE          VendorOrderRefundStatus = 3
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REQUESTED               VendorOrderRefundStatus = 4
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_PROCESSING              VendorOrderRefundStatus = 5
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REFUNDED                VendorOrderRefundStatus = 6
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_PARTIALLY_REFUNDED      VendorOrderRefundStatus = 7
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_RETURN_REFUND_REQUESTED VendorOrderRefundStatus = 8
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_RETURN_REFUNDED         VendorOrderRefundStatus = 9
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REJECTED                VendorOrderRefundStatus = 10
-	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_FAILED                  VendorOrderRefundStatus = 11
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_NOT_REQUESTED           VendorOrderRefundStatus = 2  // No refund requested
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_NOT_APPLICABLE          VendorOrderRefundStatus = 3  // Refund not applicable for this order
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REQUESTED               VendorOrderRefundStatus = 4  // Refund requested, awaiting approval
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_PROCESSING              VendorOrderRefundStatus = 5  // Refund is being processed
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REFUNDED                VendorOrderRefundStatus = 6  // Fully refunded
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_PARTIALLY_REFUNDED      VendorOrderRefundStatus = 7  // Partially refunded
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_RETURN_REFUND_REQUESTED VendorOrderRefundStatus = 8  // Return and refund requested
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_RETURN_REFUNDED         VendorOrderRefundStatus = 9  // Returned and refunded
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_REJECTED                VendorOrderRefundStatus = 10 // Refund request rejected
+	VendorOrderRefundStatus_VENDOR_ORDER_REFUND_STATUS_FAILED                  VendorOrderRefundStatus = 11 // Refund processing failed
 )
 
 // Enum value maps for VendorOrderRefundStatus.
@@ -107,16 +107,16 @@ type VendorOrderCancelStatus int32
 const (
 	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_ALL                VendorOrderCancelStatus = 0
 	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_UNKNOWN            VendorOrderCancelStatus = 1
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_NOT_REQUESTED      VendorOrderCancelStatus = 2
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_REQUESTED          VendorOrderCancelStatus = 3
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_PROCESSING         VendorOrderCancelStatus = 4
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_CANCELED           VendorOrderCancelStatus = 5
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_PARTIALLY_CANCELED VendorOrderCancelStatus = 6
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURN_REQUESTED   VendorOrderCancelStatus = 7
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURNED           VendorOrderCancelStatus = 8
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURN_REJECTED    VendorOrderCancelStatus = 9
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_REJECTED           VendorOrderCancelStatus = 10
-	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_FAILED             VendorOrderCancelStatus = 11
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_NOT_REQUESTED      VendorOrderCancelStatus = 2  // No cancellation requested
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_REQUESTED          VendorOrderCancelStatus = 3  // Cancellation requested, awaiting approval
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_PROCESSING         VendorOrderCancelStatus = 4  // Cancellation is being processed
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_CANCELED           VendorOrderCancelStatus = 5  // Fully canceled
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_PARTIALLY_CANCELED VendorOrderCancelStatus = 6  // Partially canceled
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURN_REQUESTED   VendorOrderCancelStatus = 7  // Return requested
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURNED           VendorOrderCancelStatus = 8  // Item returned
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_RETURN_REJECTED    VendorOrderCancelStatus = 9  // Return request rejected
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_REJECTED           VendorOrderCancelStatus = 10 // Cancellation request rejected
+	VendorOrderCancelStatus_VENDOR_ORDER_CANCEL_STATUS_FAILED             VendorOrderCancelStatus = 11 // Cancellation processing failed
 )
 
 // Enum value maps for VendorOrderCancelStatus.
@@ -182,15 +182,15 @@ type VendorOrderStatus int32
 
 const (
 	VendorOrderStatus_VENDOR_ORDER_STATUS_UNKNOWN              VendorOrderStatus = 0
-	VendorOrderStatus_VENDOR_ORDER_STATUS_ALL                  VendorOrderStatus = 1
-	VendorOrderStatus_VENDOR_ORDER_STATUS_AWAITING_PAYMENT     VendorOrderStatus = 2
-	VendorOrderStatus_VENDOR_ORDER_STATUS_PAYMENT_FAILED       VendorOrderStatus = 3
-	VendorOrderStatus_VENDOR_ORDER_STATUS_AWAITING_FULFILLMENT VendorOrderStatus = 4
-	VendorOrderStatus_VENDOR_ORDER_STATUS_IN_PRODUCTION        VendorOrderStatus = 5
-	VendorOrderStatus_VENDOR_ORDER_STATUS_PACKED               VendorOrderStatus = 6
-	VendorOrderStatus_VENDOR_ORDER_STATUS_SHIPPED              VendorOrderStatus = 7
-	VendorOrderStatus_VENDOR_ORDER_STATUS_CANCELLED            VendorOrderStatus = 8
-	VendorOrderStatus_VENDOR_ORDER_STATUS_ON_HOLD              VendorOrderStatus = 9
+	VendorOrderStatus_VENDOR_ORDER_STATUS_ALL                  VendorOrderStatus = 1 // All statuses (used for filtering)
+	VendorOrderStatus_VENDOR_ORDER_STATUS_AWAITING_PAYMENT     VendorOrderStatus = 2 // Waiting for payment
+	VendorOrderStatus_VENDOR_ORDER_STATUS_PAYMENT_FAILED       VendorOrderStatus = 3 // Payment failed
+	VendorOrderStatus_VENDOR_ORDER_STATUS_AWAITING_FULFILLMENT VendorOrderStatus = 4 // Paid, waiting to start production
+	VendorOrderStatus_VENDOR_ORDER_STATUS_IN_PRODUCTION        VendorOrderStatus = 5 // Currently being produced
+	VendorOrderStatus_VENDOR_ORDER_STATUS_PACKED               VendorOrderStatus = 6 // Packed and ready to ship
+	VendorOrderStatus_VENDOR_ORDER_STATUS_SHIPPED              VendorOrderStatus = 7 // Shipped to customer
+	VendorOrderStatus_VENDOR_ORDER_STATUS_CANCELLED            VendorOrderStatus = 8 // Order canceled
+	VendorOrderStatus_VENDOR_ORDER_STATUS_ON_HOLD              VendorOrderStatus = 9 // Order on hold (requires attention)
 )
 
 // Enum value maps for VendorOrderStatus.
@@ -252,12 +252,12 @@ type VendorOrderPaymentStatus int32
 
 const (
 	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_UNKNOWN           VendorOrderPaymentStatus = 0
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_ALL               VendorOrderPaymentStatus = 1
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_PENDING           VendorOrderPaymentStatus = 2
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_SUCCESS           VendorOrderPaymentStatus = 3
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_FAILED            VendorOrderPaymentStatus = 4
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_EXPIRED           VendorOrderPaymentStatus = 5
-	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_SUCCESS_PARTIALLY VendorOrderPaymentStatus = 6
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_ALL               VendorOrderPaymentStatus = 1 // All payment statuses (used for filtering)
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_PENDING           VendorOrderPaymentStatus = 2 // Payment pending
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_SUCCESS           VendorOrderPaymentStatus = 3 // Payment successful
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_FAILED            VendorOrderPaymentStatus = 4 // Payment failed
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_EXPIRED           VendorOrderPaymentStatus = 5 // Payment link expired
+	VendorOrderPaymentStatus_VENDOR_ORDER_PAYMENT_STATUS_SUCCESS_PARTIALLY VendorOrderPaymentStatus = 6 // Partially paid
 )
 
 // Enum value maps for VendorOrderPaymentStatus.
@@ -310,60 +310,111 @@ func (VendorOrderPaymentStatus) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorOrder struct {
-	state               protoimpl.MessageState    `protogen:"open.v1"`
-	OrderId             string                    `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	StoreId             string                    `protobuf:"bytes,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	TeamId              string                    `protobuf:"bytes,3,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	CreatedMethod       VendorCreatedMethod       `protobuf:"varint,4,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
-	OrderPlatform       v1.MarketplacePlatform    `protobuf:"varint,5,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
-	PlatformRef         string                    `protobuf:"bytes,6,opt,name=platform_ref,json=platformRef,proto3" json:"platform_ref,omitempty"` // will be deleted soon
-	FulfillmentVendor   VendorFulfillmentVendor   `protobuf:"varint,7,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=api.order.v1.VendorFulfillmentVendor" json:"fulfillment_vendor,omitempty"`
-	VendorRef           string                    `protobuf:"bytes,8,opt,name=vendor_ref,json=vendorRef,proto3" json:"vendor_ref,omitempty"`
-	Priority            VendorFulfillmentPriority `protobuf:"varint,9,opt,name=priority,proto3,enum=api.order.v1.VendorFulfillmentPriority" json:"priority,omitempty"`
-	FulfillmentOption   *VendorFulfillmentOption  `protobuf:"bytes,10,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
-	ShippingOption      *VendorShippingOption     `protobuf:"bytes,11,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
-	BillingOption       *VendorBillingOption      `protobuf:"bytes,12,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
-	ShippingLabels      []string                  `protobuf:"bytes,13,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
-	OrderDate           *timestamppb.Timestamp    `protobuf:"bytes,14,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
-	ApprovedAt          *timestamppb.Timestamp    `protobuf:"bytes,15,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
-	PaidAt              *timestamppb.Timestamp    `protobuf:"bytes,16,opt,name=paid_at,json=paidAt,proto3" json:"paid_at,omitempty"`
-	OrderStatus         VendorOrderStatus         `protobuf:"varint,17,opt,name=order_status,json=orderStatus,proto3,enum=api.order.v1.VendorOrderStatus" json:"order_status,omitempty"`
-	PrimaryPackageId    string                    `protobuf:"bytes,18,opt,name=primary_package_id,json=primaryPackageId,proto3" json:"primary_package_id,omitempty"`
-	PrimaryShipmentId   string                    `protobuf:"bytes,19,opt,name=primary_shipment_id,json=primaryShipmentId,proto3" json:"primary_shipment_id,omitempty"`
-	IsLabelAttached     bool                      `protobuf:"varint,20,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
-	OrderSubtotal       *v11.Money                `protobuf:"bytes,21,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
-	OrderTax            *v11.Money                `protobuf:"bytes,22,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
-	OrderFee            *v11.Money                `protobuf:"bytes,23,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
-	OrderDiscount       *v11.Money                `protobuf:"bytes,24,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
-	OrderTotal          *v11.Money                `protobuf:"bytes,25,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
-	OrderRedeem         *v11.Money                `protobuf:"bytes,26,opt,name=order_redeem,json=orderRedeem,proto3" json:"order_redeem,omitempty"`
-	PaidTotal           *v11.Money                `protobuf:"bytes,27,opt,name=paid_total,json=paidTotal,proto3" json:"paid_total,omitempty"`
-	PaidNeeded          *v11.Money                `protobuf:"bytes,28,opt,name=paid_needed,json=paidNeeded,proto3" json:"paid_needed,omitempty"`
-	TrackingNo          string                    `protobuf:"bytes,29,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
-	CreatedAt           *timestamppb.Timestamp    `protobuf:"bytes,30,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt           *timestamppb.Timestamp    `protobuf:"bytes,31,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	LineItems           []*VendorOrderLineItem    `protobuf:"bytes,32,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
-	StoreName           string                    `protobuf:"bytes,33,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
-	Addresses           []*VendorAddress          `protobuf:"bytes,34,rep,name=addresses,proto3" json:"addresses,omitempty"`
-	Stages              []*VendorProcessingStage  `protobuf:"bytes,35,rep,name=stages,proto3" json:"stages,omitempty"`
-	OrderGiftMessageFee *v11.Money                `protobuf:"bytes,36,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
-	OrderShippingFee    *v11.Money                `protobuf:"bytes,37,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
-	OrderHandleFee      *v11.Money                `protobuf:"bytes,38,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
-	OrderSurcharge      *v11.Money                `protobuf:"bytes,39,opt,name=order_surcharge,json=orderSurcharge,proto3" json:"order_surcharge,omitempty"`
-	OrderRushFee        *v11.Money                `protobuf:"bytes,40,opt,name=order_rush_fee,json=orderRushFee,proto3" json:"order_rush_fee,omitempty"`
-	OrderThankCardFee   *v11.Money                `protobuf:"bytes,41,opt,name=order_thank_card_fee,json=orderThankCardFee,proto3" json:"order_thank_card_fee,omitempty"`
-	OrderTrackings      []*VendorOrderTracking    `protobuf:"bytes,42,rep,name=order_trackings,json=orderTrackings,proto3" json:"order_trackings,omitempty"`
-	GiftMessages        []*VendorGiftMessage      `protobuf:"bytes,43,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
-	RefundStatus        VendorOrderRefundStatus   `protobuf:"varint,44,opt,name=refund_status,json=refundStatus,proto3,enum=api.order.v1.VendorOrderRefundStatus" json:"refund_status,omitempty"`
-	CancelStatus        VendorOrderCancelStatus   `protobuf:"varint,45,opt,name=cancel_status,json=cancelStatus,proto3,enum=api.order.v1.VendorOrderCancelStatus" json:"cancel_status,omitempty"`
-	OrderPriority       string                    `protobuf:"bytes,46,opt,name=order_priority,json=orderPriority,proto3" json:"order_priority,omitempty"`
-	TransactionInfo     *VendorTransactionInfo    `protobuf:"bytes,48,opt,name=transaction_info,json=transactionInfo,proto3" json:"transaction_info,omitempty"`
-	CancelReason        *VendorCancelReason       `protobuf:"bytes,49,opt,name=cancel_reason,json=cancelReason,proto3" json:"cancel_reason,omitempty"`
-	RefundedTotal       *v11.Money                `protobuf:"bytes,50,opt,name=refunded_total,json=refundedTotal,proto3" json:"refunded_total,omitempty"`
-	LegacyExternalId    string                    `protobuf:"bytes,52,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
-	ReferenceId         string                    `protobuf:"bytes,53,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique order ID
+	OrderId string `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Store ID this order belongs to
+	StoreId string `protobuf:"bytes,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	// Team ID (your account ID)
+	TeamId string `protobuf:"bytes,3,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	// How this order was created (manual, API, store sync, etc.)
+	CreatedMethod VendorCreatedMethod `protobuf:"varint,4,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
+	// Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+	OrderPlatform v1.MarketplacePlatform `protobuf:"varint,5,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
+	// Platform reference ID (deprecated, will be removed)
+	PlatformRef string `protobuf:"bytes,6,opt,name=platform_ref,json=platformRef,proto3" json:"platform_ref,omitempty"` // will be deleted soon
+	// Fulfillment vendor (Gearment, etc.)
+	FulfillmentVendor VendorFulfillmentVendor `protobuf:"varint,7,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=api.order.v1.VendorFulfillmentVendor" json:"fulfillment_vendor,omitempty"`
+	// Vendor's reference ID for this order
+	VendorRef string `protobuf:"bytes,8,opt,name=vendor_ref,json=vendorRef,proto3" json:"vendor_ref,omitempty"`
+	// Fulfillment priority (standard, rush, etc.)
+	Priority VendorFulfillmentPriority `protobuf:"varint,9,opt,name=priority,proto3,enum=api.order.v1.VendorFulfillmentPriority" json:"priority,omitempty"`
+	// Fulfillment configuration options
+	FulfillmentOption *VendorFulfillmentOption `protobuf:"bytes,10,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
+	// Shipping method and carrier details
+	ShippingOption *VendorShippingOption `protobuf:"bytes,11,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
+	// Billing and tax options (IOSS, etc.)
+	BillingOption *VendorBillingOption `protobuf:"bytes,12,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
+	// Shipping label URLs (if pre-purchased)
+	ShippingLabels []string `protobuf:"bytes,13,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
+	// When the order was originally placed
+	OrderDate *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	// When the order was approved for fulfillment
+	ApprovedAt *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
+	// When the payment was confirmed
+	PaidAt *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=paid_at,json=paidAt,proto3" json:"paid_at,omitempty"`
+	// Current order status
+	OrderStatus VendorOrderStatus `protobuf:"varint,17,opt,name=order_status,json=orderStatus,proto3,enum=api.order.v1.VendorOrderStatus" json:"order_status,omitempty"`
+	// Primary package ID for this order
+	PrimaryPackageId string `protobuf:"bytes,18,opt,name=primary_package_id,json=primaryPackageId,proto3" json:"primary_package_id,omitempty"`
+	// Primary shipment ID for this order
+	PrimaryShipmentId string `protobuf:"bytes,19,opt,name=primary_shipment_id,json=primaryShipmentId,proto3" json:"primary_shipment_id,omitempty"`
+	// Whether shipping label is attached
+	IsLabelAttached bool `protobuf:"varint,20,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
+	// Subtotal (sum of all line items before fees/tax/discount)
+	OrderSubtotal *v11.Money `protobuf:"bytes,21,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
+	// Total tax amount
+	OrderTax *v11.Money `protobuf:"bytes,22,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
+	// Additional processing fees
+	OrderFee *v11.Money `protobuf:"bytes,23,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
+	// Total discount applied
+	OrderDiscount *v11.Money `protobuf:"bytes,24,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
+	// Final total amount (subtotal + fees + tax - discount)
+	OrderTotal *v11.Money `protobuf:"bytes,25,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
+	// Amount redeemed from credits/wallet
+	OrderRedeem *v11.Money `protobuf:"bytes,26,opt,name=order_redeem,json=orderRedeem,proto3" json:"order_redeem,omitempty"`
+	// Amount already paid
+	PaidTotal *v11.Money `protobuf:"bytes,27,opt,name=paid_total,json=paidTotal,proto3" json:"paid_total,omitempty"`
+	// Amount still needed to complete payment
+	PaidNeeded *v11.Money `protobuf:"bytes,28,opt,name=paid_needed,json=paidNeeded,proto3" json:"paid_needed,omitempty"`
+	// Primary tracking number
+	TrackingNo string `protobuf:"bytes,29,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
+	// When this order record was created
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,30,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// When this order was last updated
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,31,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	// All line items in this order
+	LineItems []*VendorOrderLineItem `protobuf:"bytes,32,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
+	// Store name for display
+	StoreName string `protobuf:"bytes,33,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
+	// Shipping and billing addresses
+	Addresses []*VendorAddress `protobuf:"bytes,34,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	// Processing stages (printing, packing, shipping, etc.)
+	Stages []*VendorProcessingStage `protobuf:"bytes,35,rep,name=stages,proto3" json:"stages,omitempty"`
+	// Gift message fee (if applicable)
+	OrderGiftMessageFee *v11.Money `protobuf:"bytes,36,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
+	// Shipping cost
+	OrderShippingFee *v11.Money `protobuf:"bytes,37,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
+	// Order handling fee
+	OrderHandleFee *v11.Money `protobuf:"bytes,38,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
+	// Additional surcharges
+	OrderSurcharge *v11.Money `protobuf:"bytes,39,opt,name=order_surcharge,json=orderSurcharge,proto3" json:"order_surcharge,omitempty"`
+	// Rush processing fee (if applicable)
+	OrderRushFee *v11.Money `protobuf:"bytes,40,opt,name=order_rush_fee,json=orderRushFee,proto3" json:"order_rush_fee,omitempty"`
+	// Thank you card fee (if applicable)
+	OrderThankCardFee *v11.Money `protobuf:"bytes,41,opt,name=order_thank_card_fee,json=orderThankCardFee,proto3" json:"order_thank_card_fee,omitempty"`
+	// All tracking information for this order
+	OrderTrackings []*VendorOrderTracking `protobuf:"bytes,42,rep,name=order_trackings,json=orderTrackings,proto3" json:"order_trackings,omitempty"`
+	// Gift messages for this order
+	GiftMessages []*VendorGiftMessage `protobuf:"bytes,43,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
+	// Refund status
+	RefundStatus VendorOrderRefundStatus `protobuf:"varint,44,opt,name=refund_status,json=refundStatus,proto3,enum=api.order.v1.VendorOrderRefundStatus" json:"refund_status,omitempty"`
+	// Cancellation status
+	CancelStatus VendorOrderCancelStatus `protobuf:"varint,45,opt,name=cancel_status,json=cancelStatus,proto3,enum=api.order.v1.VendorOrderCancelStatus" json:"cancel_status,omitempty"`
+	// Order priority label (for display)
+	OrderPriority string `protobuf:"bytes,46,opt,name=order_priority,json=orderPriority,proto3" json:"order_priority,omitempty"`
+	// Payment transaction details
+	TransactionInfo *VendorTransactionInfo `protobuf:"bytes,48,opt,name=transaction_info,json=transactionInfo,proto3" json:"transaction_info,omitempty"`
+	// Cancellation reason (if canceled)
+	CancelReason *VendorCancelReason `protobuf:"bytes,49,opt,name=cancel_reason,json=cancelReason,proto3" json:"cancel_reason,omitempty"`
+	// Total amount refunded
+	RefundedTotal *v11.Money `protobuf:"bytes,50,opt,name=refunded_total,json=refundedTotal,proto3" json:"refunded_total,omitempty"`
+	// Legacy external ID (for OMS backward compatibility)
+	LegacyExternalId string `protobuf:"bytes,52,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
+	// Your custom reference ID
+	ReferenceId   string `protobuf:"bytes,53,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorOrder) Reset() {
@@ -754,10 +805,13 @@ func (x *VendorOrder) GetReferenceId() string {
 }
 
 type VendorCancelReason struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ReasonId      string                 `protobuf:"bytes,1,opt,name=reason_id,json=reasonId,proto3" json:"reason_id,omitempty"`
-	DisplayName   string                 `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	CustomReason  string                 `protobuf:"bytes,3,opt,name=custom_reason,json=customReason,proto3" json:"custom_reason,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Cancellation reason ID
+	ReasonId string `protobuf:"bytes,1,opt,name=reason_id,json=reasonId,proto3" json:"reason_id,omitempty"`
+	// Human-readable cancellation reason
+	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	// Custom cancellation reason (if not using predefined reasons)
+	CustomReason  string `protobuf:"bytes,3,opt,name=custom_reason,json=customReason,proto3" json:"custom_reason,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -814,14 +868,19 @@ func (x *VendorCancelReason) GetCustomReason() string {
 }
 
 type VendorProcessingStage struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	StageId          string                 `protobuf:"bytes,1,opt,name=stage_id,json=stageId,proto3" json:"stage_id,omitempty"`
-	StageName        string                 `protobuf:"bytes,2,opt,name=stage_name,json=stageName,proto3" json:"stage_name,omitempty"`
-	StageStartedAt   *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=stage_started_at,json=stageStartedAt,proto3" json:"stage_started_at,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Processing stage ID
+	StageId string `protobuf:"bytes,1,opt,name=stage_id,json=stageId,proto3" json:"stage_id,omitempty"`
+	// Processing stage name (e.g., "Printing", "Packing", "Shipping")
+	StageName string `protobuf:"bytes,2,opt,name=stage_name,json=stageName,proto3" json:"stage_name,omitempty"`
+	// When this stage started
+	StageStartedAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=stage_started_at,json=stageStartedAt,proto3" json:"stage_started_at,omitempty"`
+	// When this stage completed
 	StageCompletedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=stage_completed_at,json=stageCompletedAt,proto3" json:"stage_completed_at,omitempty"`
-	IsCompleted      bool                   `protobuf:"varint,5,opt,name=is_completed,json=isCompleted,proto3" json:"is_completed,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Whether this stage is completed
+	IsCompleted   bool `protobuf:"varint,5,opt,name=is_completed,json=isCompleted,proto3" json:"is_completed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorProcessingStage) Reset() {
@@ -890,13 +949,19 @@ func (x *VendorProcessingStage) GetIsCompleted() bool {
 }
 
 type VendorOrderFilter struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	OrderIds       []string               `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
-	Statuses       []VendorOrderStatus    `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=api.order.v1.VendorOrderStatus" json:"statuses,omitempty"`
-	CreatedMethods []VendorCreatedMethod  `protobuf:"varint,3,rep,packed,name=created_methods,json=createdMethods,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_methods,omitempty"`
-	CreatedAtMin   *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at_min,json=createdAtMin,proto3" json:"created_at_min,omitempty"`
-	CreatedAtMax   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at_max,json=createdAtMax,proto3" json:"created_at_max,omitempty"`
-	// For API Legacy
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Filter by specific order IDs
+	OrderIds []string `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
+	// Filter by order statuses
+	Statuses []VendorOrderStatus `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=api.order.v1.VendorOrderStatus" json:"statuses,omitempty"`
+	// Filter by order creation methods
+	CreatedMethods []VendorCreatedMethod `protobuf:"varint,3,rep,packed,name=created_methods,json=createdMethods,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_methods,omitempty"`
+	// Filter orders created after this date (inclusive, ISO 8601 format)
+	// In query params, this is sent as a string, not as seconds/nanos
+	CreatedAtMin *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at_min,json=createdAtMin,proto3" json:"created_at_min,omitempty"`
+	// Filter orders created before this date (inclusive, ISO 8601 format)
+	CreatedAtMax *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at_max,json=createdAtMax,proto3" json:"created_at_max,omitempty"`
+	// Filter by payment status (for legacy API compatibility)
 	PaymentStatus []VendorOrderPaymentStatus `protobuf:"varint,6,rep,packed,name=payment_status,json=paymentStatus,proto3,enum=api.order.v1.VendorOrderPaymentStatus" json:"payment_status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2045,11 +2110,12 @@ var file_api_order_v1_data_vendor_order_proto_rawDesc = string([]byte{
 	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x10, 0x73, 0x74, 0x61, 0x67, 0x65, 0x43, 0x6f, 0x6d,
 	0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x69, 0x73, 0x5f, 0x63,
 	0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b,
-	0x69, 0x73, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x22, 0xba, 0x03, 0x0a, 0x11,
+	0x69, 0x73, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x22, 0xca, 0x03, 0x0a, 0x11,
 	0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x46, 0x69, 0x6c, 0x74, 0x65,
-	0x72, 0x12, 0x2b, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x09, 0x42, 0x0e, 0xba, 0x48, 0x0b, 0x92, 0x01, 0x08, 0x22, 0x06, 0x72, 0x04,
-	0x10, 0x01, 0x18, 0x64, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x4a,
+	0x72, 0x12, 0x3b, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x42, 0x1e, 0xba, 0x48, 0x1b, 0x92, 0x01, 0x18, 0x22, 0x16, 0x72, 0x14,
+	0x10, 0x01, 0x18, 0x64, 0x92, 0x02, 0x0d, 0x6f, 0x72, 0x64, 0x5f, 0x61, 0x62, 0x63, 0x31, 0x32,
+	0x33, 0x78, 0x79, 0x7a, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x4a,
 	0x0a, 0x08, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0e,
 	0x32, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e,
 	0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75,

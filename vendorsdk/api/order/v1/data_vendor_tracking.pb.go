@@ -27,9 +27,9 @@ type VendorTrackingType int32
 
 const (
 	VendorTrackingType_TRACKING_TYPE_UNSPECIFIED VendorTrackingType = 0
-	VendorTrackingType_TRACKING_TYPE_PRIMARY     VendorTrackingType = 1
-	VendorTrackingType_TRACKING_TYPE_SECONDARY   VendorTrackingType = 2
-	VendorTrackingType_TRACKING_TYPE_OUTDATED    VendorTrackingType = 3
+	VendorTrackingType_TRACKING_TYPE_PRIMARY     VendorTrackingType = 1 // Primary/current tracking number
+	VendorTrackingType_TRACKING_TYPE_SECONDARY   VendorTrackingType = 2 // Additional tracking number (for multi-package shipments)
+	VendorTrackingType_TRACKING_TYPE_OUTDATED    VendorTrackingType = 3 // Old/replaced tracking number
 )
 
 // Enum value maps for VendorTrackingType.
@@ -76,17 +76,25 @@ func (VendorTrackingType) EnumDescriptor() ([]byte, []int) {
 }
 
 type VendorOrderTracking struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	TrackingNo        string                 `protobuf:"bytes,1,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Tracking number (e.g., "1Z999AA10123456784" for UPS)
+	TrackingNo string `protobuf:"bytes,1,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
+	// Last update timestamp for tracking information
 	TrackingUpdatedAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=tracking_updated_at,json=trackingUpdatedAt,proto3" json:"tracking_updated_at,omitempty"`
-	Carrier           string                 `protobuf:"bytes,3,opt,name=carrier,proto3" json:"carrier,omitempty"`
-	Service           string                 `protobuf:"bytes,4,opt,name=service,proto3" json:"service,omitempty"`
-	Type              string                 `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
-	LabelFile         *v1.File               `protobuf:"bytes,6,opt,name=label_file,json=labelFile,proto3" json:"label_file,omitempty"`
-	TrackingType      VendorTrackingType     `protobuf:"varint,7,opt,name=tracking_type,json=trackingType,proto3,enum=api.order.v1.VendorTrackingType" json:"tracking_type,omitempty"`
-	TrackingUrl       string                 `protobuf:"bytes,8,opt,name=tracking_url,json=trackingUrl,proto3" json:"tracking_url,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Shipping carrier (e.g., "USPS", "FedEx", "UPS", "DHL")
+	Carrier string `protobuf:"bytes,3,opt,name=carrier,proto3" json:"carrier,omitempty"`
+	// Shipping service level (e.g., "Priority Mail", "Ground", "Express")
+	Service string `protobuf:"bytes,4,opt,name=service,proto3" json:"service,omitempty"`
+	// Legacy tracking type field (deprecated, use tracking_type instead)
+	Type string `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
+	// Shipping label file (PDF or image)
+	LabelFile *v1.File `protobuf:"bytes,6,opt,name=label_file,json=labelFile,proto3" json:"label_file,omitempty"`
+	// Tracking type (indicates if this is the primary, secondary, or outdated tracking)
+	TrackingType VendorTrackingType `protobuf:"varint,7,opt,name=tracking_type,json=trackingType,proto3,enum=api.order.v1.VendorTrackingType" json:"tracking_type,omitempty"`
+	// Tracking URL for carrier's tracking page (e.g., "https://tools.usps.com/go/TrackConfirmAction?tLabels=...")
+	TrackingUrl   string `protobuf:"bytes,8,opt,name=tracking_url,json=trackingUrl,proto3" json:"tracking_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorOrderTracking) Reset() {

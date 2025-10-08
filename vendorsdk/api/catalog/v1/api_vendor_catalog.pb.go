@@ -25,9 +25,11 @@ const (
 )
 
 type VendorListCatalogRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Filter        *VendorCatalogFilter   `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Paging        *v1.Paging             `protobuf:"bytes,2,opt,name=paging,proto3" json:"paging,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Filter criteria for products
+	Filter *VendorCatalogFilter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Pagination parameters (default: page=1, limit=20; max limit: 100)
+	Paging        *v1.Paging `protobuf:"bytes,2,opt,name=paging,proto3" json:"paging,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -77,11 +79,17 @@ func (x *VendorListCatalogRequest) GetPaging() *v1.Paging {
 }
 
 type VendorListCatalogResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Paging        *v1.PagingResponse     `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`
-	Data          []*VendorCatalog       `protobuf:"bytes,4,rep,name=data,proto3" json:"data,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Response status: "success" or "error"
+	Status string `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	// Human-readable message describing the result
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	// Pagination metadata
+	// Contains: total count, current page, total pages
+	Paging *v1.PagingResponse `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`
+	// List of products matching the filter
+	// Each product includes: name, description, images, available variants
+	Data          []*VendorCatalog `protobuf:"bytes,4,rep,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -145,9 +153,11 @@ func (x *VendorListCatalogResponse) GetData() []*VendorCatalog {
 }
 
 type VendorListCatalogVariantRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Filter        *VendorCatalogVariantFilter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Paging        *v1.Paging                  `protobuf:"bytes,2,opt,name=paging,proto3" json:"paging,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Filter criteria for variants
+	Filter *VendorCatalogVariantFilter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Pagination parameters (max limit: 200)
+	Paging        *v1.Paging `protobuf:"bytes,2,opt,name=paging,proto3" json:"paging,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -197,10 +207,15 @@ func (x *VendorListCatalogVariantRequest) GetPaging() *v1.Paging {
 }
 
 type VendorListCatalogVariantResponse struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Status        string                  `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	Message       string                  `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Paging        *v1.PagingResponse      `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Response status: "success" or "error"
+	Status string `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	// Human-readable message
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	// Pagination metadata
+	Paging *v1.PagingResponse `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`
+	// List of product variants
+	// Each variant includes: size, color, SKU, price, stock status, print specifications
 	Data          []*VendorCatalogVariant `protobuf:"bytes,4,rep,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

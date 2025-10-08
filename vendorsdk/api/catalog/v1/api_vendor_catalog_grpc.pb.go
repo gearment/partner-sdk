@@ -28,10 +28,53 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// VendorCatalogAPI provide an abstraction to all of read data access for catalog businesses
+// VendorCatalogAPI provides access to product catalog and inventory management.
+// Use these endpoints to browse available products, check stock status, and get product details.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorCatalogAPIClient interface {
+	// List all available products in the catalog
+	//
+	// GET /api/v3/catalog
+	//
+	// Returns:
+	//   - Product listings with base information
+	//   - Available variants for each product
+	//   - Pricing and printing options
+	//
+	// Use cases:
+	//   - Build product catalog in your system
+	//   - Display available products to customers
+	//   - Sync product updates
 	VendorListCatalog(ctx context.Context, in *VendorListCatalogRequest, opts ...grpc.CallOption) (*VendorListCatalogResponse, error)
+	// List product variants with detailed specifications
+	//
+	// GET /api/v3/catalog/variants
+	//
+	// Returns:
+	//   - Variant details (size, color, SKU)
+	//   - Pricing information
+	//   - Stock availability
+	//   - Print area specifications
+	//
+	// Use cases:
+	//   - Get variant-specific pricing
+	//   - Check size/color availability
+	//   - Display product options to customers
 	VendorListCatalogVariant(ctx context.Context, in *VendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorListCatalogVariantResponse, error)
+	// Check real-time stock status for variants
+	//
+	// GET /api/v3/catalog/variants/stock
+	//
+	// Returns:
+	//   - Stock status: in_stock, out_of_stock, discontinued, temporarily_unavailable
+	//   - Expected restock date (if applicable)
+	//
+	// Use cases:
+	//   - Verify stock before order placement
+	//   - Update product availability in your system
+	//   - Show stock status to customers
 	VendorGetCatalogStockStatus(ctx context.Context, in *VendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorListCatalogVariantResponse, error)
 }
 
@@ -77,10 +120,53 @@ func (c *vendorCatalogAPIClient) VendorGetCatalogStockStatus(ctx context.Context
 // All implementations should embed UnimplementedVendorCatalogAPIServer
 // for forward compatibility.
 //
-// VendorCatalogAPI provide an abstraction to all of read data access for catalog businesses
+// VendorCatalogAPI provides access to product catalog and inventory management.
+// Use these endpoints to browse available products, check stock status, and get product details.
+//
+// Base URL: https://api.gearment.com/
+// Authentication: API Key (header: X-API-Key, X-API-Secret)
 type VendorCatalogAPIServer interface {
+	// List all available products in the catalog
+	//
+	// GET /api/v3/catalog
+	//
+	// Returns:
+	//   - Product listings with base information
+	//   - Available variants for each product
+	//   - Pricing and printing options
+	//
+	// Use cases:
+	//   - Build product catalog in your system
+	//   - Display available products to customers
+	//   - Sync product updates
 	VendorListCatalog(context.Context, *VendorListCatalogRequest) (*VendorListCatalogResponse, error)
+	// List product variants with detailed specifications
+	//
+	// GET /api/v3/catalog/variants
+	//
+	// Returns:
+	//   - Variant details (size, color, SKU)
+	//   - Pricing information
+	//   - Stock availability
+	//   - Print area specifications
+	//
+	// Use cases:
+	//   - Get variant-specific pricing
+	//   - Check size/color availability
+	//   - Display product options to customers
 	VendorListCatalogVariant(context.Context, *VendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error)
+	// Check real-time stock status for variants
+	//
+	// GET /api/v3/catalog/variants/stock
+	//
+	// Returns:
+	//   - Stock status: in_stock, out_of_stock, discontinued, temporarily_unavailable
+	//   - Expected restock date (if applicable)
+	//
+	// Use cases:
+	//   - Verify stock before order placement
+	//   - Update product availability in your system
+	//   - Show stock status to customers
 	VendorGetCatalogStockStatus(context.Context, *VendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error)
 }
 

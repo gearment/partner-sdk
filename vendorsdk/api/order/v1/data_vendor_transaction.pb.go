@@ -23,11 +23,16 @@ const (
 )
 
 type VendorTransactionInfo struct {
-	state             protoimpl.MessageState                     `protogen:"open.v1"`
-	TxnId             string                                     `protobuf:"bytes,1,opt,name=txn_id,json=txnId,proto3" json:"txn_id,omitempty"`
-	TeamId            string                                     `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	MethodCode        string                                     `protobuf:"bytes,3,opt,name=method_code,json=methodCode,proto3" json:"method_code,omitempty"`
-	MethodIconUrls    string                                     `protobuf:"bytes,4,opt,name=method_icon_urls,json=methodIconUrls,proto3" json:"method_icon_urls,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Transaction ID (unique identifier for this payment transaction)
+	TxnId string `protobuf:"bytes,1,opt,name=txn_id,json=txnId,proto3" json:"txn_id,omitempty"`
+	// Team ID (your account identifier)
+	TeamId string `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	// Payment method code (e.g., "credit_card", "paypal", "stripe")
+	MethodCode string `protobuf:"bytes,3,opt,name=method_code,json=methodCode,proto3" json:"method_code,omitempty"`
+	// Payment method icon URL (for displaying payment method logo)
+	MethodIconUrls string `protobuf:"bytes,4,opt,name=method_icon_urls,json=methodIconUrls,proto3" json:"method_icon_urls,omitempty"`
+	// List of invoice details included in this transaction
 	ListInvoiceDetail []*VendorTransactionInfo_VendorInvoiceInfo `protobuf:"bytes,5,rep,name=list_invoice_detail,json=listInvoiceDetail,proto3" json:"list_invoice_detail,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -99,17 +104,25 @@ func (x *VendorTransactionInfo) GetListInvoiceDetail() []*VendorTransactionInfo_
 }
 
 type VendorTransactionInfo_VendorInvoiceInfo struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId       string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	OrderId         string                 `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	VariantName     string                 `protobuf:"bytes,3,opt,name=variant_name,json=variantName,proto3" json:"variant_name,omitempty"`
-	Quantity        int32                  `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	ShippingService string                 `protobuf:"bytes,5,opt,name=shipping_service,json=shippingService,proto3" json:"shipping_service,omitempty"`
-	TrackingNumber  string                 `protobuf:"bytes,6,opt,name=tracking_number,json=trackingNumber,proto3" json:"tracking_number,omitempty"`
-	ProductImageUrl string                 `protobuf:"bytes,7,opt,name=product_image_url,json=productImageUrl,proto3" json:"product_image_url,omitempty"`
-	LineTotal       *v1.Money              `protobuf:"bytes,8,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Invoice ID (unique identifier for this invoice)
+	InvoiceId string `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	// Order ID associated with this invoice line
+	OrderId string `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Product variant name (e.g., "Unisex T-Shirt - Black - M")
+	VariantName string `protobuf:"bytes,3,opt,name=variant_name,json=variantName,proto3" json:"variant_name,omitempty"`
+	// Quantity of items in this invoice line
+	Quantity int32 `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	// Shipping service used (e.g., "USPS Priority Mail", "FedEx Ground")
+	ShippingService string `protobuf:"bytes,5,opt,name=shipping_service,json=shippingService,proto3" json:"shipping_service,omitempty"`
+	// Tracking number for shipment
+	TrackingNumber string `protobuf:"bytes,6,opt,name=tracking_number,json=trackingNumber,proto3" json:"tracking_number,omitempty"`
+	// Product image URL
+	ProductImageUrl string `protobuf:"bytes,7,opt,name=product_image_url,json=productImageUrl,proto3" json:"product_image_url,omitempty"`
+	// Total amount for this invoice line
+	LineTotal     *v1.Money `protobuf:"bytes,8,opt,name=line_total,json=lineTotal,proto3" json:"line_total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorTransactionInfo_VendorInvoiceInfo) Reset() {
