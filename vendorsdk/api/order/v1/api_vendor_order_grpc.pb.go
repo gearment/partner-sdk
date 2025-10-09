@@ -565,10 +565,12 @@ const (
 //
 // LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
 type LegacyVendorOrderAPIClient interface {
+	// https://api.gearment.com/v2/?act=order_estimate_costs
 	LegacyVendorGetPriceQuote(ctx context.Context, in *LegacyVendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*LegacyVendorGetPriceQuoteResponse, error)
 	LegacyVendorCreateOrderDraft(ctx context.Context, in *LegacyVendorCreateOrderDraftRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftResponse, error)
 	LegacyVendorCreateOrderDraftWithLabel(ctx context.Context, in *LegacyVendorCreateOrderDraftWithLabelRequest, opts ...grpc.CallOption) (*LegacyVendorCreateOrderDraftWithLabelResponse, error)
 	LegacyVendorListOrder(ctx context.Context, in *LegacyVendorListOrderRequest, opts ...grpc.CallOption) (*LegacyVendorListOrderResponse, error)
+	// https://api.gearment.com/v2/?act=order_fullfillment
 	LegacyVendorUpdateOrderDraftLineItems(ctx context.Context, in *LegacyVendorUpdateOrderDraftLineItemsRequest, opts ...grpc.CallOption) (*LegacyVendorUpdateOrderDraftLineItemsResponse, error)
 	LegacyVendorGetOrder(ctx context.Context, in *LegacyVendorGetOrderRequest, opts ...grpc.CallOption) (*LegacyVendorGetOrderResponse, error)
 }
@@ -647,10 +649,12 @@ func (c *legacyVendorOrderAPIClient) LegacyVendorGetOrder(ctx context.Context, i
 //
 // LegacyVendorOrderAPI provide an abstraction to support the legacy api call format
 type LegacyVendorOrderAPIServer interface {
+	// https://api.gearment.com/v2/?act=order_estimate_costs
 	LegacyVendorGetPriceQuote(context.Context, *LegacyVendorGetPriceQuoteRequest) (*LegacyVendorGetPriceQuoteResponse, error)
 	LegacyVendorCreateOrderDraft(context.Context, *LegacyVendorCreateOrderDraftRequest) (*LegacyVendorCreateOrderDraftResponse, error)
 	LegacyVendorCreateOrderDraftWithLabel(context.Context, *LegacyVendorCreateOrderDraftWithLabelRequest) (*LegacyVendorCreateOrderDraftWithLabelResponse, error)
 	LegacyVendorListOrder(context.Context, *LegacyVendorListOrderRequest) (*LegacyVendorListOrderResponse, error)
+	// https://api.gearment.com/v2/?act=order_fullfillment
 	LegacyVendorUpdateOrderDraftLineItems(context.Context, *LegacyVendorUpdateOrderDraftLineItemsRequest) (*LegacyVendorUpdateOrderDraftLineItemsResponse, error)
 	LegacyVendorGetOrder(context.Context, *LegacyVendorGetOrderRequest) (*LegacyVendorGetOrderResponse, error)
 }
