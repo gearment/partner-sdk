@@ -1443,43 +1443,78 @@ func (x *LegacyTracking) GetNewTracking() string {
 	return ""
 }
 
+// Short is a lightweight version of VendorOrder containing essential fields
+// for listing and display purposes, with flattened tracking data and minimal nested objects
 type VendorOrder_Short struct {
-	state               protoimpl.MessageState       `protogen:"open.v1"`
-	OrderId             string                       `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	StoreId             string                       `protobuf:"bytes,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	StoreName           string                       `protobuf:"bytes,3,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
-	TeamId              string                       `protobuf:"bytes,4,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	CreatedMethod       VendorCreatedMethod          `protobuf:"varint,5,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
-	OrderPlatform       v1.MarketplacePlatform       `protobuf:"varint,6,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
-	PlatformRef         string                       `protobuf:"bytes,7,opt,name=platform_ref,json=platformRef,proto3" json:"platform_ref,omitempty"` // will be deleted soon
-	ShippingLabels      []string                     `protobuf:"bytes,8,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
-	OrderDate           *timestamppb.Timestamp       `protobuf:"bytes,9,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
-	ApprovedAt          *timestamppb.Timestamp       `protobuf:"bytes,10,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
-	PaidAt              *timestamppb.Timestamp       `protobuf:"bytes,11,opt,name=paid_at,json=paidAt,proto3" json:"paid_at,omitempty"`
-	OrderStatus         VendorOrderStatus            `protobuf:"varint,12,opt,name=order_status,json=orderStatus,proto3,enum=api.order.v1.VendorOrderStatus" json:"order_status,omitempty"`
-	OrderSubtotal       *v11.Money                   `protobuf:"bytes,13,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
-	OrderShippingFee    *v11.Money                   `protobuf:"bytes,14,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
-	OrderGiftMessageFee *v11.Money                   `protobuf:"bytes,15,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
-	OrderTax            *v11.Money                   `protobuf:"bytes,16,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
-	OrderTotal          *v11.Money                   `protobuf:"bytes,17,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
-	FulfillmentOption   *VendorFulfillmentOption     `protobuf:"bytes,18,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
-	ShippingOption      *VendorShippingOption        `protobuf:"bytes,19,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
-	BillingOption       *VendorBillingOption         `protobuf:"bytes,20,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
-	LineItems           []*VendorOrderLineItem_Short `protobuf:"bytes,21,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
-	TrackingNumber      string                       `protobuf:"bytes,22,opt,name=tracking_number,json=trackingNumber,proto3" json:"tracking_number,omitempty"`
-	TrackingLink        string                       `protobuf:"bytes,23,opt,name=tracking_link,json=trackingLink,proto3" json:"tracking_link,omitempty"`
-	TrackingCompany     string                       `protobuf:"bytes,24,opt,name=tracking_company,json=trackingCompany,proto3" json:"tracking_company,omitempty"`
-	TrackingProductType string                       `protobuf:"bytes,25,opt,name=tracking_product_type,json=trackingProductType,proto3" json:"tracking_product_type,omitempty"`
-	TrackingDateCreated *timestamppb.Timestamp       `protobuf:"bytes,26,opt,name=tracking_date_created,json=trackingDateCreated,proto3" json:"tracking_date_created,omitempty"`
-	TrackingType        string                       `protobuf:"bytes,27,opt,name=tracking_type,json=trackingType,proto3" json:"tracking_type,omitempty"`
-	PaymentStatus       VendorOrderPaymentStatus     `protobuf:"varint,28,opt,name=payment_status,json=paymentStatus,proto3,enum=api.order.v1.VendorOrderPaymentStatus" json:"payment_status,omitempty"`
-	ShippedAt           *timestamppb.Timestamp       `protobuf:"bytes,30,opt,name=shipped_at,json=shippedAt,proto3" json:"shipped_at,omitempty"`
-	LegacyExternalId    string                       `protobuf:"bytes,31,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
-	ReferenceId         string                       `protobuf:"bytes,32,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
-	GiftMessages        []*VendorGiftMessage         `protobuf:"bytes,33,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
-	Addresses           []*VendorAddress             `protobuf:"bytes,34,rep,name=addresses,proto3" json:"addresses,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique order ID
+	OrderId string `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Store ID this order belongs to
+	StoreId string `protobuf:"bytes,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	// Store name for display
+	StoreName string `protobuf:"bytes,3,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
+	// Team ID (your account ID)
+	TeamId string `protobuf:"bytes,4,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	// How this order was created (manual, API, store sync, etc.)
+	CreatedMethod VendorCreatedMethod `protobuf:"varint,5,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
+	// Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+	OrderPlatform v1.MarketplacePlatform `protobuf:"varint,6,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
+	// Platform reference ID (deprecated, will be removed)
+	PlatformRef string `protobuf:"bytes,7,opt,name=platform_ref,json=platformRef,proto3" json:"platform_ref,omitempty"` // will be deleted soon
+	// Shipping label URLs (if pre-purchased)
+	ShippingLabels []string `protobuf:"bytes,8,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
+	// When the order was originally placed
+	OrderDate *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	// When the order was approved for fulfillment
+	ApprovedAt *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
+	// When the payment was confirmed
+	PaidAt *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=paid_at,json=paidAt,proto3" json:"paid_at,omitempty"`
+	// Current order status
+	OrderStatus VendorOrderStatus `protobuf:"varint,12,opt,name=order_status,json=orderStatus,proto3,enum=api.order.v1.VendorOrderStatus" json:"order_status,omitempty"`
+	// Subtotal (sum of all line items before fees/tax/discount)
+	OrderSubtotal *v11.Money `protobuf:"bytes,13,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
+	// Shipping cost
+	OrderShippingFee *v11.Money `protobuf:"bytes,14,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
+	// Gift message fee (if applicable)
+	OrderGiftMessageFee *v11.Money `protobuf:"bytes,15,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
+	// Total tax amount
+	OrderTax *v11.Money `protobuf:"bytes,16,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
+	// Final total amount (subtotal + fees + tax - discount)
+	OrderTotal *v11.Money `protobuf:"bytes,17,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
+	// Fulfillment configuration options
+	FulfillmentOption *VendorFulfillmentOption `protobuf:"bytes,18,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
+	// Shipping method and carrier details
+	ShippingOption *VendorShippingOption `protobuf:"bytes,19,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
+	// Billing and tax options (IOSS, etc.)
+	BillingOption *VendorBillingOption `protobuf:"bytes,20,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
+	// All line items in this order
+	LineItems []*VendorOrderLineItem_Short `protobuf:"bytes,21,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
+	// Primary tracking number
+	TrackingNumber string `protobuf:"bytes,22,opt,name=tracking_number,json=trackingNumber,proto3" json:"tracking_number,omitempty"`
+	// Tracking link URL
+	TrackingLink string `protobuf:"bytes,23,opt,name=tracking_link,json=trackingLink,proto3" json:"tracking_link,omitempty"`
+	// Carrier name
+	TrackingCompany string `protobuf:"bytes,24,opt,name=tracking_company,json=trackingCompany,proto3" json:"tracking_company,omitempty"`
+	// Product type for tracking
+	TrackingProductType string `protobuf:"bytes,25,opt,name=tracking_product_type,json=trackingProductType,proto3" json:"tracking_product_type,omitempty"`
+	// When tracking was created
+	TrackingDateCreated *timestamppb.Timestamp `protobuf:"bytes,26,opt,name=tracking_date_created,json=trackingDateCreated,proto3" json:"tracking_date_created,omitempty"`
+	// Tracking type
+	TrackingType string `protobuf:"bytes,27,opt,name=tracking_type,json=trackingType,proto3" json:"tracking_type,omitempty"`
+	// Payment status
+	PaymentStatus VendorOrderPaymentStatus `protobuf:"varint,28,opt,name=payment_status,json=paymentStatus,proto3,enum=api.order.v1.VendorOrderPaymentStatus" json:"payment_status,omitempty"`
+	// When the order was shipped
+	ShippedAt *timestamppb.Timestamp `protobuf:"bytes,30,opt,name=shipped_at,json=shippedAt,proto3" json:"shipped_at,omitempty"`
+	// Legacy external ID (for OMS backward compatibility)
+	LegacyExternalId string `protobuf:"bytes,31,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
+	// Your custom reference ID
+	ReferenceId string `protobuf:"bytes,32,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
+	// Gift messages for this order
+	GiftMessages []*VendorGiftMessage `protobuf:"bytes,33,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
+	// Shipping and billing addresses
+	Addresses     []*VendorAddress `protobuf:"bytes,34,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorOrder_Short) Reset() {

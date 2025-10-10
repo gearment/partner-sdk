@@ -676,47 +676,86 @@ func (x *VendorOrderDraftCheckout) GetPriceQuote() *VendorOrderPriceCalculation_
 	return nil
 }
 
+// Short is a lightweight version of VendorOrderDraft containing essential fields
+// for listing and display purposes, excluding nested collections and detailed pricing breakdowns
 type VendorOrderDraft_Short struct {
-	state                          protoimpl.MessageState           `protogen:"open.v1"`
-	OrderId                        string                           `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	TeamId                         string                           `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	StoreId                        string                           `protobuf:"bytes,3,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	StoreName                      string                           `protobuf:"bytes,4,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
-	ReferenceId                    string                           `protobuf:"bytes,5,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
-	OrderPlatform                  v1.MarketplacePlatform           `protobuf:"varint,6,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
-	ImportId                       string                           `protobuf:"bytes,7,opt,name=import_id,json=importId,proto3" json:"import_id,omitempty"`
-	PullId                         string                           `protobuf:"bytes,8,opt,name=pull_id,json=pullId,proto3" json:"pull_id,omitempty"`
-	RequestId                      string                           `protobuf:"bytes,9,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	CreatedMethod                  VendorCreatedMethod              `protobuf:"varint,10,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
-	FulfillmentVendor              VendorFulfillmentVendor          `protobuf:"varint,11,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=api.order.v1.VendorFulfillmentVendor" json:"fulfillment_vendor,omitempty"`
-	Priority                       VendorFulfillmentPriority        `protobuf:"varint,12,opt,name=priority,proto3,enum=api.order.v1.VendorFulfillmentPriority" json:"priority,omitempty"`
-	FulfillmentOption              *VendorFulfillmentOption         `protobuf:"bytes,13,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
-	ShippingOption                 *VendorShippingOption            `protobuf:"bytes,14,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
-	BillingOption                  *VendorBillingOption             `protobuf:"bytes,15,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
-	OrderDate                      *timestamppb.Timestamp           `protobuf:"bytes,16,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
-	Status                         VendorOrderDraftStatus           `protobuf:"varint,17,opt,name=status,proto3,enum=api.order.v1.VendorOrderDraftStatus" json:"status,omitempty"`
-	ShippingLabels                 []string                         `protobuf:"bytes,19,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
-	IsLabelAttached                bool                             `protobuf:"varint,20,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
-	ShippingVerificationStatus     VendorShippingVerificationStatus `protobuf:"varint,21,opt,name=shipping_verification_status,json=shippingVerificationStatus,proto3,enum=api.order.v1.VendorShippingVerificationStatus" json:"shipping_verification_status,omitempty"`
-	ProductMatchingStatus          VendorProductMatchingStatus      `protobuf:"varint,22,opt,name=product_matching_status,json=productMatchingStatus,proto3,enum=api.order.v1.VendorProductMatchingStatus" json:"product_matching_status,omitempty"`
-	IsShippingVerificationBypassed bool                             `protobuf:"varint,23,opt,name=is_shipping_verification_bypassed,json=isShippingVerificationBypassed,proto3" json:"is_shipping_verification_bypassed,omitempty"`
-	IsApproved                     bool                             `protobuf:"varint,24,opt,name=is_approved,json=isApproved,proto3" json:"is_approved,omitempty"`
-	ApprovedAt                     *timestamppb.Timestamp           `protobuf:"bytes,25,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
-	OriginDraftId                  string                           `protobuf:"bytes,26,opt,name=origin_draft_id,json=originDraftId,proto3" json:"origin_draft_id,omitempty"`
-	OriginOrderId                  string                           `protobuf:"bytes,27,opt,name=origin_order_id,json=originOrderId,proto3" json:"origin_order_id,omitempty"`
-	Addresses                      []*VendorAddress                 `protobuf:"bytes,28,rep,name=addresses,proto3" json:"addresses,omitempty"`
-	LineItems                      []*VendorLineItem_Short          `protobuf:"bytes,29,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
-	GiftMessages                   []*VendorGiftMessage             `protobuf:"bytes,30,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
-	LegacyExternalId               string                           `protobuf:"bytes,31,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
-	OrderTotal                     *v11.Money                       `protobuf:"bytes,34,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
-	OrderSubtotal                  *v11.Money                       `protobuf:"bytes,36,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
-	OrderShippingFee               *v11.Money                       `protobuf:"bytes,37,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
-	OrderHandleFee                 *v11.Money                       `protobuf:"bytes,38,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
-	OrderTax                       *v11.Money                       `protobuf:"bytes,39,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
-	OrderFee                       *v11.Money                       `protobuf:"bytes,40,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
-	OrderDiscount                  *v11.Money                       `protobuf:"bytes,41,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique draft order ID
+	OrderId string `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// Team ID (your account ID)
+	TeamId string `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	// Store ID this draft belongs to
+	StoreId string `protobuf:"bytes,3,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	// Store name for display
+	StoreName string `protobuf:"bytes,4,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
+	// Your custom reference ID
+	ReferenceId string `protobuf:"bytes,5,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
+	// Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+	OrderPlatform v1.MarketplacePlatform `protobuf:"varint,6,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
+	// Import batch ID (if created via import)
+	ImportId string `protobuf:"bytes,7,opt,name=import_id,json=importId,proto3" json:"import_id,omitempty"`
+	// Store sync pull ID (if created via store sync)
+	PullId string `protobuf:"bytes,8,opt,name=pull_id,json=pullId,proto3" json:"pull_id,omitempty"`
+	// Request ID for tracking purposes
+	RequestId string `protobuf:"bytes,9,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	// How this draft was created (manual, API, store sync, import, etc.)
+	CreatedMethod VendorCreatedMethod `protobuf:"varint,10,opt,name=created_method,json=createdMethod,proto3,enum=api.order.v1.VendorCreatedMethod" json:"created_method,omitempty"`
+	// Fulfillment vendor (Gearment, etc.)
+	FulfillmentVendor VendorFulfillmentVendor `protobuf:"varint,11,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=api.order.v1.VendorFulfillmentVendor" json:"fulfillment_vendor,omitempty"`
+	// Fulfillment priority (standard, rush, etc.)
+	Priority VendorFulfillmentPriority `protobuf:"varint,12,opt,name=priority,proto3,enum=api.order.v1.VendorFulfillmentPriority" json:"priority,omitempty"`
+	// Fulfillment configuration options
+	FulfillmentOption *VendorFulfillmentOption `protobuf:"bytes,13,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
+	// Shipping method and carrier details
+	ShippingOption *VendorShippingOption `protobuf:"bytes,14,opt,name=shipping_option,json=shippingOption,proto3" json:"shipping_option,omitempty"`
+	// Billing and tax options (IOSS, etc.)
+	BillingOption *VendorBillingOption `protobuf:"bytes,15,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
+	// Original order date from marketplace
+	OrderDate *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	// Current draft status
+	Status VendorOrderDraftStatus `protobuf:"varint,17,opt,name=status,proto3,enum=api.order.v1.VendorOrderDraftStatus" json:"status,omitempty"`
+	// Shipping label URLs (if pre-purchased)
+	ShippingLabels []string `protobuf:"bytes,19,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
+	// Whether shipping label is attached
+	IsLabelAttached bool `protobuf:"varint,20,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
+	// Shipping address verification status
+	ShippingVerificationStatus VendorShippingVerificationStatus `protobuf:"varint,21,opt,name=shipping_verification_status,json=shippingVerificationStatus,proto3,enum=api.order.v1.VendorShippingVerificationStatus" json:"shipping_verification_status,omitempty"`
+	// Product matching status (matched/unmatched to catalog)
+	ProductMatchingStatus VendorProductMatchingStatus `protobuf:"varint,22,opt,name=product_matching_status,json=productMatchingStatus,proto3,enum=api.order.v1.VendorProductMatchingStatus" json:"product_matching_status,omitempty"`
+	// Whether shipping verification was manually bypassed
+	IsShippingVerificationBypassed bool `protobuf:"varint,23,opt,name=is_shipping_verification_bypassed,json=isShippingVerificationBypassed,proto3" json:"is_shipping_verification_bypassed,omitempty"`
+	// Whether this draft has been approved for checkout
+	IsApproved bool `protobuf:"varint,24,opt,name=is_approved,json=isApproved,proto3" json:"is_approved,omitempty"`
+	// When this draft was approved
+	ApprovedAt *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
+	// Original draft ID (if this is a revised version)
+	OriginDraftId string `protobuf:"bytes,26,opt,name=origin_draft_id,json=originDraftId,proto3" json:"origin_draft_id,omitempty"`
+	// Order ID this draft was converted to (if checked out)
+	OriginOrderId string `protobuf:"bytes,27,opt,name=origin_order_id,json=originOrderId,proto3" json:"origin_order_id,omitempty"`
+	// Shipping and billing addresses
+	Addresses []*VendorAddress `protobuf:"bytes,28,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	// All line items in this draft
+	LineItems []*VendorLineItem_Short `protobuf:"bytes,29,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
+	// Gift messages for this order
+	GiftMessages []*VendorGiftMessage `protobuf:"bytes,30,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
+	// Legacy external ID (for OMS backward compatibility)
+	LegacyExternalId string `protobuf:"bytes,31,opt,name=legacy_external_id,json=legacyExternalId,proto3" json:"legacy_external_id,omitempty"` // for oms order's external id
+	// Final total amount (subtotal + fees + tax - discount)
+	OrderTotal *v11.Money `protobuf:"bytes,34,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
+	// Subtotal (sum of all line items before fees/tax/discount)
+	OrderSubtotal *v11.Money `protobuf:"bytes,36,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
+	// Shipping cost
+	OrderShippingFee *v11.Money `protobuf:"bytes,37,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
+	// Order handling fee
+	OrderHandleFee *v11.Money `protobuf:"bytes,38,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
+	// Total tax amount
+	OrderTax *v11.Money `protobuf:"bytes,39,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
+	// Additional processing fees
+	OrderFee *v11.Money `protobuf:"bytes,40,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
+	// Total discount applied
+	OrderDiscount *v11.Money `protobuf:"bytes,41,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VendorOrderDraft_Short) Reset() {
