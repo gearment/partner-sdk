@@ -189,7 +189,7 @@ type VendorCatalogVariant struct {
 	RecommendedPrice *v1.Money `protobuf:"bytes,7,opt,name=recommended_price,json=recommendedPrice,proto3" json:"recommended_price,omitempty"`
 	// Extra price for special features (if applicable)
 	ExtraPrice *v1.Money `protobuf:"bytes,8,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
-	// Net price for legacy catalog
+	// Net price (min-tier base price before team markup)
 	NetPrice *v1.Money `protobuf:"bytes,15,opt,name=net_price,json=netPrice,proto3" json:"net_price,omitempty"`
 	// Stock availability status
 	StockLabel VendorCatalogVariantStockLabel `protobuf:"varint,9,opt,name=stock_label,json=stockLabel,proto3,enum=api.catalog.v1.VendorCatalogVariantStockLabel" json:"stock_label,omitempty"`
