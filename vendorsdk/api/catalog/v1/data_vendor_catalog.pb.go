@@ -189,7 +189,7 @@ type VendorCatalogVariant struct {
 	RecommendedPrice *v1.Money `protobuf:"bytes,7,opt,name=recommended_price,json=recommendedPrice,proto3" json:"recommended_price,omitempty"`
 	// Extra price for special features (if applicable)
 	ExtraPrice *v1.Money `protobuf:"bytes,8,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
-	// Net price (min-tier base price before team markup)
+	// Price that Gearment offers to the team
 	NetPrice *v1.Money `protobuf:"bytes,15,opt,name=net_price,json=netPrice,proto3" json:"net_price,omitempty"`
 	// Stock availability status
 	StockLabel VendorCatalogVariantStockLabel `protobuf:"varint,9,opt,name=stock_label,json=stockLabel,proto3,enum=api.catalog.v1.VendorCatalogVariantStockLabel" json:"stock_label,omitempty"`
@@ -678,11 +678,11 @@ type LegacyVendorCatalogVariant struct {
 	Color string `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`
 	// Color hex code
 	HexColorCode string `protobuf:"bytes,5,opt,name=hex_color_code,json=hexColorCode,proto3" json:"hex_color_code,omitempty"`
-	// Price (as string for legacy compatibility)
+	// Sale price (as string for legacy compatibility)
 	Price string `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
 	// Extra price (as string for legacy compatibility)
 	ExtraPrice string `protobuf:"bytes,7,opt,name=extra_price,json=extraPrice,proto3" json:"extra_price,omitempty"`
-	// Net price (calculated price)
+	// Price that Gearment offers to the team
 	NetPrice float32 `protobuf:"fixed32,8,opt,name=net_price,json=netPrice,proto3" json:"net_price,omitempty"`
 	// Availability status (e.g., "in_stock", "out_of_stock")
 	AvailabilityStatus string `protobuf:"bytes,9,opt,name=availability_status,json=availabilityStatus,proto3" json:"availability_status,omitempty"`
