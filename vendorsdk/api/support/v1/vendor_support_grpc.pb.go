@@ -26,9 +26,11 @@ const (
 // SupportAPIClient is the client API for SupportAPI service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// SupportAPI is the modern (v3) vendor-facing issue-ticket API.
 type SupportAPIClient interface {
 	ListSupportRequest(ctx context.Context, in *ListSupportRequestRequest, opts ...grpc.CallOption) (*ListSupportRequestResponse, error)
-	CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*GetSupportRequestResponse, error)
+	CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*CreateSupportRequestResponse, error)
 }
 
 type supportAPIClient struct {
@@ -49,9 +51,9 @@ func (c *supportAPIClient) ListSupportRequest(ctx context.Context, in *ListSuppo
 	return out, nil
 }
 
-func (c *supportAPIClient) CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*GetSupportRequestResponse, error) {
+func (c *supportAPIClient) CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*CreateSupportRequestResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetSupportRequestResponse)
+	out := new(CreateSupportRequestResponse)
 	err := c.cc.Invoke(ctx, SupportAPI_CreateSupportRequest_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -62,9 +64,11 @@ func (c *supportAPIClient) CreateSupportRequest(ctx context.Context, in *CreateS
 // SupportAPIServer is the server API for SupportAPI service.
 // All implementations should embed UnimplementedSupportAPIServer
 // for forward compatibility.
+//
+// SupportAPI is the modern (v3) vendor-facing issue-ticket API.
 type SupportAPIServer interface {
 	ListSupportRequest(context.Context, *ListSupportRequestRequest) (*ListSupportRequestResponse, error)
-	CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*GetSupportRequestResponse, error)
+	CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*CreateSupportRequestResponse, error)
 }
 
 // UnimplementedSupportAPIServer should be embedded to have
@@ -77,7 +81,7 @@ type UnimplementedSupportAPIServer struct{}
 func (UnimplementedSupportAPIServer) ListSupportRequest(context.Context, *ListSupportRequestRequest) (*ListSupportRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSupportRequest not implemented")
 }
-func (UnimplementedSupportAPIServer) CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*GetSupportRequestResponse, error) {
+func (UnimplementedSupportAPIServer) CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*CreateSupportRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSupportRequest not implemented")
 }
 func (UnimplementedSupportAPIServer) testEmbeddedByValue() {}
@@ -150,6 +154,156 @@ var SupportAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateSupportRequest",
 			Handler:    _SupportAPI_CreateSupportRequest_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/support/v1/vendor_support.proto",
+}
+
+const (
+	LegacyVendorSupportAPI_LegacyListSupportRequest_FullMethodName   = "/api.support.v1.LegacyVendorSupportAPI/LegacyListSupportRequest"
+	LegacyVendorSupportAPI_LegacyCreateSupportRequest_FullMethodName = "/api.support.v1.LegacyVendorSupportAPI/LegacyCreateSupportRequest"
+)
+
+// LegacyVendorSupportAPIClient is the client API for LegacyVendorSupportAPI service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// LegacyVendorSupportAPI provides the legacy (v2) issue-ticket wire format,
+// exposed through https://api.gearment.com/v2/?act=issue_request_list and
+// ?act=issue_create.
+type LegacyVendorSupportAPIClient interface {
+	// https://api.gearment.com/v2/?act=issue_request_list
+	LegacyListSupportRequest(ctx context.Context, in *LegacyListSupportRequestRequest, opts ...grpc.CallOption) (*LegacyListSupportRequestResponse, error)
+	// https://api.gearment.com/v2/?act=issue_create
+	LegacyCreateSupportRequest(ctx context.Context, in *LegacyCreateSupportRequestRequest, opts ...grpc.CallOption) (*LegacyCreateSupportRequestResponse, error)
+}
+
+type legacyVendorSupportAPIClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewLegacyVendorSupportAPIClient(cc grpc.ClientConnInterface) LegacyVendorSupportAPIClient {
+	return &legacyVendorSupportAPIClient{cc}
+}
+
+func (c *legacyVendorSupportAPIClient) LegacyListSupportRequest(ctx context.Context, in *LegacyListSupportRequestRequest, opts ...grpc.CallOption) (*LegacyListSupportRequestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacyListSupportRequestResponse)
+	err := c.cc.Invoke(ctx, LegacyVendorSupportAPI_LegacyListSupportRequest_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *legacyVendorSupportAPIClient) LegacyCreateSupportRequest(ctx context.Context, in *LegacyCreateSupportRequestRequest, opts ...grpc.CallOption) (*LegacyCreateSupportRequestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacyCreateSupportRequestResponse)
+	err := c.cc.Invoke(ctx, LegacyVendorSupportAPI_LegacyCreateSupportRequest_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// LegacyVendorSupportAPIServer is the server API for LegacyVendorSupportAPI service.
+// All implementations should embed UnimplementedLegacyVendorSupportAPIServer
+// for forward compatibility.
+//
+// LegacyVendorSupportAPI provides the legacy (v2) issue-ticket wire format,
+// exposed through https://api.gearment.com/v2/?act=issue_request_list and
+// ?act=issue_create.
+type LegacyVendorSupportAPIServer interface {
+	// https://api.gearment.com/v2/?act=issue_request_list
+	LegacyListSupportRequest(context.Context, *LegacyListSupportRequestRequest) (*LegacyListSupportRequestResponse, error)
+	// https://api.gearment.com/v2/?act=issue_create
+	LegacyCreateSupportRequest(context.Context, *LegacyCreateSupportRequestRequest) (*LegacyCreateSupportRequestResponse, error)
+}
+
+// UnimplementedLegacyVendorSupportAPIServer should be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedLegacyVendorSupportAPIServer struct{}
+
+func (UnimplementedLegacyVendorSupportAPIServer) LegacyListSupportRequest(context.Context, *LegacyListSupportRequestRequest) (*LegacyListSupportRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacyListSupportRequest not implemented")
+}
+func (UnimplementedLegacyVendorSupportAPIServer) LegacyCreateSupportRequest(context.Context, *LegacyCreateSupportRequestRequest) (*LegacyCreateSupportRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacyCreateSupportRequest not implemented")
+}
+func (UnimplementedLegacyVendorSupportAPIServer) testEmbeddedByValue() {}
+
+// UnsafeLegacyVendorSupportAPIServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LegacyVendorSupportAPIServer will
+// result in compilation errors.
+type UnsafeLegacyVendorSupportAPIServer interface {
+	mustEmbedUnimplementedLegacyVendorSupportAPIServer()
+}
+
+func RegisterLegacyVendorSupportAPIServer(s grpc.ServiceRegistrar, srv LegacyVendorSupportAPIServer) {
+	// If the following call pancis, it indicates UnimplementedLegacyVendorSupportAPIServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&LegacyVendorSupportAPI_ServiceDesc, srv)
+}
+
+func _LegacyVendorSupportAPI_LegacyListSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacyListSupportRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LegacyVendorSupportAPIServer).LegacyListSupportRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LegacyVendorSupportAPI_LegacyListSupportRequest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LegacyVendorSupportAPIServer).LegacyListSupportRequest(ctx, req.(*LegacyListSupportRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LegacyVendorSupportAPI_LegacyCreateSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacyCreateSupportRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LegacyVendorSupportAPIServer).LegacyCreateSupportRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LegacyVendorSupportAPI_LegacyCreateSupportRequest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LegacyVendorSupportAPIServer).LegacyCreateSupportRequest(ctx, req.(*LegacyCreateSupportRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// LegacyVendorSupportAPI_ServiceDesc is the grpc.ServiceDesc for LegacyVendorSupportAPI service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var LegacyVendorSupportAPI_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.support.v1.LegacyVendorSupportAPI",
+	HandlerType: (*LegacyVendorSupportAPIServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "LegacyListSupportRequest",
+			Handler:    _LegacyVendorSupportAPI_LegacyListSupportRequest_Handler,
+		},
+		{
+			MethodName: "LegacyCreateSupportRequest",
+			Handler:    _LegacyVendorSupportAPI_LegacyCreateSupportRequest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
