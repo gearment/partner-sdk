@@ -44,6 +44,9 @@ tags:
     x-displayName: api.catalog.v1.VendorCatalogAPI
   - name: api.support.v1.SupportAPI
     x-displayName: api.support.v1.SupportAPI
+  - name: api.pod.v1.SellerShippingLabelAPI
+    description: Seller-facing shipping label API for the USPS/EasyPost pilot. Requires an authenticated Gearment POD team session and per-team enablement by Gearment staff.
+    x-displayName: Seller Shipping Labels
 externalDocs:
   description: Find out more about Gearment API v3
   url: https://gearment.com/integration/api-docs.html
@@ -426,6 +429,484 @@ paths:
               schema:
                 $ref: '#/components/schemas/connect.error'
       security: []
+  /api.pod.v1.SellerShippingLabelAPI/CancelLabel:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: CancelLabel
+      operationId: api.pod.v1.SellerShippingLabelAPI.CancelLabel
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.CancelLabelRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.CancelLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Request cancellation/refund for a purchased EasyPost label when the provider
+        still allows it.
+  /api.pod.v1.SellerShippingLabelAPI/EstimateLabelRates:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: EstimateLabelRates
+      operationId: api.pod.v1.SellerShippingLabelAPI.EstimateLabelRates
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.EstimateLabelRatesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.EstimateLabelRatesResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Create a 15-minute quote for a US shipment and return partner-visible rates.
+        Use the returned rateId in PurchaseLabel.
+  /api.pod.v1.SellerShippingLabelAPI/GetLabel:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    get:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: GetLabel
+      operationId: api.pod.v1.SellerShippingLabelAPI.GetLabel.get
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      - name: message
+        in: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.GetLabelRequest'
+      - name: encoding
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/encoding'
+      - name: base64
+        in: query
+        schema:
+          $ref: '#/components/schemas/base64'
+      - name: compression
+        in: query
+        schema:
+          $ref: '#/components/schemas/compression'
+      - name: connect
+        in: query
+        schema:
+          $ref: '#/components/schemas/connect'
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.GetLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Fetch one seller shipping label owned by the authenticated team.
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: GetLabel
+      operationId: api.pod.v1.SellerShippingLabelAPI.GetLabel
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.GetLabelRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.GetLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Fetch one seller shipping label owned by the authenticated team.
+  /api.pod.v1.SellerShippingLabelAPI/ListEnabledCarrierServices:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    get:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: ListEnabledCarrierServices
+      operationId: api.pod.v1.SellerShippingLabelAPI.ListEnabledCarrierServices.get
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      - name: message
+        in: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesRequest'
+      - name: encoding
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/encoding'
+      - name: base64
+        in: query
+        schema:
+          $ref: '#/components/schemas/base64'
+      - name: compression
+        in: query
+        schema:
+          $ref: '#/components/schemas/compression'
+      - name: connect
+        in: query
+        schema:
+          $ref: '#/components/schemas/connect'
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: List carrier/service combinations enabled for the authenticated team. The
+        current production pilot exposes EasyPost/USPS only after the team is enabled by Gearment
+        staff.
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: ListEnabledCarrierServices
+      operationId: api.pod.v1.SellerShippingLabelAPI.ListEnabledCarrierServices
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: List carrier/service combinations enabled for the authenticated team. The
+        current production pilot exposes EasyPost/USPS only after the team is enabled by Gearment
+        staff.
+  /api.pod.v1.SellerShippingLabelAPI/ListLabels:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    get:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: ListLabels
+      operationId: api.pod.v1.SellerShippingLabelAPI.ListLabels.get
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      - name: message
+        in: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.ListLabelsRequest'
+      - name: encoding
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/encoding'
+      - name: base64
+        in: query
+        schema:
+          $ref: '#/components/schemas/base64'
+      - name: compression
+        in: query
+        schema:
+          $ref: '#/components/schemas/compression'
+      - name: connect
+        in: query
+        schema:
+          $ref: '#/components/schemas/connect'
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.ListLabelsResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: List seller shipping labels owned by the authenticated team.
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: ListLabels
+      operationId: api.pod.v1.SellerShippingLabelAPI.ListLabels
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.ListLabelsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.ListLabelsResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: List seller shipping labels owned by the authenticated team.
+  /api.pod.v1.SellerShippingLabelAPI/PurchaseLabel:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: PurchaseLabel
+      operationId: api.pod.v1.SellerShippingLabelAPI.PurchaseLabel
+      parameters:
+      - name: Connect-Protocol-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/connect-protocol-version'
+      - name: Connect-Timeout-Ms
+        in: header
+        schema:
+          $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.pod.v1.PurchaseLabelRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.PurchaseLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Purchase a selected label idempotently. requestId is required and repeated
+        calls with the same requestId return the existing label instead of buying twice.
 components:
   schemas:
     api.webhook.v1.Webhook.Event:
@@ -1941,6 +2422,576 @@ components:
             additionalProperties: false
       title: SupportRequest
       additionalProperties: false
+    connect-protocol-version:
+      type: number
+      title: Connect-Protocol-Version
+      enum:
+      - 1
+      description: Define the version of the Connect protocol
+      const: 1
+    connect-timeout-header:
+      type: number
+      title: Connect-Timeout-Ms
+      description: Define the timeout, in ms
+    api.pod.v1.CancelLabelRequest:
+      type: object
+      properties:
+        labelId:
+          type: string
+          title: label_id
+          minLength: 1
+      title: CancelLabelRequest
+      additionalProperties: false
+    connect.error_details.Any:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'A URL that acts as a globally unique identifier for the type of the serialized
+            message. For example: `type.googleapis.com/google.rpc.ErrorInfo`. This is used to
+            determine the schema of the data in the `value` field and is the discriminator for
+            the `debug` field.'
+        value:
+          type: string
+          format: binary
+          description: The Protobuf message, serialized as bytes and base64-encoded. The specific
+            message type is identified by the `type` field.
+        debug:
+          oneOf:
+          - type: object
+            title: Any
+            additionalProperties: true
+            description: Detailed error information.
+          discriminator:
+            propertyName: type
+          title: Debug
+          description: Deserialized error detail payload. The 'type' field indicates the schema.
+            This field is for easier debugging and should not be relied upon for application logic.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes
+        the type of the serialized message, with an additional debug field for ConnectRPC error
+        details.
+    api.pod.v1.CancelLabelResponse:
+      type: object
+      properties:
+        label:
+          title: label
+          $ref: '#/components/schemas/api.pod.v1.SellerLabel'
+      title: CancelLabelResponse
+      additionalProperties: false
+    api.pod.v1.SellerLabel:
+      type: object
+      properties:
+        labelId:
+          type: string
+          title: label_id
+        teamId:
+          type: string
+          title: team_id
+        status:
+          title: status
+          $ref: '#/components/schemas/api.pod.v1.SellerLabelStatus'
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        shipFrom:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        shipTo:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Package'
+        sellerPrice:
+          title: seller_price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        internalCost:
+          title: internal_cost
+          $ref: '#/components/schemas/common.type.v1.Money'
+        billingMode:
+          title: billing_mode
+          $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingMode'
+        billingState:
+          title: billing_state
+          $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingState'
+        trackingNo:
+          type: string
+          title: tracking_no
+        trackingUrl:
+          type: string
+          title: tracking_url
+        labelUrl:
+          type: string
+          title: label_url
+        labelFormat:
+          type: string
+          title: label_format
+        rateQuoteId:
+          type: string
+          title: rate_quote_id
+        rateId:
+          type: string
+          title: rate_id
+        requestId:
+          type: string
+          title: request_id
+        createdBy:
+          type: string
+          title: created_by
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        cancelledAt:
+          title: cancelled_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        failureReason:
+          type: string
+          title: failure_reason
+      title: SellerLabel
+      additionalProperties: false
+    api.pod.v1.SellerLabelStatus:
+      type: string
+      title: SellerLabelStatus
+      enum:
+      - SELLER_LABEL_STATUS_UNSPECIFIED
+      - SELLER_LABEL_STATUS_PURCHASING
+      - SELLER_LABEL_STATUS_PURCHASED
+      - SELLER_LABEL_STATUS_FAILED
+      - SELLER_LABEL_STATUS_CANCEL_REQUESTED
+      - SELLER_LABEL_STATUS_REFUND_PENDING
+      - SELLER_LABEL_STATUS_REFUNDED
+      - SELLER_LABEL_STATUS_CANCEL_REJECTED
+    common.type.v1.USAddress:
+      type: object
+      properties:
+        street1:
+          type: string
+          title: street1
+          maxLength: 255
+          minLength: 1
+        street2:
+          type: string
+          title: street2
+          maxLength: 255
+        countryCode:
+          type: string
+          title: country_code
+          maxLength: 3
+          minLength: 2
+        country:
+          type: string
+          title: country
+          maxLength: 100
+        stateCode:
+          type: string
+          title: state_code
+          maxLength: 10
+          minLength: 1
+        state:
+          type: string
+          title: state
+          maxLength: 100
+        city:
+          type: string
+          title: city
+          maxLength: 100
+        zipCode:
+          type: string
+          title: zip_code
+          maxLength: 10
+          minLength: 4
+        firstName:
+          type: string
+          title: first_name
+          maxLength: 100
+        lastName:
+          type: string
+          title: last_name
+          maxLength: 100
+        phoneNo:
+          type: string
+          title: phone_no
+          maxLength: 50
+        email:
+          type: string
+          title: email
+          maxLength: 50
+          description: 'email.valid_format // Email must be in valid format (e.g., user@example.com)
+
+            '
+        note:
+          type: string
+          title: note
+          maxLength: 500
+        company:
+          type: string
+          title: company
+          maxLength: 255
+      title: USAddress
+      additionalProperties: false
+    api.shipping.v1.ShippingLabelPurchaseForm.Package:
+      type: object
+      properties:
+        dimensions:
+          title: dimensions
+          description: Dimensions are required
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Package.Dimensions'
+        weight:
+          title: weight
+          description: Weight is required
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Measurement'
+        value:
+          title: value
+          description: Value is required, is the value of the package
+          $ref: '#/components/schemas/common.type.v1.Money'
+        productDescription:
+          type: string
+          title: product_description
+          description: "Product description is required, is the product description for the\n\
+            \ package, required if international shipping"
+        hsCode:
+          type: array
+          items:
+            type: string
+          title: hs_code
+          description: "HS code is optional, is the HS code for the package, required if\n international\
+            \ shipping"
+        quantity:
+          type:
+          - integer
+          - string
+          title: quantity
+          format: int64
+          description: "Quantity is optional, is the quantity of the package, required if\n international\
+            \ shipping"
+        expectationPickupDate:
+          title: expectation_pickup_date
+          description: "Expectation pickup date is optional, is the expectation pickup date for\n\
+            \ the package, required if international shipping"
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: Package
+      required:
+      - weight
+      additionalProperties: false
+      description: Package is required
+    api.shipping.v1.ShippingLabelPurchaseForm.Package.Dimensions:
+      type: object
+      properties:
+        width:
+          title: width
+          description: Width is optional
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Measurement'
+        height:
+          title: height
+          description: Height is optional
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Measurement'
+        length:
+          title: length
+          description: Length is optional
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Measurement'
+      title: Dimensions
+      additionalProperties: false
+      description: Dimensions are optional
+    api.shipping.v1.ShippingLabelPurchaseForm.Measurement:
+      type: object
+      properties:
+        value:
+          type: string
+          title: value
+        unit:
+          type: string
+          title: unit
+      title: Measurement
+      required:
+      - value
+      - unit
+      additionalProperties: false
+    api.pod.v1.SellerLabelBillingMode:
+      type: string
+      title: SellerLabelBillingMode
+      enum:
+      - SELLER_LABEL_BILLING_MODE_UNSPECIFIED
+      - SELLER_LABEL_BILLING_MODE_WALLET_IMMEDIATE
+      - SELLER_LABEL_BILLING_MODE_INVOICE_WEEKLY
+    api.pod.v1.SellerLabelBillingState:
+      type: string
+      title: SellerLabelBillingState
+      enum:
+      - SELLER_LABEL_BILLING_STATE_UNSPECIFIED
+      - SELLER_LABEL_BILLING_STATE_CHARGED
+      - SELLER_LABEL_BILLING_STATE_PENDING_INVOICE
+      - SELLER_LABEL_BILLING_STATE_INVOICED
+      - SELLER_LABEL_BILLING_STATE_SETTLED
+      - SELLER_LABEL_BILLING_STATE_CREDITED
+    api.pod.v1.EstimateLabelRatesRequest:
+      type: object
+      properties:
+        shipFrom:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        shipTo:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Package'
+        providers:
+          type: array
+          items:
+            type: string
+          title: providers
+      title: EstimateLabelRatesRequest
+      required:
+      - shipFrom
+      - shipTo
+      - package
+      additionalProperties: false
+    api.pod.v1.EstimateLabelRatesResponse:
+      type: object
+      properties:
+        quote:
+          title: quote
+          $ref: '#/components/schemas/api.pod.v1.SellerRateQuote'
+      title: EstimateLabelRatesResponse
+      additionalProperties: false
+    api.pod.v1.SellerRateQuote:
+      type: object
+      properties:
+        rateQuoteId:
+          type: string
+          title: rate_quote_id
+        rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerRate'
+          title: rates
+        expiresAt:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        degradedProviders:
+          type: array
+          items:
+            type: string
+          title: degraded_providers
+      title: SellerRateQuote
+      additionalProperties: false
+    api.pod.v1.SellerRate:
+      type: object
+      properties:
+        rateId:
+          type: string
+          title: rate_id
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        sellerPrice:
+          title: seller_price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        deliveryDays:
+          type: integer
+          title: delivery_days
+          format: int32
+        billingMode:
+          title: billing_mode
+          $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingMode'
+      title: SellerRate
+      additionalProperties: false
+    api.pod.v1.GetLabelRequest:
+      type: object
+      properties:
+        labelId:
+          type: string
+          title: label_id
+          minLength: 1
+      title: GetLabelRequest
+      additionalProperties: false
+    api.pod.v1.GetLabelResponse:
+      type: object
+      properties:
+        label:
+          title: label
+          $ref: '#/components/schemas/api.pod.v1.SellerLabel'
+      title: GetLabelResponse
+      additionalProperties: false
+    api.pod.v1.ListEnabledCarrierServicesRequest:
+      type: object
+      title: ListEnabledCarrierServicesRequest
+      additionalProperties: false
+    api.pod.v1.ListEnabledCarrierServicesResponse:
+      type: object
+      properties:
+        carriers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.CarrierLabelConfig'
+          title: carriers
+      title: ListEnabledCarrierServicesResponse
+      additionalProperties: false
+    api.pod.v1.CarrierLabelConfig:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        services:
+          type: array
+          items:
+            type: string
+          title: services
+        enabled:
+          type: boolean
+          title: enabled
+        billingMode:
+          title: billing_mode
+          $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingMode'
+        markup:
+          title: markup
+          $ref: '#/components/schemas/api.pod.v1.MarkupRule'
+      title: CarrierLabelConfig
+      additionalProperties: false
+    api.pod.v1.MarkupRule:
+      type: object
+      properties:
+        percentBps:
+          type: integer
+          title: percent_bps
+          maximum: 100000
+          minimum: 0
+          format: int32
+        flatFee:
+          title: flat_fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: MarkupRule
+      additionalProperties: false
+    api.pod.v1.ListLabelsRequest:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerLabelStatus'
+          title: statuses
+        carriers:
+          type: array
+          items:
+            type: string
+          title: carriers
+        billingStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingState'
+          title: billing_states
+        createdAtFrom:
+          title: created_at_from
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdAtTo:
+          title: created_at_to
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        page:
+          type: integer
+          title: page
+          minimum: 0
+          format: int32
+        limit:
+          type: integer
+          title: limit
+          maximum: 500
+          minimum: 0
+          format: int32
+      title: ListLabelsRequest
+      additionalProperties: false
+    api.pod.v1.ListLabelsResponse:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerLabel'
+          title: labels
+        page:
+          type: integer
+          title: page
+          format: int32
+        limit:
+          type: integer
+          title: limit
+          format: int32
+        total:
+          type:
+          - integer
+          - string
+          title: total
+          format: int64
+        totalPage:
+          type: integer
+          title: total_page
+          format: int32
+      title: ListLabelsResponse
+      additionalProperties: false
+    api.pod.v1.PurchaseLabelRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+          minLength: 1
+        rateId:
+          type: string
+          title: rate_id
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        shipFrom:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        shipTo:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.shipping.v1.ShippingLabelPurchaseForm.Package'
+        labelFormat:
+          type: string
+          title: label_format
+          enum:
+          - ''
+          - pdf
+          - zpl
+      title: PurchaseLabelRequest
+      additionalProperties: false
+    api.pod.v1.PurchaseLabelResponse:
+      type: object
+      properties:
+        label:
+          title: label
+          $ref: '#/components/schemas/api.pod.v1.SellerLabel'
+      title: PurchaseLabelResponse
+      additionalProperties: false
   securitySchemes:
     BearerAuth:
       type: http
@@ -2015,3 +3066,6 @@ x-tagGroups:
   - name: api.support.v1
     tags:
       - api.support.v1.SupportAPI
+  - name: api.pod.v1
+    tags:
+      - api.pod.v1.SellerShippingLabelAPI
