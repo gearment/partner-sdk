@@ -429,31 +429,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/connect.error'
       security: []
-  /api.pod.v1.SellerShippingLabelAPI/CancelLabel:
+  /v1/vendor/shipping-labels/services:
     servers:
     - url: https://apiv2.gearment.com/pod
       description: Production POD API
-    post:
+    get:
       tags:
       - api.pod.v1.SellerShippingLabelAPI
-      summary: CancelLabel
-      operationId: api.pod.v1.SellerShippingLabelAPI.CancelLabel
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.CancelLabelRequest'
-        required: true
+      summary: List enabled carrier services
+      operationId: sellerShippingLabels.listEnabledCarrierServices
       responses:
         default:
           description: Error
@@ -472,31 +456,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/api.pod.v1.CancelLabelResponse'
+                $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesResponse'
       security:
       - BearerAuth: []
       - CookieAuth: []
-      description: Request cancellation/refund for a purchased EasyPost label when the provider
-        still allows it.
-  /api.pod.v1.SellerShippingLabelAPI/EstimateLabelRates:
+      description: List carrier and service combinations enabled for the authenticated team. The current production pilot exposes EasyPost and USPS only after Gearment staff enable the team.
+  /v1/vendor/shipping-labels/rates:
     servers:
     - url: https://apiv2.gearment.com/pod
       description: Production POD API
     post:
       tags:
       - api.pod.v1.SellerShippingLabelAPI
-      summary: EstimateLabelRates
-      operationId: api.pod.v1.SellerShippingLabelAPI.EstimateLabelRates
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
+      summary: Estimate label rates
+      operationId: sellerShippingLabels.estimateRates
       requestBody:
         content:
           application/json:
@@ -525,272 +498,61 @@ paths:
       security:
       - BearerAuth: []
       - CookieAuth: []
-      description: Create a 15-minute quote for a US shipment and return partner-visible rates.
-        Use the returned rateId in PurchaseLabel.
-  /api.pod.v1.SellerShippingLabelAPI/GetLabel:
+      description: Create a 15-minute quote for a US shipment. Use a returned rateId to purchase a label.
+  /v1/vendor/shipping-labels:
     servers:
     - url: https://apiv2.gearment.com/pod
       description: Production POD API
     get:
       tags:
       - api.pod.v1.SellerShippingLabelAPI
-      summary: GetLabel
-      operationId: api.pod.v1.SellerShippingLabelAPI.GetLabel.get
+      summary: List shipping labels
+      operationId: sellerShippingLabels.list
       parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      - name: message
+      - name: status
         in: query
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.GetLabelRequest'
-      - name: encoding
-        in: query
-        required: true
+        description: Filter by label status. Repeat the parameter to select more than one status.
         schema:
-          $ref: '#/components/schemas/encoding'
-      - name: base64
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerLabelStatus'
+      - name: carrier
         in: query
+        description: Filter by carrier. Repeat the parameter to select more than one carrier.
         schema:
-          $ref: '#/components/schemas/base64'
-      - name: compression
+          type: array
+          items:
+            type: string
+      - name: billingState
+        in: query
+        description: Filter by billing state. Repeat the parameter to select more than one billing state.
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingState'
+      - name: createdAtFrom
         in: query
         schema:
-          $ref: '#/components/schemas/compression'
-      - name: connect
+          type: string
+          format: date-time
+      - name: createdAtTo
         in: query
         schema:
-          $ref: '#/components/schemas/connect'
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.pod.v1.GetLabelResponse'
-      security:
-      - BearerAuth: []
-      - CookieAuth: []
-      description: Fetch one seller shipping label owned by the authenticated team.
-    post:
-      tags:
-      - api.pod.v1.SellerShippingLabelAPI
-      summary: GetLabel
-      operationId: api.pod.v1.SellerShippingLabelAPI.GetLabel
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.GetLabelRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.pod.v1.GetLabelResponse'
-      security:
-      - BearerAuth: []
-      - CookieAuth: []
-      description: Fetch one seller shipping label owned by the authenticated team.
-  /api.pod.v1.SellerShippingLabelAPI/ListEnabledCarrierServices:
-    servers:
-    - url: https://apiv2.gearment.com/pod
-      description: Production POD API
-    get:
-      tags:
-      - api.pod.v1.SellerShippingLabelAPI
-      summary: ListEnabledCarrierServices
-      operationId: api.pod.v1.SellerShippingLabelAPI.ListEnabledCarrierServices.get
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      - name: message
-        in: query
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesRequest'
-      - name: encoding
-        in: query
-        required: true
-        schema:
-          $ref: '#/components/schemas/encoding'
-      - name: base64
+          type: string
+          format: date-time
+      - name: page
         in: query
         schema:
-          $ref: '#/components/schemas/base64'
-      - name: compression
+          type: integer
+          minimum: 0
+          format: int32
+      - name: limit
         in: query
         schema:
-          $ref: '#/components/schemas/compression'
-      - name: connect
-        in: query
-        schema:
-          $ref: '#/components/schemas/connect'
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesResponse'
-      security:
-      - BearerAuth: []
-      - CookieAuth: []
-      description: List carrier/service combinations enabled for the authenticated team. The
-        current production pilot exposes EasyPost/USPS only after the team is enabled by Gearment
-        staff.
-    post:
-      tags:
-      - api.pod.v1.SellerShippingLabelAPI
-      summary: ListEnabledCarrierServices
-      operationId: api.pod.v1.SellerShippingLabelAPI.ListEnabledCarrierServices
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.pod.v1.ListEnabledCarrierServicesResponse'
-      security:
-      - BearerAuth: []
-      - CookieAuth: []
-      description: List carrier/service combinations enabled for the authenticated team. The
-        current production pilot exposes EasyPost/USPS only after the team is enabled by Gearment
-        staff.
-  /api.pod.v1.SellerShippingLabelAPI/ListLabels:
-    servers:
-    - url: https://apiv2.gearment.com/pod
-      description: Production POD API
-    get:
-      tags:
-      - api.pod.v1.SellerShippingLabelAPI
-      summary: ListLabels
-      operationId: api.pod.v1.SellerShippingLabelAPI.ListLabels.get
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      - name: message
-        in: query
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.ListLabelsRequest'
-      - name: encoding
-        in: query
-        required: true
-        schema:
-          $ref: '#/components/schemas/encoding'
-      - name: base64
-        in: query
-        schema:
-          $ref: '#/components/schemas/base64'
-      - name: compression
-        in: query
-        schema:
-          $ref: '#/components/schemas/compression'
-      - name: connect
-        in: query
-        schema:
-          $ref: '#/components/schemas/connect'
+          type: integer
+          minimum: 0
+          maximum: 500
+          format: int32
       responses:
         default:
           description: Error
@@ -817,66 +579,8 @@ paths:
     post:
       tags:
       - api.pod.v1.SellerShippingLabelAPI
-      summary: ListLabels
-      operationId: api.pod.v1.SellerShippingLabelAPI.ListLabels
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.pod.v1.ListLabelsRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.pod.v1.ListLabelsResponse'
-      security:
-      - BearerAuth: []
-      - CookieAuth: []
-      description: List seller shipping labels owned by the authenticated team.
-  /api.pod.v1.SellerShippingLabelAPI/PurchaseLabel:
-    servers:
-    - url: https://apiv2.gearment.com/pod
-      description: Production POD API
-    post:
-      tags:
-      - api.pod.v1.SellerShippingLabelAPI
-      summary: PurchaseLabel
-      operationId: api.pod.v1.SellerShippingLabelAPI.PurchaseLabel
-      parameters:
-      - name: Connect-Protocol-Version
-        in: header
-        required: true
-        schema:
-          $ref: '#/components/schemas/connect-protocol-version'
-      - name: Connect-Timeout-Ms
-        in: header
-        schema:
-          $ref: '#/components/schemas/connect-timeout-header'
+      summary: Purchase a shipping label
+      operationId: sellerShippingLabels.purchase
       requestBody:
         content:
           application/json:
@@ -905,8 +609,85 @@ paths:
       security:
       - BearerAuth: []
       - CookieAuth: []
-      description: Purchase a selected label idempotently. requestId is required and repeated
-        calls with the same requestId return the existing label instead of buying twice.
+      description: Purchase a selected rate idempotently. requestId is required; repeating it returns the existing label instead of buying twice.
+  /v1/vendor/shipping-labels/{label_id}:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    get:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: Get a shipping label
+      operationId: sellerShippingLabels.get
+      parameters:
+      - name: label_id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.GetLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Fetch one seller shipping label owned by the authenticated team.
+  /v1/vendor/shipping-labels/{label_id}:cancel:
+    servers:
+    - url: https://apiv2.gearment.com/pod
+      description: Production POD API
+    post:
+      tags:
+      - api.pod.v1.SellerShippingLabelAPI
+      summary: Cancel a shipping label
+      operationId: sellerShippingLabels.cancel
+      parameters:
+      - name: label_id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.pod.v1.CancelLabelResponse'
+      security:
+      - BearerAuth: []
+      - CookieAuth: []
+      description: Request cancellation or refund for a purchased EasyPost label while the provider still allows it.
 components:
   schemas:
     api.webhook.v1.Webhook.Event:
