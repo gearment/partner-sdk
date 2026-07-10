@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: api/support/v1/vendor_support.proto
+// source: api/support/v1/api_vendor_support.proto
 
 package supportv1
 
@@ -19,145 +19,145 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SupportAPI_ListSupportRequest_FullMethodName   = "/api.support.v1.SupportAPI/ListSupportRequest"
-	SupportAPI_CreateSupportRequest_FullMethodName = "/api.support.v1.SupportAPI/CreateSupportRequest"
+	VendorSupportAPI_ListSupportRequest_FullMethodName   = "/api.support.v1.VendorSupportAPI/ListSupportRequest"
+	VendorSupportAPI_CreateSupportRequest_FullMethodName = "/api.support.v1.VendorSupportAPI/CreateSupportRequest"
 )
 
-// SupportAPIClient is the client API for SupportAPI service.
+// VendorSupportAPIClient is the client API for VendorSupportAPI service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// SupportAPI is the modern (v3) vendor-facing issue-ticket API.
-type SupportAPIClient interface {
+// VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
+type VendorSupportAPIClient interface {
 	ListSupportRequest(ctx context.Context, in *ListSupportRequestRequest, opts ...grpc.CallOption) (*ListSupportRequestResponse, error)
 	CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*CreateSupportRequestResponse, error)
 }
 
-type supportAPIClient struct {
+type vendorSupportAPIClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSupportAPIClient(cc grpc.ClientConnInterface) SupportAPIClient {
-	return &supportAPIClient{cc}
+func NewVendorSupportAPIClient(cc grpc.ClientConnInterface) VendorSupportAPIClient {
+	return &vendorSupportAPIClient{cc}
 }
 
-func (c *supportAPIClient) ListSupportRequest(ctx context.Context, in *ListSupportRequestRequest, opts ...grpc.CallOption) (*ListSupportRequestResponse, error) {
+func (c *vendorSupportAPIClient) ListSupportRequest(ctx context.Context, in *ListSupportRequestRequest, opts ...grpc.CallOption) (*ListSupportRequestResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListSupportRequestResponse)
-	err := c.cc.Invoke(ctx, SupportAPI_ListSupportRequest_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, VendorSupportAPI_ListSupportRequest_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *supportAPIClient) CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*CreateSupportRequestResponse, error) {
+func (c *vendorSupportAPIClient) CreateSupportRequest(ctx context.Context, in *CreateSupportRequestRequest, opts ...grpc.CallOption) (*CreateSupportRequestResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateSupportRequestResponse)
-	err := c.cc.Invoke(ctx, SupportAPI_CreateSupportRequest_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, VendorSupportAPI_CreateSupportRequest_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SupportAPIServer is the server API for SupportAPI service.
-// All implementations should embed UnimplementedSupportAPIServer
+// VendorSupportAPIServer is the server API for VendorSupportAPI service.
+// All implementations should embed UnimplementedVendorSupportAPIServer
 // for forward compatibility.
 //
-// SupportAPI is the modern (v3) vendor-facing issue-ticket API.
-type SupportAPIServer interface {
+// VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
+type VendorSupportAPIServer interface {
 	ListSupportRequest(context.Context, *ListSupportRequestRequest) (*ListSupportRequestResponse, error)
 	CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*CreateSupportRequestResponse, error)
 }
 
-// UnimplementedSupportAPIServer should be embedded to have
+// UnimplementedVendorSupportAPIServer should be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedSupportAPIServer struct{}
+type UnimplementedVendorSupportAPIServer struct{}
 
-func (UnimplementedSupportAPIServer) ListSupportRequest(context.Context, *ListSupportRequestRequest) (*ListSupportRequestResponse, error) {
+func (UnimplementedVendorSupportAPIServer) ListSupportRequest(context.Context, *ListSupportRequestRequest) (*ListSupportRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSupportRequest not implemented")
 }
-func (UnimplementedSupportAPIServer) CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*CreateSupportRequestResponse, error) {
+func (UnimplementedVendorSupportAPIServer) CreateSupportRequest(context.Context, *CreateSupportRequestRequest) (*CreateSupportRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSupportRequest not implemented")
 }
-func (UnimplementedSupportAPIServer) testEmbeddedByValue() {}
+func (UnimplementedVendorSupportAPIServer) testEmbeddedByValue() {}
 
-// UnsafeSupportAPIServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SupportAPIServer will
+// UnsafeVendorSupportAPIServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to VendorSupportAPIServer will
 // result in compilation errors.
-type UnsafeSupportAPIServer interface {
-	mustEmbedUnimplementedSupportAPIServer()
+type UnsafeVendorSupportAPIServer interface {
+	mustEmbedUnimplementedVendorSupportAPIServer()
 }
 
-func RegisterSupportAPIServer(s grpc.ServiceRegistrar, srv SupportAPIServer) {
-	// If the following call pancis, it indicates UnimplementedSupportAPIServer was
+func RegisterVendorSupportAPIServer(s grpc.ServiceRegistrar, srv VendorSupportAPIServer) {
+	// If the following call pancis, it indicates UnimplementedVendorSupportAPIServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&SupportAPI_ServiceDesc, srv)
+	s.RegisterService(&VendorSupportAPI_ServiceDesc, srv)
 }
 
-func _SupportAPI_ListSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VendorSupportAPI_ListSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSupportRequestRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SupportAPIServer).ListSupportRequest(ctx, in)
+		return srv.(VendorSupportAPIServer).ListSupportRequest(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SupportAPI_ListSupportRequest_FullMethodName,
+		FullMethod: VendorSupportAPI_ListSupportRequest_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SupportAPIServer).ListSupportRequest(ctx, req.(*ListSupportRequestRequest))
+		return srv.(VendorSupportAPIServer).ListSupportRequest(ctx, req.(*ListSupportRequestRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SupportAPI_CreateSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VendorSupportAPI_CreateSupportRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateSupportRequestRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SupportAPIServer).CreateSupportRequest(ctx, in)
+		return srv.(VendorSupportAPIServer).CreateSupportRequest(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SupportAPI_CreateSupportRequest_FullMethodName,
+		FullMethod: VendorSupportAPI_CreateSupportRequest_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SupportAPIServer).CreateSupportRequest(ctx, req.(*CreateSupportRequestRequest))
+		return srv.(VendorSupportAPIServer).CreateSupportRequest(ctx, req.(*CreateSupportRequestRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// SupportAPI_ServiceDesc is the grpc.ServiceDesc for SupportAPI service.
+// VendorSupportAPI_ServiceDesc is the grpc.ServiceDesc for VendorSupportAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SupportAPI_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.support.v1.SupportAPI",
-	HandlerType: (*SupportAPIServer)(nil),
+var VendorSupportAPI_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.support.v1.VendorSupportAPI",
+	HandlerType: (*VendorSupportAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListSupportRequest",
-			Handler:    _SupportAPI_ListSupportRequest_Handler,
+			Handler:    _VendorSupportAPI_ListSupportRequest_Handler,
 		},
 		{
 			MethodName: "CreateSupportRequest",
-			Handler:    _SupportAPI_CreateSupportRequest_Handler,
+			Handler:    _VendorSupportAPI_CreateSupportRequest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/support/v1/vendor_support.proto",
+	Metadata: "api/support/v1/api_vendor_support.proto",
 }
 
 const (
@@ -307,5 +307,5 @@ var LegacyVendorSupportAPI_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/support/v1/vendor_support.proto",
+	Metadata: "api/support/v1/api_vendor_support.proto",
 }
