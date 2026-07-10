@@ -2293,9 +2293,6 @@ components:
         sellerPrice:
           title: seller_price
           $ref: '#/components/schemas/common.type.v1.Money'
-        internalCost:
-          title: internal_cost
-          $ref: '#/components/schemas/common.type.v1.Money'
         billingMode:
           title: billing_mode
           $ref: '#/components/schemas/api.pod.v1.SellerLabelBillingMode'
