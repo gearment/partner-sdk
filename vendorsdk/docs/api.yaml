@@ -1,0 +1,4862 @@
+openapi: 3.1.0
+info:
+  contact:
+    email: integration@gearment.com
+    name: Support Integration
+  termsOfService: https://gearment.com/integration/api-terms-of-service.html
+  title: Gearment API integration
+  version: v3.0.0
+  description: Find out more about Gearment API v3
+servers:
+  - url: https://apiv2.gearment.com/integration-handler
+    description: Production Server
+  - url: https://api.gearmentinc.com/integration-handler
+    description: Sandbox Server
+tags:
+  - name: api.catalog.v1.VendorCatalogAPI
+    description: |-
+      VendorCatalogAPI provides access to product catalog and inventory management.
+       Use these endpoints to browse available products, check stock status, and get product details.
+
+       Base URL: https://api.gearment.com/
+       Authentication: API Key (header: X-API-Key, X-API-Secret)
+    x-displayName: Catalog
+  - name: api.webhook.v1.VendorWebhookAPI
+    description: |-
+      VendorWebhookAPI provides webhook management for real-time event notifications.
+       Register webhooks to receive automated notifications when orders are completed, cancelled, or tracking is updated.
+
+       Base URL: https://api.gearment.com/
+       Authentication: API Key (header: X-API-Key, X-API-Secret)
+    x-displayName: Webhook
+  - name: api.order.v1.VendorOrderAPI
+    description: |-
+      VendorOrderAPI provides comprehensive order management capabilities for vendors.
+       All endpoints require authentication via X-API-Key and X-API-Secret headers.
+
+       Base URL: https://api.gearment.com/
+       Authentication: API Key (header: X-API-Key, X-API-Secret)
+    x-displayName: Order
+  - name: api.support.v1.VendorSupportAPI
+    description: VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
+    x-displayName: Support
+externalDocs:
+  description: Find out more about Gearment API v3
+  url: https://gearment.com/integration/api-docs.html
+paths:
+  /api/v3/catalog:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      summary: List Catalog
+      description: |-
+        List all available products in the catalog
+
+         GET /api/v3/catalog
+
+         Returns:
+           - Product listings with base information
+           - Available variants for each product
+           - Pricing and printing options
+
+         Use cases:
+           - Build product catalog in your system
+           - Display available products to customers
+           - Sync product updates
+      operationId: api.catalog.v1.VendorCatalogAPI.VendorListCatalog
+      parameters:
+        - name: filter.product_ids
+          in: query
+          description: Filter by specific product IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - prod_abc123
+              maxLength: 100
+              minLength: 1
+            title: product_ids
+            description: Filter by specific product IDs
+        - name: filter.search_text
+          in: query
+          description: Search products by name or description
+          schema:
+            type: string
+            examples:
+              - Unisex T-Shirt
+            title: search_text
+            maxLength: 100
+            description: Search products by name or description
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.catalog.v1.VendorListCatalogResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/catalog/variants:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      summary: List Catalog Variant
+      description: |-
+        List product variants with detailed specifications
+
+         GET /api/v3/catalog/variants
+
+         Returns:
+           - Variant details (size, color, SKU)
+           - Pricing information
+           - Stock availability
+           - Print area specifications
+
+         Use cases:
+           - Get variant-specific pricing
+           - Check size/color availability
+           - Display product options to customers
+      operationId: api.catalog.v1.VendorCatalogAPI.VendorListCatalogVariant
+      parameters:
+        - name: filter.color_codes
+          in: query
+          description: Filter by color codes (internal codes or hex)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - COLOR_BLACK
+              maxLength: 100
+              minLength: 1
+            title: color_codes
+            description: Filter by color codes (internal codes or hex)
+        - name: filter.colors
+          in: query
+          description: Filter by colors (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - Black
+              maxLength: 100
+              minLength: 1
+            title: colors
+            description: Filter by colors (display names)
+        - name: filter.legacy_variant_ids
+          in: query
+          description: Filter by legacy variant IDs (for backward compatibility)
+          schema:
+            type: array
+            items:
+              exclusiveMinimum: 0
+              type: integer
+              examples:
+                - 12345
+              format: int32
+            title: legacy_variant_ids
+            description: Filter by legacy variant IDs (for backward compatibility)
+        - name: filter.product_ids
+          in: query
+          description: Filter by product IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - prod_abc123
+              maxLength: 100
+              minLength: 1
+            title: product_ids
+            description: Filter by product IDs
+        - name: filter.search_text
+          in: query
+          description: Search variants by text
+          schema:
+            type: string
+            examples:
+              - Black Medium
+            title: search_text
+            description: Search variants by text
+        - name: filter.size_codes
+          in: query
+          description: Filter by size codes (internal codes)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SIZE_M
+              maxLength: 100
+              minLength: 1
+            title: size_codes
+            description: Filter by size codes (internal codes)
+        - name: filter.sizes
+          in: query
+          description: Filter by sizes (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - M
+              maxLength: 100
+              minLength: 1
+            title: sizes
+            description: Filter by sizes (display names)
+        - name: filter.skus
+          in: query
+          description: Filter by SKUs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SKU-TS-BLK-M
+              maxLength: 100
+              minLength: 1
+            title: skus
+            description: Filter by SKUs
+        - name: filter.stock_labels
+          in: query
+          description: Filter by stock availability
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+            title: stock_labels
+            description: Filter by stock availability
+        - name: filter.variant_ids
+          in: query
+          description: Filter by specific variant IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - var_123
+              maxLength: 100
+              minLength: 1
+            title: variant_ids
+            description: Filter by specific variant IDs
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.catalog.v1.VendorListCatalogVariantResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/catalog/variants/stock:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      summary: Get Catalog Stock Status
+      description: |-
+        Check real-time stock status for variants
+
+         GET /api/v3/catalog/variants/stock
+
+         Returns:
+           - Stock status: in_stock, out_of_stock, discontinued, temporarily_unavailable
+           - Expected restock date (if applicable)
+
+         Use cases:
+           - Verify stock before order placement
+           - Update product availability in your system
+           - Show stock status to customers
+      operationId: api.catalog.v1.VendorCatalogAPI.VendorGetCatalogStockStatus
+      parameters:
+        - name: filter.color_codes
+          in: query
+          description: Filter by color codes (internal codes or hex)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - COLOR_BLACK
+              maxLength: 100
+              minLength: 1
+            title: color_codes
+            description: Filter by color codes (internal codes or hex)
+        - name: filter.colors
+          in: query
+          description: Filter by colors (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - Black
+              maxLength: 100
+              minLength: 1
+            title: colors
+            description: Filter by colors (display names)
+        - name: filter.legacy_variant_ids
+          in: query
+          description: Filter by legacy variant IDs (for backward compatibility)
+          schema:
+            type: array
+            items:
+              exclusiveMinimum: 0
+              type: integer
+              examples:
+                - 12345
+              format: int32
+            title: legacy_variant_ids
+            description: Filter by legacy variant IDs (for backward compatibility)
+        - name: filter.product_ids
+          in: query
+          description: Filter by product IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - prod_abc123
+              maxLength: 100
+              minLength: 1
+            title: product_ids
+            description: Filter by product IDs
+        - name: filter.search_text
+          in: query
+          description: Search variants by text
+          schema:
+            type: string
+            examples:
+              - Black Medium
+            title: search_text
+            description: Search variants by text
+        - name: filter.size_codes
+          in: query
+          description: Filter by size codes (internal codes)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SIZE_M
+              maxLength: 100
+              minLength: 1
+            title: size_codes
+            description: Filter by size codes (internal codes)
+        - name: filter.sizes
+          in: query
+          description: Filter by sizes (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - M
+              maxLength: 100
+              minLength: 1
+            title: sizes
+            description: Filter by sizes (display names)
+        - name: filter.skus
+          in: query
+          description: Filter by SKUs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SKU-TS-BLK-M
+              maxLength: 100
+              minLength: 1
+            title: skus
+            description: Filter by SKUs
+        - name: filter.stock_labels
+          in: query
+          description: Filter by stock availability
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+            title: stock_labels
+            description: Filter by stock availability
+        - name: filter.variant_ids
+          in: query
+          description: Filter by specific variant IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - var_123
+              maxLength: 100
+              minLength: 1
+            title: variant_ids
+            description: Filter by specific variant IDs
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.catalog.v1.VendorListCatalogVariantResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/webhooks:
+    get:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: List Webhook
+      description: |-
+        List all registered webhooks
+
+         GET /api/v3/webhooks
+
+         Returns:
+           - All registered webhooks for your account
+           - Webhook status (active/inactive)
+           - Event topics subscribed
+           - Delivery URLs
+
+         Use cases:
+           - Audit webhook configurations
+           - Verify webhook setup
+           - List active event subscriptions
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorListWebhook
+      parameters:
+        - name: filter.statuses
+          in: query
+          description: Filter by webhook status (e.g., to see only active webhooks)
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+            title: statuses
+            description: Filter by webhook status (e.g., to see only active webhooks)
+        - name: filter.store_ids
+          in: query
+          description: Filter by store IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - store_abc123
+              minLength: 1
+            title: store_ids
+            description: Filter by store IDs
+        - name: filter.team_ids
+          in: query
+          description: Filter by team IDs (internal use)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - team_abc123
+              minLength: 1
+            title: team_ids
+            description: Filter by team IDs (internal use)
+        - name: filter.topics
+          in: query
+          description: Filter by event topics
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+            title: topics
+            description: Filter by event topics
+        - name: filter.versions
+          in: query
+          description: Filter by webhook version
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+            title: versions
+            description: Filter by webhook version
+        - name: filter.webhook_ids
+          in: query
+          description: Filter by specific webhook IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - wh_abc123
+              minLength: 1
+            title: webhook_ids
+            description: Filter by specific webhook IDs
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorListWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+    post:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: Create Webhook
+      description: |-
+        Register a new webhook for event notifications
+
+         POST /api/v3/webhooks
+         Content-Type: application/json
+
+         Available topics:
+           - VENDOR_WEBHOOK_TOPIC_ORDER_COMPLETED: Order fulfillment completed
+           - VENDOR_WEBHOOK_TOPIC_ORDER_CANCELED: Order was cancelled
+           - VENDOR_WEBHOOK_TOPIC_TRACKING_UPDATED: Shipping tracking updated
+           - VENDOR_WEBHOOK_TOPIC_ADDRESS_UNVERIFIED: Shipping address validation failed
+
+         Security:
+           - Webhooks are sent via HTTPS POST
+           - Include signature header for verification
+           - Must respond with 200 OK within 30 seconds
+
+         Use cases:
+           - Automate order status updates
+           - Sync tracking information
+           - Alert customers of shipment
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorCreateWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/webhooks/{webhook_id}:
+    delete:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: Delete Webhook
+      description: |-
+        Delete a webhook subscription
+
+         DELETE /api/v3/webhooks/{webhook_id}
+
+         Use cases:
+           - Remove unused webhooks
+           - Update webhook configuration (delete + recreate)
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorDeleteWebhook
+      parameters:
+        - name: webhook_id
+          in: path
+          description: Webhook ID is provided in URL path parameter
+          required: true
+          schema:
+            type: string
+            title: webhook_id
+            maxLength: 255
+            minLength: 1
+            description: Webhook ID is provided in URL path parameter
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorDeleteWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/orders:
+    get:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: List Order
+      description: |-
+        List orders with filtering and pagination
+
+         GET /api/v3/orders
+
+         Use cases:
+           - Monitor order status changes
+           - Sync orders to your system
+           - Generate reports on order volumes
+      operationId: api.order.v1.VendorOrderAPI.VendorListOrder
+      parameters:
+        - name: filter.created_at_min
+          in: query
+          description: ISO 8601 date-time format (e.g., 2024-01-01T00:00:00Z)
+          schema:
+            type: string
+            format: date-time
+        - name: filter.created_methods
+          in: query
+          description: Filter by order creation methods
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+            title: created_methods
+            description: Filter by order creation methods
+        - name: filter.order_ids
+          in: query
+          description: Filter by specific order IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - ord_abc123xyz
+              maxLength: 100
+              minLength: 1
+            title: order_ids
+            description: Filter by specific order IDs
+        - name: filter.payment_status
+          in: query
+          description: Filter by payment status (for legacy API compatibility)
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.order.v1.VendorOrderPaymentStatus'
+            title: payment_status
+            description: Filter by payment status (for legacy API compatibility)
+        - name: filter.reference_ids
+          in: query
+          description: Filter by platform reference IDs (platform_ref field)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - shopify_12345
+              maxLength: 100
+              minLength: 1
+            title: reference_ids
+            description: Filter by platform reference IDs (platform_ref field)
+        - name: filter.statuses
+          in: query
+          description: Filter by order statuses
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.order.v1.VendorOrderStatus'
+            title: statuses
+            description: Filter by order statuses
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListOrderResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/orders/draft:
+    get:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: List Order Draft
+      description: |-
+        List order drafts (pending checkout)
+
+         GET /api/v3/orders/draft
+
+         Use cases:
+           - Review drafts before checkout
+           - Identify stuck/incomplete orders
+      operationId: api.order.v1.VendorOrderAPI.VendorListOrderDraft
+      parameters:
+        - name: filter.created_at_min
+          in: query
+          description: ISO 8601 date-time format (e.g., 2024-01-01T00:00:00Z)
+          schema:
+            type: string
+            format: date-time
+        - name: filter.created_methods
+          in: query
+          description: Filter by creation methods
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+            title: created_methods
+            description: Filter by creation methods
+        - name: filter.order_ids
+          in: query
+          description: Filter by specific order draft IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - draft_abc123
+              maxLength: 100
+              minLength: 1
+            title: order_ids
+            description: Filter by specific order draft IDs
+        - name: filter.reference_ids
+          in: query
+          description: Filter by platform reference IDs (platform_ref field)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - shopify_12345
+              maxLength: 100
+              minLength: 1
+            title: reference_ids
+            description: Filter by platform reference IDs (platform_ref field)
+        - name: filter.statuses
+          in: query
+          description: Filter by draft statuses
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.order.v1.VendorOrderDraftStatus'
+            title: statuses
+            description: Filter by draft statuses
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListOrderDraftResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+    post:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Create Order Draft
+      description: |-
+        Create a new order draft
+
+         POST /api/v3/orders/draft
+         Content-Type: application/json
+
+         Use cases:
+           - Place new orders programmatically
+           - Bulk order creation
+           - Integration with e-commerce platforms
+      operationId: api.order.v1.VendorOrderAPI.VendorCreateOrderDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorCreateOrderDraftRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorCreateOrderDraftResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/orders/draft/labeled:
+    post:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Create Order Draft With Label
+      description: |-
+        Create order draft with pre-purchased shipping label
+
+         POST /api/v3/orders/draft/labeled
+         Content-Type: application/json
+
+         Use cases:
+           - Use your own shipping account
+           - Consolidate shipping management
+      operationId: api.order.v1.VendorOrderAPI.VendorCreateOrderDraftWithLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorCreateOrderDraftWithLabelRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorCreateOrderDraftWithLabelResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/orders/draft/line-items:
+    patch:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Update Order Draft Line Items
+      description: |-
+        Update line items in an order draft
+
+         PATCH /api/v3/orders/draft/line-items
+         Content-Type: application/json
+
+         Use cases:
+           - Update quantities before checkout
+           - Change designs on line items
+           - Fix errors in draft orders
+      operationId: api.order.v1.VendorOrderAPI.VendorUpdateOrderDraftLineItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorUpdateOrderDraftLineItemsRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorUpdateOrderDraftLineItemsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/orders/draft/{order_id}:
+    get:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Get Order Draft
+      description: |-
+        Get details of a specific order draft
+
+         GET /api/v3/orders/draft/{order_id}
+
+         Use cases:
+           - Review draft before checkout
+           - Verify pricing and line items
+      operationId: api.order.v1.VendorOrderAPI.VendorGetOrderDraft
+      parameters:
+        - name: order_id
+          in: path
+          description: Order draft ID is provided in the URL path parameter
+          required: true
+          schema:
+            type: string
+            title: order_id
+            maxLength: 255
+            minLength: 1
+            description: Order draft ID is provided in the URL path parameter
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetOrderDraftResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/orders/price:
+    post:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Get Price Quote
+      description: |-
+        Get price quote before creating order
+
+         POST /api/v3/orders/price
+         Content-Type: application/json
+
+         Response includes:
+           - order_total: Total cost
+           - order_subtotal: Product costs
+           - order_shipping_fee: Shipping cost
+           - order_tax: Tax amount
+
+         Use cases:
+           - Show pricing to customers before checkout
+           - Compare shipping methods
+           - Calculate profit margins
+      operationId: api.order.v1.VendorOrderAPI.VendorGetPriceQuote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorGetPriceQuoteRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetPriceQuoteResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/orders/{order_id}:
+    get:
+      tags:
+        - api.order.v1.VendorOrderAPI
+      summary: Get Order
+      description: |-
+        Get details of a specific order
+
+         GET /api/v3/orders/{order_id}
+
+         Response includes:
+           - Order status and tracking
+           - Line items with printing details
+           - Shipping information
+           - Payment/transaction details
+
+         Use cases:
+           - Track order fulfillment
+           - Get shipping/tracking info
+           - Customer support queries
+      operationId: api.order.v1.VendorOrderAPI.VendorGetOrder
+      parameters:
+        - name: order_id
+          in: path
+          description: Order ID is provided in the URL path parameter
+          required: true
+          schema:
+            type: string
+            title: order_id
+            maxLength: 255
+            minLength: 1
+            description: Order ID is provided in the URL path parameter
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetOrderResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/support/requests:
+    get:
+      tags:
+        - api.support.v1.VendorSupportAPI
+      summary: List Support Request
+      operationId: api.support.v1.VendorSupportAPI.ListSupportRequest
+      parameters:
+        - name: created_from
+          in: query
+          description: ISO 8601 date-time format (e.g., 2024-01-01T00:00:00Z)
+          schema:
+            type: string
+            format: date-time
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+        - name: request_status
+          in: query
+          schema:
+            title: request_status
+            $ref: '#/components/schemas/api.support.v1.SupportRequest.Status'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.ListSupportRequestResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+    post:
+      tags:
+        - api.support.v1.VendorSupportAPI
+      summary: Create Support Request
+      operationId: api.support.v1.VendorSupportAPI.CreateSupportRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.support.v1.CreateSupportRequestRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.support.v1.CreateSupportRequestResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+          example: INVALID_ARGUMENT
+        message:
+          type: string
+          description: Human-readable error message
+          example: The request parameters are invalid
+        details:
+          type: array
+          description: Additional error details
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              issue:
+                type: string
+                description: Description of the issue
+    common.platform.v1.MarketplacePlatform:
+      type:
+        - string
+        - number
+      title: MarketplacePlatform
+      enum:
+        - MARKETPLACE_PLATFORM_EBAY
+        - 2
+        - MARKETPLACE_PLATFORM_AMAZON
+        - 3
+        - MARKETPLACE_PLATFORM_SHOPIFY
+        - 4
+        - MARKETPLACE_PLATFORM_WOOCOMMERCE
+        - 5
+        - MARKETPLACE_PLATFORM_ETSY
+        - 6
+        - MARKETPLACE_PLATFORM_SHOPBASE
+        - 7
+        - MARKETPLACE_PLATFORM_GEARMENT
+        - 8
+        - MARKETPLACE_PLATFORM_ORDERDESK
+        - 9
+        - MARKETPLACE_PLATFORM_TIKTOKSHOP
+        - 10
+        - MARKETPLACE_PLATFORM_POSHMARK
+        - 11
+        - MARKETPLACE_PLATFORM_PRESTASHOP
+        - 12
+        - MARKETPLACE_PLATFORM_INKGO
+        - 13
+        - MARKETPLACE_PLATFORM_WISH
+        - 14
+        - MARKETPLACE_PLATFORM_BIGCOMMERCE
+        - 15
+        - MARKETPLACE_PLATFORM_CUSTOMILY
+        - 16
+    common.type.v1.Money:
+      type: object
+      properties:
+        currency_code:
+          type: string
+          title: currency_code
+          description: The three-letter currency code defined in ISO 4217.
+        units:
+          type:
+            - integer
+            - string
+          title: units
+          format: int64
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+        nanos:
+          type: integer
+          title: nanos
+          format: int32
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
+    google.protobuf.Timestamp:
+      type: string
+      examples:
+        - "2023-01-15T01:30:15.01Z"
+        - "2024-12-25T12:00:00Z"
+      format: date-time
+      description: |-
+        A Timestamp represents a point in time independent of any time zone or local
+         calendar, encoded as a count of seconds and fractions of seconds at
+         nanosecond resolution. The count is relative to an epoch at UTC midnight on
+         January 1, 1970, in the proleptic Gregorian calendar which extends the
+         Gregorian calendar backwards to year one.
+
+         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+         second table is needed for interpretation, using a [24-hour linear
+         smear](https://developers.google.com/time/smear).
+
+         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+         restricting to that range, we ensure that we can convert to and from [RFC
+         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+
+         # Examples
+
+         Example 1: Compute Timestamp from POSIX `time()`.
+
+             Timestamp timestamp;
+             timestamp.set_seconds(time(NULL));
+             timestamp.set_nanos(0);
+
+         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+
+             struct timeval tv;
+             gettimeofday(&tv, NULL);
+
+             Timestamp timestamp;
+             timestamp.set_seconds(tv.tv_sec);
+             timestamp.set_nanos(tv.tv_usec * 1000);
+
+         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+
+             FILETIME ft;
+             GetSystemTimeAsFileTime(&ft);
+             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+             Timestamp timestamp;
+             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+
+             long millis = System.currentTimeMillis();
+
+             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+         Example 5: Compute Timestamp from Java `Instant.now()`.
+
+             Instant now = Instant.now();
+
+             Timestamp timestamp =
+                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+                     .setNanos(now.getNano()).build();
+
+         Example 6: Compute Timestamp from current time in Python.
+
+             timestamp = Timestamp()
+             timestamp.GetCurrentTime()
+
+         # JSON Mapping
+
+         In JSON format, the Timestamp type is encoded as a string in the
+         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+         where {year} is always expressed using four digits while {month}, {day},
+         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+         is required. A ProtoJSON serializer should always use UTC (as indicated by
+         "Z") when printing the Timestamp type and a ProtoJSON parser should be
+         able to accept both UTC and other timezones (as indicated by an offset).
+
+         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+         01:30 UTC on January 15, 2017.
+
+         In JavaScript, one can convert a Date object to this format using the
+         standard
+         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+         method. In Python, a standard `datetime.datetime` object can be converted
+         to this format using
+         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+         the Joda Time's [`ISODateTimeFormat.dateTime()`](
+         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+         ) to obtain a formatter capable of generating timestamps in this format.
+    api.catalog.v1.VendorCatalog:
+      type: object
+      properties:
+        product_id:
+          type: string
+          title: product_id
+          description: Product ID
+        product_name:
+          type: string
+          title: product_name
+          description: Product name (e.g., "Unisex T-Shirt", "Hoodie")
+        product_avatar_url:
+          type: string
+          title: product_avatar_url
+          description: Product main image URL
+        print_locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogPrintLocation'
+          title: print_locations
+          description: Available print locations for this product
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariant'
+          title: variants
+          description: Available variants (size/color combinations)
+        legacy_product_id:
+          type: integer
+          title: legacy_product_id
+          format: int32
+          description: Legacy product ID (for backward compatibility)
+      title: VendorCatalog
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogPrintLocation:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          description: Print location code (e.g., "front", "back", "pocket")
+        name:
+          type: string
+          title: name
+          description: Print location display name
+        location_id:
+          type: integer
+          title: location_id
+          format: int32
+          description: Internal location ID
+      title: VendorCatalogPrintLocation
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogVariant:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          title: variant_id
+          description: Variant ID (unique identifier)
+        name:
+          type: string
+          title: name
+          description: Variant name (e.g., "Black / Medium")
+        size:
+          type: string
+          title: size
+          description: Size (e.g., "S", "M", "L", "XL")
+        color:
+          type: string
+          title: color
+          description: Color name (e.g., "Black", "White", "Navy")
+        hex_color_code:
+          type: string
+          title: hex_color_code
+          description: Color hex code (e.g., "#000000", "#FFFFFF")
+        price:
+          title: price
+          description: Base price for this variant
+          $ref: '#/components/schemas/common.type.v1.Money'
+        recommended_price:
+          title: recommended_price
+          description: Recommended retail price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        extra_price:
+          title: extra_price
+          description: Extra price for special features (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        net_price:
+          title: net_price
+          description: Price that Gearment offers to the team
+          $ref: '#/components/schemas/common.type.v1.Money'
+        stock_label:
+          title: stock_label
+          description: Stock availability status
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+        product:
+          title: product
+          description: Parent product information
+          $ref: '#/components/schemas/api.catalog.v1.VendorCatalog'
+        legacy_variant_id:
+          type: integer
+          title: legacy_variant_id
+          format: int32
+          description: Legacy variant ID (for backward compatibility)
+        variant_sku:
+          type: string
+          title: variant_sku
+          description: Variant SKU
+        color_code:
+          type: string
+          title: color_code
+          description: Color code
+        size_code:
+          type: string
+          title: size_code
+          description: Size code
+      title: VendorCatalogVariant
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogVariantStockLabel:
+      type:
+        - string
+        - number
+      title: VendorCatalogVariantStockLabel
+      enum:
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_IN_STOCK
+        - 1
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_OUT_OF_STOCK
+        - 2
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_OUT_OF_STOCK_5D
+        - 3
+        - VENDOR_CATALOG_VARIANT_STOCK_LABEL_DISCONTINUED
+        - 4
+    api.catalog.v1.VendorListCatalogResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message describing the result
+        paging:
+          title: paging
+          description: |-
+            Pagination metadata
+             Contains: total count, current page, total pages
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalog'
+          title: data
+          description: |-
+            List of products matching the filter
+             Each product includes: name, description, images, available variants
+      title: VendorListCatalogResponse
+      additionalProperties: false
+    api.catalog.v1.VendorListCatalogVariantResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        paging:
+          title: paging
+          description: Pagination metadata
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariant'
+          title: data
+          description: |-
+            List of product variants
+             Each variant includes: size, color, SKU, price, stock status, print specifications
+      title: VendorListCatalogVariantResponse
+      additionalProperties: false
+    common.type.v1.PagingResponse:
+      type: object
+      properties:
+        total:
+          type:
+            - integer
+            - string
+          title: total
+          format: int64
+        total_page:
+          type: integer
+          title: total_page
+          format: int32
+        page:
+          type: integer
+          title: page
+          format: int32
+        limit:
+          type: integer
+          title: limit
+          format: int32
+      title: PagingResponse
+      additionalProperties: false
+    api.webhook.v1.VendorCreateWebhookRequest:
+      type: object
+      properties:
+        status:
+          title: status
+          description: 'Webhook status: ACTIVE or INACTIVE (default: ACTIVE)'
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+        topic:
+          title: topic
+          description: |-
+            Event topic to subscribe to (required)
+             Choose from: ORDER_COMPLETED, ORDER_CANCELED, TRACKING_UPDATED, ADDRESS_UNVERIFIED
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+        name:
+          type: string
+          examples:
+            - Production Order Completed Notifications
+          title: name
+          maxLength: 255
+          description: 'Human-readable webhook name (optional, helps identify webhook purpose, max length: 255 characters)'
+        version:
+          title: version
+          description: 'Webhook payload version (recommended: use latest version for new webhooks)'
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+        delivery_url:
+          type: string
+          examples:
+            - https://yourapp.com/webhooks/gearment/orders
+          title: delivery_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+          description: HTTPS URL to receive webhook POST requests (required, must be publicly accessible and respond within 30 seconds, must use HTTPS)
+        store_id:
+          type: string
+          examples:
+            - store_abc123
+          title: store_id
+          description: Optional store ID to filter events (if provided, only events for this store will trigger the webhook)
+      title: VendorCreateWebhookRequest
+      additionalProperties: false
+    api.webhook.v1.VendorCreateWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: |-
+            Human-readable message
+             Success: "Webhook created successfully"
+             Error: "Invalid delivery URL" or "Duplicate webhook"
+        data:
+          title: data
+          description: |-
+            Created webhook details
+             Includes: webhook_id, topic, delivery_url, created_at
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+      title: VendorCreateWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorDeleteWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: |-
+            Human-readable message
+             Success: "Webhook deleted successfully"
+             Error: "Webhook not found"
+        data:
+          title: data
+          description: Deleted webhook information
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+      title: VendorDeleteWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorListWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        paging:
+          title: paging
+          description: Pagination metadata
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+          title: data
+          description: |-
+            List of registered webhooks
+             Each webhook includes: ID, topic, delivery URL, status, created_at
+      title: VendorListWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorWebhook:
+      type: object
+      properties:
+        webhook_id:
+          type: string
+          title: webhook_id
+          maxLength: 255
+          minLength: 1
+          description: Unique webhook ID
+        topic:
+          title: topic
+          description: Event topic this webhook subscribes to
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+        status:
+          title: status
+          description: Webhook status (active/inactive)
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+        delivery_url:
+          type: string
+          title: delivery_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+          description: URL where webhook events will be delivered (HTTPS required)
+        version:
+          title: version
+          description: Webhook payload version
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+        created_at:
+          title: created_at
+          description: When this webhook was created
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updated_at:
+          title: updated_at
+          description: When this webhook was last updated
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID this webhook belongs to
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this webhook is scoped to (optional)
+      title: VendorWebhook
+      additionalProperties: false
+    api.webhook.v1.VendorWebhook.Status:
+      type:
+        - string
+        - number
+      title: Status
+      enum:
+        - STATUS_ACTIVE
+        - 2
+        - STATUS_INACTIVE
+        - 3
+    api.webhook.v1.VendorWebhook.Topic:
+      type:
+        - string
+        - number
+      title: Topic
+      enum:
+        - TOPIC_ORDER_COMPLETED
+        - 2
+        - TOPIC_ORDER_CANCELLED
+        - 3
+        - TOPIC_TRACKING_ORDER_UPDATED
+        - 4
+        - TOPIC_ORDER_ON_HOLD
+        - 5
+        - TOPIC_SHIPPING_ADDRESS_VERIFIED
+        - 6
+        - TOPIC_SHIPPING_ADDRESS_UNVERIFIED
+        - 7
+        - TOPIC_PRODUCT_OUT_OF_STOCK
+        - 8
+    api.webhook.v1.VendorWebhook.Version:
+      type:
+        - string
+        - number
+      title: Version
+      enum:
+        - VERSION_V1
+        - 2
+        - VERSION_V3
+        - 3
+    api.order.v1.VendorAddress:
+      type: object
+      properties:
+        first_name:
+          type: string
+          examples:
+            - John
+          title: first_name
+          maxLength: 50
+          minLength: 1
+          description: Recipient's first name (required)
+        last_name:
+          type: string
+          examples:
+            - Doe
+          title: last_name
+          maxLength: 35
+          description: Recipient's last name (optional)
+        company:
+          type: string
+          examples:
+            - Acme Corporation
+          title: company
+          maxLength: 50
+          description: Company name (optional)
+        contact_pronoun:
+          type: string
+          examples:
+            - Mr.
+          title: contact_pronoun
+          maxLength: 50
+          description: Contact pronoun (optional)
+        street_1:
+          type: string
+          examples:
+            - 123 Main Street
+          title: street_1
+          maxLength: 50
+          minLength: 1
+          description: Street address line 1 (required)
+        street_2:
+          type: string
+          examples:
+            - Apt 4B
+          title: street_2
+          maxLength: 35
+          description: Street address line 2 (optional, for apartment/suite)
+        state_code:
+          type: string
+          examples:
+            - CA
+          title: state_code
+          maxLength: 3
+          description: State/province code (ISO 3166-2)
+        state_name:
+          type: string
+          examples:
+            - California
+          title: state_name
+          maxLength: 40
+          description: State/province full name (optional)
+        city:
+          type: string
+          examples:
+            - Los Angeles
+          title: city
+          maxLength: 30
+          minLength: 1
+          description: City name (required)
+        zip_code:
+          type: string
+          examples:
+            - "90001"
+          title: zip_code
+          maxLength: 12
+          minLength: 1
+          description: Postal/ZIP code (required)
+        country_code:
+          type: string
+          examples:
+            - US
+          title: country_code
+          maxLength: 2
+          minLength: 2
+          description: Country code (ISO 3166-1 alpha-2, required)
+        country_name:
+          type: string
+          examples:
+            - United States
+          title: country_name
+          maxLength: 255
+          description: Country full name (optional)
+        phone_no:
+          type: string
+          examples:
+            - +1-555-123-4567
+          title: phone_no
+          maxLength: 50
+          description: |
+            Phone number (optional)
+            phone_no.valid_format // Phone number must be in valid format with 10 digits in 3-3-4 pattern (e.g., +1 (555) 123-4567, 555-123-4567, or +84 555 123 4567). Extensions allowed: ext/x followed by 3-6 digits.
+        email:
+          type: string
+          examples:
+            - john.doe@gmail.com
+          title: email
+          maxLength: 50
+          description: |
+            Email address (optional)
+            email.valid_format // Email must be in valid format (e.g., user@example.com)
+        type:
+          title: type
+          description: Address type
+          $ref: '#/components/schemas/api.order.v1.VendorAddress.Type'
+      title: VendorAddress
+      additionalProperties: false
+    api.order.v1.VendorAddress.Type:
+      type:
+        - string
+        - number
+      title: Type
+      enum:
+        - TYPE_SHIP_FROM
+        - 2
+        - TYPE_SHIP_TO
+        - 3
+        - TYPE_BILL_TO
+        - 4
+        - TYPE_RETURN_TO
+        - 5
+    api.order.v1.VendorBillingOption:
+      type: object
+      properties:
+        ioss_number:
+          type: string
+          examples:
+            - IM1234567890
+          title: ioss_number
+          maxLength: 255
+          description: |-
+            IOSS (Import One-Stop Shop) number for EU tax compliance (optional)
+             Required for shipments to EU countries to avoid customs delays
+        ioss_value:
+          title: ioss_value
+          description: Total value for IOSS declaration (optional)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        tax_number:
+          type: string
+          examples:
+            - GB123456789
+          title: tax_number
+          maxLength: 255
+          description: |-
+            Tax identification number (optional)
+             Used for VAT/GST compliance in various countries
+        tax_value:
+          title: tax_value
+          description: Tax value/amount (optional)
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: VendorBillingOption
+      additionalProperties: false
+    api.order.v1.VendorCancelReason:
+      type: object
+      properties:
+        reason_id:
+          type: string
+          title: reason_id
+          description: Cancellation reason ID
+        display_name:
+          type: string
+          title: display_name
+          description: Human-readable cancellation reason
+        custom_reason:
+          type: string
+          title: custom_reason
+          description: Custom cancellation reason (if not using predefined reasons)
+      title: VendorCancelReason
+      additionalProperties: false
+    api.order.v1.VendorCreateOrderDraftRequest:
+      type: object
+      properties:
+        data:
+          title: data
+          description: 'Order draft creation parameters (required fields: platform, store_id, shipping address, line_items)'
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraftManualCreationParams'
+      title: VendorCreateOrderDraftRequest
+      additionalProperties: false
+    api.order.v1.VendorCreateOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        data:
+          title: data
+          description: |-
+            Created order draft details
+             Includes: order_id, status, pricing, line items
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraft.Short'
+        warnings:
+          type: array
+          items:
+            type: string
+          title: warnings
+          description: Warnings about at-risk variants or other non-blocking issues
+      title: VendorCreateOrderDraftResponse
+      additionalProperties: false
+    api.order.v1.VendorCreateOrderDraftWithLabelRequest:
+      type: object
+      properties:
+        data:
+          title: data
+          description: 'Order draft creation with shipping label parameters (required: shipping label URL and service type)'
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraftWithLabelCreationParams'
+      title: VendorCreateOrderDraftWithLabelRequest
+      additionalProperties: false
+    api.order.v1.VendorCreateOrderDraftWithLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message describing the result
+        data:
+          title: data
+          description: Created order draft with shipping label
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraft.Short'
+        warnings:
+          type: array
+          items:
+            type: string
+          title: warnings
+          description: Warnings about at-risk variants or other non-blocking issues
+      title: VendorCreateOrderDraftWithLabelResponse
+      additionalProperties: false
+    api.order.v1.VendorCreatedMethod:
+      type:
+        - string
+        - number
+      title: VendorCreatedMethod
+      enum:
+        - VENDOR_CREATED_METHOD_SYNC
+        - 2
+        - VENDOR_CREATED_METHOD_MANUAL
+        - 3
+        - VENDOR_CREATED_METHOD_API
+        - 4
+        - VENDOR_CREATED_METHOD_IMPORT
+        - 5
+        - VENDOR_CREATED_METHOD_LABEL
+        - 6
+    api.order.v1.VendorFulfillmentOption:
+      type: object
+      properties:
+        purchase_tracking_config:
+          title: purchase_tracking_config
+          description: Tracking purchase timing configuration
+          $ref: '#/components/schemas/api.order.v1.VendorPurchaseTrackingConfig'
+      title: VendorFulfillmentOption
+      additionalProperties: false
+    api.order.v1.VendorFulfillmentPriority:
+      type:
+        - string
+        - number
+      title: VendorFulfillmentPriority
+      enum:
+        - VENDOR_FULFILLMENT_PRIORITY_NORMAL
+        - 2
+        - VENDOR_FULFILLMENT_PRIORITY_RUSH
+        - 3
+    api.order.v1.VendorFulfillmentVendor:
+      type:
+        - string
+        - number
+      title: VendorFulfillmentVendor
+      enum:
+        - VENDOR_FULFILLMENT_VENDOR_GEARMENT
+        - 2
+        - VENDOR_FULFILLMENT_VENDOR_AMAZON
+        - 3
+    api.order.v1.VendorGetOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        data:
+          title: data
+          description: |-
+            Complete order draft details
+             Includes: line items, shipping, pricing, status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraft'
+      title: VendorGetOrderDraftResponse
+      additionalProperties: false
+    api.order.v1.VendorGetOrderResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        data:
+          title: data
+          description: |-
+            Complete order details
+             Includes: line items, tracking, shipping, payment, pricing
+          $ref: '#/components/schemas/api.order.v1.VendorOrder'
+      title: VendorGetOrderResponse
+      additionalProperties: false
+    api.order.v1.VendorGetPriceQuoteRequest:
+      type: object
+      properties:
+        order_platform:
+          type: string
+          examples:
+            - shopify
+          title: order_platform
+          enum:
+            - ""
+            - ebay
+            - amazon
+            - shopify
+            - woocommerce
+            - etsy
+            - shopbase
+            - gearment
+            - orderdesk
+            - tiktokshop
+            - poshmark
+            - prestashop
+            - inkgo
+            - wish
+            - bigcommerce
+            - customily
+            - MARKETPLACE_PLATFORM_EBAY
+            - MARKETPLACE_PLATFORM_AMAZON
+            - MARKETPLACE_PLATFORM_SHOPIFY
+            - MARKETPLACE_PLATFORM_WOOCOMMERCE
+            - MARKETPLACE_PLATFORM_ETSY
+            - MARKETPLACE_PLATFORM_SHOPBASE
+            - MARKETPLACE_PLATFORM_GEARMENT
+            - MARKETPLACE_PLATFORM_ORDERDESK
+            - MARKETPLACE_PLATFORM_TIKTOKSHOP
+            - MARKETPLACE_PLATFORM_POSHMARK
+            - MARKETPLACE_PLATFORM_PRESTASHOP
+            - MARKETPLACE_PLATFORM_INKGO
+            - MARKETPLACE_PLATFORM_WISH
+            - MARKETPLACE_PLATFORM_BIGCOMMERCE
+            - MARKETPLACE_PLATFORM_CUSTOMILY
+          description: Platform where the order originates
+        billing:
+          title: billing
+          description: Billing information (optional, used for tax calculation and billing address)
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.Billing'
+        shipping:
+          title: shipping
+          description: 'Shipping address and method (required: country_code, state_code, method)'
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.Shipping'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.LineItem'
+          title: line_items
+          description: 'List of line items to quote (each item requires: variant_id, quantity, print_locations)'
+        gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.GiftMessage'
+          title: gift_messages
+          description: Optional gift messages (adds fee if present)
+      title: VendorGetPriceQuoteRequest
+      additionalProperties: false
+    api.order.v1.VendorGetPriceQuoteResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        data:
+          title: data
+          description: 'Price quote breakdown (includes: order_total, order_subtotal, order_shipping_fee, order_tax, currency; all amounts are in USD unless specified otherwise)'
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.OrderPriceQuote'
+      title: VendorGetPriceQuoteResponse
+      additionalProperties: false
+    api.order.v1.VendorGiftMessage:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this gift message belongs to
+        gift_message_id:
+          type: string
+          title: gift_message_id
+          description: Gift message ID (unique identifier)
+        type:
+          title: type
+          description: Gift message type (custom or uploaded image)
+          $ref: '#/components/schemas/api.order.v1.VendorGiftMessage.Type'
+        content:
+          type: string
+          title: content
+          description: Gift message text content (max 1000 characters)
+        avatar_url:
+          type: string
+          title: avatar_url
+          description: Avatar/image URL for the gift message card
+        gift_message_name:
+          type: string
+          title: gift_message_name
+          description: Gift message template/design name
+      title: VendorGiftMessage
+      additionalProperties: false
+    api.order.v1.VendorGiftMessage.Type:
+      type:
+        - string
+        - number
+      title: Type
+      enum:
+        - TYPE_CUSTOM_IMAGE
+        - 1
+        - TYPE_UPLOAD_IMAGE
+        - 2
+    api.order.v1.VendorLineItem:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this line item belongs to
+        quantity:
+          type: integer
+          title: quantity
+          minimum: 1
+          format: int32
+          description: Quantity ordered (minimum 1)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorPrintingOption'
+          title: printing_options
+          description: Printing options for this line item (design URLs and locations)
+        origin_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.OriginOption'
+          title: origin_options
+          description: Original product options from marketplace (e.g., color, size selections)
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment options (barcode, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.FulfillmentOption'
+        variant:
+          title: variant
+          description: Product variant details
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.Variant'
+        product:
+          title: product
+          description: Product details
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.Product'
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+          description: Internal line item ID
+        item_price:
+          title: item_price
+          description: Unit price per item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_tax:
+          title: line_tax
+          description: Tax amount for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_fee:
+          title: line_fee
+          description: Additional fees for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_discount:
+          title: line_discount
+          description: Discount applied to this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_subtotal:
+          title: line_subtotal
+          description: Subtotal before tax and fees (item_price × quantity)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_total:
+          title: line_total
+          description: Total amount for this line (subtotal + tax + fees - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_item_id:
+          type: string
+          title: line_item_id
+          description: Line item ID (string format)
+      title: VendorLineItem
+      additionalProperties: false
+    api.order.v1.VendorLineItem.FulfillmentOption:
+      type: object
+      properties:
+        barcode_url:
+          type: string
+          title: barcode_url
+          description: Barcode URL for inventory tracking (optional)
+      title: FulfillmentOption
+      additionalProperties: false
+    api.order.v1.VendorLineItem.OriginOption:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          description: Option display name (e.g., "Color", "Size")
+        key:
+          type: string
+          title: key
+          description: Option key/identifier
+        value:
+          type: string
+          title: value
+          description: Option value (e.g., "Black", "Medium")
+      title: OriginOption
+      additionalProperties: false
+    api.order.v1.VendorLineItem.Product:
+      type: object
+      properties:
+        product_id:
+          type: string
+          title: product_id
+          description: Product ID
+        name:
+          type: string
+          title: name
+          description: Product name (e.g., "Unisex T-Shirt")
+        description:
+          type: string
+          title: description
+          description: Product description
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.ProductImage'
+          title: images
+          description: Product images
+        print_locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.ProductPrintLocation'
+          title: print_locations
+          description: Available print locations for this product
+        sku:
+          type: string
+          title: sku
+          description: Product SKU
+      title: Product
+      additionalProperties: false
+    api.order.v1.VendorLineItem.ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+          title: url
+          description: Image URL
+        tag:
+          type: string
+          title: tag
+          description: Image tag/category (e.g., "front", "back", "detail")
+      title: ProductImage
+      additionalProperties: false
+    api.order.v1.VendorLineItem.ProductPrintLocation:
+      type: object
+      properties:
+        code:
+          type: string
+          title: code
+          description: Print location code (e.g., "front", "back")
+        name:
+          type: string
+          title: name
+          description: Print location display name
+        location_id:
+          type: integer
+          title: location_id
+          format: int32
+          description: Internal location ID
+      title: ProductPrintLocation
+      additionalProperties: false
+    api.order.v1.VendorLineItem.Short:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this line item belongs to
+        quantity:
+          type: integer
+          title: quantity
+          minimum: 1
+          format: int32
+          description: Quantity ordered (minimum 1)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorPrintingOption'
+          title: printing_options
+          description: Printing options for this line item (design URLs and locations)
+        origin_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.OriginOption'
+          title: origin_options
+          description: Original product options from marketplace (e.g., color, size selections)
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment options (barcode, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.FulfillmentOption'
+        variant:
+          title: variant
+          description: Product variant details
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.Variant'
+        product:
+          title: product
+          description: Product details
+          $ref: '#/components/schemas/api.order.v1.VendorLineItem.Product'
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+          description: Internal line item ID
+        line_total:
+          title: line_total
+          description: Total amount for this line (subtotal + tax + fees - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_item_id:
+          type: string
+          title: line_item_id
+          description: Line item ID (string format)
+      title: Short
+      additionalProperties: false
+      description: |-
+        Short is a lightweight version of VendorLineItem containing essential fields
+         for compact representation in order listings, including only the total price
+    api.order.v1.VendorLineItem.Variant:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          title: variant_id
+          description: Variant ID (string format)
+        legacy_id:
+          type: integer
+          title: legacy_id
+          format: int32
+          description: Legacy variant ID (integer format, for backward compatibility)
+        sku:
+          type: string
+          title: sku
+          description: SKU (Stock Keeping Unit)
+        name:
+          type: string
+          title: name
+          description: Variant name (e.g., "Black / Medium")
+        description:
+          type: string
+          title: description
+          description: Variant description
+        option_1:
+          type: string
+          title: option_1
+          description: First option value (e.g., "Black" for color)
+        option_2:
+          type: string
+          title: option_2
+          description: Second option value (e.g., "Medium" for size)
+        option_3:
+          type: string
+          title: option_3
+          description: Third option value (optional)
+        option_1_name:
+          type: string
+          title: option_1_name
+          description: First option name (e.g., "Color")
+        option_2_name:
+          type: string
+          title: option_2_name
+          description: Second option name (e.g., "Size")
+        price:
+          title: price
+          description: Variant price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        price_gm:
+          title: price_gm
+          description: Gearment price (internal)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.ProductImage'
+          title: images
+          description: Variant images
+        stock_label:
+          title: stock_label
+          description: Stock availability status
+          $ref: '#/components/schemas/api.order.v1.VendorStockLabel'
+      title: Variant
+      additionalProperties: false
+    api.order.v1.VendorListOrderDraftResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message describing the result
+        paging:
+          title: paging
+          description: |-
+            Pagination metadata
+             Contains: total count, current page, total pages
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraft.Short'
+          title: data
+          description: List of order drafts matching the filter criteria
+      title: VendorListOrderDraftResponse
+      additionalProperties: false
+    api.order.v1.VendorListOrderResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message describing the result
+        paging:
+          title: paging
+          description: Pagination metadata including total count and pages
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrder.Short'
+          title: data
+          description: |-
+            List of orders matching the filter criteria
+             Each order includes: ID, status, line items, tracking info, pricing
+      title: VendorListOrderResponse
+      additionalProperties: false
+    api.order.v1.VendorOrder:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Unique order ID
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this order belongs to
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID (your account ID)
+        created_method:
+          title: created_method
+          description: How this order was created (manual, API, store sync, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        order_platform:
+          title: order_platform
+          description: Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        platform_ref:
+          type: string
+          title: platform_ref
+          description: Platform reference ID (deprecated, will be removed) will be deleted soon
+        fulfillment_vendor:
+          title: fulfillment_vendor
+          description: Fulfillment vendor (Gearment, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentVendor'
+        vendor_ref:
+          type: string
+          title: vendor_ref
+          description: Vendor's reference ID for this order
+        priority:
+          title: priority
+          description: Fulfillment priority (standard, rush, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentPriority'
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment configuration options
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentOption'
+        shipping_option:
+          title: shipping_option
+          description: Shipping method and carrier details
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption'
+        billing_option:
+          title: billing_option
+          description: Billing and tax options (IOSS, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorBillingOption'
+        shipping_labels:
+          type: array
+          items:
+            type: string
+          title: shipping_labels
+          description: Shipping label URLs (if pre-purchased)
+        order_date:
+          title: order_date
+          description: When the order was originally placed
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        approved_at:
+          title: approved_at
+          description: When the order was approved for fulfillment
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        paid_at:
+          title: paid_at
+          description: When the payment was confirmed
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        order_status:
+          title: order_status
+          description: Current order status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderStatus'
+        primary_package_id:
+          type: string
+          title: primary_package_id
+          description: Primary package ID for this order
+        primary_shipment_id:
+          type: string
+          title: primary_shipment_id
+          description: Primary shipment ID for this order
+        is_label_attached:
+          type: boolean
+          title: is_label_attached
+          description: Whether shipping label is attached
+        order_subtotal:
+          title: order_subtotal
+          description: Subtotal (sum of all line items before fees/tax/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_tax:
+          title: order_tax
+          description: Total tax amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_fee:
+          title: order_fee
+          description: Additional processing fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_discount:
+          title: order_discount
+          description: Total discount applied
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_total:
+          title: order_total
+          description: Final total amount (subtotal + fees + tax - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_redeem:
+          title: order_redeem
+          description: Amount redeemed from credits/wallet
+          $ref: '#/components/schemas/common.type.v1.Money'
+        paid_total:
+          title: paid_total
+          description: Amount already paid
+          $ref: '#/components/schemas/common.type.v1.Money'
+        paid_needed:
+          title: paid_needed
+          description: Amount still needed to complete payment
+          $ref: '#/components/schemas/common.type.v1.Money'
+        tracking_no:
+          type: string
+          title: tracking_no
+          description: Primary tracking number
+        created_at:
+          title: created_at
+          description: When this order record was created
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updated_at:
+          title: updated_at
+          description: When this order was last updated
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderLineItem'
+          title: line_items
+          description: All line items in this order
+        store_name:
+          type: string
+          title: store_name
+          description: Store name for display
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorAddress'
+          title: addresses
+          description: Shipping and billing addresses
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorProcessingStage'
+          title: stages
+          description: Processing stages (printing, packing, shipping, etc.)
+        order_gift_message_fee:
+          title: order_gift_message_fee
+          description: Gift message fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_shipping_fee:
+          title: order_shipping_fee
+          description: Shipping cost
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_handle_fee:
+          title: order_handle_fee
+          description: Order handling fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_surcharge:
+          title: order_surcharge
+          description: Additional surcharges
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_rush_fee:
+          title: order_rush_fee
+          description: Rush processing fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_thank_card_fee:
+          title: order_thank_card_fee
+          description: Thank you card fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_trackings:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderTracking'
+          title: order_trackings
+          description: All tracking information for this order
+        gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorGiftMessage'
+          title: gift_messages
+          description: Gift messages for this order
+        refund_status:
+          title: refund_status
+          description: Refund status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderRefundStatus'
+        cancel_status:
+          title: cancel_status
+          description: Cancellation status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderCancelStatus'
+        order_priority:
+          type: string
+          title: order_priority
+          description: Order priority label (for display)
+        transaction_info:
+          title: transaction_info
+          description: Payment transaction details
+          $ref: '#/components/schemas/api.order.v1.VendorTransactionInfo'
+        cancel_reason:
+          title: cancel_reason
+          description: Cancellation reason (if canceled)
+          $ref: '#/components/schemas/api.order.v1.VendorCancelReason'
+        refunded_total:
+          title: refunded_total
+          description: Total amount refunded
+          $ref: '#/components/schemas/common.type.v1.Money'
+        legacy_external_id:
+          type: string
+          title: legacy_external_id
+          description: Legacy external ID (for OMS backward compatibility) for oms order's external id
+        reference_id:
+          type: string
+          title: reference_id
+          description: Your custom reference ID
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderRefund'
+          title: refunds
+          description: All refunds for this order (detailed breakdown)
+      title: VendorOrder
+      additionalProperties: false
+    api.order.v1.VendorOrder.Short:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Unique order ID
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this order belongs to
+        store_name:
+          type: string
+          title: store_name
+          description: Store name for display
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID (your account ID)
+        created_method:
+          title: created_method
+          description: How this order was created (manual, API, store sync, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        order_platform:
+          title: order_platform
+          description: Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        platform_ref:
+          type: string
+          title: platform_ref
+          description: Platform reference ID (deprecated, will be removed) will be deleted soon
+        shipping_labels:
+          type: array
+          items:
+            type: string
+          title: shipping_labels
+          description: Shipping label URLs (if pre-purchased)
+        order_date:
+          title: order_date
+          description: When the order was originally placed
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        approved_at:
+          title: approved_at
+          description: When the order was approved for fulfillment
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        paid_at:
+          title: paid_at
+          description: When the payment was confirmed
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        order_status:
+          title: order_status
+          description: Current order status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderStatus'
+        order_subtotal:
+          title: order_subtotal
+          description: Subtotal (sum of all line items before fees/tax/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_shipping_fee:
+          title: order_shipping_fee
+          description: Shipping cost
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_gift_message_fee:
+          title: order_gift_message_fee
+          description: Gift message fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_tax:
+          title: order_tax
+          description: Total tax amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_total:
+          title: order_total
+          description: Final total amount (subtotal + fees + tax - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment configuration options
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentOption'
+        shipping_option:
+          title: shipping_option
+          description: Shipping method and carrier details
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption'
+        billing_option:
+          title: billing_option
+          description: Billing and tax options (IOSS, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorBillingOption'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderLineItem.Short'
+          title: line_items
+          description: All line items in this order
+        tracking_number:
+          type: string
+          title: tracking_number
+          description: Primary tracking number
+        tracking_link:
+          type: string
+          title: tracking_link
+          description: Tracking link URL
+        tracking_company:
+          type: string
+          title: tracking_company
+          description: Carrier name
+        tracking_product_type:
+          type: string
+          title: tracking_product_type
+          description: Product type for tracking
+        tracking_date_created:
+          title: tracking_date_created
+          description: When tracking was created
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        tracking_type:
+          type: string
+          title: tracking_type
+          description: Tracking type
+        payment_status:
+          title: payment_status
+          description: Payment status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPaymentStatus'
+        shipped_at:
+          title: shipped_at
+          description: When the order was shipped
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        legacy_external_id:
+          type: string
+          title: legacy_external_id
+          description: Legacy external ID (for OMS backward compatibility) for oms order's external id
+        reference_id:
+          type: string
+          title: reference_id
+          description: Your custom reference ID
+        gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorGiftMessage'
+          title: gift_messages
+          description: Gift messages for this order
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorAddress'
+          title: addresses
+          description: Shipping and billing addresses
+        order_handle_fee:
+          title: order_handle_fee
+          description: Order handling fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_rush_fee:
+          title: order_rush_fee
+          description: Rush processing fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_surcharge:
+          title: order_surcharge
+          description: Additional surcharges
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: Short
+      additionalProperties: false
+      description: |-
+        Short is a lightweight version of VendorOrder containing essential fields
+         for listing and display purposes, with flattened tracking data and minimal nested objects
+    api.order.v1.VendorOrderCancelStatus:
+      type:
+        - string
+        - number
+      title: VendorOrderCancelStatus
+      enum:
+        - VENDOR_ORDER_CANCEL_STATUS_NOT_REQUESTED
+        - 2
+        - VENDOR_ORDER_CANCEL_STATUS_REQUESTED
+        - 3
+        - VENDOR_ORDER_CANCEL_STATUS_PROCESSING
+        - 4
+        - VENDOR_ORDER_CANCEL_STATUS_CANCELED
+        - 5
+        - VENDOR_ORDER_CANCEL_STATUS_PARTIALLY_CANCELED
+        - 6
+        - VENDOR_ORDER_CANCEL_STATUS_RETURN_REQUESTED
+        - 7
+        - VENDOR_ORDER_CANCEL_STATUS_RETURNED
+        - 8
+        - VENDOR_ORDER_CANCEL_STATUS_RETURN_REJECTED
+        - 9
+        - VENDOR_ORDER_CANCEL_STATUS_REJECTED
+        - 10
+        - VENDOR_ORDER_CANCEL_STATUS_FAILED
+        - 11
+    api.order.v1.VendorOrderDraft:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Unique draft order ID
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID (your account ID)
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this draft belongs to
+        store_name:
+          type: string
+          title: store_name
+          description: Store name for display
+        platform_ref:
+          type: string
+          title: platform_ref
+          description: Platform reference ID (deprecated, will be removed) will be deleted soon
+        order_platform:
+          title: order_platform
+          description: Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        import_id:
+          type: string
+          title: import_id
+          description: Import batch ID (if created via import)
+        pull_id:
+          type: string
+          title: pull_id
+          description: Store sync pull ID (if created via store sync)
+        request_id:
+          type: string
+          title: request_id
+          description: Request ID for tracking purposes
+        created_method:
+          title: created_method
+          description: How this draft was created (manual, API, store sync, import, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        fulfillment_vendor:
+          title: fulfillment_vendor
+          description: Fulfillment vendor (Gearment, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentVendor'
+        priority:
+          title: priority
+          description: Fulfillment priority (standard, rush, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentPriority'
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment configuration options
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentOption'
+        shipping_option:
+          title: shipping_option
+          description: Shipping method and carrier details
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption'
+        billing_option:
+          title: billing_option
+          description: Billing and tax options (IOSS, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorBillingOption'
+        order_date:
+          title: order_date
+          description: Original order date from marketplace
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        status:
+          title: status
+          description: Current draft status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraftStatus'
+        shipping_labels:
+          type: array
+          items:
+            type: string
+          title: shipping_labels
+          description: Shipping label URLs (if pre-purchased)
+        is_label_attached:
+          type: boolean
+          title: is_label_attached
+          description: Whether shipping label is attached
+        shipping_verification_status:
+          title: shipping_verification_status
+          description: Shipping address verification status
+          $ref: '#/components/schemas/api.order.v1.VendorShippingVerificationStatus'
+        product_matching_status:
+          title: product_matching_status
+          description: Product matching status (matched/unmatched to catalog)
+          $ref: '#/components/schemas/api.order.v1.VendorProductMatchingStatus'
+        is_shipping_verification_bypassed:
+          type: boolean
+          title: is_shipping_verification_bypassed
+          description: Whether shipping verification was manually bypassed
+        is_approved:
+          type: boolean
+          title: is_approved
+          description: Whether this draft has been approved for checkout
+        approved_at:
+          title: approved_at
+          description: When this draft was approved
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        origin_draft_id:
+          type: string
+          title: origin_draft_id
+          description: Original draft ID (if this is a revised version)
+        origin_order_id:
+          type: string
+          title: origin_order_id
+          description: Order ID this draft was converted to (if checked out)
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorAddress'
+          title: addresses
+          description: Shipping and billing addresses
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem'
+          title: line_items
+          description: All line items in this draft
+        gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorGiftMessage'
+          title: gift_messages
+          description: Gift messages for this order
+        legacy_external_id:
+          type: string
+          title: legacy_external_id
+          description: Legacy external ID (for OMS backward compatibility) for oms order's external id
+        order_subtotal:
+          title: order_subtotal
+          description: Subtotal (sum of all line items before fees/tax/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_shipping_fee:
+          title: order_shipping_fee
+          description: Shipping cost
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_handle_fee:
+          title: order_handle_fee
+          description: Order handling fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_tax:
+          title: order_tax
+          description: Total tax amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_fee:
+          title: order_fee
+          description: Additional processing fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_discount:
+          title: order_discount
+          description: Total discount applied
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_total:
+          title: order_total
+          description: Final total amount (subtotal + fees + tax - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        reference_id:
+          type: string
+          title: reference_id
+          description: Your custom reference ID
+      title: VendorOrderDraft
+      additionalProperties: false
+    api.order.v1.VendorOrderDraft.Short:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Unique draft order ID
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID (your account ID)
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this draft belongs to
+        store_name:
+          type: string
+          title: store_name
+          description: Store name for display
+        reference_id:
+          type: string
+          title: reference_id
+          description: Your custom reference ID
+        order_platform:
+          title: order_platform
+          description: Marketplace platform (Shopify, Etsy, WooCommerce, etc.)
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        import_id:
+          type: string
+          title: import_id
+          description: Import batch ID (if created via import)
+        pull_id:
+          type: string
+          title: pull_id
+          description: Store sync pull ID (if created via store sync)
+        request_id:
+          type: string
+          title: request_id
+          description: Request ID for tracking purposes
+        created_method:
+          title: created_method
+          description: How this draft was created (manual, API, store sync, import, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorCreatedMethod'
+        fulfillment_vendor:
+          title: fulfillment_vendor
+          description: Fulfillment vendor (Gearment, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentVendor'
+        priority:
+          title: priority
+          description: Fulfillment priority (standard, rush, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentPriority'
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment configuration options
+          $ref: '#/components/schemas/api.order.v1.VendorFulfillmentOption'
+        shipping_option:
+          title: shipping_option
+          description: Shipping method and carrier details
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption'
+        billing_option:
+          title: billing_option
+          description: Billing and tax options (IOSS, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorBillingOption'
+        order_date:
+          title: order_date
+          description: Original order date from marketplace
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        status:
+          title: status
+          description: Current draft status
+          $ref: '#/components/schemas/api.order.v1.VendorOrderDraftStatus'
+        shipping_labels:
+          type: array
+          items:
+            type: string
+          title: shipping_labels
+          description: Shipping label URLs (if pre-purchased)
+        is_label_attached:
+          type: boolean
+          title: is_label_attached
+          description: Whether shipping label is attached
+        shipping_verification_status:
+          title: shipping_verification_status
+          description: Shipping address verification status
+          $ref: '#/components/schemas/api.order.v1.VendorShippingVerificationStatus'
+        product_matching_status:
+          title: product_matching_status
+          description: Product matching status (matched/unmatched to catalog)
+          $ref: '#/components/schemas/api.order.v1.VendorProductMatchingStatus'
+        is_shipping_verification_bypassed:
+          type: boolean
+          title: is_shipping_verification_bypassed
+          description: Whether shipping verification was manually bypassed
+        is_approved:
+          type: boolean
+          title: is_approved
+          description: Whether this draft has been approved for checkout
+        approved_at:
+          title: approved_at
+          description: When this draft was approved
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        origin_draft_id:
+          type: string
+          title: origin_draft_id
+          description: Original draft ID (if this is a revised version)
+        origin_order_id:
+          type: string
+          title: origin_order_id
+          description: Order ID this draft was converted to (if checked out)
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorAddress'
+          title: addresses
+          description: Shipping and billing addresses
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorLineItem.Short'
+          title: line_items
+          description: All line items in this draft
+        gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorGiftMessage'
+          title: gift_messages
+          description: Gift messages for this order
+        legacy_external_id:
+          type: string
+          title: legacy_external_id
+          description: Legacy external ID (for OMS backward compatibility) for oms order's external id
+        order_total:
+          title: order_total
+          description: Final total amount (subtotal + fees + tax - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_subtotal:
+          title: order_subtotal
+          description: Subtotal (sum of all line items before fees/tax/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_shipping_fee:
+          title: order_shipping_fee
+          description: Shipping cost
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_handle_fee:
+          title: order_handle_fee
+          description: Order handling fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_tax:
+          title: order_tax
+          description: Total tax amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_fee:
+          title: order_fee
+          description: Additional processing fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_discount:
+          title: order_discount
+          description: Total discount applied
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: Short
+      additionalProperties: false
+      description: |-
+        Short is a lightweight version of VendorOrderDraft containing essential fields
+         for listing and display purposes, excluding nested collections and detailed pricing breakdowns
+    api.order.v1.VendorOrderDraftCreationParams.CustomGiftMessage:
+      type: object
+      properties:
+        url:
+          type: string
+          examples:
+            - https://example.com/giftmessage/giftmessage-12345.png
+          title: url
+          maxLength: 1000
+          minLength: 1
+        content:
+          type: string
+          examples:
+            - Happy Birthday! Hope you enjoy this gift. - Sarah
+          title: content
+          maxLength: 1000
+        text_color:
+          type: string
+          examples:
+            - FFFFFF
+          title: text_color
+          pattern: ^([0-9A-F]{6})?$
+        background_color:
+          type: string
+          examples:
+            - "000000"
+          title: background_color
+          pattern: ^([0-9A-F]{6})?$
+      title: CustomGiftMessage
+      additionalProperties: false
+      description: |
+        custom_gift_message_colors_match_content // text_color and background_color must be empty when content is empty, otherwise they must be 6-digit uppercase hex values
+    api.order.v1.VendorOrderDraftCreationParams.LineItem:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          examples:
+            - variant_abc123
+          title: variant_id
+          description: Product variant ID from catalog (use variant_id OR legacy_id, not both)
+        legacy_id:
+          type:
+            - integer
+            - string
+          title: legacy_id
+          format: int64
+          description: Legacy variant ID (for backward compatibility)
+        quantity:
+          exclusiveMinimum: 0
+          type: integer
+          examples:
+            - 2
+          title: quantity
+          maximum: 1000
+          format: int32
+          description: Quantity to order (1-1000)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.PrintingOption'
+          title: printing_options
+          minItems: 1
+          description: Printing options (at least 1 required, must include front or back)
+        barcode_url:
+          type: string
+          examples:
+            - https://example.com/barcodes/item-12345.png
+          title: barcode_url
+          maxLength: 1000
+          description: Barcode URL for inventory tracking (optional)
+      title: LineItem
+      additionalProperties: false
+      description: |
+        has_front_back_or_whole_printing_option // A line item must include at least one printing option with location_code front, pocket, back or whole
+        oneof_variant_id_legacy_id // Exactly one of 'variant_id' or 'legacy_id' must be set
+    api.order.v1.VendorOrderDraftCreationParams.PrintingOption:
+      type: object
+      properties:
+        location_code:
+          title: location_code
+          description: Print location on product
+          $ref: '#/components/schemas/api.order.v1.VendorPrintingOption.PrintLocationCode'
+        url:
+          type: string
+          examples:
+            - https://example.com/designs/design-12345.png
+          title: url
+          maxLength: 1000
+          description: Design file URL (PNG, JPEG, or PDF)
+      title: PrintingOption
+      additionalProperties: false
+    api.order.v1.VendorOrderDraftManualCreationParams:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          examples:
+            - my-order-12345
+          title: reference_id
+          maxLength: 255
+          description: Your reference ID for this order (optional)
+        platform:
+          title: platform
+          description: Platform where this order originates
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        store_id:
+          type: string
+          examples:
+            - store_abc123xyz
+          title: store_id
+          maxLength: 255
+          description: Your store ID from Gearment
+        agree_at_risk:
+          title: agree_at_risk
+          description: Acknowledge production risks (e.g., unverified address, to proceed with order despite warnings)
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        address:
+          title: address
+          description: Shipping address details
+          $ref: '#/components/schemas/api.order.v1.VendorAddress'
+        shipping_method:
+          title: shipping_method
+          description: Shipping method selection
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption.Method'
+        billing_option:
+          title: billing_option
+          description: Billing options (taxes, IOSS, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorBillingOption'
+        gift_message_body:
+          type: string
+          examples:
+            - Happy Birthday! Hope you enjoy this gift. - Sarah
+          title: gift_message_body
+          maxLength: 1000
+          description: Optional gift message (max 1000 chars)
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.LineItem'
+          title: line_items
+          maxItems: 1000
+          minItems: 1
+          description: Line items to order (at least 1, max 1000)
+        order_number:
+          type: string
+          examples:
+            - ORD-12345
+          title: order_number
+          maxLength: 255
+          description: |-
+            Order number from OrderDesk (optional, max 255 chars)
+             Used as PlatformRef when reference_id is empty for OrderDesk orders
+        print_type:
+          type: string
+          title: print_type
+          enum:
+            - ""
+            - DTG
+            - DTF
+          description: 'Print type for production (optional: "DTG" or "DTF"). Only available for enabled teams.'
+        custom_gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.CustomGiftMessage'
+          title: custom_gift_messages
+          maxItems: 1000
+      title: VendorOrderDraftManualCreationParams
+      additionalProperties: false
+    api.order.v1.VendorOrderDraftStatus:
+      type:
+        - string
+        - number
+      title: VendorOrderDraftStatus
+      enum:
+        - VENDOR_ORDER_DRAFT_STATUS_DRAFT
+        - 2
+        - VENDOR_ORDER_DRAFT_STATUS_AWAITING_CHECKOUT
+        - 3
+        - VENDOR_ORDER_DRAFT_STATUS_CHECKED_OUT
+        - 4
+        - VENDOR_ORDER_DRAFT_STATUS_DELETED
+        - 5
+        - VENDOR_ORDER_DRAFT_STATUS_ARCHIVED
+        - 6
+    api.order.v1.VendorOrderDraftUpdateParams.LineItem:
+      type: object
+      properties:
+        line_item_id:
+          type: string
+          examples:
+            - li_abc123
+          title: line_item_id
+          description: Line item ID to update (required)
+        variant_id:
+          type: string
+          examples:
+            - variant_abc123
+          title: variant_id
+          description: Product variant ID (use variant_id OR legacy_id, not both)
+        legacy_id:
+          type:
+            - integer
+            - string
+          title: legacy_id
+          format: int64
+          description: Legacy variant ID (for backward compatibility, use variant_id OR legacy_id, not both)
+        quantity:
+          exclusiveMinimum: 0
+          type: integer
+          examples:
+            - 2
+          title: quantity
+          maximum: 1000
+          format: int32
+          description: Quantity to order (1-1000)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.PrintingOption'
+          title: printing_options
+          minItems: 1
+          description: Printing options (at least 1 required, must include front or back)
+        barcode_url:
+          type: string
+          examples:
+            - https://example.com/barcodes/item-12345.png
+          title: barcode_url
+          maxLength: 1000
+          description: Barcode URL for inventory tracking (optional)
+      title: LineItem
+      additionalProperties: false
+      description: |
+        has_front_back_or_whole_printing_option // A line item must include at least one printing option with location_code front, pocket, back or whole
+        oneof_variant_id_legacy_id // Exactly one of 'variant_id' or 'legacy_id' must be set
+    api.order.v1.VendorOrderDraftWithLabelCreationParams:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          examples:
+            - my-order-12345
+          title: reference_id
+          maxLength: 255
+          description: Your reference ID for this order (optional)
+        platform:
+          title: platform
+          description: Platform where this order originates (required)
+          $ref: '#/components/schemas/common.platform.v1.MarketplacePlatform'
+        store_id:
+          type: string
+          examples:
+            - store_abc123xyz
+          title: store_id
+          maxLength: 255
+          description: Your store ID from Gearment (required)
+        agree_at_risk:
+          title: agree_at_risk
+          description: Acknowledge production risks (e.g., unverified address, to proceed with order despite warnings)
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        shipping_label_urls:
+          type: array
+          items:
+            type: string
+            examples:
+              - https://example.com/labels/shipping-label-001.pdf
+            maxLength: 1000
+            minLength: 1
+            minItems: 1
+          title: shipping_label_urls
+          minItems: 1
+          description: |-
+            Pre-purchased shipping label URLs (required, at least 1, PDF or image format)
+             Use this when you've already purchased shipping labels and want Gearment to use them
+        gift_message_body:
+          type: string
+          examples:
+            - Happy Birthday! Hope you enjoy this gift. - Sarah
+          title: gift_message_body
+          maxLength: 1000
+          description: Optional gift message (max 1000 chars)
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.LineItem'
+          title: line_items
+          maxItems: 1000
+          minItems: 1
+          description: Line items to order (at least 1, max 1000)
+        print_type:
+          type: string
+          title: print_type
+          enum:
+            - ""
+            - DTG
+            - DTF
+          description: 'Print type for production (optional: "DTG" or "DTF"). Only available for enabled teams.'
+        custom_gift_messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.CustomGiftMessage'
+          title: custom_gift_messages
+          maxItems: 1000
+      title: VendorOrderDraftWithLabelCreationParams
+      additionalProperties: false
+    api.order.v1.VendorOrderLineItem:
+      type: object
+      properties:
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+          description: Internal line item ID
+        variant_id:
+          type: string
+          title: variant_id
+          description: Product variant ID
+        quantity:
+          type: integer
+          title: quantity
+          minimum: 1
+          format: int32
+          description: Quantity ordered (minimum 1)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorPrintingOption'
+          title: printing_options
+          description: Printing options for this line item
+        seller_variant_id:
+          type: string
+          title: seller_variant_id
+          description: Seller's variant ID (from marketplace)
+        product_id:
+          type: string
+          title: product_id
+          description: Product ID
+        option_1:
+          type: string
+          title: option_1
+          description: First option value (e.g., "Black" for color)
+        option_2:
+          type: string
+          title: option_2
+          description: Second option value (e.g., "Medium" for size)
+        product_name:
+          type: string
+          title: product_name
+          description: Product name
+        item_price:
+          title: item_price
+          description: Unit price per item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_tax:
+          title: line_tax
+          description: Tax amount for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_fee:
+          title: line_fee
+          description: Additional fees for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_discount:
+          title: line_discount
+          description: Discount applied to this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_subtotal:
+          title: line_subtotal
+          description: Subtotal before tax and fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_total:
+          title: line_total
+          description: Total amount for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        variant_name:
+          type: string
+          title: variant_name
+          description: Variant name (e.g., "Black / Medium")
+        product_url:
+          type: string
+          title: product_url
+          description: Product URL (link to product page)
+        variant_sku:
+          type: string
+          title: variant_sku
+          description: Variant SKU
+        product_type_name:
+          type: string
+          title: product_type_name
+          description: Product type name (e.g., "T-Shirt", "Hoodie")
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this line item belongs to
+        line_item_id:
+          type: string
+          title: line_item_id
+          description: Line item ID (string format)
+      title: VendorOrderLineItem
+      additionalProperties: false
+    api.order.v1.VendorOrderLineItem.FulfillmentOption:
+      type: object
+      properties:
+        barcode_url:
+          type: string
+          title: barcode_url
+      title: FulfillmentOption
+      additionalProperties: false
+    api.order.v1.VendorOrderLineItem.Short:
+      type: object
+      properties:
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+          description: Internal line item ID
+        quantity:
+          type: integer
+          title: quantity
+          minimum: 1
+          format: int32
+          description: Quantity ordered (minimum 1)
+        printing_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorPrintingOption'
+          title: printing_options
+          description: Printing options for this line item
+        seller_variant_id:
+          type: string
+          title: seller_variant_id
+          description: Seller's variant ID (from marketplace)
+        product_id:
+          type: string
+          title: product_id
+          description: Product ID
+        product_name:
+          type: string
+          title: product_name
+          description: Product name
+        item_price:
+          title: item_price
+          description: Unit price per item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_tax:
+          title: line_tax
+          description: Tax amount for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_fee:
+          title: line_fee
+          description: Additional fees for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_discount:
+          title: line_discount
+          description: Discount applied to this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_subtotal:
+          title: line_subtotal
+          description: Subtotal before tax and fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_total:
+          title: line_total
+          description: Total amount for this line
+          $ref: '#/components/schemas/common.type.v1.Money'
+        fulfillment_option:
+          title: fulfillment_option
+          description: Fulfillment options (barcode, etc.)
+          $ref: '#/components/schemas/api.order.v1.VendorOrderLineItem.FulfillmentOption'
+        product_url:
+          type: string
+          title: product_url
+          description: Product URL (link to product page)
+        product_sku:
+          type: string
+          title: product_sku
+          description: Product SKU
+        variant:
+          title: variant
+          description: Variant details
+          $ref: '#/components/schemas/api.order.v1.VendorOrderLineItem.Short.Variant'
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this line item belongs to
+        line_item_id:
+          type: string
+          title: line_item_id
+          description: Line item ID (string format)
+      title: Short
+      additionalProperties: false
+      description: |-
+        Short is a lightweight version of VendorOrderLineItem with essential fields
+         for compact order representation, including variant details in a nested Short.Variant message
+    api.order.v1.VendorOrderLineItem.Short.Variant:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          title: variant_id
+          description: Variant ID (string format)
+        variant_name:
+          type: string
+          title: variant_name
+          description: Variant name (e.g., "Black / Medium")
+        legacy_id:
+          type: integer
+          title: legacy_id
+          format: int32
+          description: Legacy variant ID (integer format, for backward compatibility)
+        sku:
+          type: string
+          title: sku
+          description: SKU (Stock Keeping Unit)
+        name:
+          type: string
+          title: name
+          description: Variant name
+        description:
+          type: string
+          title: description
+          description: Variant description
+        option_1:
+          type: string
+          title: option_1
+          description: First option value (e.g., "Black" for color)
+        option_2:
+          type: string
+          title: option_2
+          description: Second option value (e.g., "Medium" for size)
+        option_3:
+          type: string
+          title: option_3
+          description: Third option value (optional)
+        option_1_name:
+          type: string
+          title: option_1_name
+          description: First option name (e.g., "Color")
+        option_2_name:
+          type: string
+          title: option_2_name
+          description: Second option name (e.g., "Size")
+        option_3_name:
+          type: string
+          title: option_3_name
+          description: Third option name (optional)
+        stock_label:
+          title: stock_label
+          description: Stock availability status
+          $ref: '#/components/schemas/api.order.v1.VendorStockLabel'
+      title: Variant
+      additionalProperties: false
+      description: Variant contains essential variant information for the short line item representation
+    api.order.v1.VendorOrderPaymentStatus:
+      type:
+        - string
+        - number
+      title: VendorOrderPaymentStatus
+      enum:
+        - VENDOR_ORDER_PAYMENT_STATUS_PENDING
+        - 2
+        - VENDOR_ORDER_PAYMENT_STATUS_SUCCESS
+        - 3
+        - VENDOR_ORDER_PAYMENT_STATUS_FAILED
+        - 4
+        - VENDOR_ORDER_PAYMENT_STATUS_EXPIRED
+        - 5
+        - VENDOR_ORDER_PAYMENT_STATUS_SUCCESS_PARTIALLY
+        - 6
+    api.order.v1.VendorOrderPriceCalculation.Address:
+      type: object
+      properties:
+        method:
+          type: string
+          examples:
+            - standard
+          title: method
+          enum:
+            - standard
+            - METHOD_STANDARD
+            - economy
+            - METHOD_ECONOMY
+            - stamp
+            - METHOD_STAMP
+            - ground
+            - METHOD_GROUND
+            - fastship
+            - METHOD_FAST_SHIP
+          description: Shipping method
+        state_code:
+          type: string
+          examples:
+            - CA
+          title: state_code
+          description: State/province code (ISO 3166-2)
+        country_code:
+          type: string
+          examples:
+            - US
+          title: country_code
+          description: Country code (ISO 3166-1 alpha-2)
+      title: Address
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.Billing:
+      type: object
+      properties:
+        ioss_number:
+          type: string
+          examples:
+            - IM1234567890
+          title: ioss_number
+          description: IOSS number for EU tax compliance
+        tax_number:
+          type: string
+          examples:
+            - GB123456789
+          title: tax_number
+          description: Tax identification number
+      title: Billing
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.FeePriceQuote:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID this fee applies to
+        line_item_id:
+          type: string
+          title: line_item_id
+          description: Line item ID this fee applies to
+        fee_code:
+          type: string
+          title: fee_code
+          description: Fee code/identifier (e.g., "RUSH_FEE", "GIFT_MESSAGE_FEE")
+        amount:
+          title: amount
+          description: Fee amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: FeePriceQuote
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.GiftMessage:
+      type: object
+      properties:
+        gift_message_id:
+          type: string
+          examples:
+            - gift_msg_123
+          title: gift_message_id
+          maxLength: 30
+          minLength: 1
+          description: Unique identifier for the gift message
+        content:
+          type: string
+          examples:
+            - Happy Birthday! Wishing you all the best. - John
+          title: content
+          maxLength: 300
+          description: Gift message text content (max 300 characters)
+      title: GiftMessage
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.Label:
+      type: object
+      properties:
+        url:
+          type: string
+          examples:
+            - https://example.com/shipping-label.pdf
+          title: url
+          description: URL to pre-purchased shipping label (PDF or image)
+      title: Label
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.LineItem:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          examples:
+            - variant_abc123
+          title: variant_id
+          maxLength: 30
+          minLength: 1
+          description: Product variant ID from catalog
+        quantity:
+          exclusiveMinimum: 0
+          type: integer
+          examples:
+            - 2
+          title: quantity
+          format: int32
+          description: Quantity to order
+        print_locations:
+          type: array
+          items:
+            type: string
+            examples:
+              - front
+            enum:
+              - front
+              - PRINT_LOCATION_CODE_FRONT
+              - back
+              - PRINT_LOCATION_CODE_BACK
+              - left_sleeve
+              - PRINT_LOCATION_CODE_LEFT_SLEEVE
+              - right_sleeve
+              - PRINT_LOCATION_CODE_RIGHT_SLEEVE
+              - pocket
+              - PRINT_LOCATION_CODE_POCKET
+              - whole
+              - PRINT_LOCATION_CODE_WHOLE
+          title: print_locations
+          description: Print locations on the product
+      title: LineItem
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.LineItemPriceQuote:
+      type: object
+      properties:
+        line_sub_total:
+          title: line_sub_total
+          description: Line item subtotal (item_price × quantity, before tax/fees/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_tax:
+          title: line_tax
+          description: Tax for this line item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_fee:
+          title: line_fee
+          description: Additional fees for this line item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_discount:
+          title: line_discount
+          description: Discount applied to this line item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_total:
+          title: line_total
+          description: Total for this line item (subtotal + tax + fee - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        item_price:
+          title: item_price
+          description: Unit price per item
+          $ref: '#/components/schemas/common.type.v1.Money'
+        item_fee:
+          title: item_fee
+          description: Per-item fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+        item_discount:
+          title: item_discount
+          description: Per-item discount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        item_quantity:
+          type: integer
+          title: item_quantity
+          format: int32
+          description: Quantity of items
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+          description: Internal line item ID
+        unit_base_price:
+          title: unit_base_price
+          description: Base price per unit (before fees/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: LineItemPriceQuote
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.OrderPriceQuote:
+      type: object
+      properties:
+        order_shipping_fee:
+          title: order_shipping_fee
+          description: Total shipping fee for the order
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_fee:
+          title: order_fee
+          description: Additional processing fees
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_tax:
+          title: order_tax
+          description: Total tax for the order
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_sub_total:
+          title: order_sub_total
+          description: Order subtotal (sum of all line items before tax/fees/discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_total:
+          title: order_total
+          description: Final order total (subtotal + shipping + tax + fees - discount)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_discount:
+          title: order_discount
+          description: Total discount applied to the order
+          $ref: '#/components/schemas/common.type.v1.Money'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.LineItemPriceQuote'
+          title: line_items
+          description: Price breakdown for each line item
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.FeePriceQuote'
+          title: fees
+          description: Detailed fee breakdown
+        order_gift_message_fee:
+          title: order_gift_message_fee
+          description: Gift message fee (if applicable)
+          $ref: '#/components/schemas/common.type.v1.Money'
+        order_handle_fee:
+          title: order_handle_fee
+          description: Order handling fee
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: OrderPriceQuote
+      additionalProperties: false
+    api.order.v1.VendorOrderPriceCalculation.Shipping:
+      type: object
+      properties:
+        address:
+          title: address
+          description: Shipping address information
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.Address'
+        label:
+          title: label
+          description: Pre-purchased shipping label (optional)
+          $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.Label'
+      title: Shipping
+      additionalProperties: false
+    api.order.v1.VendorOrderRefund:
+      type: object
+      properties:
+        refund_request_id:
+          type: string
+          title: refund_request_id
+          description: Unique refund request ID
+        order_refund_id:
+          type: string
+          title: order_refund_id
+          description: Order-specific refund ID
+        type:
+          title: type
+          description: Type of refund (full, partial, specific fees)
+          $ref: '#/components/schemas/api.order.v1.VendorRefundRequestType'
+        amount:
+          title: amount
+          description: Refund amount
+          $ref: '#/components/schemas/common.type.v1.Money'
+        transaction_id:
+          type: string
+          title: transaction_id
+          description: Transaction ID from payment system
+        transaction_ref:
+          type: string
+          title: transaction_ref
+          description: Transaction reference
+        status:
+          title: status
+          description: Current refund status
+          $ref: '#/components/schemas/api.order.v1.VendorRefundStatus'
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorRefundReason'
+          title: reasons
+          description: Refund reason/notes (if any)
+        created_at:
+          title: created_at
+          description: When this refund was created
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updated_at:
+          title: updated_at
+          description: When this refund was last updated
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        expired_at:
+          title: expired_at
+          description: Expiration timestamp (if applicable)
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: VendorOrderRefund
+      additionalProperties: false
+      description: Detailed refund information for a single refund request
+    api.order.v1.VendorOrderRefundStatus:
+      type:
+        - string
+        - number
+      title: VendorOrderRefundStatus
+      enum:
+        - VENDOR_ORDER_REFUND_STATUS_NOT_REQUESTED
+        - 2
+        - VENDOR_ORDER_REFUND_STATUS_NOT_APPLICABLE
+        - 3
+        - VENDOR_ORDER_REFUND_STATUS_REQUESTED
+        - 4
+        - VENDOR_ORDER_REFUND_STATUS_PROCESSING
+        - 5
+        - VENDOR_ORDER_REFUND_STATUS_REFUNDED
+        - 6
+        - VENDOR_ORDER_REFUND_STATUS_PARTIALLY_REFUNDED
+        - 7
+        - VENDOR_ORDER_REFUND_STATUS_RETURN_REFUND_REQUESTED
+        - 8
+        - VENDOR_ORDER_REFUND_STATUS_RETURN_REFUNDED
+        - 9
+        - VENDOR_ORDER_REFUND_STATUS_REJECTED
+        - 10
+        - VENDOR_ORDER_REFUND_STATUS_FAILED
+        - 11
+    api.order.v1.VendorOrderStatus:
+      type:
+        - string
+        - number
+      title: VendorOrderStatus
+      enum:
+        - VENDOR_ORDER_STATUS_AWAITING_PAYMENT
+        - 2
+        - VENDOR_ORDER_STATUS_PAYMENT_FAILED
+        - 3
+        - VENDOR_ORDER_STATUS_AWAITING_FULFILLMENT
+        - 4
+        - VENDOR_ORDER_STATUS_IN_PRODUCTION
+        - 5
+        - VENDOR_ORDER_STATUS_PACKED
+        - 6
+        - VENDOR_ORDER_STATUS_SHIPPED
+        - 7
+        - VENDOR_ORDER_STATUS_CANCELLED
+        - 8
+        - VENDOR_ORDER_STATUS_ON_HOLD
+        - 9
+    api.order.v1.VendorOrderTracking:
+      type: object
+      properties:
+        tracking_no:
+          type: string
+          title: tracking_no
+          description: Tracking number (e.g., "1Z999AA10123456784" for UPS)
+        tracking_updated_at:
+          title: tracking_updated_at
+          description: Last update timestamp for tracking information
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        carrier:
+          type: string
+          title: carrier
+          description: Shipping carrier (e.g., "USPS", "FedEx", "UPS", "DHL")
+        service:
+          type: string
+          title: service
+          description: Shipping service level (e.g., "Priority Mail", "Ground", "Express")
+        type:
+          type: string
+          title: type
+          description: Legacy tracking type field (deprecated, use tracking_type instead)
+        label_file:
+          title: label_file
+          description: Shipping label file (PDF or image)
+          $ref: '#/components/schemas/common.type.v1.File'
+        tracking_type:
+          title: tracking_type
+          description: Tracking type (indicates if this is the primary, secondary, or outdated tracking)
+          $ref: '#/components/schemas/api.order.v1.VendorTrackingType'
+        tracking_url:
+          type: string
+          title: tracking_url
+          description: Tracking URL for carrier's tracking page (e.g., "https://tools.usps.com/go/TrackConfirmAction?tLabels=...")
+      title: VendorOrderTracking
+      additionalProperties: false
+    api.order.v1.VendorPrintingOption:
+      type: object
+      properties:
+        print_location_code:
+          title: print_location_code
+          description: Print location on the product (required)
+          $ref: '#/components/schemas/api.order.v1.VendorPrintingOption.PrintLocationCode'
+        design_url:
+          type: string
+          examples:
+            - https://example.com/designs/front-design.png
+          title: design_url
+          maxLength: 1000
+          description: Design file URL (PNG, JPEG, or PDF format)
+      title: VendorPrintingOption
+      additionalProperties: false
+    api.order.v1.VendorPrintingOption.PrintLocationCode:
+      type:
+        - string
+        - number
+      title: PrintLocationCode
+      enum:
+        - PRINT_LOCATION_CODE_WHOLE
+        - 1
+        - PRINT_LOCATION_CODE_FRONT
+        - 2
+        - PRINT_LOCATION_CODE_BACK
+        - 3
+        - PRINT_LOCATION_CODE_LEFT_SLEEVE
+        - 4
+        - PRINT_LOCATION_CODE_RIGHT_SLEEVE
+        - 5
+        - PRINT_LOCATION_CODE_POCKET
+        - 6
+        - PRINT_LOCATION_CODE_INSIDE_LABEL
+        - 7
+        - PRINT_LOCATION_CODE_OUTSIDE_LABEL
+        - 8
+    api.order.v1.VendorProcessingStage:
+      type: object
+      properties:
+        stage_id:
+          type: string
+          title: stage_id
+          description: Processing stage ID
+        stage_name:
+          type: string
+          title: stage_name
+          description: Processing stage name (e.g., "Printing", "Packing", "Shipping")
+        stage_started_at:
+          title: stage_started_at
+          description: When this stage started
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        stage_completed_at:
+          title: stage_completed_at
+          description: When this stage completed
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        is_completed:
+          type: boolean
+          title: is_completed
+          description: Whether this stage is completed
+      title: VendorProcessingStage
+      additionalProperties: false
+    api.order.v1.VendorProductMatchingStatus:
+      type:
+        - string
+        - number
+      title: VendorProductMatchingStatus
+      enum:
+        - VENDOR_PRODUCT_MATCHING_STATUS_MATCHED
+        - 2
+        - VENDOR_PRODUCT_MATCHING_STATUS_UNMATCHED
+        - 3
+    api.order.v1.VendorPurchaseTrackingConfig:
+      type:
+        - string
+        - number
+      title: VendorPurchaseTrackingConfig
+      enum:
+        - VENDOR_PURCHASE_TRACKING_TIME_DEFAULT
+        - 1
+        - VENDOR_PURCHASE_TRACKING_TIME_IMMEDIATELY_AFTER_THE_PAYMENT_TIME
+        - 2
+        - VENDOR_PURCHASE_TRACKING_TIME_WITHIN_A_SPECIFIC_NUMBER_OF_DAY
+        - 4
+    api.order.v1.VendorRefundReason:
+      type: object
+      properties:
+        reason_id:
+          type: string
+          title: reason_id
+          description: Predefined reason ID (if applicable)
+        detail:
+          type: string
+          title: detail
+          description: Custom detail text
+        note_type:
+          type: string
+          title: note_type
+          description: Type of note (approve/reject)
+      title: VendorRefundReason
+      additionalProperties: false
+      description: Refund reason/note information
+    api.order.v1.VendorRefundRequestType:
+      type:
+        - string
+        - number
+      title: VendorRefundRequestType
+      enum:
+        - VENDOR_REFUND_REQUEST_TYPE_FULL
+        - 1
+        - VENDOR_REFUND_REQUEST_TYPE_FULL_BASE_PRICE
+        - 2
+        - VENDOR_REFUND_REQUEST_TYPE_LABEL_FEE
+        - 3
+        - VENDOR_REFUND_REQUEST_TYPE_SURCHARGE_FEE
+        - 4
+        - VENDOR_REFUND_REQUEST_TYPE_GIFT_MESSAGE_FEE
+        - 5
+        - VENDOR_REFUND_REQUEST_TYPE_FULL_SHIPPING_FEE
+        - 6
+        - VENDOR_REFUND_REQUEST_TYPE_TAX_FEE
+        - 7
+        - VENDOR_REFUND_REQUEST_TYPE_CUSTOM
+        - 8
+        - VENDOR_REFUND_REQUEST_TYPE_FULL_LINE_ITEM
+        - 9
+        - VENDOR_REFUND_REQUEST_TYPE_FASTSHIP
+        - 10
+        - VENDOR_REFUND_REQUEST_TYPE_HANDLE_FEE
+        - 11
+        - VENDOR_REFUND_REQUEST_TYPE_FULL_BASE_PRICE_FBA
+        - 12
+      description: Vendor-facing refund request type enum
+    api.order.v1.VendorRefundStatus:
+      type:
+        - string
+        - number
+      title: VendorRefundStatus
+      enum:
+        - VENDOR_REFUND_STATUS_PENDING
+        - 1
+        - VENDOR_REFUND_STATUS_PROCESSING
+        - 2
+        - VENDOR_REFUND_STATUS_APPROVED
+        - 3
+        - VENDOR_REFUND_STATUS_SUCCESS
+        - 4
+        - VENDOR_REFUND_STATUS_FAILED
+        - 5
+        - VENDOR_REFUND_STATUS_REJECTED
+        - 6
+      description: Vendor-facing refund status enum
+    api.order.v1.VendorShippingOption:
+      type: object
+      properties:
+        method:
+          title: method
+          description: Shipping method (required)
+          $ref: '#/components/schemas/api.order.v1.VendorShippingOption.Method'
+      title: VendorShippingOption
+      additionalProperties: false
+    api.order.v1.VendorShippingOption.Method:
+      type:
+        - string
+        - number
+      title: Method
+      enum:
+        - METHOD_STANDARD
+        - 2
+        - METHOD_GROUND
+        - 3
+        - METHOD_FAST_SHIP
+        - 4
+        - METHOD_STAMP
+        - 5
+        - METHOD_ECONOMY
+        - 6
+    api.order.v1.VendorShippingVerificationStatus:
+      type:
+        - string
+        - number
+      title: VendorShippingVerificationStatus
+      enum:
+        - VENDOR_SHIPPING_VERIFICATION_STATUS_PENDING
+        - 2
+        - VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_INVALID
+        - 3
+        - VENDOR_SHIPPING_VERIFICATION_STATUS_CONSTRAINT_VALID
+        - 4
+        - VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_UNVERIFIED
+        - 5
+        - VENDOR_SHIPPING_VERIFICATION_STATUS_ADDRESS_VERIFIED
+        - 6
+    api.order.v1.VendorStockLabel:
+      type:
+        - string
+        - number
+      title: VendorStockLabel
+      enum:
+        - VENDOR_STOCK_LABEL_IN_STOCK
+        - 1
+        - VENDOR_STOCK_LABEL_OUT_OF_STOCK
+        - 2
+        - VENDOR_STOCK_LABEL_AT_RISK
+        - 3
+        - VENDOR_STOCK_LABEL_DISCONTINUED
+        - 4
+    api.order.v1.VendorTrackingType:
+      type:
+        - string
+        - number
+      title: VendorTrackingType
+      enum:
+        - TRACKING_TYPE_PRIMARY
+        - 1
+        - TRACKING_TYPE_SECONDARY
+        - 2
+        - TRACKING_TYPE_OUTDATED
+        - 3
+    api.order.v1.VendorTransactionInfo:
+      type: object
+      properties:
+        txn_id:
+          type: string
+          title: txn_id
+          description: Transaction ID (unique identifier for this payment transaction)
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID (your account identifier)
+        method_code:
+          type: string
+          title: method_code
+          description: Payment method code (e.g., "credit_card", "paypal", "stripe")
+        method_icon_urls:
+          type: string
+          title: method_icon_urls
+          description: Payment method icon URL (for displaying payment method logo)
+        list_invoice_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorTransactionInfo.VendorInvoiceInfo'
+          title: list_invoice_detail
+          description: List of invoice details included in this transaction
+      title: VendorTransactionInfo
+      additionalProperties: false
+    api.order.v1.VendorTransactionInfo.VendorInvoiceInfo:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+          title: invoice_id
+          description: Invoice ID (unique identifier for this invoice)
+        order_id:
+          type: string
+          title: order_id
+          description: Order ID associated with this invoice line
+        variant_name:
+          type: string
+          title: variant_name
+          description: Product variant name (e.g., "Unisex T-Shirt - Black - M")
+        quantity:
+          type: integer
+          title: quantity
+          format: int32
+          description: Quantity of items in this invoice line
+        shipping_service:
+          type: string
+          title: shipping_service
+          description: Shipping service used (e.g., "USPS Priority Mail", "FedEx Ground")
+        tracking_number:
+          type: string
+          title: tracking_number
+          description: Tracking number for shipment
+        product_image_url:
+          type: string
+          title: product_image_url
+          description: Product image URL
+        line_total:
+          title: line_total
+          description: Total amount for this invoice line
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: VendorInvoiceInfo
+      additionalProperties: false
+    api.order.v1.VendorUpdateOrderDraftLineItemsRequest:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          maxLength: 255
+          minLength: 1
+          description: 'Order draft ID to update (format: draft_xxxxx or UUID)'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorOrderDraftUpdateParams.LineItem'
+          title: line_items
+          maxItems: 1000
+          minItems: 1
+          description: 'Updated line items (can update: quantity, designs, printing options; max 1000 line items per request)'
+      title: VendorUpdateOrderDraftLineItemsRequest
+      additionalProperties: false
+    api.order.v1.VendorUpdateOrderDraftLineItemsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        data:
+          title: data
+          description: Updated order draft information
+          $ref: '#/components/schemas/api.order.v1.VendorUpdateOrderDraftLineItemsResponse.Data'
+      title: VendorUpdateOrderDraftLineItemsResponse
+      additionalProperties: false
+    api.order.v1.VendorUpdateOrderDraftLineItemsResponse.Data:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          description: Order draft ID that was updated
+      title: Data
+      additionalProperties: false
+    common.type.v1.File:
+      type: object
+      properties:
+        file_name:
+          type: string
+          title: file_name
+          maxLength: 1000
+        file_path:
+          type: string
+          title: file_path
+          maxLength: 1000
+        file_url:
+          type: string
+          title: file_url
+          maxLength: 1000
+        file_id:
+          type: string
+          title: file_id
+          maxLength: 2048
+        storage_type:
+          title: storage_type
+          $ref: '#/components/schemas/common.type.v1.File.StorageType'
+      title: File
+      additionalProperties: false
+    common.type.v1.File.StorageType:
+      type:
+        - string
+        - number
+      title: StorageType
+      enum:
+        - STORAGE_TYPE_S3
+        - 1
+        - STORAGE_TYPE_CLOUDFLARE
+        - 2
+        - STORAGE_TYPE_S3_LEGACY
+        - 3
+        - STORAGE_TYPE_EXTERNAL
+        - 4
+    google.protobuf.BoolValue:
+      type: boolean
+      description: |-
+        Wrapper message for `bool`.
+
+         The JSON representation for `BoolValue` is JSON `true` and `false`.
+
+         Not recommended for use in new APIs, but still useful for legacy APIs and
+         has no plan to be removed.
+    api.support.v1.CreateSupportRequestRequest:
+      type: object
+      properties:
+        order_id:
+          type: string
+          title: order_id
+          minLength: 1
+        issue_category:
+          title: issue_category
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Category'
+        issue_detail:
+          type: string
+          title: issue_detail
+          minLength: 1
+        issue_solution:
+          type: string
+          title: issue_solution
+        issue_image_urls:
+          type: array
+          items:
+            type: string
+            maxLength: 2048
+            format: uri
+          title: issue_image_urls
+        item_affected:
+          type: integer
+          title: item_affected
+          minimum: 0
+          format: int32
+      title: CreateSupportRequestRequest
+      additionalProperties: false
+    api.support.v1.CreateSupportRequestResponse:
+      type: object
+      properties:
+        support_request:
+          title: support_request
+          $ref: '#/components/schemas/api.support.v1.SupportRequest'
+      title: CreateSupportRequestResponse
+      additionalProperties: false
+    api.support.v1.ListSupportRequestResponse:
+      type: object
+      properties:
+        support_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.support.v1.SupportRequest'
+          title: support_requests
+        paging:
+          title: paging
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+      title: ListSupportRequestResponse
+      additionalProperties: false
+    api.support.v1.SupportRequest:
+      type: object
+      properties:
+        id:
+          type:
+            - integer
+            - string
+          title: id
+          format: int64
+        order_id:
+          type: string
+          title: order_id
+        created_at:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        status:
+          title: status
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Status'
+        issue_category:
+          title: issue_category
+          $ref: '#/components/schemas/api.support.v1.SupportRequest.Category'
+        issue_detail:
+          type: string
+          title: issue_detail
+        issue_solution:
+          type: string
+          title: issue_solution
+        issue_image_urls:
+          type: array
+          items:
+            type: string
+          title: issue_image_urls
+      title: SupportRequest
+      additionalProperties: false
+    api.support.v1.SupportRequest.Category:
+      type:
+        - string
+        - number
+      title: Category
+      enum:
+        - CATEGORY_IMG_QUALITY
+        - 1
+        - CATEGORY_ITEM_DAMAGED
+        - 2
+        - CATEGORY_ITEM_MISSING
+        - 3
+        - CATEGORY_ITEM_NOT_EXPECTED
+        - 4
+        - CATEGORY_NO_UPDATE_FROM_CARRIER
+        - 5
+        - CATEGORY_ORDER_LATE_PRODUCTION
+        - 6
+        - CATEGORY_SHIPPING_PROBLEM
+        - 7
+        - CATEGORY_WRONG_ITEM_SIZE
+        - 8
+        - CATEGORY_WRONG_PRINT
+        - 9
+        - CATEGORY_SHIPPING_TO_WRONG_ADDRESS
+        - 10
+        - CATEGORY_SIZE_NOT_EXPECTED
+        - 11
+        - CATEGORY_PRINT_MISSING
+        - 12
+        - CATEGORY_ANOTHER
+        - 13
+        - CATEGORY_CANCEL_BY_BUYER
+        - 14
+    api.support.v1.SupportRequest.Status:
+      type:
+        - string
+        - number
+      title: Status
+      enum:
+        - STATUS_PENDING
+        - 1
+        - STATUS_PROCESSING
+        - 2
+        - STATUS_COMPLETED
+        - 3
+        - STATUS_REJECTED
+        - 4
+  responses:
+    BadRequest:
+      description: Bad Request - The request was malformed or contained invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: INVALID_ARGUMENT
+            message: The request parameters are invalid
+            details:
+              - field: product_id
+                issue: Product ID must be a valid format
+    Forbidden:
+      description: Forbidden - The authenticated user does not have permission to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: PERMISSION_DENIED
+            message: You do not have permission to perform this action
+    InternalError:
+      description: Internal Server Error - An unexpected error occurred on the server
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: INTERNAL
+            message: An unexpected error occurred. Please try again later
+    NotFound:
+      description: Not Found - The requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: NOT_FOUND
+            message: The requested resource was not found
+    Unauthorized:
+      description: Unauthorized - Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: UNAUTHENTICATED
+            message: Authentication credentials are missing or invalid
+  parameters: {}
+  requestBodies: {}
+  headers: {}
+  examples: {}
+  callbacks: {}
+  links: {}
