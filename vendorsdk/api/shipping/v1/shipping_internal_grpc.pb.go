@@ -19,13 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName              = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
-	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
-	ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalVoidGofoLabel"
-	ShippingInternalAPI_InternalCreateUSPSScanForm_FullMethodName                 = "/api.shipping.v1.ShippingInternalAPI/InternalCreateUSPSScanForm"
-	ShippingInternalAPI_InternalListShipmentInfoByOrderRefs_FullMethodName        = "/api.shipping.v1.ShippingInternalAPI/InternalListShipmentInfoByOrderRefs"
-	ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_FullMethodName = "/api.shipping.v1.ShippingInternalAPI/InternalGetLatestTrackingStatusByOrderRefs"
-	ShippingInternalAPI_InternalEstimateShippingRate_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalEstimateShippingRate"
+	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName                   = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
+	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                     = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
+	ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName                           = "/api.shipping.v1.ShippingInternalAPI/InternalVoidGofoLabel"
+	ShippingInternalAPI_InternalCreateUSPSScanForm_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalCreateUSPSScanForm"
+	ShippingInternalAPI_InternalListShipmentInfoByOrderRefs_FullMethodName             = "/api.shipping.v1.ShippingInternalAPI/InternalListShipmentInfoByOrderRefs"
+	ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_FullMethodName      = "/api.shipping.v1.ShippingInternalAPI/InternalGetLatestTrackingStatusByOrderRefs"
+	ShippingInternalAPI_InternalEstimateShippingRate_FullMethodName                    = "/api.shipping.v1.ShippingInternalAPI/InternalEstimateShippingRate"
+	ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_FullMethodName = "/api.shipping.v1.ShippingInternalAPI/InternalListShippingCostLedgerByTrackingNumbers"
 )
 
 // ShippingInternalAPIClient is the client API for ShippingInternalAPI service.
@@ -39,6 +40,7 @@ type ShippingInternalAPIClient interface {
 	InternalListShipmentInfoByOrderRefs(ctx context.Context, in *InternalListShipmentInfoByOrderRefsRequest, opts ...grpc.CallOption) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(ctx context.Context, in *InternalGetLatestTrackingStatusByOrderRefsRequest, opts ...grpc.CallOption) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
 	InternalEstimateShippingRate(ctx context.Context, in *InternalEstimateShippingRateRequest, opts ...grpc.CallOption) (*InternalEstimateShippingRateResponse, error)
+	InternalListShippingCostLedgerByTrackingNumbers(ctx context.Context, in *InternalListShippingCostLedgerByTrackingNumbersRequest, opts ...grpc.CallOption) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error)
 }
 
 type shippingInternalAPIClient struct {
@@ -119,6 +121,16 @@ func (c *shippingInternalAPIClient) InternalEstimateShippingRate(ctx context.Con
 	return out, nil
 }
 
+func (c *shippingInternalAPIClient) InternalListShippingCostLedgerByTrackingNumbers(ctx context.Context, in *InternalListShippingCostLedgerByTrackingNumbersRequest, opts ...grpc.CallOption) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListShippingCostLedgerByTrackingNumbersResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ShippingInternalAPIServer is the server API for ShippingInternalAPI service.
 // All implementations should embed UnimplementedShippingInternalAPIServer
 // for forward compatibility.
@@ -130,6 +142,7 @@ type ShippingInternalAPIServer interface {
 	InternalListShipmentInfoByOrderRefs(context.Context, *InternalListShipmentInfoByOrderRefsRequest) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(context.Context, *InternalGetLatestTrackingStatusByOrderRefsRequest) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
 	InternalEstimateShippingRate(context.Context, *InternalEstimateShippingRateRequest) (*InternalEstimateShippingRateResponse, error)
+	InternalListShippingCostLedgerByTrackingNumbers(context.Context, *InternalListShippingCostLedgerByTrackingNumbersRequest) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error)
 }
 
 // UnimplementedShippingInternalAPIServer should be embedded to have
@@ -159,6 +172,9 @@ func (UnimplementedShippingInternalAPIServer) InternalGetLatestTrackingStatusByO
 }
 func (UnimplementedShippingInternalAPIServer) InternalEstimateShippingRate(context.Context, *InternalEstimateShippingRateRequest) (*InternalEstimateShippingRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalEstimateShippingRate not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalListShippingCostLedgerByTrackingNumbers(context.Context, *InternalListShippingCostLedgerByTrackingNumbersRequest) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListShippingCostLedgerByTrackingNumbers not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) testEmbeddedByValue() {}
 
@@ -306,6 +322,24 @@ func _ShippingInternalAPI_InternalEstimateShippingRate_Handler(srv interface{}, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListShippingCostLedgerByTrackingNumbersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalListShippingCostLedgerByTrackingNumbers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalListShippingCostLedgerByTrackingNumbers(ctx, req.(*InternalListShippingCostLedgerByTrackingNumbersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ShippingInternalAPI_ServiceDesc is the grpc.ServiceDesc for ShippingInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -340,6 +374,10 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalEstimateShippingRate",
 			Handler:    _ShippingInternalAPI_InternalEstimateShippingRate_Handler,
+		},
+		{
+			MethodName: "InternalListShippingCostLedgerByTrackingNumbers",
+			Handler:    _ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
