@@ -25,6 +25,7 @@ const (
 	ShippingRuleAdminAPI_StaffListShiprouterExecutionMappings_FullMethodName   = "/api.pod.v1.ShippingRuleAdminAPI/StaffListShiprouterExecutionMappings"
 	ShippingRuleAdminAPI_StaffListShiprouterOriginAccounts_FullMethodName      = "/api.pod.v1.ShippingRuleAdminAPI/StaffListShiprouterOriginAccounts"
 	ShippingRuleAdminAPI_StaffGetGofoShiprouterHealth_FullMethodName           = "/api.pod.v1.ShippingRuleAdminAPI/StaffGetGofoShiprouterHealth"
+	ShippingRuleAdminAPI_StaffListGofoShiprouterHealthOrders_FullMethodName    = "/api.pod.v1.ShippingRuleAdminAPI/StaffListGofoShiprouterHealthOrders"
 	ShippingRuleAdminAPI_StaffPreviewShiprouterResolution_FullMethodName       = "/api.pod.v1.ShippingRuleAdminAPI/StaffPreviewShiprouterResolution"
 	ShippingRuleAdminAPI_StaffGetShippingCategory_FullMethodName               = "/api.pod.v1.ShippingRuleAdminAPI/StaffGetShippingCategory"
 	ShippingRuleAdminAPI_StaffCreateShippingCategory_FullMethodName            = "/api.pod.v1.ShippingRuleAdminAPI/StaffCreateShippingCategory"
@@ -50,6 +51,7 @@ type ShippingRuleAdminAPIClient interface {
 	StaffListShiprouterExecutionMappings(ctx context.Context, in *StaffListShiprouterExecutionMappingsRequest, opts ...grpc.CallOption) (*StaffListShiprouterExecutionMappingsResponse, error)
 	StaffListShiprouterOriginAccounts(ctx context.Context, in *StaffListShiprouterOriginAccountsRequest, opts ...grpc.CallOption) (*StaffListShiprouterOriginAccountsResponse, error)
 	StaffGetGofoShiprouterHealth(ctx context.Context, in *StaffGetGofoShiprouterHealthRequest, opts ...grpc.CallOption) (*StaffGetGofoShiprouterHealthResponse, error)
+	StaffListGofoShiprouterHealthOrders(ctx context.Context, in *StaffListGofoShiprouterHealthOrdersRequest, opts ...grpc.CallOption) (*StaffListGofoShiprouterHealthOrdersResponse, error)
 	StaffPreviewShiprouterResolution(ctx context.Context, in *StaffPreviewShiprouterResolutionRequest, opts ...grpc.CallOption) (*StaffPreviewShiprouterResolutionResponse, error)
 	StaffGetShippingCategory(ctx context.Context, in *StaffGetShippingCategoryRequest, opts ...grpc.CallOption) (*StaffGetShippingCategoryResponse, error)
 	StaffCreateShippingCategory(ctx context.Context, in *StaffCreateShippingCategoryRequest, opts ...grpc.CallOption) (*StaffCreateShippingCategoryResponse, error)
@@ -127,6 +129,16 @@ func (c *shippingRuleAdminAPIClient) StaffGetGofoShiprouterHealth(ctx context.Co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGetGofoShiprouterHealthResponse)
 	err := c.cc.Invoke(ctx, ShippingRuleAdminAPI_StaffGetGofoShiprouterHealth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingRuleAdminAPIClient) StaffListGofoShiprouterHealthOrders(ctx context.Context, in *StaffListGofoShiprouterHealthOrdersRequest, opts ...grpc.CallOption) (*StaffListGofoShiprouterHealthOrdersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListGofoShiprouterHealthOrdersResponse)
+	err := c.cc.Invoke(ctx, ShippingRuleAdminAPI_StaffListGofoShiprouterHealthOrders_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -273,6 +285,7 @@ type ShippingRuleAdminAPIServer interface {
 	StaffListShiprouterExecutionMappings(context.Context, *StaffListShiprouterExecutionMappingsRequest) (*StaffListShiprouterExecutionMappingsResponse, error)
 	StaffListShiprouterOriginAccounts(context.Context, *StaffListShiprouterOriginAccountsRequest) (*StaffListShiprouterOriginAccountsResponse, error)
 	StaffGetGofoShiprouterHealth(context.Context, *StaffGetGofoShiprouterHealthRequest) (*StaffGetGofoShiprouterHealthResponse, error)
+	StaffListGofoShiprouterHealthOrders(context.Context, *StaffListGofoShiprouterHealthOrdersRequest) (*StaffListGofoShiprouterHealthOrdersResponse, error)
 	StaffPreviewShiprouterResolution(context.Context, *StaffPreviewShiprouterResolutionRequest) (*StaffPreviewShiprouterResolutionResponse, error)
 	StaffGetShippingCategory(context.Context, *StaffGetShippingCategoryRequest) (*StaffGetShippingCategoryResponse, error)
 	StaffCreateShippingCategory(context.Context, *StaffCreateShippingCategoryRequest) (*StaffCreateShippingCategoryResponse, error)
@@ -312,6 +325,9 @@ func (UnimplementedShippingRuleAdminAPIServer) StaffListShiprouterOriginAccounts
 }
 func (UnimplementedShippingRuleAdminAPIServer) StaffGetGofoShiprouterHealth(context.Context, *StaffGetGofoShiprouterHealthRequest) (*StaffGetGofoShiprouterHealthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetGofoShiprouterHealth not implemented")
+}
+func (UnimplementedShippingRuleAdminAPIServer) StaffListGofoShiprouterHealthOrders(context.Context, *StaffListGofoShiprouterHealthOrdersRequest) (*StaffListGofoShiprouterHealthOrdersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListGofoShiprouterHealthOrders not implemented")
 }
 func (UnimplementedShippingRuleAdminAPIServer) StaffPreviewShiprouterResolution(context.Context, *StaffPreviewShiprouterResolutionRequest) (*StaffPreviewShiprouterResolutionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffPreviewShiprouterResolution not implemented")
@@ -476,6 +492,24 @@ func _ShippingRuleAdminAPI_StaffGetGofoShiprouterHealth_Handler(srv interface{},
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShippingRuleAdminAPIServer).StaffGetGofoShiprouterHealth(ctx, req.(*StaffGetGofoShiprouterHealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingRuleAdminAPI_StaffListGofoShiprouterHealthOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListGofoShiprouterHealthOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingRuleAdminAPIServer).StaffListGofoShiprouterHealthOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingRuleAdminAPI_StaffListGofoShiprouterHealthOrders_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingRuleAdminAPIServer).StaffListGofoShiprouterHealthOrders(ctx, req.(*StaffListGofoShiprouterHealthOrdersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -744,6 +778,10 @@ var ShippingRuleAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetGofoShiprouterHealth",
 			Handler:    _ShippingRuleAdminAPI_StaffGetGofoShiprouterHealth_Handler,
+		},
+		{
+			MethodName: "StaffListGofoShiprouterHealthOrders",
+			Handler:    _ShippingRuleAdminAPI_StaffListGofoShiprouterHealthOrders_Handler,
 		},
 		{
 			MethodName: "StaffPreviewShiprouterResolution",
