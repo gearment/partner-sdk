@@ -1240,168 +1240,6 @@ components:
               issue:
                 type: string
                 description: Description of the issue
-    common.platform.v1.MarketplacePlatform:
-      type:
-        - string
-        - number
-      title: MarketplacePlatform
-      enum:
-        - MARKETPLACE_PLATFORM_EBAY
-        - 2
-        - MARKETPLACE_PLATFORM_AMAZON
-        - 3
-        - MARKETPLACE_PLATFORM_SHOPIFY
-        - 4
-        - MARKETPLACE_PLATFORM_WOOCOMMERCE
-        - 5
-        - MARKETPLACE_PLATFORM_ETSY
-        - 6
-        - MARKETPLACE_PLATFORM_SHOPBASE
-        - 7
-        - MARKETPLACE_PLATFORM_GEARMENT
-        - 8
-        - MARKETPLACE_PLATFORM_ORDERDESK
-        - 9
-        - MARKETPLACE_PLATFORM_TIKTOKSHOP
-        - 10
-        - MARKETPLACE_PLATFORM_POSHMARK
-        - 11
-        - MARKETPLACE_PLATFORM_PRESTASHOP
-        - 12
-        - MARKETPLACE_PLATFORM_INKGO
-        - 13
-        - MARKETPLACE_PLATFORM_WISH
-        - 14
-        - MARKETPLACE_PLATFORM_BIGCOMMERCE
-        - 15
-        - MARKETPLACE_PLATFORM_CUSTOMILY
-        - 16
-    common.type.v1.Money:
-      type: object
-      properties:
-        currency_code:
-          type: string
-          title: currency_code
-          description: The three-letter currency code defined in ISO 4217.
-        units:
-          type:
-            - integer
-            - string
-          title: units
-          format: int64
-          description: |-
-            The whole units of the amount.
-             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-        nanos:
-          type: integer
-          title: nanos
-          format: int32
-          description: |-
-            Number of nano (10^-9) units of the amount.
-             The value must be between -999,999,999 and +999,999,999 inclusive.
-             If `units` is positive, `nanos` must be positive or zero.
-             If `units` is zero, `nanos` can be positive, zero, or negative.
-             If `units` is negative, `nanos` must be negative or zero.
-             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-      title: Money
-      additionalProperties: false
-      description: Represents an amount of money with its currency type.
-    google.protobuf.Timestamp:
-      type: string
-      examples:
-        - "2023-01-15T01:30:15.01Z"
-        - "2024-12-25T12:00:00Z"
-      format: date-time
-      description: |-
-        A Timestamp represents a point in time independent of any time zone or local
-         calendar, encoded as a count of seconds and fractions of seconds at
-         nanosecond resolution. The count is relative to an epoch at UTC midnight on
-         January 1, 1970, in the proleptic Gregorian calendar which extends the
-         Gregorian calendar backwards to year one.
-
-         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
-         second table is needed for interpretation, using a [24-hour linear
-         smear](https://developers.google.com/time/smear).
-
-         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
-         restricting to that range, we ensure that we can convert to and from [RFC
-         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
-
-         # Examples
-
-         Example 1: Compute Timestamp from POSIX `time()`.
-
-             Timestamp timestamp;
-             timestamp.set_seconds(time(NULL));
-             timestamp.set_nanos(0);
-
-         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
-
-             struct timeval tv;
-             gettimeofday(&tv, NULL);
-
-             Timestamp timestamp;
-             timestamp.set_seconds(tv.tv_sec);
-             timestamp.set_nanos(tv.tv_usec * 1000);
-
-         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
-
-             FILETIME ft;
-             GetSystemTimeAsFileTime(&ft);
-             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
-
-             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
-             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
-             Timestamp timestamp;
-             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
-             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
-
-         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
-
-             long millis = System.currentTimeMillis();
-
-             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
-                 .setNanos((int) ((millis % 1000) * 1000000)).build();
-
-         Example 5: Compute Timestamp from Java `Instant.now()`.
-
-             Instant now = Instant.now();
-
-             Timestamp timestamp =
-                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
-                     .setNanos(now.getNano()).build();
-
-         Example 6: Compute Timestamp from current time in Python.
-
-             timestamp = Timestamp()
-             timestamp.GetCurrentTime()
-
-         # JSON Mapping
-
-         In JSON format, the Timestamp type is encoded as a string in the
-         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
-         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
-         where {year} is always expressed using four digits while {month}, {day},
-         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
-         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
-         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-         is required. A ProtoJSON serializer should always use UTC (as indicated by
-         "Z") when printing the Timestamp type and a ProtoJSON parser should be
-         able to accept both UTC and other timezones (as indicated by an offset).
-
-         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
-         01:30 UTC on January 15, 2017.
-
-         In JavaScript, one can convert a Date object to this format using the
-         standard
-         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
-         method. In Python, a standard `datetime.datetime` object can be converted
-         to this format using
-         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
-         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
-         the Joda Time's [`ISODateTimeFormat.dateTime()`](
-         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
-         ) to obtain a formatter capable of generating timestamps in this format.
     api.catalog.v1.VendorCatalog:
       type: object
       properties:
@@ -1586,6 +1424,36 @@ components:
              Each variant includes: size, color, SKU, price, stock status, print specifications
       title: VendorListCatalogVariantResponse
       additionalProperties: false
+    common.type.v1.Money:
+      type: object
+      properties:
+        currency_code:
+          type: string
+          title: currency_code
+          description: The three-letter currency code defined in ISO 4217.
+        units:
+          type:
+            - integer
+            - string
+          title: units
+          format: int64
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+        nanos:
+          type: integer
+          title: nanos
+          format: int32
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
     common.type.v1.PagingResponse:
       type: object
       properties:
@@ -1803,6 +1671,132 @@ components:
         - 2
         - VERSION_V3
         - 3
+    google.protobuf.Timestamp:
+      type: string
+      examples:
+        - "2023-01-15T01:30:15.01Z"
+        - "2024-12-25T12:00:00Z"
+      format: date-time
+      description: |-
+        A Timestamp represents a point in time independent of any time zone or local
+         calendar, encoded as a count of seconds and fractions of seconds at
+         nanosecond resolution. The count is relative to an epoch at UTC midnight on
+         January 1, 1970, in the proleptic Gregorian calendar which extends the
+         Gregorian calendar backwards to year one.
+
+         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+         second table is needed for interpretation, using a [24-hour linear
+         smear](https://developers.google.com/time/smear).
+
+         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+         restricting to that range, we ensure that we can convert to and from [RFC
+         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+
+         # Examples
+
+         Example 1: Compute Timestamp from POSIX `time()`.
+
+             Timestamp timestamp;
+             timestamp.set_seconds(time(NULL));
+             timestamp.set_nanos(0);
+
+         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+
+             struct timeval tv;
+             gettimeofday(&tv, NULL);
+
+             Timestamp timestamp;
+             timestamp.set_seconds(tv.tv_sec);
+             timestamp.set_nanos(tv.tv_usec * 1000);
+
+         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+
+             FILETIME ft;
+             GetSystemTimeAsFileTime(&ft);
+             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+             Timestamp timestamp;
+             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+
+             long millis = System.currentTimeMillis();
+
+             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+         Example 5: Compute Timestamp from Java `Instant.now()`.
+
+             Instant now = Instant.now();
+
+             Timestamp timestamp =
+                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+                     .setNanos(now.getNano()).build();
+
+         Example 6: Compute Timestamp from current time in Python.
+
+             timestamp = Timestamp()
+             timestamp.GetCurrentTime()
+
+         # JSON Mapping
+
+         In JSON format, the Timestamp type is encoded as a string in the
+         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+         where {year} is always expressed using four digits while {month}, {day},
+         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+         is required. A ProtoJSON serializer should always use UTC (as indicated by
+         "Z") when printing the Timestamp type and a ProtoJSON parser should be
+         able to accept both UTC and other timezones (as indicated by an offset).
+
+         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+         01:30 UTC on January 15, 2017.
+
+         In JavaScript, one can convert a Date object to this format using the
+         standard
+         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+         method. In Python, a standard `datetime.datetime` object can be converted
+         to this format using
+         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+         the Joda Time's [`ISODateTimeFormat.dateTime()`](
+         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+         ) to obtain a formatter capable of generating timestamps in this format.
+    api.order.v1.OriginSalesChannel:
+      type:
+        - string
+        - number
+      title: OriginSalesChannel
+      enum:
+        - ORIGIN_SALES_CHANNEL_DIRECT
+        - 1
+        - ORIGIN_SALES_CHANNEL_ETSY
+        - 2
+        - ORIGIN_SALES_CHANNEL_EBAY
+        - 3
+        - ORIGIN_SALES_CHANNEL_AMAZON
+        - 4
+        - ORIGIN_SALES_CHANNEL_SHOPIFY
+        - 5
+        - ORIGIN_SALES_CHANNEL_WOOCOMMERCE
+        - 6
+        - ORIGIN_SALES_CHANNEL_SHOPBASE
+        - 7
+        - ORIGIN_SALES_CHANNEL_ORDERDESK
+        - 8
+        - ORIGIN_SALES_CHANNEL_TIKTOKSHOP
+        - 9
+        - ORIGIN_SALES_CHANNEL_OTHER_MARKETPLACE
+        - 10
+      description: |-
+        OriginSalesChannel identifies the partner-claimed sales channel where an
+         order was originally placed. It is separate from order_platform, which
+         continues to identify the integration ingress and tracking-sync contract.
     api.order.v1.VendorAddress:
       type: object
       properties:
@@ -2809,6 +2803,11 @@ components:
             $ref: '#/components/schemas/api.order.v1.VendorOrderRefund'
           title: refunds
           description: All refunds for this order (detailed breakdown)
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: Partner-claimed sales channel where this order was originally placed.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: VendorOrder
       additionalProperties: false
     api.order.v1.VendorOrder.Short:
@@ -2966,6 +2965,11 @@ components:
           title: order_surcharge
           description: Additional surcharges
           $ref: '#/components/schemas/common.type.v1.Money'
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: Partner-claimed sales channel where this order was originally placed.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: Short
       additionalProperties: false
       description: |-
@@ -3160,6 +3164,11 @@ components:
           type: string
           title: reference_id
           description: Your custom reference ID
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: Partner-claimed sales channel where this order was originally placed.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: VendorOrderDraft
       additionalProperties: false
     api.order.v1.VendorOrderDraft.Short:
@@ -3321,6 +3330,11 @@ components:
           title: order_discount
           description: Total discount applied
           $ref: '#/components/schemas/common.type.v1.Money'
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: Partner-claimed sales channel where this order was originally placed.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: Short
       additionalProperties: false
       description: |-
@@ -3493,6 +3507,13 @@ components:
             $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.CustomGiftMessage'
           title: custom_gift_messages
           maxItems: 1000
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: |-
+            Partner-claimed sales channel where this order was originally placed.
+             This does not replace platform, which identifies the integration ingress.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: VendorOrderDraftManualCreationParams
       additionalProperties: false
     api.order.v1.VendorOrderDraftStatus:
@@ -3629,6 +3650,13 @@ components:
             $ref: '#/components/schemas/api.order.v1.VendorOrderDraftCreationParams.CustomGiftMessage'
           title: custom_gift_messages
           maxItems: 1000
+        origin_sales_channel:
+          title: origin_sales_channel
+          description: |-
+            Partner-claimed sales channel where this order was originally placed.
+             This does not replace platform, which identifies the integration ingress.
+          nullable: true
+          $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
       title: VendorOrderDraftWithLabelCreationParams
       additionalProperties: false
     api.order.v1.VendorOrderLineItem:
@@ -4624,6 +4652,42 @@ components:
           description: Order draft ID that was updated
       title: Data
       additionalProperties: false
+    common.platform.v1.MarketplacePlatform:
+      type:
+        - string
+        - number
+      title: MarketplacePlatform
+      enum:
+        - MARKETPLACE_PLATFORM_EBAY
+        - 2
+        - MARKETPLACE_PLATFORM_AMAZON
+        - 3
+        - MARKETPLACE_PLATFORM_SHOPIFY
+        - 4
+        - MARKETPLACE_PLATFORM_WOOCOMMERCE
+        - 5
+        - MARKETPLACE_PLATFORM_ETSY
+        - 6
+        - MARKETPLACE_PLATFORM_SHOPBASE
+        - 7
+        - MARKETPLACE_PLATFORM_GEARMENT
+        - 8
+        - MARKETPLACE_PLATFORM_ORDERDESK
+        - 9
+        - MARKETPLACE_PLATFORM_TIKTOKSHOP
+        - 10
+        - MARKETPLACE_PLATFORM_POSHMARK
+        - 11
+        - MARKETPLACE_PLATFORM_PRESTASHOP
+        - 12
+        - MARKETPLACE_PLATFORM_INKGO
+        - 13
+        - MARKETPLACE_PLATFORM_WISH
+        - 14
+        - MARKETPLACE_PLATFORM_BIGCOMMERCE
+        - 15
+        - MARKETPLACE_PLATFORM_CUSTOMILY
+        - 16
     common.type.v1.File:
       type: object
       properties:
