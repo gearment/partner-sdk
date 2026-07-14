@@ -34,6 +34,9 @@ const (
 	TeamAPI_UserLeaveTeam_FullMethodName                  = "/api.iam.v1.TeamAPI/UserLeaveTeam"
 	TeamAPI_UserListTeam_FullMethodName                   = "/api.iam.v1.TeamAPI/UserListTeam"
 	TeamAPI_StaffGetAccountManagerTeams_FullMethodName    = "/api.iam.v1.TeamAPI/StaffGetAccountManagerTeams"
+	TeamAPI_StaffListAccountManagerTeams_FullMethodName   = "/api.iam.v1.TeamAPI/StaffListAccountManagerTeams"
+	TeamAPI_StaffListAccountManagerStaffs_FullMethodName  = "/api.iam.v1.TeamAPI/StaffListAccountManagerStaffs"
+	TeamAPI_StaffListTeamIDsByOwnerUserIDs_FullMethodName = "/api.iam.v1.TeamAPI/StaffListTeamIDsByOwnerUserIDs"
 	TeamAPI_StaffAssignAccountManagerTeams_FullMethodName = "/api.iam.v1.TeamAPI/StaffAssignAccountManagerTeams"
 	TeamAPI_StaffRemoveAccountManagerTeams_FullMethodName = "/api.iam.v1.TeamAPI/StaffRemoveAccountManagerTeams"
 	TeamAPI_UserMarkStatusAsInactive_FullMethodName       = "/api.iam.v1.TeamAPI/UserMarkStatusAsInactive"
@@ -67,6 +70,9 @@ type TeamAPIClient interface {
 	UserLeaveTeam(ctx context.Context, in *UserLeaveTeamRequest, opts ...grpc.CallOption) (*UserLeaveTeamResponse, error)
 	UserListTeam(ctx context.Context, in *UserListTeamRequest, opts ...grpc.CallOption) (*UserListTeamResponse, error)
 	StaffGetAccountManagerTeams(ctx context.Context, in *StaffGetAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffGetAccountManagerTeamsResponse, error)
+	StaffListAccountManagerTeams(ctx context.Context, in *StaffListAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerTeamsResponse, error)
+	StaffListAccountManagerStaffs(ctx context.Context, in *StaffListAccountManagerStaffsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerStaffsResponse, error)
+	StaffListTeamIDsByOwnerUserIDs(ctx context.Context, in *StaffListTeamIDsByOwnerUserIDsRequest, opts ...grpc.CallOption) (*StaffListTeamIDsByOwnerUserIDsResponse, error)
 	StaffAssignAccountManagerTeams(ctx context.Context, in *StaffAssignAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffAssignAccountManagerTeamsResponse, error)
 	StaffRemoveAccountManagerTeams(ctx context.Context, in *StaffRemoveAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffRemoveAccountManagerTeamsResponse, error)
 	UserMarkStatusAsInactive(ctx context.Context, in *UserMarkStatusAsInactiveRequest, opts ...grpc.CallOption) (*UserMarkStatusAsInactiveResponse, error)
@@ -237,6 +243,36 @@ func (c *teamAPIClient) StaffGetAccountManagerTeams(ctx context.Context, in *Sta
 	return out, nil
 }
 
+func (c *teamAPIClient) StaffListAccountManagerTeams(ctx context.Context, in *StaffListAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerTeamsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListAccountManagerTeamsResponse)
+	err := c.cc.Invoke(ctx, TeamAPI_StaffListAccountManagerTeams_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *teamAPIClient) StaffListAccountManagerStaffs(ctx context.Context, in *StaffListAccountManagerStaffsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerStaffsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListAccountManagerStaffsResponse)
+	err := c.cc.Invoke(ctx, TeamAPI_StaffListAccountManagerStaffs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *teamAPIClient) StaffListTeamIDsByOwnerUserIDs(ctx context.Context, in *StaffListTeamIDsByOwnerUserIDsRequest, opts ...grpc.CallOption) (*StaffListTeamIDsByOwnerUserIDsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListTeamIDsByOwnerUserIDsResponse)
+	err := c.cc.Invoke(ctx, TeamAPI_StaffListTeamIDsByOwnerUserIDs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *teamAPIClient) StaffAssignAccountManagerTeams(ctx context.Context, in *StaffAssignAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffAssignAccountManagerTeamsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffAssignAccountManagerTeamsResponse)
@@ -349,6 +385,9 @@ type TeamAPIServer interface {
 	UserLeaveTeam(context.Context, *UserLeaveTeamRequest) (*UserLeaveTeamResponse, error)
 	UserListTeam(context.Context, *UserListTeamRequest) (*UserListTeamResponse, error)
 	StaffGetAccountManagerTeams(context.Context, *StaffGetAccountManagerTeamsRequest) (*StaffGetAccountManagerTeamsResponse, error)
+	StaffListAccountManagerTeams(context.Context, *StaffListAccountManagerTeamsRequest) (*StaffListAccountManagerTeamsResponse, error)
+	StaffListAccountManagerStaffs(context.Context, *StaffListAccountManagerStaffsRequest) (*StaffListAccountManagerStaffsResponse, error)
+	StaffListTeamIDsByOwnerUserIDs(context.Context, *StaffListTeamIDsByOwnerUserIDsRequest) (*StaffListTeamIDsByOwnerUserIDsResponse, error)
 	StaffAssignAccountManagerTeams(context.Context, *StaffAssignAccountManagerTeamsRequest) (*StaffAssignAccountManagerTeamsResponse, error)
 	StaffRemoveAccountManagerTeams(context.Context, *StaffRemoveAccountManagerTeamsRequest) (*StaffRemoveAccountManagerTeamsResponse, error)
 	UserMarkStatusAsInactive(context.Context, *UserMarkStatusAsInactiveRequest) (*UserMarkStatusAsInactiveResponse, error)
@@ -412,6 +451,15 @@ func (UnimplementedTeamAPIServer) UserListTeam(context.Context, *UserListTeamReq
 }
 func (UnimplementedTeamAPIServer) StaffGetAccountManagerTeams(context.Context, *StaffGetAccountManagerTeamsRequest) (*StaffGetAccountManagerTeamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetAccountManagerTeams not implemented")
+}
+func (UnimplementedTeamAPIServer) StaffListAccountManagerTeams(context.Context, *StaffListAccountManagerTeamsRequest) (*StaffListAccountManagerTeamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListAccountManagerTeams not implemented")
+}
+func (UnimplementedTeamAPIServer) StaffListAccountManagerStaffs(context.Context, *StaffListAccountManagerStaffsRequest) (*StaffListAccountManagerStaffsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListAccountManagerStaffs not implemented")
+}
+func (UnimplementedTeamAPIServer) StaffListTeamIDsByOwnerUserIDs(context.Context, *StaffListTeamIDsByOwnerUserIDsRequest) (*StaffListTeamIDsByOwnerUserIDsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListTeamIDsByOwnerUserIDs not implemented")
 }
 func (UnimplementedTeamAPIServer) StaffAssignAccountManagerTeams(context.Context, *StaffAssignAccountManagerTeamsRequest) (*StaffAssignAccountManagerTeamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffAssignAccountManagerTeams not implemented")
@@ -730,6 +778,60 @@ func _TeamAPI_StaffGetAccountManagerTeams_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TeamAPI_StaffListAccountManagerTeams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListAccountManagerTeamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TeamAPIServer).StaffListAccountManagerTeams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TeamAPI_StaffListAccountManagerTeams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TeamAPIServer).StaffListAccountManagerTeams(ctx, req.(*StaffListAccountManagerTeamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TeamAPI_StaffListAccountManagerStaffs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListAccountManagerStaffsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TeamAPIServer).StaffListAccountManagerStaffs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TeamAPI_StaffListAccountManagerStaffs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TeamAPIServer).StaffListAccountManagerStaffs(ctx, req.(*StaffListAccountManagerStaffsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TeamAPI_StaffListTeamIDsByOwnerUserIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListTeamIDsByOwnerUserIDsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TeamAPIServer).StaffListTeamIDsByOwnerUserIDs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TeamAPI_StaffListTeamIDsByOwnerUserIDs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TeamAPIServer).StaffListTeamIDsByOwnerUserIDs(ctx, req.(*StaffListTeamIDsByOwnerUserIDsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TeamAPI_StaffAssignAccountManagerTeams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffAssignAccountManagerTeamsRequest)
 	if err := dec(in); err != nil {
@@ -958,6 +1060,18 @@ var TeamAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetAccountManagerTeams",
 			Handler:    _TeamAPI_StaffGetAccountManagerTeams_Handler,
+		},
+		{
+			MethodName: "StaffListAccountManagerTeams",
+			Handler:    _TeamAPI_StaffListAccountManagerTeams_Handler,
+		},
+		{
+			MethodName: "StaffListAccountManagerStaffs",
+			Handler:    _TeamAPI_StaffListAccountManagerStaffs_Handler,
+		},
+		{
+			MethodName: "StaffListTeamIDsByOwnerUserIDs",
+			Handler:    _TeamAPI_StaffListTeamIDsByOwnerUserIDs_Handler,
 		},
 		{
 			MethodName: "StaffAssignAccountManagerTeams",
