@@ -22,6 +22,7 @@ const (
 	UserAccountAdminAPI_StaffBlockUser_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
 	UserAccountAdminAPI_StaffUnblockUser_FullMethodName       = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
 	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
+	UserAccountAdminAPI_StaffListUser_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffListUser"
 	UserAccountAdminAPI_StaffGetTeam_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeam"
 	UserAccountAdminAPI_StaffGetTeamDetail_FullMethodName     = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeamDetail"
 	UserAccountAdminAPI_StaffCreateFlag_FullMethodName        = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFlag"
@@ -36,6 +37,7 @@ type UserAccountAdminAPIClient interface {
 	StaffBlockUser(ctx context.Context, in *StaffBlockUserRequest, opts ...grpc.CallOption) (*StaffBlockUserResponse, error)
 	StaffUnblockUser(ctx context.Context, in *StaffUnblockUserRequest, opts ...grpc.CallOption) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(ctx context.Context, in *StaffUpdateUserProfileRequest, opts ...grpc.CallOption) (*StaffUpdateUserProfileResponse, error)
+	StaffListUser(ctx context.Context, in *StaffListUserRequest, opts ...grpc.CallOption) (*StaffListUserResponse, error)
 	StaffGetTeam(ctx context.Context, in *StaffGetTeamRequest, opts ...grpc.CallOption) (*StaffGetTeamResponse, error)
 	StaffGetTeamDetail(ctx context.Context, in *StaffGetTeamDetailRequest, opts ...grpc.CallOption) (*StaffGetTeamDetailResponse, error)
 	StaffCreateFlag(ctx context.Context, in *Flag, opts ...grpc.CallOption) (*Flag, error)
@@ -75,6 +77,16 @@ func (c *userAccountAdminAPIClient) StaffUpdateUserProfile(ctx context.Context, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateUserProfileResponse)
 	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffListUser(ctx context.Context, in *StaffListUserRequest, opts ...grpc.CallOption) (*StaffListUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListUserResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,6 +150,7 @@ type UserAccountAdminAPIServer interface {
 	StaffBlockUser(context.Context, *StaffBlockUserRequest) (*StaffBlockUserResponse, error)
 	StaffUnblockUser(context.Context, *StaffUnblockUserRequest) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(context.Context, *StaffUpdateUserProfileRequest) (*StaffUpdateUserProfileResponse, error)
+	StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error)
 	StaffGetTeam(context.Context, *StaffGetTeamRequest) (*StaffGetTeamResponse, error)
 	StaffGetTeamDetail(context.Context, *StaffGetTeamDetailRequest) (*StaffGetTeamDetailResponse, error)
 	StaffCreateFlag(context.Context, *Flag) (*Flag, error)
@@ -160,6 +173,9 @@ func (UnimplementedUserAccountAdminAPIServer) StaffUnblockUser(context.Context, 
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffUpdateUserProfile(context.Context, *StaffUpdateUserProfileRequest) (*StaffUpdateUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateUserProfile not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListUser not implemented")
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffGetTeam(context.Context, *StaffGetTeamRequest) (*StaffGetTeamResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetTeam not implemented")
@@ -246,6 +262,24 @@ func _UserAccountAdminAPI_StaffUpdateUserProfile_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAccountAdminAPIServer).StaffUpdateUserProfile(ctx, req.(*StaffUpdateUserProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffListUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffListUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffListUser(ctx, req.(*StaffListUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -358,6 +392,10 @@ var UserAccountAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateUserProfile",
 			Handler:    _UserAccountAdminAPI_StaffUpdateUserProfile_Handler,
+		},
+		{
+			MethodName: "StaffListUser",
+			Handler:    _UserAccountAdminAPI_StaffListUser_Handler,
 		},
 		{
 			MethodName: "StaffGetTeam",
