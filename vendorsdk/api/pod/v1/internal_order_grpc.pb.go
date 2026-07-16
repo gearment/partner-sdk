@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	OrderInternalAPI_InternalCountOrderByStoreIDs_FullMethodName                                       = "/api.pod.v1.OrderInternalAPI/InternalCountOrderByStoreIDs"
+	OrderInternalAPI_InternalGetTeamOrderMetrics_FullMethodName                                        = "/api.pod.v1.OrderInternalAPI/InternalGetTeamOrderMetrics"
 	OrderInternalAPI_InternalGetDraftIDAndPlatformRefInfo_FullMethodName                               = "/api.pod.v1.OrderInternalAPI/InternalGetDraftIDAndPlatformRefInfo"
 	OrderInternalAPI_InternalGetIsSaleOrderByOrderIDGetter_FullMethodName                              = "/api.pod.v1.OrderInternalAPI/InternalGetIsSaleOrderByOrderIDGetter"
 	OrderInternalAPI_InternalBuildIsSaleOrderByOrderIDGetter_FullMethodName                            = "/api.pod.v1.OrderInternalAPI/InternalBuildIsSaleOrderByOrderIDGetter"
@@ -64,6 +65,7 @@ const (
 // for order businesses
 type OrderInternalAPIClient interface {
 	InternalCountOrderByStoreIDs(ctx context.Context, in *InternalCountOrderByStoreIDsRequest, opts ...grpc.CallOption) (*InternalCountOrderByStoreIDsResponse, error)
+	InternalGetTeamOrderMetrics(ctx context.Context, in *InternalGetTeamOrderMetricsRequest, opts ...grpc.CallOption) (*InternalGetTeamOrderMetricsResponse, error)
 	InternalGetDraftIDAndPlatformRefInfo(ctx context.Context, in *InternalGetDraftIDAndPlatformRefInfoRequest, opts ...grpc.CallOption) (*InternalGetDraftIDAndPlatformRefInfoResponse, error)
 	InternalGetIsSaleOrderByOrderIDGetter(ctx context.Context, in *InternalGetIsSaleOrderByOrderIDGetterRequest, opts ...grpc.CallOption) (*InternalGetIsSaleOrderByOrderIDGetterResponse, error)
 	InternalBuildIsSaleOrderByOrderIDGetter(ctx context.Context, in *InternalBuildIsSaleOrderByOrderIDGetterRequest, opts ...grpc.CallOption) (*InternalBuildIsSaleOrderByOrderIDGetterResponse, error)
@@ -112,6 +114,16 @@ func (c *orderInternalAPIClient) InternalCountOrderByStoreIDs(ctx context.Contex
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalCountOrderByStoreIDsResponse)
 	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalCountOrderByStoreIDs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderInternalAPIClient) InternalGetTeamOrderMetrics(ctx context.Context, in *InternalGetTeamOrderMetricsRequest, opts ...grpc.CallOption) (*InternalGetTeamOrderMetricsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetTeamOrderMetricsResponse)
+	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalGetTeamOrderMetrics_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -466,6 +478,7 @@ func (c *orderInternalAPIClient) InternalGofoDhlSwitch(ctx context.Context, in *
 // for order businesses
 type OrderInternalAPIServer interface {
 	InternalCountOrderByStoreIDs(context.Context, *InternalCountOrderByStoreIDsRequest) (*InternalCountOrderByStoreIDsResponse, error)
+	InternalGetTeamOrderMetrics(context.Context, *InternalGetTeamOrderMetricsRequest) (*InternalGetTeamOrderMetricsResponse, error)
 	InternalGetDraftIDAndPlatformRefInfo(context.Context, *InternalGetDraftIDAndPlatformRefInfoRequest) (*InternalGetDraftIDAndPlatformRefInfoResponse, error)
 	InternalGetIsSaleOrderByOrderIDGetter(context.Context, *InternalGetIsSaleOrderByOrderIDGetterRequest) (*InternalGetIsSaleOrderByOrderIDGetterResponse, error)
 	InternalBuildIsSaleOrderByOrderIDGetter(context.Context, *InternalBuildIsSaleOrderByOrderIDGetterRequest) (*InternalBuildIsSaleOrderByOrderIDGetterResponse, error)
@@ -511,6 +524,9 @@ type UnimplementedOrderInternalAPIServer struct{}
 
 func (UnimplementedOrderInternalAPIServer) InternalCountOrderByStoreIDs(context.Context, *InternalCountOrderByStoreIDsRequest) (*InternalCountOrderByStoreIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCountOrderByStoreIDs not implemented")
+}
+func (UnimplementedOrderInternalAPIServer) InternalGetTeamOrderMetrics(context.Context, *InternalGetTeamOrderMetricsRequest) (*InternalGetTeamOrderMetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetTeamOrderMetrics not implemented")
 }
 func (UnimplementedOrderInternalAPIServer) InternalGetDraftIDAndPlatformRefInfo(context.Context, *InternalGetDraftIDAndPlatformRefInfoRequest) (*InternalGetDraftIDAndPlatformRefInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetDraftIDAndPlatformRefInfo not implemented")
@@ -648,6 +664,24 @@ func _OrderInternalAPI_InternalCountOrderByStoreIDs_Handler(srv interface{}, ctx
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderInternalAPIServer).InternalCountOrderByStoreIDs(ctx, req.(*InternalCountOrderByStoreIDsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderInternalAPI_InternalGetTeamOrderMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetTeamOrderMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderInternalAPIServer).InternalGetTeamOrderMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderInternalAPI_InternalGetTeamOrderMetrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderInternalAPIServer).InternalGetTeamOrderMetrics(ctx, req.(*InternalGetTeamOrderMetricsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1274,6 +1308,10 @@ var OrderInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalCountOrderByStoreIDs",
 			Handler:    _OrderInternalAPI_InternalCountOrderByStoreIDs_Handler,
+		},
+		{
+			MethodName: "InternalGetTeamOrderMetrics",
+			Handler:    _OrderInternalAPI_InternalGetTeamOrderMetrics_Handler,
 		},
 		{
 			MethodName: "InternalGetDraftIDAndPlatformRefInfo",
