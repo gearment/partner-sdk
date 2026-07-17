@@ -23,6 +23,7 @@ const (
 	TeamInternalAPI_InternalListAccessibleScope_FullMethodName                         = "/api.iam.v1.TeamInternalAPI/InternalListAccessibleScope"
 	TeamInternalAPI_InternalListTeamIDByLegacyCode_FullMethodName                      = "/api.iam.v1.TeamInternalAPI/InternalListTeamIDByLegacyCode"
 	TeamInternalAPI_InternalListOwnerIDByListTeamID_FullMethodName                     = "/api.iam.v1.TeamInternalAPI/InternalListOwnerIDByListTeamID"
+	TeamInternalAPI_InternalListTeamIDsByOwnerUserIDs_FullMethodName                   = "/api.iam.v1.TeamInternalAPI/InternalListTeamIDsByOwnerUserIDs"
 	TeamInternalAPI_InternalListTeamWithOwnerByTeamIDs_FullMethodName                  = "/api.iam.v1.TeamInternalAPI/InternalListTeamWithOwnerByTeamIDs"
 	TeamInternalAPI_InternalStaffGetTeamInformation_FullMethodName                     = "/api.iam.v1.TeamInternalAPI/InternalStaffGetTeamInformation"
 	TeamInternalAPI_InternalGetAllTeam_FullMethodName                                  = "/api.iam.v1.TeamInternalAPI/InternalGetAllTeam"
@@ -43,6 +44,7 @@ type TeamInternalAPIClient interface {
 	InternalListAccessibleScope(ctx context.Context, in *InternalListAccessibleScopeRequest, opts ...grpc.CallOption) (*InternalListAccessibleScopeResponse, error)
 	InternalListTeamIDByLegacyCode(ctx context.Context, in *InternalListTeamIDByLegacyCodeRequest, opts ...grpc.CallOption) (*InternalListTeamIDByLegacyCodeResponse, error)
 	InternalListOwnerIDByListTeamID(ctx context.Context, in *InternalListOwnerIDByListTeamIDRequest, opts ...grpc.CallOption) (*InternalListOwnerIDByListTeamIDResponse, error)
+	InternalListTeamIDsByOwnerUserIDs(ctx context.Context, in *InternalListTeamIDsByOwnerUserIDsRequest, opts ...grpc.CallOption) (*InternalListTeamIDsByOwnerUserIDsResponse, error)
 	InternalListTeamWithOwnerByTeamIDs(ctx context.Context, in *InternalListTeamWithOwnerByTeamIDsRequest, opts ...grpc.CallOption) (*InternalListTeamWithOwnerByTeamIDsResponse, error)
 	InternalStaffGetTeamInformation(ctx context.Context, in *InternalStaffGetTeamInformationRequest, opts ...grpc.CallOption) (*InternalStaffGetTeamInformationResponse, error)
 	InternalGetAllTeam(ctx context.Context, in *InternalGetAllTeamRequest, opts ...grpc.CallOption) (*InternalGetAllTeamResponse, error)
@@ -93,6 +95,16 @@ func (c *teamInternalAPIClient) InternalListOwnerIDByListTeamID(ctx context.Cont
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalListOwnerIDByListTeamIDResponse)
 	err := c.cc.Invoke(ctx, TeamInternalAPI_InternalListOwnerIDByListTeamID_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *teamInternalAPIClient) InternalListTeamIDsByOwnerUserIDs(ctx context.Context, in *InternalListTeamIDsByOwnerUserIDsRequest, opts ...grpc.CallOption) (*InternalListTeamIDsByOwnerUserIDsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListTeamIDsByOwnerUserIDsResponse)
+	err := c.cc.Invoke(ctx, TeamInternalAPI_InternalListTeamIDsByOwnerUserIDs_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -171,6 +183,7 @@ type TeamInternalAPIServer interface {
 	InternalListAccessibleScope(context.Context, *InternalListAccessibleScopeRequest) (*InternalListAccessibleScopeResponse, error)
 	InternalListTeamIDByLegacyCode(context.Context, *InternalListTeamIDByLegacyCodeRequest) (*InternalListTeamIDByLegacyCodeResponse, error)
 	InternalListOwnerIDByListTeamID(context.Context, *InternalListOwnerIDByListTeamIDRequest) (*InternalListOwnerIDByListTeamIDResponse, error)
+	InternalListTeamIDsByOwnerUserIDs(context.Context, *InternalListTeamIDsByOwnerUserIDsRequest) (*InternalListTeamIDsByOwnerUserIDsResponse, error)
 	InternalListTeamWithOwnerByTeamIDs(context.Context, *InternalListTeamWithOwnerByTeamIDsRequest) (*InternalListTeamWithOwnerByTeamIDsResponse, error)
 	InternalStaffGetTeamInformation(context.Context, *InternalStaffGetTeamInformationRequest) (*InternalStaffGetTeamInformationResponse, error)
 	InternalGetAllTeam(context.Context, *InternalGetAllTeamRequest) (*InternalGetAllTeamResponse, error)
@@ -197,6 +210,9 @@ func (UnimplementedTeamInternalAPIServer) InternalListTeamIDByLegacyCode(context
 }
 func (UnimplementedTeamInternalAPIServer) InternalListOwnerIDByListTeamID(context.Context, *InternalListOwnerIDByListTeamIDRequest) (*InternalListOwnerIDByListTeamIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListOwnerIDByListTeamID not implemented")
+}
+func (UnimplementedTeamInternalAPIServer) InternalListTeamIDsByOwnerUserIDs(context.Context, *InternalListTeamIDsByOwnerUserIDsRequest) (*InternalListTeamIDsByOwnerUserIDsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListTeamIDsByOwnerUserIDs not implemented")
 }
 func (UnimplementedTeamInternalAPIServer) InternalListTeamWithOwnerByTeamIDs(context.Context, *InternalListTeamWithOwnerByTeamIDsRequest) (*InternalListTeamWithOwnerByTeamIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListTeamWithOwnerByTeamIDs not implemented")
@@ -304,6 +320,24 @@ func _TeamInternalAPI_InternalListOwnerIDByListTeamID_Handler(srv interface{}, c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TeamInternalAPIServer).InternalListOwnerIDByListTeamID(ctx, req.(*InternalListOwnerIDByListTeamIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TeamInternalAPI_InternalListTeamIDsByOwnerUserIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListTeamIDsByOwnerUserIDsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TeamInternalAPIServer).InternalListTeamIDsByOwnerUserIDs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TeamInternalAPI_InternalListTeamIDsByOwnerUserIDs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TeamInternalAPIServer).InternalListTeamIDsByOwnerUserIDs(ctx, req.(*InternalListTeamIDsByOwnerUserIDsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -438,6 +472,10 @@ var TeamInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalListOwnerIDByListTeamID",
 			Handler:    _TeamInternalAPI_InternalListOwnerIDByListTeamID_Handler,
+		},
+		{
+			MethodName: "InternalListTeamIDsByOwnerUserIDs",
+			Handler:    _TeamInternalAPI_InternalListTeamIDsByOwnerUserIDs_Handler,
 		},
 		{
 			MethodName: "InternalListTeamWithOwnerByTeamIDs",
