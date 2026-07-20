@@ -292,6 +292,178 @@ paths:
         "500":
           $ref: '#/components/responses/InternalError'
       security: []
+  /api/v3/catalog/variants/shipping-fee:
+    get:
+      tags:
+        - api.catalog.v1.VendorCatalogAPI
+      summary: Get Catalog Shipping Fee
+      description: |-
+        Check real-time shipping fee for variants
+
+         GET /api/v3/catalog/variants/shipping-fee
+
+         Returns:
+           - Shipping fee details for each variant
+           - Shipping policy information
+
+         Use cases:
+           - Estimate shipping cost before order placement
+           - Display shipping fee to customers
+           - Sync shipping fee configuration in your system
+      operationId: api.catalog.v1.VendorCatalogAPI.VendorGetCatalogShippingFee
+      parameters:
+        - name: filter.color_codes
+          in: query
+          description: Filter by color codes (internal codes or hex)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - COLOR_BLACK
+              maxLength: 100
+              minLength: 1
+            title: color_codes
+            description: Filter by color codes (internal codes or hex)
+        - name: filter.colors
+          in: query
+          description: Filter by colors (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - Black
+              maxLength: 100
+              minLength: 1
+            title: colors
+            description: Filter by colors (display names)
+        - name: filter.legacy_variant_ids
+          in: query
+          description: Filter by legacy variant IDs (for backward compatibility)
+          schema:
+            type: array
+            items:
+              exclusiveMinimum: 0
+              type: integer
+              examples:
+                - 12345
+              format: int32
+            title: legacy_variant_ids
+            description: Filter by legacy variant IDs (for backward compatibility)
+        - name: filter.product_ids
+          in: query
+          description: Filter by product IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - prod_abc123
+              maxLength: 100
+              minLength: 1
+            title: product_ids
+            description: Filter by product IDs
+        - name: filter.search_text
+          in: query
+          description: Search variants by text
+          schema:
+            type: string
+            examples:
+              - Black Medium
+            title: search_text
+            description: Search variants by text
+        - name: filter.size_codes
+          in: query
+          description: Filter by size codes (internal codes)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SIZE_M
+              maxLength: 100
+              minLength: 1
+            title: size_codes
+            description: Filter by size codes (internal codes)
+        - name: filter.sizes
+          in: query
+          description: Filter by sizes (display names)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - M
+              maxLength: 100
+              minLength: 1
+            title: sizes
+            description: Filter by sizes (display names)
+        - name: filter.skus
+          in: query
+          description: Filter by SKUs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - SKU-TS-BLK-M
+              maxLength: 100
+              minLength: 1
+            title: skus
+            description: Filter by SKUs
+        - name: filter.stock_labels
+          in: query
+          description: Filter by stock availability
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.catalog.v1.VendorCatalogVariantStockLabel'
+            title: stock_labels
+            description: Filter by stock availability
+        - name: filter.variant_ids
+          in: query
+          description: Filter by specific variant IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - var_123
+              maxLength: 100
+              minLength: 1
+            title: variant_ids
+            description: Filter by specific variant IDs
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.catalog.v1.VendorGetCatalogShippingFeeResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
   /api/v3/catalog/variants/stock:
     get:
       tags:
@@ -1240,6 +1412,168 @@ components:
               issue:
                 type: string
                 description: Description of the issue
+    common.platform.v1.MarketplacePlatform:
+      type:
+        - string
+        - number
+      title: MarketplacePlatform
+      enum:
+        - MARKETPLACE_PLATFORM_EBAY
+        - 2
+        - MARKETPLACE_PLATFORM_AMAZON
+        - 3
+        - MARKETPLACE_PLATFORM_SHOPIFY
+        - 4
+        - MARKETPLACE_PLATFORM_WOOCOMMERCE
+        - 5
+        - MARKETPLACE_PLATFORM_ETSY
+        - 6
+        - MARKETPLACE_PLATFORM_SHOPBASE
+        - 7
+        - MARKETPLACE_PLATFORM_GEARMENT
+        - 8
+        - MARKETPLACE_PLATFORM_ORDERDESK
+        - 9
+        - MARKETPLACE_PLATFORM_TIKTOKSHOP
+        - 10
+        - MARKETPLACE_PLATFORM_POSHMARK
+        - 11
+        - MARKETPLACE_PLATFORM_PRESTASHOP
+        - 12
+        - MARKETPLACE_PLATFORM_INKGO
+        - 13
+        - MARKETPLACE_PLATFORM_WISH
+        - 14
+        - MARKETPLACE_PLATFORM_BIGCOMMERCE
+        - 15
+        - MARKETPLACE_PLATFORM_CUSTOMILY
+        - 16
+    common.type.v1.Money:
+      type: object
+      properties:
+        currency_code:
+          type: string
+          title: currency_code
+          description: The three-letter currency code defined in ISO 4217.
+        units:
+          type:
+            - integer
+            - string
+          title: units
+          format: int64
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+        nanos:
+          type: integer
+          title: nanos
+          format: int32
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
+    google.protobuf.Timestamp:
+      type: string
+      examples:
+        - "2023-01-15T01:30:15.01Z"
+        - "2024-12-25T12:00:00Z"
+      format: date-time
+      description: |-
+        A Timestamp represents a point in time independent of any time zone or local
+         calendar, encoded as a count of seconds and fractions of seconds at
+         nanosecond resolution. The count is relative to an epoch at UTC midnight on
+         January 1, 1970, in the proleptic Gregorian calendar which extends the
+         Gregorian calendar backwards to year one.
+
+         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+         second table is needed for interpretation, using a [24-hour linear
+         smear](https://developers.google.com/time/smear).
+
+         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+         restricting to that range, we ensure that we can convert to and from [RFC
+         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+
+         # Examples
+
+         Example 1: Compute Timestamp from POSIX `time()`.
+
+             Timestamp timestamp;
+             timestamp.set_seconds(time(NULL));
+             timestamp.set_nanos(0);
+
+         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+
+             struct timeval tv;
+             gettimeofday(&tv, NULL);
+
+             Timestamp timestamp;
+             timestamp.set_seconds(tv.tv_sec);
+             timestamp.set_nanos(tv.tv_usec * 1000);
+
+         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+
+             FILETIME ft;
+             GetSystemTimeAsFileTime(&ft);
+             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+             Timestamp timestamp;
+             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+
+             long millis = System.currentTimeMillis();
+
+             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+         Example 5: Compute Timestamp from Java `Instant.now()`.
+
+             Instant now = Instant.now();
+
+             Timestamp timestamp =
+                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+                     .setNanos(now.getNano()).build();
+
+         Example 6: Compute Timestamp from current time in Python.
+
+             timestamp = Timestamp()
+             timestamp.GetCurrentTime()
+
+         # JSON Mapping
+
+         In JSON format, the Timestamp type is encoded as a string in the
+         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+         where {year} is always expressed using four digits while {month}, {day},
+         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+         is required. A ProtoJSON serializer should always use UTC (as indicated by
+         "Z") when printing the Timestamp type and a ProtoJSON parser should be
+         able to accept both UTC and other timezones (as indicated by an offset).
+
+         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+         01:30 UTC on January 15, 2017.
+
+         In JavaScript, one can convert a Date object to this format using the
+         standard
+         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+         method. In Python, a standard `datetime.datetime` object can be converted
+         to this format using
+         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+         the Joda Time's [`ISODateTimeFormat.dateTime()`](
+         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+         ) to obtain a formatter capable of generating timestamps in this format.
     api.catalog.v1.VendorCatalog:
       type: object
       properties:
@@ -1291,6 +1625,73 @@ components:
           format: int32
           description: Internal location ID
       title: VendorCatalogPrintLocation
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogShippingFee:
+      type: object
+      properties:
+        variant_id:
+          type: string
+          title: variant_id
+          description: Variant ID (unique identifier)
+        product_id:
+          type: string
+          title: product_id
+          description: Product ID
+        name:
+          type: string
+          title: name
+          description: Variant name (e.g., "Black / Medium")
+        size:
+          type: string
+          title: size
+          description: Size (e.g., "S", "M", "L", "XL")
+        color:
+          type: string
+          title: color
+          description: Color name (e.g., "Black", "White", "Navy")
+        hex_color_code:
+          type: string
+          title: hex_color_code
+          description: Color hex code (e.g., "#000000", "#FFFFFF")
+        variant_sku:
+          type: string
+          title: variant_sku
+          description: Variant SKU
+        color_code:
+          type: string
+          title: color_code
+          description: Color code
+        size_code:
+          type: string
+          title: size_code
+          description: Size code
+        shipping_services:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogShippingFeeService'
+          title: shipping_services
+      title: VendorCatalogShippingFee
+      additionalProperties: false
+    api.catalog.v1.VendorCatalogShippingFeeService:
+      type: object
+      properties:
+        fee_amount:
+          title: fee_amount
+          description: Shipping fee for the base item quantity.
+          $ref: '#/components/schemas/common.type.v1.Money'
+        additional_item:
+          title: additional_item
+          description: Shipping fee for each additional item.
+          $ref: '#/components/schemas/common.type.v1.Money'
+        shipping_profile:
+          type: string
+          title: shipping_profile
+          description: Shipping profile identifier.
+        shipping_service:
+          type: string
+          title: shipping_service
+          description: Shipping service display name.
+      title: VendorCatalogShippingFeeService
       additionalProperties: false
     api.catalog.v1.VendorCatalogVariant:
       type: object
@@ -1372,6 +1773,29 @@ components:
         - 3
         - VENDOR_CATALOG_VARIANT_STOCK_LABEL_DISCONTINUED
         - 4
+    api.catalog.v1.VendorGetCatalogShippingFeeResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        paging:
+          title: paging
+          description: Pagination metadata
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.catalog.v1.VendorCatalogShippingFee'
+          title: data
+          description: List of product variants with shipping fee details.
+      title: VendorGetCatalogShippingFeeResponse
+      additionalProperties: false
     api.catalog.v1.VendorListCatalogResponse:
       type: object
       properties:
@@ -1424,36 +1848,6 @@ components:
              Each variant includes: size, color, SKU, price, stock status, print specifications
       title: VendorListCatalogVariantResponse
       additionalProperties: false
-    common.type.v1.Money:
-      type: object
-      properties:
-        currency_code:
-          type: string
-          title: currency_code
-          description: The three-letter currency code defined in ISO 4217.
-        units:
-          type:
-            - integer
-            - string
-          title: units
-          format: int64
-          description: |-
-            The whole units of the amount.
-             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-        nanos:
-          type: integer
-          title: nanos
-          format: int32
-          description: |-
-            Number of nano (10^-9) units of the amount.
-             The value must be between -999,999,999 and +999,999,999 inclusive.
-             If `units` is positive, `nanos` must be positive or zero.
-             If `units` is zero, `nanos` can be positive, zero, or negative.
-             If `units` is negative, `nanos` must be negative or zero.
-             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-      title: Money
-      additionalProperties: false
-      description: Represents an amount of money with its currency type.
     common.type.v1.PagingResponse:
       type: object
       properties:
@@ -1671,102 +2065,6 @@ components:
         - 2
         - VERSION_V3
         - 3
-    google.protobuf.Timestamp:
-      type: string
-      examples:
-        - "2023-01-15T01:30:15.01Z"
-        - "2024-12-25T12:00:00Z"
-      format: date-time
-      description: |-
-        A Timestamp represents a point in time independent of any time zone or local
-         calendar, encoded as a count of seconds and fractions of seconds at
-         nanosecond resolution. The count is relative to an epoch at UTC midnight on
-         January 1, 1970, in the proleptic Gregorian calendar which extends the
-         Gregorian calendar backwards to year one.
-
-         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
-         second table is needed for interpretation, using a [24-hour linear
-         smear](https://developers.google.com/time/smear).
-
-         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
-         restricting to that range, we ensure that we can convert to and from [RFC
-         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
-
-         # Examples
-
-         Example 1: Compute Timestamp from POSIX `time()`.
-
-             Timestamp timestamp;
-             timestamp.set_seconds(time(NULL));
-             timestamp.set_nanos(0);
-
-         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
-
-             struct timeval tv;
-             gettimeofday(&tv, NULL);
-
-             Timestamp timestamp;
-             timestamp.set_seconds(tv.tv_sec);
-             timestamp.set_nanos(tv.tv_usec * 1000);
-
-         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
-
-             FILETIME ft;
-             GetSystemTimeAsFileTime(&ft);
-             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
-
-             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
-             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
-             Timestamp timestamp;
-             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
-             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
-
-         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
-
-             long millis = System.currentTimeMillis();
-
-             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
-                 .setNanos((int) ((millis % 1000) * 1000000)).build();
-
-         Example 5: Compute Timestamp from Java `Instant.now()`.
-
-             Instant now = Instant.now();
-
-             Timestamp timestamp =
-                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
-                     .setNanos(now.getNano()).build();
-
-         Example 6: Compute Timestamp from current time in Python.
-
-             timestamp = Timestamp()
-             timestamp.GetCurrentTime()
-
-         # JSON Mapping
-
-         In JSON format, the Timestamp type is encoded as a string in the
-         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
-         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
-         where {year} is always expressed using four digits while {month}, {day},
-         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
-         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
-         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-         is required. A ProtoJSON serializer should always use UTC (as indicated by
-         "Z") when printing the Timestamp type and a ProtoJSON parser should be
-         able to accept both UTC and other timezones (as indicated by an offset).
-
-         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
-         01:30 UTC on January 15, 2017.
-
-         In JavaScript, one can convert a Date object to this format using the
-         standard
-         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
-         method. In Python, a standard `datetime.datetime` object can be converted
-         to this format using
-         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
-         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
-         the Joda Time's [`ISODateTimeFormat.dateTime()`](
-         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
-         ) to obtain a formatter capable of generating timestamps in this format.
     api.order.v1.OriginSalesChannel:
       type:
         - string
@@ -3957,6 +4255,15 @@ components:
             - US
           title: country_code
           description: Country code (ISO 3166-1 alpha-2)
+        street1:
+          type: string
+          title: street1
+          maxLength: 300
+          description: Street address line 1
+        street2:
+          type: string
+          title: street2
+          description: Street address line 2
       title: Address
       additionalProperties: false
     api.order.v1.VendorOrderPriceCalculation.Billing:
@@ -4652,42 +4959,6 @@ components:
           description: Order draft ID that was updated
       title: Data
       additionalProperties: false
-    common.platform.v1.MarketplacePlatform:
-      type:
-        - string
-        - number
-      title: MarketplacePlatform
-      enum:
-        - MARKETPLACE_PLATFORM_EBAY
-        - 2
-        - MARKETPLACE_PLATFORM_AMAZON
-        - 3
-        - MARKETPLACE_PLATFORM_SHOPIFY
-        - 4
-        - MARKETPLACE_PLATFORM_WOOCOMMERCE
-        - 5
-        - MARKETPLACE_PLATFORM_ETSY
-        - 6
-        - MARKETPLACE_PLATFORM_SHOPBASE
-        - 7
-        - MARKETPLACE_PLATFORM_GEARMENT
-        - 8
-        - MARKETPLACE_PLATFORM_ORDERDESK
-        - 9
-        - MARKETPLACE_PLATFORM_TIKTOKSHOP
-        - 10
-        - MARKETPLACE_PLATFORM_POSHMARK
-        - 11
-        - MARKETPLACE_PLATFORM_PRESTASHOP
-        - 12
-        - MARKETPLACE_PLATFORM_INKGO
-        - 13
-        - MARKETPLACE_PLATFORM_WISH
-        - 14
-        - MARKETPLACE_PLATFORM_BIGCOMMERCE
-        - 15
-        - MARKETPLACE_PLATFORM_CUSTOMILY
-        - 16
     common.type.v1.File:
       type: object
       properties:

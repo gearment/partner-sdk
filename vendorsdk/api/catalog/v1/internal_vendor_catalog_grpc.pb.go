@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InternalVendorCatalogAPI_InternalVendorListCatalog_FullMethodName        = "/api.catalog.v1.InternalVendorCatalogAPI/InternalVendorListCatalog"
-	InternalVendorCatalogAPI_InternalVendorListCatalogVariant_FullMethodName = "/api.catalog.v1.InternalVendorCatalogAPI/InternalVendorListCatalogVariant"
+	InternalVendorCatalogAPI_InternalVendorListCatalog_FullMethodName           = "/api.catalog.v1.InternalVendorCatalogAPI/InternalVendorListCatalog"
+	InternalVendorCatalogAPI_InternalVendorListCatalogVariant_FullMethodName    = "/api.catalog.v1.InternalVendorCatalogAPI/InternalVendorListCatalogVariant"
+	InternalVendorCatalogAPI_InternalVendorGetCatalogShippingFee_FullMethodName = "/api.catalog.v1.InternalVendorCatalogAPI/InternalVendorGetCatalogShippingFee"
 )
 
 // InternalVendorCatalogAPIClient is the client API for InternalVendorCatalogAPI service.
@@ -29,6 +30,7 @@ const (
 type InternalVendorCatalogAPIClient interface {
 	InternalVendorListCatalog(ctx context.Context, in *InternalVendorListCatalogRequest, opts ...grpc.CallOption) (*VendorListCatalogResponse, error)
 	InternalVendorListCatalogVariant(ctx context.Context, in *InternalVendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorListCatalogVariantResponse, error)
+	InternalVendorGetCatalogShippingFee(ctx context.Context, in *InternalVendorGetCatalogShippingFeeRequest, opts ...grpc.CallOption) (*VendorGetCatalogShippingFeeResponse, error)
 }
 
 type internalVendorCatalogAPIClient struct {
@@ -59,12 +61,23 @@ func (c *internalVendorCatalogAPIClient) InternalVendorListCatalogVariant(ctx co
 	return out, nil
 }
 
+func (c *internalVendorCatalogAPIClient) InternalVendorGetCatalogShippingFee(ctx context.Context, in *InternalVendorGetCatalogShippingFeeRequest, opts ...grpc.CallOption) (*VendorGetCatalogShippingFeeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorGetCatalogShippingFeeResponse)
+	err := c.cc.Invoke(ctx, InternalVendorCatalogAPI_InternalVendorGetCatalogShippingFee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InternalVendorCatalogAPIServer is the server API for InternalVendorCatalogAPI service.
 // All implementations should embed UnimplementedInternalVendorCatalogAPIServer
 // for forward compatibility.
 type InternalVendorCatalogAPIServer interface {
 	InternalVendorListCatalog(context.Context, *InternalVendorListCatalogRequest) (*VendorListCatalogResponse, error)
 	InternalVendorListCatalogVariant(context.Context, *InternalVendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error)
+	InternalVendorGetCatalogShippingFee(context.Context, *InternalVendorGetCatalogShippingFeeRequest) (*VendorGetCatalogShippingFeeResponse, error)
 }
 
 // UnimplementedInternalVendorCatalogAPIServer should be embedded to have
@@ -79,6 +92,9 @@ func (UnimplementedInternalVendorCatalogAPIServer) InternalVendorListCatalog(con
 }
 func (UnimplementedInternalVendorCatalogAPIServer) InternalVendorListCatalogVariant(context.Context, *InternalVendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorListCatalogVariant not implemented")
+}
+func (UnimplementedInternalVendorCatalogAPIServer) InternalVendorGetCatalogShippingFee(context.Context, *InternalVendorGetCatalogShippingFeeRequest) (*VendorGetCatalogShippingFeeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorGetCatalogShippingFee not implemented")
 }
 func (UnimplementedInternalVendorCatalogAPIServer) testEmbeddedByValue() {}
 
@@ -136,6 +152,24 @@ func _InternalVendorCatalogAPI_InternalVendorListCatalogVariant_Handler(srv inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternalVendorCatalogAPI_InternalVendorGetCatalogShippingFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalVendorGetCatalogShippingFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalVendorCatalogAPIServer).InternalVendorGetCatalogShippingFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalVendorCatalogAPI_InternalVendorGetCatalogShippingFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalVendorCatalogAPIServer).InternalVendorGetCatalogShippingFee(ctx, req.(*InternalVendorGetCatalogShippingFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InternalVendorCatalogAPI_ServiceDesc is the grpc.ServiceDesc for InternalVendorCatalogAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -150,6 +184,10 @@ var InternalVendorCatalogAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalVendorListCatalogVariant",
 			Handler:    _InternalVendorCatalogAPI_InternalVendorListCatalogVariant_Handler,
+		},
+		{
+			MethodName: "InternalVendorGetCatalogShippingFee",
+			Handler:    _InternalVendorCatalogAPI_InternalVendorGetCatalogShippingFee_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

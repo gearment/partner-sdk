@@ -22,6 +22,7 @@ const (
 	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName                   = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
 	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                     = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
 	ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName                           = "/api.shipping.v1.ShippingInternalAPI/InternalVoidGofoLabel"
+	ShippingInternalAPI_InternalGofoVoidCapability_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalGofoVoidCapability"
 	ShippingInternalAPI_InternalCreateUSPSScanForm_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalCreateUSPSScanForm"
 	ShippingInternalAPI_InternalListShipmentInfoByOrderRefs_FullMethodName             = "/api.shipping.v1.ShippingInternalAPI/InternalListShipmentInfoByOrderRefs"
 	ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_FullMethodName      = "/api.shipping.v1.ShippingInternalAPI/InternalGetLatestTrackingStatusByOrderRefs"
@@ -36,6 +37,7 @@ type ShippingInternalAPIClient interface {
 	InternalPurchaseShippingLabel(ctx context.Context, in *InternalPurchaseShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseShippingLabelResponse, error)
 	InternalCancelShippingLabel(ctx context.Context, in *InternalCancelShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelShippingLabelResponse, error)
 	InternalVoidGofoLabel(ctx context.Context, in *InternalVoidGofoLabelRequest, opts ...grpc.CallOption) (*InternalVoidGofoLabelResponse, error)
+	InternalGofoVoidCapability(ctx context.Context, in *InternalGofoVoidCapabilityRequest, opts ...grpc.CallOption) (*InternalGofoVoidCapabilityResponse, error)
 	InternalCreateUSPSScanForm(ctx context.Context, in *InternalCreateUSPSScanFormRequest, opts ...grpc.CallOption) (*InternalCreateUSPSScanFormResponse, error)
 	InternalListShipmentInfoByOrderRefs(ctx context.Context, in *InternalListShipmentInfoByOrderRefsRequest, opts ...grpc.CallOption) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(ctx context.Context, in *InternalGetLatestTrackingStatusByOrderRefsRequest, opts ...grpc.CallOption) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
@@ -75,6 +77,16 @@ func (c *shippingInternalAPIClient) InternalVoidGofoLabel(ctx context.Context, i
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalVoidGofoLabelResponse)
 	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalGofoVoidCapability(ctx context.Context, in *InternalGofoVoidCapabilityRequest, opts ...grpc.CallOption) (*InternalGofoVoidCapabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGofoVoidCapabilityResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalGofoVoidCapability_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,6 +150,7 @@ type ShippingInternalAPIServer interface {
 	InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error)
 	InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error)
 	InternalVoidGofoLabel(context.Context, *InternalVoidGofoLabelRequest) (*InternalVoidGofoLabelResponse, error)
+	InternalGofoVoidCapability(context.Context, *InternalGofoVoidCapabilityRequest) (*InternalGofoVoidCapabilityResponse, error)
 	InternalCreateUSPSScanForm(context.Context, *InternalCreateUSPSScanFormRequest) (*InternalCreateUSPSScanFormResponse, error)
 	InternalListShipmentInfoByOrderRefs(context.Context, *InternalListShipmentInfoByOrderRefsRequest) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(context.Context, *InternalGetLatestTrackingStatusByOrderRefsRequest) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
@@ -160,6 +173,9 @@ func (UnimplementedShippingInternalAPIServer) InternalCancelShippingLabel(contex
 }
 func (UnimplementedShippingInternalAPIServer) InternalVoidGofoLabel(context.Context, *InternalVoidGofoLabelRequest) (*InternalVoidGofoLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVoidGofoLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalGofoVoidCapability(context.Context, *InternalGofoVoidCapabilityRequest) (*InternalGofoVoidCapabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGofoVoidCapability not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) InternalCreateUSPSScanForm(context.Context, *InternalCreateUSPSScanFormRequest) (*InternalCreateUSPSScanFormResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCreateUSPSScanForm not implemented")
@@ -246,6 +262,24 @@ func _ShippingInternalAPI_InternalVoidGofoLabel_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShippingInternalAPIServer).InternalVoidGofoLabel(ctx, req.(*InternalVoidGofoLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalGofoVoidCapability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGofoVoidCapabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalGofoVoidCapability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalGofoVoidCapability_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalGofoVoidCapability(ctx, req.(*InternalGofoVoidCapabilityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -358,6 +392,10 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalVoidGofoLabel",
 			Handler:    _ShippingInternalAPI_InternalVoidGofoLabel_Handler,
+		},
+		{
+			MethodName: "InternalGofoVoidCapability",
+			Handler:    _ShippingInternalAPI_InternalGofoVoidCapability_Handler,
 		},
 		{
 			MethodName: "InternalCreateUSPSScanForm",

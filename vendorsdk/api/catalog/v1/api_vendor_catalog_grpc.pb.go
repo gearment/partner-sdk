@@ -22,6 +22,7 @@ const (
 	VendorCatalogAPI_VendorListCatalog_FullMethodName           = "/api.catalog.v1.VendorCatalogAPI/VendorListCatalog"
 	VendorCatalogAPI_VendorListCatalogVariant_FullMethodName    = "/api.catalog.v1.VendorCatalogAPI/VendorListCatalogVariant"
 	VendorCatalogAPI_VendorGetCatalogStockStatus_FullMethodName = "/api.catalog.v1.VendorCatalogAPI/VendorGetCatalogStockStatus"
+	VendorCatalogAPI_VendorGetCatalogShippingFee_FullMethodName = "/api.catalog.v1.VendorCatalogAPI/VendorGetCatalogShippingFee"
 )
 
 // VendorCatalogAPIClient is the client API for VendorCatalogAPI service.
@@ -76,6 +77,19 @@ type VendorCatalogAPIClient interface {
 	//   - Update product availability in your system
 	//   - Show stock status to customers
 	VendorGetCatalogStockStatus(ctx context.Context, in *VendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorListCatalogVariantResponse, error)
+	// Check real-time shipping fee for variants
+	//
+	// GET /api/v3/catalog/variants/shipping-fee
+	//
+	// Returns:
+	//   - Shipping fee details for each variant
+	//   - Shipping policy information
+	//
+	// Use cases:
+	//   - Estimate shipping cost before order placement
+	//   - Display shipping fee to customers
+	//   - Sync shipping fee configuration in your system
+	VendorGetCatalogShippingFee(ctx context.Context, in *VendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorGetCatalogShippingFeeResponse, error)
 }
 
 type vendorCatalogAPIClient struct {
@@ -110,6 +124,16 @@ func (c *vendorCatalogAPIClient) VendorGetCatalogStockStatus(ctx context.Context
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VendorListCatalogVariantResponse)
 	err := c.cc.Invoke(ctx, VendorCatalogAPI_VendorGetCatalogStockStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorCatalogAPIClient) VendorGetCatalogShippingFee(ctx context.Context, in *VendorListCatalogVariantRequest, opts ...grpc.CallOption) (*VendorGetCatalogShippingFeeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorGetCatalogShippingFeeResponse)
+	err := c.cc.Invoke(ctx, VendorCatalogAPI_VendorGetCatalogShippingFee_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -168,6 +192,19 @@ type VendorCatalogAPIServer interface {
 	//   - Update product availability in your system
 	//   - Show stock status to customers
 	VendorGetCatalogStockStatus(context.Context, *VendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error)
+	// Check real-time shipping fee for variants
+	//
+	// GET /api/v3/catalog/variants/shipping-fee
+	//
+	// Returns:
+	//   - Shipping fee details for each variant
+	//   - Shipping policy information
+	//
+	// Use cases:
+	//   - Estimate shipping cost before order placement
+	//   - Display shipping fee to customers
+	//   - Sync shipping fee configuration in your system
+	VendorGetCatalogShippingFee(context.Context, *VendorListCatalogVariantRequest) (*VendorGetCatalogShippingFeeResponse, error)
 }
 
 // UnimplementedVendorCatalogAPIServer should be embedded to have
@@ -185,6 +222,9 @@ func (UnimplementedVendorCatalogAPIServer) VendorListCatalogVariant(context.Cont
 }
 func (UnimplementedVendorCatalogAPIServer) VendorGetCatalogStockStatus(context.Context, *VendorListCatalogVariantRequest) (*VendorListCatalogVariantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorGetCatalogStockStatus not implemented")
+}
+func (UnimplementedVendorCatalogAPIServer) VendorGetCatalogShippingFee(context.Context, *VendorListCatalogVariantRequest) (*VendorGetCatalogShippingFeeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorGetCatalogShippingFee not implemented")
 }
 func (UnimplementedVendorCatalogAPIServer) testEmbeddedByValue() {}
 
@@ -260,6 +300,24 @@ func _VendorCatalogAPI_VendorGetCatalogStockStatus_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorCatalogAPI_VendorGetCatalogShippingFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorListCatalogVariantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorCatalogAPIServer).VendorGetCatalogShippingFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorCatalogAPI_VendorGetCatalogShippingFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorCatalogAPIServer).VendorGetCatalogShippingFee(ctx, req.(*VendorListCatalogVariantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorCatalogAPI_ServiceDesc is the grpc.ServiceDesc for VendorCatalogAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +336,10 @@ var VendorCatalogAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VendorGetCatalogStockStatus",
 			Handler:    _VendorCatalogAPI_VendorGetCatalogStockStatus_Handler,
+		},
+		{
+			MethodName: "VendorGetCatalogShippingFee",
+			Handler:    _VendorCatalogAPI_VendorGetCatalogShippingFee_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
