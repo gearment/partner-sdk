@@ -22,6 +22,7 @@ const (
 	WMSShipmentExternalAPI_WMSExternalGetShippingCarriersServices_FullMethodName              = "/api.shipping.v1.WMSShipmentExternalAPI/WMSExternalGetShippingCarriersServices"
 	WMSShipmentExternalAPI_WMSExternalGetManifestsForHandoverSessionAttachment_FullMethodName = "/api.shipping.v1.WMSShipmentExternalAPI/WMSExternalGetManifestsForHandoverSessionAttachment"
 	WMSShipmentExternalAPI_WMSExternalCreateUSPSScanForm_FullMethodName                       = "/api.shipping.v1.WMSShipmentExternalAPI/WMSExternalCreateUSPSScanForm"
+	WMSShipmentExternalAPI_WMSExternalCreateCarrierManifest_FullMethodName                    = "/api.shipping.v1.WMSShipmentExternalAPI/WMSExternalCreateCarrierManifest"
 )
 
 // WMSShipmentExternalAPIClient is the client API for WMSShipmentExternalAPI service.
@@ -31,6 +32,10 @@ type WMSShipmentExternalAPIClient interface {
 	WMSExternalGetShippingCarriersServices(ctx context.Context, in *WMSExternalGetShippingCarriersServicesRequest, opts ...grpc.CallOption) (*WMSExternalGetShippingCarriersServicesResponse, error)
 	WMSExternalGetManifestsForHandoverSessionAttachment(ctx context.Context, in *WMSExternalGetManifestsForHandoverSessionAttachmentRequest, opts ...grpc.CallOption) (*WMSExternalGetManifestsForHandoverSessionAttachmentResponse, error)
 	WMSExternalCreateUSPSScanForm(ctx context.Context, in *WMSExternalCreateUSPSScanFormRequest, opts ...grpc.CallOption) (*WMSExternalCreateUSPSScanFormResponse, error)
+	// Creates a carrier handover manifest through the registered carrier adapter.
+	// The caller owns idempotency_key generation from the handover session and
+	// its immutable revision.
+	WMSExternalCreateCarrierManifest(ctx context.Context, in *WMSExternalCreateCarrierManifestRequest, opts ...grpc.CallOption) (*WMSExternalCreateCarrierManifestResponse, error)
 }
 
 type wMSShipmentExternalAPIClient struct {
@@ -71,6 +76,16 @@ func (c *wMSShipmentExternalAPIClient) WMSExternalCreateUSPSScanForm(ctx context
 	return out, nil
 }
 
+func (c *wMSShipmentExternalAPIClient) WMSExternalCreateCarrierManifest(ctx context.Context, in *WMSExternalCreateCarrierManifestRequest, opts ...grpc.CallOption) (*WMSExternalCreateCarrierManifestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WMSExternalCreateCarrierManifestResponse)
+	err := c.cc.Invoke(ctx, WMSShipmentExternalAPI_WMSExternalCreateCarrierManifest_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WMSShipmentExternalAPIServer is the server API for WMSShipmentExternalAPI service.
 // All implementations should embed UnimplementedWMSShipmentExternalAPIServer
 // for forward compatibility.
@@ -78,6 +93,10 @@ type WMSShipmentExternalAPIServer interface {
 	WMSExternalGetShippingCarriersServices(context.Context, *WMSExternalGetShippingCarriersServicesRequest) (*WMSExternalGetShippingCarriersServicesResponse, error)
 	WMSExternalGetManifestsForHandoverSessionAttachment(context.Context, *WMSExternalGetManifestsForHandoverSessionAttachmentRequest) (*WMSExternalGetManifestsForHandoverSessionAttachmentResponse, error)
 	WMSExternalCreateUSPSScanForm(context.Context, *WMSExternalCreateUSPSScanFormRequest) (*WMSExternalCreateUSPSScanFormResponse, error)
+	// Creates a carrier handover manifest through the registered carrier adapter.
+	// The caller owns idempotency_key generation from the handover session and
+	// its immutable revision.
+	WMSExternalCreateCarrierManifest(context.Context, *WMSExternalCreateCarrierManifestRequest) (*WMSExternalCreateCarrierManifestResponse, error)
 }
 
 // UnimplementedWMSShipmentExternalAPIServer should be embedded to have
@@ -95,6 +114,9 @@ func (UnimplementedWMSShipmentExternalAPIServer) WMSExternalGetManifestsForHando
 }
 func (UnimplementedWMSShipmentExternalAPIServer) WMSExternalCreateUSPSScanForm(context.Context, *WMSExternalCreateUSPSScanFormRequest) (*WMSExternalCreateUSPSScanFormResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WMSExternalCreateUSPSScanForm not implemented")
+}
+func (UnimplementedWMSShipmentExternalAPIServer) WMSExternalCreateCarrierManifest(context.Context, *WMSExternalCreateCarrierManifestRequest) (*WMSExternalCreateCarrierManifestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WMSExternalCreateCarrierManifest not implemented")
 }
 func (UnimplementedWMSShipmentExternalAPIServer) testEmbeddedByValue() {}
 
@@ -170,6 +192,24 @@ func _WMSShipmentExternalAPI_WMSExternalCreateUSPSScanForm_Handler(srv interface
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WMSShipmentExternalAPI_WMSExternalCreateCarrierManifest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WMSExternalCreateCarrierManifestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WMSShipmentExternalAPIServer).WMSExternalCreateCarrierManifest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WMSShipmentExternalAPI_WMSExternalCreateCarrierManifest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WMSShipmentExternalAPIServer).WMSExternalCreateCarrierManifest(ctx, req.(*WMSExternalCreateCarrierManifestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WMSShipmentExternalAPI_ServiceDesc is the grpc.ServiceDesc for WMSShipmentExternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -188,6 +228,10 @@ var WMSShipmentExternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WMSExternalCreateUSPSScanForm",
 			Handler:    _WMSShipmentExternalAPI_WMSExternalCreateUSPSScanForm_Handler,
+		},
+		{
+			MethodName: "WMSExternalCreateCarrierManifest",
+			Handler:    _WMSShipmentExternalAPI_WMSExternalCreateCarrierManifest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

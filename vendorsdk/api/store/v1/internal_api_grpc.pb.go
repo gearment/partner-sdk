@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	StoreInternalAPI_InternalForceResyncOrderTracking_FullMethodName                = "/api.store.v1.StoreInternalAPI/InternalForceResyncOrderTracking"
 	StoreInternalAPI_InternalListStoreShort_FullMethodName                          = "/api.store.v1.StoreInternalAPI/InternalListStoreShort"
 	StoreInternalAPI_InternalListStore_FullMethodName                               = "/api.store.v1.StoreInternalAPI/InternalListStore"
 	StoreInternalAPI_InternalGetDefaultStore_FullMethodName                         = "/api.store.v1.StoreInternalAPI/InternalGetDefaultStore"
@@ -43,6 +44,7 @@ const (
 //
 // StoreInternalAPI provide an abstraction to all of read and write data access for store businesses
 type StoreInternalAPIClient interface {
+	InternalForceResyncOrderTracking(ctx context.Context, in *InternalForceResyncOrderTrackingRequest, opts ...grpc.CallOption) (*InternalForceResyncOrderTrackingResponse, error)
 	InternalListStoreShort(ctx context.Context, in *InternalListStoreShortRequest, opts ...grpc.CallOption) (*InternalListStoreShortResponse, error)
 	InternalListStore(ctx context.Context, in *InternalListStoreRequest, opts ...grpc.CallOption) (*InternalListStoreResponse, error)
 	InternalGetDefaultStore(ctx context.Context, in *InternalGetDefaultStoreRequest, opts ...grpc.CallOption) (*InternalGetDefaultStoreResponse, error)
@@ -68,6 +70,16 @@ type storeInternalAPIClient struct {
 
 func NewStoreInternalAPIClient(cc grpc.ClientConnInterface) StoreInternalAPIClient {
 	return &storeInternalAPIClient{cc}
+}
+
+func (c *storeInternalAPIClient) InternalForceResyncOrderTracking(ctx context.Context, in *InternalForceResyncOrderTrackingRequest, opts ...grpc.CallOption) (*InternalForceResyncOrderTrackingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalForceResyncOrderTrackingResponse)
+	err := c.cc.Invoke(ctx, StoreInternalAPI_InternalForceResyncOrderTracking_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *storeInternalAPIClient) InternalListStoreShort(ctx context.Context, in *InternalListStoreShortRequest, opts ...grpc.CallOption) (*InternalListStoreShortResponse, error) {
@@ -236,6 +248,7 @@ func (c *storeInternalAPIClient) InternalSetStoreLegacyGiftMessage(ctx context.C
 //
 // StoreInternalAPI provide an abstraction to all of read and write data access for store businesses
 type StoreInternalAPIServer interface {
+	InternalForceResyncOrderTracking(context.Context, *InternalForceResyncOrderTrackingRequest) (*InternalForceResyncOrderTrackingResponse, error)
 	InternalListStoreShort(context.Context, *InternalListStoreShortRequest) (*InternalListStoreShortResponse, error)
 	InternalListStore(context.Context, *InternalListStoreRequest) (*InternalListStoreResponse, error)
 	InternalGetDefaultStore(context.Context, *InternalGetDefaultStoreRequest) (*InternalGetDefaultStoreResponse, error)
@@ -262,6 +275,9 @@ type StoreInternalAPIServer interface {
 // pointer dereference when methods are called.
 type UnimplementedStoreInternalAPIServer struct{}
 
+func (UnimplementedStoreInternalAPIServer) InternalForceResyncOrderTracking(context.Context, *InternalForceResyncOrderTrackingRequest) (*InternalForceResyncOrderTrackingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalForceResyncOrderTracking not implemented")
+}
 func (UnimplementedStoreInternalAPIServer) InternalListStoreShort(context.Context, *InternalListStoreShortRequest) (*InternalListStoreShortResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListStoreShort not implemented")
 }
@@ -328,6 +344,24 @@ func RegisterStoreInternalAPIServer(s grpc.ServiceRegistrar, srv StoreInternalAP
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&StoreInternalAPI_ServiceDesc, srv)
+}
+
+func _StoreInternalAPI_InternalForceResyncOrderTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalForceResyncOrderTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StoreInternalAPIServer).InternalForceResyncOrderTracking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StoreInternalAPI_InternalForceResyncOrderTracking_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StoreInternalAPIServer).InternalForceResyncOrderTracking(ctx, req.(*InternalForceResyncOrderTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _StoreInternalAPI_InternalListStoreShort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -625,6 +659,10 @@ var StoreInternalAPI_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.store.v1.StoreInternalAPI",
 	HandlerType: (*StoreInternalAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "InternalForceResyncOrderTracking",
+			Handler:    _StoreInternalAPI_InternalForceResyncOrderTracking_Handler,
+		},
 		{
 			MethodName: "InternalListStoreShort",
 			Handler:    _StoreInternalAPI_InternalListStoreShort_Handler,
