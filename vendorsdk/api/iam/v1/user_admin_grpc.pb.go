@@ -19,15 +19,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserAccountAdminAPI_StaffBlockUser_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
-	UserAccountAdminAPI_StaffUnblockUser_FullMethodName       = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
-	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
-	UserAccountAdminAPI_StaffListUser_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffListUser"
-	UserAccountAdminAPI_StaffGetTeam_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeam"
-	UserAccountAdminAPI_StaffGetTeamDetail_FullMethodName     = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeamDetail"
-	UserAccountAdminAPI_StaffCreateFlag_FullMethodName        = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFlag"
-	UserAccountAdminAPI_StaffListFlag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffListFlag"
-	UserAccountAdminAPI_StaffUpdateFlag_FullMethodName        = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateFlag"
+	UserAccountAdminAPI_StaffBlockUser_FullMethodName              = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
+	UserAccountAdminAPI_StaffUnblockUser_FullMethodName            = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
+	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName      = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
+	UserAccountAdminAPI_StaffListUser_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffListUser"
+	UserAccountAdminAPI_StaffCreateUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffCreateUserTag"
+	UserAccountAdminAPI_StaffListUserTags_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTags"
+	UserAccountAdminAPI_StaffUpdateUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserTag"
+	UserAccountAdminAPI_StaffDeleteUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffDeleteUserTag"
+	UserAccountAdminAPI_StaffAssignUserTags_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffAssignUserTags"
+	UserAccountAdminAPI_StaffRemoveUserTags_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffRemoveUserTags"
+	UserAccountAdminAPI_StaffListUserTagAssignments_FullMethodName = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTagAssignments"
+	UserAccountAdminAPI_StaffGetTeam_FullMethodName                = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeam"
+	UserAccountAdminAPI_StaffGetTeamDetail_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeamDetail"
+	UserAccountAdminAPI_StaffCreateFlag_FullMethodName             = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFlag"
+	UserAccountAdminAPI_StaffListFlag_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffListFlag"
+	UserAccountAdminAPI_StaffUpdateFlag_FullMethodName             = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateFlag"
 )
 
 // UserAccountAdminAPIClient is the client API for UserAccountAdminAPI service.
@@ -38,6 +45,13 @@ type UserAccountAdminAPIClient interface {
 	StaffUnblockUser(ctx context.Context, in *StaffUnblockUserRequest, opts ...grpc.CallOption) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(ctx context.Context, in *StaffUpdateUserProfileRequest, opts ...grpc.CallOption) (*StaffUpdateUserProfileResponse, error)
 	StaffListUser(ctx context.Context, in *StaffListUserRequest, opts ...grpc.CallOption) (*StaffListUserResponse, error)
+	StaffCreateUserTag(ctx context.Context, in *StaffCreateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error)
+	StaffListUserTags(ctx context.Context, in *StaffListUserTagsRequest, opts ...grpc.CallOption) (*StaffListUserTagsResponse, error)
+	StaffUpdateUserTag(ctx context.Context, in *StaffUpdateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error)
+	StaffDeleteUserTag(ctx context.Context, in *StaffDeleteUserTagRequest, opts ...grpc.CallOption) (*StaffDeleteUserTagResponse, error)
+	StaffAssignUserTags(ctx context.Context, in *StaffAssignUserTagsRequest, opts ...grpc.CallOption) (*StaffAssignUserTagsResponse, error)
+	StaffRemoveUserTags(ctx context.Context, in *StaffRemoveUserTagsRequest, opts ...grpc.CallOption) (*StaffRemoveUserTagsResponse, error)
+	StaffListUserTagAssignments(ctx context.Context, in *StaffListUserTagAssignmentsRequest, opts ...grpc.CallOption) (*StaffListUserTagAssignmentsResponse, error)
 	StaffGetTeam(ctx context.Context, in *StaffGetTeamRequest, opts ...grpc.CallOption) (*StaffGetTeamResponse, error)
 	StaffGetTeamDetail(ctx context.Context, in *StaffGetTeamDetailRequest, opts ...grpc.CallOption) (*StaffGetTeamDetailResponse, error)
 	StaffCreateFlag(ctx context.Context, in *Flag, opts ...grpc.CallOption) (*Flag, error)
@@ -87,6 +101,76 @@ func (c *userAccountAdminAPIClient) StaffListUser(ctx context.Context, in *Staff
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListUserResponse)
 	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffCreateUserTag(ctx context.Context, in *StaffCreateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserTag)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffCreateUserTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffListUserTags(ctx context.Context, in *StaffListUserTagsRequest, opts ...grpc.CallOption) (*StaffListUserTagsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListUserTagsResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListUserTags_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffUpdateUserTag(ctx context.Context, in *StaffUpdateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserTag)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffUpdateUserTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffDeleteUserTag(ctx context.Context, in *StaffDeleteUserTagRequest, opts ...grpc.CallOption) (*StaffDeleteUserTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteUserTagResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffDeleteUserTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffAssignUserTags(ctx context.Context, in *StaffAssignUserTagsRequest, opts ...grpc.CallOption) (*StaffAssignUserTagsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffAssignUserTagsResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffAssignUserTags_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffRemoveUserTags(ctx context.Context, in *StaffRemoveUserTagsRequest, opts ...grpc.CallOption) (*StaffRemoveUserTagsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffRemoveUserTagsResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffRemoveUserTags_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffListUserTagAssignments(ctx context.Context, in *StaffListUserTagAssignmentsRequest, opts ...grpc.CallOption) (*StaffListUserTagAssignmentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListUserTagAssignmentsResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListUserTagAssignments_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -151,6 +235,13 @@ type UserAccountAdminAPIServer interface {
 	StaffUnblockUser(context.Context, *StaffUnblockUserRequest) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(context.Context, *StaffUpdateUserProfileRequest) (*StaffUpdateUserProfileResponse, error)
 	StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error)
+	StaffCreateUserTag(context.Context, *StaffCreateUserTagRequest) (*UserTag, error)
+	StaffListUserTags(context.Context, *StaffListUserTagsRequest) (*StaffListUserTagsResponse, error)
+	StaffUpdateUserTag(context.Context, *StaffUpdateUserTagRequest) (*UserTag, error)
+	StaffDeleteUserTag(context.Context, *StaffDeleteUserTagRequest) (*StaffDeleteUserTagResponse, error)
+	StaffAssignUserTags(context.Context, *StaffAssignUserTagsRequest) (*StaffAssignUserTagsResponse, error)
+	StaffRemoveUserTags(context.Context, *StaffRemoveUserTagsRequest) (*StaffRemoveUserTagsResponse, error)
+	StaffListUserTagAssignments(context.Context, *StaffListUserTagAssignmentsRequest) (*StaffListUserTagAssignmentsResponse, error)
 	StaffGetTeam(context.Context, *StaffGetTeamRequest) (*StaffGetTeamResponse, error)
 	StaffGetTeamDetail(context.Context, *StaffGetTeamDetailRequest) (*StaffGetTeamDetailResponse, error)
 	StaffCreateFlag(context.Context, *Flag) (*Flag, error)
@@ -176,6 +267,27 @@ func (UnimplementedUserAccountAdminAPIServer) StaffUpdateUserProfile(context.Con
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListUser not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffCreateUserTag(context.Context, *StaffCreateUserTagRequest) (*UserTag, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateUserTag not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffListUserTags(context.Context, *StaffListUserTagsRequest) (*StaffListUserTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListUserTags not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffUpdateUserTag(context.Context, *StaffUpdateUserTagRequest) (*UserTag, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateUserTag not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffDeleteUserTag(context.Context, *StaffDeleteUserTagRequest) (*StaffDeleteUserTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteUserTag not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffAssignUserTags(context.Context, *StaffAssignUserTagsRequest) (*StaffAssignUserTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffAssignUserTags not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffRemoveUserTags(context.Context, *StaffRemoveUserTagsRequest) (*StaffRemoveUserTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffRemoveUserTags not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffListUserTagAssignments(context.Context, *StaffListUserTagAssignmentsRequest) (*StaffListUserTagAssignmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListUserTagAssignments not implemented")
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffGetTeam(context.Context, *StaffGetTeamRequest) (*StaffGetTeamResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetTeam not implemented")
@@ -280,6 +392,132 @@ func _UserAccountAdminAPI_StaffListUser_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAccountAdminAPIServer).StaffListUser(ctx, req.(*StaffListUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffCreateUserTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCreateUserTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffCreateUserTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffCreateUserTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffCreateUserTag(ctx, req.(*StaffCreateUserTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffListUserTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListUserTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffListUserTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffListUserTags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffListUserTags(ctx, req.(*StaffListUserTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffUpdateUserTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateUserTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffUpdateUserTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffUpdateUserTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffUpdateUserTag(ctx, req.(*StaffUpdateUserTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffDeleteUserTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteUserTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffDeleteUserTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffDeleteUserTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffDeleteUserTag(ctx, req.(*StaffDeleteUserTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffAssignUserTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffAssignUserTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffAssignUserTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffAssignUserTags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffAssignUserTags(ctx, req.(*StaffAssignUserTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffRemoveUserTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffRemoveUserTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffRemoveUserTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffRemoveUserTags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffRemoveUserTags(ctx, req.(*StaffRemoveUserTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffListUserTagAssignments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListUserTagAssignmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffListUserTagAssignments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffListUserTagAssignments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffListUserTagAssignments(ctx, req.(*StaffListUserTagAssignmentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -396,6 +634,34 @@ var UserAccountAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListUser",
 			Handler:    _UserAccountAdminAPI_StaffListUser_Handler,
+		},
+		{
+			MethodName: "StaffCreateUserTag",
+			Handler:    _UserAccountAdminAPI_StaffCreateUserTag_Handler,
+		},
+		{
+			MethodName: "StaffListUserTags",
+			Handler:    _UserAccountAdminAPI_StaffListUserTags_Handler,
+		},
+		{
+			MethodName: "StaffUpdateUserTag",
+			Handler:    _UserAccountAdminAPI_StaffUpdateUserTag_Handler,
+		},
+		{
+			MethodName: "StaffDeleteUserTag",
+			Handler:    _UserAccountAdminAPI_StaffDeleteUserTag_Handler,
+		},
+		{
+			MethodName: "StaffAssignUserTags",
+			Handler:    _UserAccountAdminAPI_StaffAssignUserTags_Handler,
+		},
+		{
+			MethodName: "StaffRemoveUserTags",
+			Handler:    _UserAccountAdminAPI_StaffRemoveUserTags_Handler,
+		},
+		{
+			MethodName: "StaffListUserTagAssignments",
+			Handler:    _UserAccountAdminAPI_StaffListUserTagAssignments_Handler,
 		},
 		{
 			MethodName: "StaffGetTeam",

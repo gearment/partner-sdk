@@ -19,36 +19,35 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TeamAPI_UserCreateTeam_FullMethodName                        = "/api.iam.v1.TeamAPI/UserCreateTeam"
-	TeamAPI_UserUpdateTeam_FullMethodName                        = "/api.iam.v1.TeamAPI/UserUpdateTeam"
-	TeamAPI_UserInviteTeamMember_FullMethodName                  = "/api.iam.v1.TeamAPI/UserInviteTeamMember"
-	TeamAPI_UserListTeamMember_FullMethodName                    = "/api.iam.v1.TeamAPI/UserListTeamMember"
-	TeamAPI_UserUpdateTeamMember_FullMethodName                  = "/api.iam.v1.TeamAPI/UserUpdateTeamMember"
-	TeamAPI_UserRemoveTeamMember_FullMethodName                  = "/api.iam.v1.TeamAPI/UserRemoveTeamMember"
-	TeamAPI_UserAcceptTeamInvitation_FullMethodName              = "/api.iam.v1.TeamAPI/UserAcceptTeamInvitation"
-	TeamAPI_UserRejectTeamInvitation_FullMethodName              = "/api.iam.v1.TeamAPI/UserRejectTeamInvitation"
-	TeamAPI_UserCancelTeamInvitation_FullMethodName              = "/api.iam.v1.TeamAPI/UserCancelTeamInvitation"
-	TeamAPI_UserResendTeamInvitation_FullMethodName              = "/api.iam.v1.TeamAPI/UserResendTeamInvitation"
-	TeamAPI_UserListTeamInvitation_FullMethodName                = "/api.iam.v1.TeamAPI/UserListTeamInvitation"
-	TeamAPI_UserGetTeam_FullMethodName                           = "/api.iam.v1.TeamAPI/UserGetTeam"
-	TeamAPI_UserLeaveTeam_FullMethodName                         = "/api.iam.v1.TeamAPI/UserLeaveTeam"
-	TeamAPI_UserListTeam_FullMethodName                          = "/api.iam.v1.TeamAPI/UserListTeam"
-	TeamAPI_StaffGetAccountManagerTeams_FullMethodName           = "/api.iam.v1.TeamAPI/StaffGetAccountManagerTeams"
-	TeamAPI_StaffListAccountManagerTeams_FullMethodName          = "/api.iam.v1.TeamAPI/StaffListAccountManagerTeams"
-	TeamAPI_StaffListAccountManagerStaffs_FullMethodName         = "/api.iam.v1.TeamAPI/StaffListAccountManagerStaffs"
-	TeamAPI_StaffListAccountManagerStaffMetrics_FullMethodName   = "/api.iam.v1.TeamAPI/StaffListAccountManagerStaffMetrics"
-	TeamAPI_StaffListTeamIDsByOwnerUserIDs_FullMethodName        = "/api.iam.v1.TeamAPI/StaffListTeamIDsByOwnerUserIDs"
-	TeamAPI_StaffCacheAccountManagerUserOrders30D_FullMethodName = "/api.iam.v1.TeamAPI/StaffCacheAccountManagerUserOrders30D"
-	TeamAPI_StaffAssignAccountManagerTeams_FullMethodName        = "/api.iam.v1.TeamAPI/StaffAssignAccountManagerTeams"
-	TeamAPI_StaffRemoveAccountManagerTeams_FullMethodName        = "/api.iam.v1.TeamAPI/StaffRemoveAccountManagerTeams"
-	TeamAPI_UserMarkStatusAsInactive_FullMethodName              = "/api.iam.v1.TeamAPI/UserMarkStatusAsInactive"
-	TeamAPI_UserListTeamMemberInvitation_FullMethodName          = "/api.iam.v1.TeamAPI/UserListTeamMemberInvitation"
-	TeamAPI_StaffListAllGMTeam_FullMethodName                    = "/api.iam.v1.TeamAPI/StaffListAllGMTeam"
-	TeamAPI_StaffCountTeamDefaultShippingMethod_FullMethodName   = "/api.iam.v1.TeamAPI/StaffCountTeamDefaultShippingMethod"
-	TeamAPI_StaffGetTeam_FullMethodName                          = "/api.iam.v1.TeamAPI/StaffGetTeam"
-	TeamAPI_StaffBlockTeam_FullMethodName                        = "/api.iam.v1.TeamAPI/StaffBlockTeam"
-	TeamAPI_StaffUnBlockTeam_FullMethodName                      = "/api.iam.v1.TeamAPI/StaffUnBlockTeam"
-	TeamAPI_UserUploadAvatar_FullMethodName                      = "/api.iam.v1.TeamAPI/UserUploadAvatar"
+	TeamAPI_UserCreateTeam_FullMethodName                      = "/api.iam.v1.TeamAPI/UserCreateTeam"
+	TeamAPI_UserUpdateTeam_FullMethodName                      = "/api.iam.v1.TeamAPI/UserUpdateTeam"
+	TeamAPI_UserInviteTeamMember_FullMethodName                = "/api.iam.v1.TeamAPI/UserInviteTeamMember"
+	TeamAPI_UserListTeamMember_FullMethodName                  = "/api.iam.v1.TeamAPI/UserListTeamMember"
+	TeamAPI_UserUpdateTeamMember_FullMethodName                = "/api.iam.v1.TeamAPI/UserUpdateTeamMember"
+	TeamAPI_UserRemoveTeamMember_FullMethodName                = "/api.iam.v1.TeamAPI/UserRemoveTeamMember"
+	TeamAPI_UserAcceptTeamInvitation_FullMethodName            = "/api.iam.v1.TeamAPI/UserAcceptTeamInvitation"
+	TeamAPI_UserRejectTeamInvitation_FullMethodName            = "/api.iam.v1.TeamAPI/UserRejectTeamInvitation"
+	TeamAPI_UserCancelTeamInvitation_FullMethodName            = "/api.iam.v1.TeamAPI/UserCancelTeamInvitation"
+	TeamAPI_UserResendTeamInvitation_FullMethodName            = "/api.iam.v1.TeamAPI/UserResendTeamInvitation"
+	TeamAPI_UserListTeamInvitation_FullMethodName              = "/api.iam.v1.TeamAPI/UserListTeamInvitation"
+	TeamAPI_UserGetTeam_FullMethodName                         = "/api.iam.v1.TeamAPI/UserGetTeam"
+	TeamAPI_UserLeaveTeam_FullMethodName                       = "/api.iam.v1.TeamAPI/UserLeaveTeam"
+	TeamAPI_UserListTeam_FullMethodName                        = "/api.iam.v1.TeamAPI/UserListTeam"
+	TeamAPI_StaffGetAccountManagerTeams_FullMethodName         = "/api.iam.v1.TeamAPI/StaffGetAccountManagerTeams"
+	TeamAPI_StaffListAccountManagerTeams_FullMethodName        = "/api.iam.v1.TeamAPI/StaffListAccountManagerTeams"
+	TeamAPI_StaffListAccountManagerStaffs_FullMethodName       = "/api.iam.v1.TeamAPI/StaffListAccountManagerStaffs"
+	TeamAPI_StaffListAccountManagerStaffMetrics_FullMethodName = "/api.iam.v1.TeamAPI/StaffListAccountManagerStaffMetrics"
+	TeamAPI_StaffListTeamIDsByOwnerUserIDs_FullMethodName      = "/api.iam.v1.TeamAPI/StaffListTeamIDsByOwnerUserIDs"
+	TeamAPI_StaffAssignAccountManagerTeams_FullMethodName      = "/api.iam.v1.TeamAPI/StaffAssignAccountManagerTeams"
+	TeamAPI_StaffRemoveAccountManagerTeams_FullMethodName      = "/api.iam.v1.TeamAPI/StaffRemoveAccountManagerTeams"
+	TeamAPI_UserMarkStatusAsInactive_FullMethodName            = "/api.iam.v1.TeamAPI/UserMarkStatusAsInactive"
+	TeamAPI_UserListTeamMemberInvitation_FullMethodName        = "/api.iam.v1.TeamAPI/UserListTeamMemberInvitation"
+	TeamAPI_StaffListAllGMTeam_FullMethodName                  = "/api.iam.v1.TeamAPI/StaffListAllGMTeam"
+	TeamAPI_StaffCountTeamDefaultShippingMethod_FullMethodName = "/api.iam.v1.TeamAPI/StaffCountTeamDefaultShippingMethod"
+	TeamAPI_StaffGetTeam_FullMethodName                        = "/api.iam.v1.TeamAPI/StaffGetTeam"
+	TeamAPI_StaffBlockTeam_FullMethodName                      = "/api.iam.v1.TeamAPI/StaffBlockTeam"
+	TeamAPI_StaffUnBlockTeam_FullMethodName                    = "/api.iam.v1.TeamAPI/StaffUnBlockTeam"
+	TeamAPI_UserUploadAvatar_FullMethodName                    = "/api.iam.v1.TeamAPI/UserUploadAvatar"
 )
 
 // TeamAPIClient is the client API for TeamAPI service.
@@ -77,7 +76,6 @@ type TeamAPIClient interface {
 	StaffListAccountManagerStaffs(ctx context.Context, in *StaffListAccountManagerStaffsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerStaffsResponse, error)
 	StaffListAccountManagerStaffMetrics(ctx context.Context, in *StaffListAccountManagerStaffMetricsRequest, opts ...grpc.CallOption) (*StaffListAccountManagerStaffMetricsResponse, error)
 	StaffListTeamIDsByOwnerUserIDs(ctx context.Context, in *StaffListTeamIDsByOwnerUserIDsRequest, opts ...grpc.CallOption) (*StaffListTeamIDsByOwnerUserIDsResponse, error)
-	StaffCacheAccountManagerUserOrders30D(ctx context.Context, in *StaffCacheAccountManagerUserOrders30DRequest, opts ...grpc.CallOption) (*StaffCacheAccountManagerUserOrders30DResponse, error)
 	StaffAssignAccountManagerTeams(ctx context.Context, in *StaffAssignAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffAssignAccountManagerTeamsResponse, error)
 	StaffRemoveAccountManagerTeams(ctx context.Context, in *StaffRemoveAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffRemoveAccountManagerTeamsResponse, error)
 	UserMarkStatusAsInactive(ctx context.Context, in *UserMarkStatusAsInactiveRequest, opts ...grpc.CallOption) (*UserMarkStatusAsInactiveResponse, error)
@@ -289,16 +287,6 @@ func (c *teamAPIClient) StaffListTeamIDsByOwnerUserIDs(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *teamAPIClient) StaffCacheAccountManagerUserOrders30D(ctx context.Context, in *StaffCacheAccountManagerUserOrders30DRequest, opts ...grpc.CallOption) (*StaffCacheAccountManagerUserOrders30DResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StaffCacheAccountManagerUserOrders30DResponse)
-	err := c.cc.Invoke(ctx, TeamAPI_StaffCacheAccountManagerUserOrders30D_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *teamAPIClient) StaffAssignAccountManagerTeams(ctx context.Context, in *StaffAssignAccountManagerTeamsRequest, opts ...grpc.CallOption) (*StaffAssignAccountManagerTeamsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffAssignAccountManagerTeamsResponse)
@@ -425,7 +413,6 @@ type TeamAPIServer interface {
 	StaffListAccountManagerStaffs(context.Context, *StaffListAccountManagerStaffsRequest) (*StaffListAccountManagerStaffsResponse, error)
 	StaffListAccountManagerStaffMetrics(context.Context, *StaffListAccountManagerStaffMetricsRequest) (*StaffListAccountManagerStaffMetricsResponse, error)
 	StaffListTeamIDsByOwnerUserIDs(context.Context, *StaffListTeamIDsByOwnerUserIDsRequest) (*StaffListTeamIDsByOwnerUserIDsResponse, error)
-	StaffCacheAccountManagerUserOrders30D(context.Context, *StaffCacheAccountManagerUserOrders30DRequest) (*StaffCacheAccountManagerUserOrders30DResponse, error)
 	StaffAssignAccountManagerTeams(context.Context, *StaffAssignAccountManagerTeamsRequest) (*StaffAssignAccountManagerTeamsResponse, error)
 	StaffRemoveAccountManagerTeams(context.Context, *StaffRemoveAccountManagerTeamsRequest) (*StaffRemoveAccountManagerTeamsResponse, error)
 	UserMarkStatusAsInactive(context.Context, *UserMarkStatusAsInactiveRequest) (*UserMarkStatusAsInactiveResponse, error)
@@ -502,9 +489,6 @@ func (UnimplementedTeamAPIServer) StaffListAccountManagerStaffMetrics(context.Co
 }
 func (UnimplementedTeamAPIServer) StaffListTeamIDsByOwnerUserIDs(context.Context, *StaffListTeamIDsByOwnerUserIDsRequest) (*StaffListTeamIDsByOwnerUserIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListTeamIDsByOwnerUserIDs not implemented")
-}
-func (UnimplementedTeamAPIServer) StaffCacheAccountManagerUserOrders30D(context.Context, *StaffCacheAccountManagerUserOrders30DRequest) (*StaffCacheAccountManagerUserOrders30DResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StaffCacheAccountManagerUserOrders30D not implemented")
 }
 func (UnimplementedTeamAPIServer) StaffAssignAccountManagerTeams(context.Context, *StaffAssignAccountManagerTeamsRequest) (*StaffAssignAccountManagerTeamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffAssignAccountManagerTeams not implemented")
@@ -898,24 +882,6 @@ func _TeamAPI_StaffListTeamIDsByOwnerUserIDs_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TeamAPI_StaffCacheAccountManagerUserOrders30D_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StaffCacheAccountManagerUserOrders30DRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TeamAPIServer).StaffCacheAccountManagerUserOrders30D(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TeamAPI_StaffCacheAccountManagerUserOrders30D_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TeamAPIServer).StaffCacheAccountManagerUserOrders30D(ctx, req.(*StaffCacheAccountManagerUserOrders30DRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _TeamAPI_StaffAssignAccountManagerTeams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffAssignAccountManagerTeamsRequest)
 	if err := dec(in); err != nil {
@@ -1178,10 +1144,6 @@ var TeamAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListTeamIDsByOwnerUserIDs",
 			Handler:    _TeamAPI_StaffListTeamIDsByOwnerUserIDs_Handler,
-		},
-		{
-			MethodName: "StaffCacheAccountManagerUserOrders30D",
-			Handler:    _TeamAPI_StaffCacheAccountManagerUserOrders30D_Handler,
 		},
 		{
 			MethodName: "StaffAssignAccountManagerTeams",

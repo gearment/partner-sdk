@@ -30,6 +30,7 @@ const (
 	OrderAdminAPI_StaffCountOrderLineItemForExport_FullMethodName  = "/api.pod.v1.OrderAdminAPI/StaffCountOrderLineItemForExport"
 	OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesOrder"
 	OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName       = "/api.pod.v1.OrderAdminAPI/StaffGetStatisticSalesUnits"
+	OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffListSalesUnitsByUser"
 	OrderAdminAPI_StaffListSalesOrderFilterCriteria_FullMethodName = "/api.pod.v1.OrderAdminAPI/StaffListSalesOrderFilterCriteria"
 	OrderAdminAPI_StaffExportOrder_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffExportOrder"
 	OrderAdminAPI_StaffExportOrderItems_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffExportOrderItems"
@@ -67,6 +68,7 @@ type OrderAdminAPIClient interface {
 	StaffCountOrderLineItemForExport(ctx context.Context, in *StaffCountOrderLineItemForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderLineItemForExportResponse, error)
 	StaffStatisticSalesOrder(ctx context.Context, in *StaffStatisticSalesOrderRequest, opts ...grpc.CallOption) (*StaffStatisticSalesOrderResponse, error)
 	StaffGetStatisticSalesUnits(ctx context.Context, in *StaffGetStatisticSalesUnitsRequest, opts ...grpc.CallOption) (*StaffGetStatisticSalesUnitsResponse, error)
+	StaffListSalesUnitsByUser(ctx context.Context, in *StaffListSalesUnitsByUserRequest, opts ...grpc.CallOption) (*StaffListSalesUnitsByUserResponse, error)
 	StaffListSalesOrderFilterCriteria(ctx context.Context, in *StaffListSalesOrderFilterCriteriaRequest, opts ...grpc.CallOption) (*StaffListSalesOrderFilterCriteriaResponse, error)
 	StaffExportOrder(ctx context.Context, in *StaffExportOrderRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffExportOrderItems(ctx context.Context, in *StaffExportOrderItemsRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
@@ -192,6 +194,16 @@ func (c *orderAdminAPIClient) StaffGetStatisticSalesUnits(ctx context.Context, i
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGetStatisticSalesUnitsResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffListSalesUnitsByUser(ctx context.Context, in *StaffListSalesUnitsByUserRequest, opts ...grpc.CallOption) (*StaffListSalesUnitsByUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListSalesUnitsByUserResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -422,6 +434,7 @@ type OrderAdminAPIServer interface {
 	StaffCountOrderLineItemForExport(context.Context, *StaffCountOrderLineItemForExportRequest) (*StaffCountOrderLineItemForExportResponse, error)
 	StaffStatisticSalesOrder(context.Context, *StaffStatisticSalesOrderRequest) (*StaffStatisticSalesOrderResponse, error)
 	StaffGetStatisticSalesUnits(context.Context, *StaffGetStatisticSalesUnitsRequest) (*StaffGetStatisticSalesUnitsResponse, error)
+	StaffListSalesUnitsByUser(context.Context, *StaffListSalesUnitsByUserRequest) (*StaffListSalesUnitsByUserResponse, error)
 	StaffListSalesOrderFilterCriteria(context.Context, *StaffListSalesOrderFilterCriteriaRequest) (*StaffListSalesOrderFilterCriteriaResponse, error)
 	StaffExportOrder(context.Context, *StaffExportOrderRequest) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffExportOrderItems(context.Context, *StaffExportOrderItemsRequest) (*v1.FileAttachmentOrMessageResponse, error)
@@ -481,6 +494,9 @@ func (UnimplementedOrderAdminAPIServer) StaffStatisticSalesOrder(context.Context
 }
 func (UnimplementedOrderAdminAPIServer) StaffGetStatisticSalesUnits(context.Context, *StaffGetStatisticSalesUnitsRequest) (*StaffGetStatisticSalesUnitsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetStatisticSalesUnits not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffListSalesUnitsByUser(context.Context, *StaffListSalesUnitsByUserRequest) (*StaffListSalesUnitsByUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListSalesUnitsByUser not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffListSalesOrderFilterCriteria(context.Context, *StaffListSalesOrderFilterCriteriaRequest) (*StaffListSalesOrderFilterCriteriaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListSalesOrderFilterCriteria not implemented")
@@ -741,6 +757,24 @@ func _OrderAdminAPI_StaffGetStatisticSalesUnits_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffGetStatisticSalesUnits(ctx, req.(*StaffGetStatisticSalesUnitsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffListSalesUnitsByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListSalesUnitsByUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffListSalesUnitsByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffListSalesUnitsByUser(ctx, req.(*StaffListSalesUnitsByUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1169,6 +1203,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetStatisticSalesUnits",
 			Handler:    _OrderAdminAPI_StaffGetStatisticSalesUnits_Handler,
+		},
+		{
+			MethodName: "StaffListSalesUnitsByUser",
+			Handler:    _OrderAdminAPI_StaffListSalesUnitsByUser_Handler,
 		},
 		{
 			MethodName: "StaffListSalesOrderFilterCriteria",
