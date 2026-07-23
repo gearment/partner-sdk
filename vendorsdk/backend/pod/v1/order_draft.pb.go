@@ -1027,18 +1027,19 @@ func (x *AfterVerifyOrderDraftResult) GetMessage() string {
 }
 
 type VerifyOrderDraftParams struct {
-	state                         protoimpl.MessageState `protogen:"open.v1"`
-	DraftId                       string                 `protobuf:"bytes,1,opt,name=draft_id,json=draftId,proto3" json:"draft_id,omitempty"`
-	TeamId                        string                 `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	IsBypassVerifyShippingAddress bool                   `protobuf:"varint,3,opt,name=is_bypass_verify_shipping_address,json=isBypassVerifyShippingAddress,proto3" json:"is_bypass_verify_shipping_address,omitempty"`
-	IsLabelAttached               bool                   `protobuf:"varint,4,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
-	ShippingMethod                string                 `protobuf:"bytes,5,opt,name=shipping_method,json=shippingMethod,proto3" json:"shipping_method,omitempty"`
-	StoreId                       string                 `protobuf:"bytes,6,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
-	Address                       *Address               `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
-	PlatformKey                   v1.MarketplacePlatform `protobuf:"varint,8,opt,name=platform_key,json=platformKey,proto3,enum=common.platform.v1.MarketplacePlatform" json:"platform_key,omitempty"`
-	LineItems                     []*LineItem            `protobuf:"bytes,9,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
-	Labels                        []*ShippingLabel       `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty"`
-	BillingOption                 *BillingOption         `protobuf:"bytes,11,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
+	state                         protoimpl.MessageState  `protogen:"open.v1"`
+	DraftId                       string                  `protobuf:"bytes,1,opt,name=draft_id,json=draftId,proto3" json:"draft_id,omitempty"`
+	TeamId                        string                  `protobuf:"bytes,2,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	IsBypassVerifyShippingAddress bool                    `protobuf:"varint,3,opt,name=is_bypass_verify_shipping_address,json=isBypassVerifyShippingAddress,proto3" json:"is_bypass_verify_shipping_address,omitempty"`
+	IsLabelAttached               bool                    `protobuf:"varint,4,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
+	ShippingMethod                string                  `protobuf:"bytes,5,opt,name=shipping_method,json=shippingMethod,proto3" json:"shipping_method,omitempty"`
+	StoreId                       string                  `protobuf:"bytes,6,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	Address                       *Address                `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	PlatformKey                   v1.MarketplacePlatform  `protobuf:"varint,8,opt,name=platform_key,json=platformKey,proto3,enum=common.platform.v1.MarketplacePlatform" json:"platform_key,omitempty"`
+	LineItems                     []*LineItem             `protobuf:"bytes,9,rep,name=line_items,json=lineItems,proto3" json:"line_items,omitempty"`
+	Labels                        []*ShippingLabel        `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty"`
+	BillingOption                 *BillingOption          `protobuf:"bytes,11,opt,name=billing_option,json=billingOption,proto3" json:"billing_option,omitempty"`
+	CreatedMethod                 OrderDraftCreatedMethod `protobuf:"varint,12,opt,name=created_method,json=createdMethod,proto3,enum=backend.pod.v1.OrderDraftCreatedMethod" json:"created_method,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -1148,6 +1149,13 @@ func (x *VerifyOrderDraftParams) GetBillingOption() *BillingOption {
 		return x.BillingOption
 	}
 	return nil
+}
+
+func (x *VerifyOrderDraftParams) GetCreatedMethod() OrderDraftCreatedMethod {
+	if x != nil {
+		return x.CreatedMethod
+	}
+	return OrderDraftCreatedMethod_ORDER_DRAFT_CREATED_METHOD_UNSPECIFIED
 }
 
 type VerifyOrderDraftResult struct {
@@ -5443,7 +5451,7 @@ var file_backend_pod_v1_order_draft_proto_rawDesc = string([]byte{
 	0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x72, 0x61, 0x66, 0x74,
 	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x22, 0xbb, 0x04, 0x0a, 0x16, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x22, 0x8b, 0x05, 0x0a, 0x16, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x4f, 0x72, 0x64, 0x65, 0x72,
 	0x44, 0x72, 0x61, 0x66, 0x74, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x19, 0x0a, 0x08, 0x64,
 	0x72, 0x61, 0x66, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x64,
 	0x72, 0x61, 0x66, 0x74, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x74, 0x65, 0x61, 0x6d, 0x5f, 0x69,
@@ -5478,7 +5486,12 @@ var file_backend_pod_v1_order_draft_proto_rawDesc = string([]byte{
 	0x69, 0x6e, 0x67, 0x5f, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x1d, 0x2e, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76,
 	0x31, 0x2e, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x0d, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xaa,
+	0x0d, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x4e,
+	0x0a, 0x0e, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x6d, 0x65, 0x74, 0x68, 0x6f, 0x64,
+	0x18, 0x0c, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x27, 0x2e, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64,
+	0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x72, 0x61,
+	0x66, 0x74, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x52,
+	0x0d, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x22, 0xaa,
 	0x03, 0x0a, 0x16, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x72,
 	0x61, 0x66, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x54, 0x0a, 0x27, 0x69, 0x73, 0x5f,
 	0x73, 0x68, 0x69, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
@@ -6430,76 +6443,77 @@ var file_backend_pod_v1_order_draft_proto_depIdxs = []int32{
 	22, // 11: backend.pod.v1.VerifyOrderDraftParams.line_items:type_name -> backend.pod.v1.LineItem
 	88, // 12: backend.pod.v1.VerifyOrderDraftParams.labels:type_name -> backend.pod.v1.ShippingLabel
 	56, // 13: backend.pod.v1.VerifyOrderDraftParams.billing_option:type_name -> backend.pod.v1.BillingOption
-	15, // 14: backend.pod.v1.VerifyOrderDraftResult.notes:type_name -> backend.pod.v1.NoteOrderDraft
-	89, // 15: backend.pod.v1.PrintingOption.design_file:type_name -> common.type.v1.File
-	21, // 16: backend.pod.v1.LineItem.printing_options:type_name -> backend.pod.v1.PrintingOption
-	89, // 17: backend.pod.v1.LineItem.barcode_file:type_name -> common.type.v1.File
-	20, // 18: backend.pod.v1.VerifyShippingAddressWithThirdPartyParams.address:type_name -> backend.pod.v1.Address
-	72, // 19: backend.pod.v1.GetOrderDraftImportResult.item_barcodes:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
-	74, // 20: backend.pod.v1.GetOrderDraftImportResult.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
-	73, // 21: backend.pod.v1.GetOrderDraftImportResult.product_images:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
-	75, // 22: backend.pod.v1.GetOrderDraftImportResult.printing_options:type_name -> backend.pod.v1.OrderDraftImport.PrintingOption
-	76, // 23: backend.pod.v1.GetOrderDraftImportResult.gift_messages:type_name -> backend.pod.v1.OrderDraftImport.GiftMessage
-	74, // 24: backend.pod.v1.ImportOrderShippingLabelParams.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
-	72, // 25: backend.pod.v1.ImportOrderItemBarcodeParams.item_barcode:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
-	73, // 26: backend.pod.v1.ImportOrderProductImageParams.product_image:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
-	72, // 27: backend.pod.v1.CompleteOrderDraftImportParams.item_barcodes:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
-	74, // 28: backend.pod.v1.CompleteOrderDraftImportParams.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
-	73, // 29: backend.pod.v1.CompleteOrderDraftImportParams.product_images:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
-	75, // 30: backend.pod.v1.CompleteOrderDraftImportParams.printing_options:type_name -> backend.pod.v1.OrderDraftImport.PrintingOption
-	76, // 31: backend.pod.v1.CompleteOrderDraftImportParams.gift_messages:type_name -> backend.pod.v1.OrderDraftImport.GiftMessage
-	78, // 32: backend.pod.v1.VerifyOrderShippingAddressParams.shipping_address:type_name -> backend.pod.v1.OrderDraftImport.ShippingAddress
-	18, // 33: backend.pod.v1.VerifyListOrderDraftParams.verify_params:type_name -> backend.pod.v1.VerifyOrderDraftParams
-	19, // 34: backend.pod.v1.VerifyListOrderDraftResult.verify_results:type_name -> backend.pod.v1.VerifyOrderDraftResult
-	47, // 35: backend.pod.v1.RefreshListOrderDraftValueParams.refresh_params:type_name -> backend.pod.v1.RefreshOrderDraftValueParams
-	48, // 36: backend.pod.v1.RefreshListOrderDraftValueResult.refresh_results:type_name -> backend.pod.v1.RefreshOrderDraftValueResult
-	87, // 37: backend.pod.v1.OrderDraft.order_platform:type_name -> common.platform.v1.MarketplacePlatform
-	5,  // 38: backend.pod.v1.OrderDraft.created_method:type_name -> backend.pod.v1.OrderDraftCreatedMethod
-	4,  // 39: backend.pod.v1.OrderDraft.fulfillment_vendor:type_name -> backend.pod.v1.FulfillmentVendor
-	3,  // 40: backend.pod.v1.OrderDraft.priority:type_name -> backend.pod.v1.OrderPriority
-	54, // 41: backend.pod.v1.OrderDraft.fulfillment_option:type_name -> backend.pod.v1.FulfillmentOption
-	55, // 42: backend.pod.v1.OrderDraft.shipping_option:type_name -> backend.pod.v1.ShippingOption
-	56, // 43: backend.pod.v1.OrderDraft.billing_option:type_name -> backend.pod.v1.BillingOption
-	88, // 44: backend.pod.v1.OrderDraft.shipping_labels:type_name -> backend.pod.v1.ShippingLabel
-	90, // 45: backend.pod.v1.OrderDraft.order_date:type_name -> google.protobuf.Timestamp
-	90, // 46: backend.pod.v1.OrderDraft.approved_at:type_name -> google.protobuf.Timestamp
-	2,  // 47: backend.pod.v1.OrderDraft.status:type_name -> backend.pod.v1.OrderDraftStatus
-	57, // 48: backend.pod.v1.OrderDraft.logs:type_name -> backend.pod.v1.OrderDraftLog
-	1,  // 49: backend.pod.v1.OrderDraft.shipping_verification_status:type_name -> backend.pod.v1.ShippingVerificationStatus
-	0,  // 50: backend.pod.v1.OrderDraft.product_matching_status:type_name -> backend.pod.v1.ProductMatchingStatus
-	58, // 51: backend.pod.v1.OrderDraft.gift_messages:type_name -> backend.pod.v1.OrderDraftGiftMessage
-	59, // 52: backend.pod.v1.OrderDraft.addresses:type_name -> backend.pod.v1.OrderDraftAddress
-	91, // 53: backend.pod.v1.OrderDraft.line_items:type_name -> backend.pod.v1.OrderDraftLineItem
-	92, // 54: backend.pod.v1.BillingOption.ioss_number:type_name -> google.protobuf.StringValue
-	93, // 55: backend.pod.v1.BillingOption.ioss_value:type_name -> common.type.v1.Money
-	92, // 56: backend.pod.v1.BillingOption.tax_number:type_name -> google.protobuf.StringValue
-	93, // 57: backend.pod.v1.BillingOption.tax_value:type_name -> common.type.v1.Money
-	7,  // 58: backend.pod.v1.OrderDraftGiftMessage.type:type_name -> backend.pod.v1.OrderDraftGiftMessageType
-	6,  // 59: backend.pod.v1.OrderDraftAddress.type:type_name -> backend.pod.v1.OrderDraftAddressType
-	79, // 60: backend.pod.v1.SnapshotOrderParams.gift_messages:type_name -> backend.pod.v1.SnapshotOrderParams.GiftMessage
-	80, // 61: backend.pod.v1.SnapshotOrderParams.line_item_printing_options:type_name -> backend.pod.v1.SnapshotOrderParams.LineItemPrintingOption
-	81, // 62: backend.pod.v1.SnapshotOrderParams.shipping_labels:type_name -> backend.pod.v1.SnapshotOrderParams.ShippingLabel
-	82, // 63: backend.pod.v1.SnapshotOrderParams.barcodes:type_name -> backend.pod.v1.SnapshotOrderParams.Barcode
-	83, // 64: backend.pod.v1.CompleteCaptureGiftMessageParams.gift_messages:type_name -> backend.pod.v1.CompleteCaptureGiftMessageParams.GiftMessage
-	84, // 65: backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.design_printing_options:type_name -> backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.DesignPrintingOption
-	85, // 66: backend.pod.v1.CompleteCaptureShippingLabelParams.shipping_labels:type_name -> backend.pod.v1.CompleteCaptureShippingLabelParams.ShippingLabel
-	86, // 67: backend.pod.v1.CompleteCaptureBarcodeParams.barcodes:type_name -> backend.pod.v1.CompleteCaptureBarcodeParams.Barcode
-	89, // 68: backend.pod.v1.OrderDraftImport.ItemBarcode.file:type_name -> common.type.v1.File
-	89, // 69: backend.pod.v1.OrderDraftImport.ProductImage.file:type_name -> common.type.v1.File
-	89, // 70: backend.pod.v1.OrderDraftImport.ShippingLabel.label_file:type_name -> common.type.v1.File
-	89, // 71: backend.pod.v1.OrderDraftImport.PrintingOption.file:type_name -> common.type.v1.File
-	8,  // 72: backend.pod.v1.OrderDraftImport.GiftMessage.type:type_name -> backend.pod.v1.OrderDraftImport.GiftMessageType
-	71, // 73: backend.pod.v1.OrderDraftImport.GiftMessage.origin_data:type_name -> backend.pod.v1.OrderDraftImport.GiftMessageOriginData
-	89, // 74: backend.pod.v1.OrderDraftImport.GiftMessage.file:type_name -> common.type.v1.File
-	89, // 75: backend.pod.v1.CompleteCaptureGiftMessageParams.GiftMessage.file:type_name -> common.type.v1.File
-	89, // 76: backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.DesignPrintingOption.file:type_name -> common.type.v1.File
-	89, // 77: backend.pod.v1.CompleteCaptureShippingLabelParams.ShippingLabel.file:type_name -> common.type.v1.File
-	89, // 78: backend.pod.v1.CompleteCaptureBarcodeParams.Barcode.file:type_name -> common.type.v1.File
-	79, // [79:79] is the sub-list for method output_type
-	79, // [79:79] is the sub-list for method input_type
-	79, // [79:79] is the sub-list for extension type_name
-	79, // [79:79] is the sub-list for extension extendee
-	0,  // [0:79] is the sub-list for field type_name
+	5,  // 14: backend.pod.v1.VerifyOrderDraftParams.created_method:type_name -> backend.pod.v1.OrderDraftCreatedMethod
+	15, // 15: backend.pod.v1.VerifyOrderDraftResult.notes:type_name -> backend.pod.v1.NoteOrderDraft
+	89, // 16: backend.pod.v1.PrintingOption.design_file:type_name -> common.type.v1.File
+	21, // 17: backend.pod.v1.LineItem.printing_options:type_name -> backend.pod.v1.PrintingOption
+	89, // 18: backend.pod.v1.LineItem.barcode_file:type_name -> common.type.v1.File
+	20, // 19: backend.pod.v1.VerifyShippingAddressWithThirdPartyParams.address:type_name -> backend.pod.v1.Address
+	72, // 20: backend.pod.v1.GetOrderDraftImportResult.item_barcodes:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
+	74, // 21: backend.pod.v1.GetOrderDraftImportResult.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
+	73, // 22: backend.pod.v1.GetOrderDraftImportResult.product_images:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
+	75, // 23: backend.pod.v1.GetOrderDraftImportResult.printing_options:type_name -> backend.pod.v1.OrderDraftImport.PrintingOption
+	76, // 24: backend.pod.v1.GetOrderDraftImportResult.gift_messages:type_name -> backend.pod.v1.OrderDraftImport.GiftMessage
+	74, // 25: backend.pod.v1.ImportOrderShippingLabelParams.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
+	72, // 26: backend.pod.v1.ImportOrderItemBarcodeParams.item_barcode:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
+	73, // 27: backend.pod.v1.ImportOrderProductImageParams.product_image:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
+	72, // 28: backend.pod.v1.CompleteOrderDraftImportParams.item_barcodes:type_name -> backend.pod.v1.OrderDraftImport.ItemBarcode
+	74, // 29: backend.pod.v1.CompleteOrderDraftImportParams.order_shipping_label:type_name -> backend.pod.v1.OrderDraftImport.ShippingLabel
+	73, // 30: backend.pod.v1.CompleteOrderDraftImportParams.product_images:type_name -> backend.pod.v1.OrderDraftImport.ProductImage
+	75, // 31: backend.pod.v1.CompleteOrderDraftImportParams.printing_options:type_name -> backend.pod.v1.OrderDraftImport.PrintingOption
+	76, // 32: backend.pod.v1.CompleteOrderDraftImportParams.gift_messages:type_name -> backend.pod.v1.OrderDraftImport.GiftMessage
+	78, // 33: backend.pod.v1.VerifyOrderShippingAddressParams.shipping_address:type_name -> backend.pod.v1.OrderDraftImport.ShippingAddress
+	18, // 34: backend.pod.v1.VerifyListOrderDraftParams.verify_params:type_name -> backend.pod.v1.VerifyOrderDraftParams
+	19, // 35: backend.pod.v1.VerifyListOrderDraftResult.verify_results:type_name -> backend.pod.v1.VerifyOrderDraftResult
+	47, // 36: backend.pod.v1.RefreshListOrderDraftValueParams.refresh_params:type_name -> backend.pod.v1.RefreshOrderDraftValueParams
+	48, // 37: backend.pod.v1.RefreshListOrderDraftValueResult.refresh_results:type_name -> backend.pod.v1.RefreshOrderDraftValueResult
+	87, // 38: backend.pod.v1.OrderDraft.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	5,  // 39: backend.pod.v1.OrderDraft.created_method:type_name -> backend.pod.v1.OrderDraftCreatedMethod
+	4,  // 40: backend.pod.v1.OrderDraft.fulfillment_vendor:type_name -> backend.pod.v1.FulfillmentVendor
+	3,  // 41: backend.pod.v1.OrderDraft.priority:type_name -> backend.pod.v1.OrderPriority
+	54, // 42: backend.pod.v1.OrderDraft.fulfillment_option:type_name -> backend.pod.v1.FulfillmentOption
+	55, // 43: backend.pod.v1.OrderDraft.shipping_option:type_name -> backend.pod.v1.ShippingOption
+	56, // 44: backend.pod.v1.OrderDraft.billing_option:type_name -> backend.pod.v1.BillingOption
+	88, // 45: backend.pod.v1.OrderDraft.shipping_labels:type_name -> backend.pod.v1.ShippingLabel
+	90, // 46: backend.pod.v1.OrderDraft.order_date:type_name -> google.protobuf.Timestamp
+	90, // 47: backend.pod.v1.OrderDraft.approved_at:type_name -> google.protobuf.Timestamp
+	2,  // 48: backend.pod.v1.OrderDraft.status:type_name -> backend.pod.v1.OrderDraftStatus
+	57, // 49: backend.pod.v1.OrderDraft.logs:type_name -> backend.pod.v1.OrderDraftLog
+	1,  // 50: backend.pod.v1.OrderDraft.shipping_verification_status:type_name -> backend.pod.v1.ShippingVerificationStatus
+	0,  // 51: backend.pod.v1.OrderDraft.product_matching_status:type_name -> backend.pod.v1.ProductMatchingStatus
+	58, // 52: backend.pod.v1.OrderDraft.gift_messages:type_name -> backend.pod.v1.OrderDraftGiftMessage
+	59, // 53: backend.pod.v1.OrderDraft.addresses:type_name -> backend.pod.v1.OrderDraftAddress
+	91, // 54: backend.pod.v1.OrderDraft.line_items:type_name -> backend.pod.v1.OrderDraftLineItem
+	92, // 55: backend.pod.v1.BillingOption.ioss_number:type_name -> google.protobuf.StringValue
+	93, // 56: backend.pod.v1.BillingOption.ioss_value:type_name -> common.type.v1.Money
+	92, // 57: backend.pod.v1.BillingOption.tax_number:type_name -> google.protobuf.StringValue
+	93, // 58: backend.pod.v1.BillingOption.tax_value:type_name -> common.type.v1.Money
+	7,  // 59: backend.pod.v1.OrderDraftGiftMessage.type:type_name -> backend.pod.v1.OrderDraftGiftMessageType
+	6,  // 60: backend.pod.v1.OrderDraftAddress.type:type_name -> backend.pod.v1.OrderDraftAddressType
+	79, // 61: backend.pod.v1.SnapshotOrderParams.gift_messages:type_name -> backend.pod.v1.SnapshotOrderParams.GiftMessage
+	80, // 62: backend.pod.v1.SnapshotOrderParams.line_item_printing_options:type_name -> backend.pod.v1.SnapshotOrderParams.LineItemPrintingOption
+	81, // 63: backend.pod.v1.SnapshotOrderParams.shipping_labels:type_name -> backend.pod.v1.SnapshotOrderParams.ShippingLabel
+	82, // 64: backend.pod.v1.SnapshotOrderParams.barcodes:type_name -> backend.pod.v1.SnapshotOrderParams.Barcode
+	83, // 65: backend.pod.v1.CompleteCaptureGiftMessageParams.gift_messages:type_name -> backend.pod.v1.CompleteCaptureGiftMessageParams.GiftMessage
+	84, // 66: backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.design_printing_options:type_name -> backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.DesignPrintingOption
+	85, // 67: backend.pod.v1.CompleteCaptureShippingLabelParams.shipping_labels:type_name -> backend.pod.v1.CompleteCaptureShippingLabelParams.ShippingLabel
+	86, // 68: backend.pod.v1.CompleteCaptureBarcodeParams.barcodes:type_name -> backend.pod.v1.CompleteCaptureBarcodeParams.Barcode
+	89, // 69: backend.pod.v1.OrderDraftImport.ItemBarcode.file:type_name -> common.type.v1.File
+	89, // 70: backend.pod.v1.OrderDraftImport.ProductImage.file:type_name -> common.type.v1.File
+	89, // 71: backend.pod.v1.OrderDraftImport.ShippingLabel.label_file:type_name -> common.type.v1.File
+	89, // 72: backend.pod.v1.OrderDraftImport.PrintingOption.file:type_name -> common.type.v1.File
+	8,  // 73: backend.pod.v1.OrderDraftImport.GiftMessage.type:type_name -> backend.pod.v1.OrderDraftImport.GiftMessageType
+	71, // 74: backend.pod.v1.OrderDraftImport.GiftMessage.origin_data:type_name -> backend.pod.v1.OrderDraftImport.GiftMessageOriginData
+	89, // 75: backend.pod.v1.OrderDraftImport.GiftMessage.file:type_name -> common.type.v1.File
+	89, // 76: backend.pod.v1.CompleteCaptureGiftMessageParams.GiftMessage.file:type_name -> common.type.v1.File
+	89, // 77: backend.pod.v1.CompleteCaptureDesignPrintingOptionParams.DesignPrintingOption.file:type_name -> common.type.v1.File
+	89, // 78: backend.pod.v1.CompleteCaptureShippingLabelParams.ShippingLabel.file:type_name -> common.type.v1.File
+	89, // 79: backend.pod.v1.CompleteCaptureBarcodeParams.Barcode.file:type_name -> common.type.v1.File
+	80, // [80:80] is the sub-list for method output_type
+	80, // [80:80] is the sub-list for method input_type
+	80, // [80:80] is the sub-list for extension type_name
+	80, // [80:80] is the sub-list for extension extendee
+	0,  // [0:80] is the sub-list for field type_name
 }
 
 func init() { file_backend_pod_v1_order_draft_proto_init() }
