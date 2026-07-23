@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ActivityAPI_UserGetActivity_FullMethodName                = "/api.audit.v1.ActivityAPI/UserGetActivity"
 	ActivityAPI_UserListTeamMemberActivity_FullMethodName     = "/api.audit.v1.ActivityAPI/UserListTeamMemberActivity"
+	ActivityAPI_UserListTeamActivity_FullMethodName           = "/api.audit.v1.ActivityAPI/UserListTeamActivity"
 	ActivityAPI_UserListTeamSettingActivity_FullMethodName    = "/api.audit.v1.ActivityAPI/UserListTeamSettingActivity"
 	ActivityAPI_UserListStoreActivity_FullMethodName          = "/api.audit.v1.ActivityAPI/UserListStoreActivity"
 	ActivityAPI_UserListOrderActivity_FullMethodName          = "/api.audit.v1.ActivityAPI/UserListOrderActivity"
@@ -38,6 +39,7 @@ const (
 type ActivityAPIClient interface {
 	UserGetActivity(ctx context.Context, in *UserGetActivityRequest, opts ...grpc.CallOption) (*Activity, error)
 	UserListTeamMemberActivity(ctx context.Context, in *UserListTeamMemberActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
+	UserListTeamActivity(ctx context.Context, in *UserListTeamActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListTeamSettingActivity(ctx context.Context, in *UserListTeamSettingActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListOrderActivity(ctx context.Context, in *UserListOrderActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
@@ -71,6 +73,16 @@ func (c *activityAPIClient) UserListTeamMemberActivity(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserListActivityResponse)
 	err := c.cc.Invoke(ctx, ActivityAPI_UserListTeamMemberActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityAPIClient) UserListTeamActivity(ctx context.Context, in *UserListTeamActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListActivityResponse)
+	err := c.cc.Invoke(ctx, ActivityAPI_UserListTeamActivity_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -173,6 +185,7 @@ func (c *activityAPIClient) StaffListTeamConfigActivity(ctx context.Context, in 
 type ActivityAPIServer interface {
 	UserGetActivity(context.Context, *UserGetActivityRequest) (*Activity, error)
 	UserListTeamMemberActivity(context.Context, *UserListTeamMemberActivityRequest) (*UserListActivityResponse, error)
+	UserListTeamActivity(context.Context, *UserListTeamActivityRequest) (*UserListActivityResponse, error)
 	UserListTeamSettingActivity(context.Context, *UserListTeamSettingActivityRequest) (*UserListActivityResponse, error)
 	UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityResponse, error)
 	UserListOrderActivity(context.Context, *UserListOrderActivityRequest) (*UserListActivityResponse, error)
@@ -196,6 +209,9 @@ func (UnimplementedActivityAPIServer) UserGetActivity(context.Context, *UserGetA
 }
 func (UnimplementedActivityAPIServer) UserListTeamMemberActivity(context.Context, *UserListTeamMemberActivityRequest) (*UserListActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListTeamMemberActivity not implemented")
+}
+func (UnimplementedActivityAPIServer) UserListTeamActivity(context.Context, *UserListTeamActivityRequest) (*UserListActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListTeamActivity not implemented")
 }
 func (UnimplementedActivityAPIServer) UserListTeamSettingActivity(context.Context, *UserListTeamSettingActivityRequest) (*UserListActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListTeamSettingActivity not implemented")
@@ -276,6 +292,24 @@ func _ActivityAPI_UserListTeamMemberActivity_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ActivityAPIServer).UserListTeamMemberActivity(ctx, req.(*UserListTeamMemberActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ActivityAPI_UserListTeamActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListTeamActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityAPIServer).UserListTeamActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ActivityAPI_UserListTeamActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityAPIServer).UserListTeamActivity(ctx, req.(*UserListTeamActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -456,6 +490,10 @@ var ActivityAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserListTeamMemberActivity",
 			Handler:    _ActivityAPI_UserListTeamMemberActivity_Handler,
+		},
+		{
+			MethodName: "UserListTeamActivity",
+			Handler:    _ActivityAPI_UserListTeamActivity_Handler,
 		},
 		{
 			MethodName: "UserListTeamSettingActivity",
