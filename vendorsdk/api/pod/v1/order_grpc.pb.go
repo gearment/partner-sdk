@@ -19,19 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SaleOrderAPI_UserMakeOrderPayment_FullMethodName          = "/api.pod.v1.SaleOrderAPI/UserMakeOrderPayment"
-	SaleOrderAPI_UserDuplicateListOrder_FullMethodName        = "/api.pod.v1.SaleOrderAPI/UserDuplicateListOrder"
-	SaleOrderAPI_UserCancelOrder_FullMethodName               = "/api.pod.v1.SaleOrderAPI/UserCancelOrder"
-	SaleOrderAPI_UserListOrder_FullMethodName                 = "/api.pod.v1.SaleOrderAPI/UserListOrder"
-	SaleOrderAPI_UserGetOrder_FullMethodName                  = "/api.pod.v1.SaleOrderAPI/UserGetOrder"
-	SaleOrderAPI_UserListProductForOrderFilter_FullMethodName = "/api.pod.v1.SaleOrderAPI/UserListProductForOrderFilter"
-	SaleOrderAPI_UserCountOrderStatus_FullMethodName          = "/api.pod.v1.SaleOrderAPI/UserCountOrderStatus"
-	SaleOrderAPI_UserExportOrder_FullMethodName               = "/api.pod.v1.SaleOrderAPI/UserExportOrder"
-	SaleOrderAPI_UserCountAllOrder_FullMethodName             = "/api.pod.v1.SaleOrderAPI/UserCountAllOrder"
-	SaleOrderAPI_UserListOrderForCheckout_FullMethodName      = "/api.pod.v1.SaleOrderAPI/UserListOrderForCheckout"
-	SaleOrderAPI_UserImportOrderDraft_FullMethodName          = "/api.pod.v1.SaleOrderAPI/UserImportOrderDraft"
-	SaleOrderAPI_UserListOrderExportSession_FullMethodName    = "/api.pod.v1.SaleOrderAPI/UserListOrderExportSession"
-	SaleOrderAPI_UserPreImportOrderDraft_FullMethodName       = "/api.pod.v1.SaleOrderAPI/UserPreImportOrderDraft"
+	SaleOrderAPI_UserMakeOrderPayment_FullMethodName                             = "/api.pod.v1.SaleOrderAPI/UserMakeOrderPayment"
+	SaleOrderAPI_UserSwitchEconomyCoverageHeldOrderShippingMethod_FullMethodName = "/api.pod.v1.SaleOrderAPI/UserSwitchEconomyCoverageHeldOrderShippingMethod"
+	SaleOrderAPI_UserDuplicateListOrder_FullMethodName                           = "/api.pod.v1.SaleOrderAPI/UserDuplicateListOrder"
+	SaleOrderAPI_UserCancelOrder_FullMethodName                                  = "/api.pod.v1.SaleOrderAPI/UserCancelOrder"
+	SaleOrderAPI_UserListOrder_FullMethodName                                    = "/api.pod.v1.SaleOrderAPI/UserListOrder"
+	SaleOrderAPI_UserGetOrder_FullMethodName                                     = "/api.pod.v1.SaleOrderAPI/UserGetOrder"
+	SaleOrderAPI_UserListProductForOrderFilter_FullMethodName                    = "/api.pod.v1.SaleOrderAPI/UserListProductForOrderFilter"
+	SaleOrderAPI_UserCountOrderStatus_FullMethodName                             = "/api.pod.v1.SaleOrderAPI/UserCountOrderStatus"
+	SaleOrderAPI_UserExportOrder_FullMethodName                                  = "/api.pod.v1.SaleOrderAPI/UserExportOrder"
+	SaleOrderAPI_UserCountAllOrder_FullMethodName                                = "/api.pod.v1.SaleOrderAPI/UserCountAllOrder"
+	SaleOrderAPI_UserListOrderForCheckout_FullMethodName                         = "/api.pod.v1.SaleOrderAPI/UserListOrderForCheckout"
+	SaleOrderAPI_UserImportOrderDraft_FullMethodName                             = "/api.pod.v1.SaleOrderAPI/UserImportOrderDraft"
+	SaleOrderAPI_UserListOrderExportSession_FullMethodName                       = "/api.pod.v1.SaleOrderAPI/UserListOrderExportSession"
+	SaleOrderAPI_UserPreImportOrderDraft_FullMethodName                          = "/api.pod.v1.SaleOrderAPI/UserPreImportOrderDraft"
 )
 
 // SaleOrderAPIClient is the client API for SaleOrderAPI service.
@@ -41,6 +42,7 @@ const (
 // SaleOrderAPI provide an abstraction to all of read and write data access for order businesses
 type SaleOrderAPIClient interface {
 	UserMakeOrderPayment(ctx context.Context, in *UserMakeOrderPaymentRequest, opts ...grpc.CallOption) (*UserMakeOrderPaymentResponse, error)
+	UserSwitchEconomyCoverageHeldOrderShippingMethod(ctx context.Context, in *UserSwitchEconomyCoverageHeldOrderShippingMethodRequest, opts ...grpc.CallOption) (*UserSwitchEconomyCoverageHeldOrderShippingMethodResponse, error)
 	UserDuplicateListOrder(ctx context.Context, in *UserDuplicateListOrderRequest, opts ...grpc.CallOption) (*UserDuplicateListOrderResponse, error)
 	UserCancelOrder(ctx context.Context, in *UserCancelOrderRequest, opts ...grpc.CallOption) (*UserCancelOrderResponse, error)
 	UserListOrder(ctx context.Context, in *UserListOrderRequest, opts ...grpc.CallOption) (*UserListOrderResponse, error)
@@ -67,6 +69,16 @@ func (c *saleOrderAPIClient) UserMakeOrderPayment(ctx context.Context, in *UserM
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserMakeOrderPaymentResponse)
 	err := c.cc.Invoke(ctx, SaleOrderAPI_UserMakeOrderPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *saleOrderAPIClient) UserSwitchEconomyCoverageHeldOrderShippingMethod(ctx context.Context, in *UserSwitchEconomyCoverageHeldOrderShippingMethodRequest, opts ...grpc.CallOption) (*UserSwitchEconomyCoverageHeldOrderShippingMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserSwitchEconomyCoverageHeldOrderShippingMethodResponse)
+	err := c.cc.Invoke(ctx, SaleOrderAPI_UserSwitchEconomyCoverageHeldOrderShippingMethod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -200,6 +212,7 @@ func (c *saleOrderAPIClient) UserPreImportOrderDraft(ctx context.Context, in *Us
 // SaleOrderAPI provide an abstraction to all of read and write data access for order businesses
 type SaleOrderAPIServer interface {
 	UserMakeOrderPayment(context.Context, *UserMakeOrderPaymentRequest) (*UserMakeOrderPaymentResponse, error)
+	UserSwitchEconomyCoverageHeldOrderShippingMethod(context.Context, *UserSwitchEconomyCoverageHeldOrderShippingMethodRequest) (*UserSwitchEconomyCoverageHeldOrderShippingMethodResponse, error)
 	UserDuplicateListOrder(context.Context, *UserDuplicateListOrderRequest) (*UserDuplicateListOrderResponse, error)
 	UserCancelOrder(context.Context, *UserCancelOrderRequest) (*UserCancelOrderResponse, error)
 	UserListOrder(context.Context, *UserListOrderRequest) (*UserListOrderResponse, error)
@@ -223,6 +236,9 @@ type UnimplementedSaleOrderAPIServer struct{}
 
 func (UnimplementedSaleOrderAPIServer) UserMakeOrderPayment(context.Context, *UserMakeOrderPaymentRequest) (*UserMakeOrderPaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserMakeOrderPayment not implemented")
+}
+func (UnimplementedSaleOrderAPIServer) UserSwitchEconomyCoverageHeldOrderShippingMethod(context.Context, *UserSwitchEconomyCoverageHeldOrderShippingMethodRequest) (*UserSwitchEconomyCoverageHeldOrderShippingMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserSwitchEconomyCoverageHeldOrderShippingMethod not implemented")
 }
 func (UnimplementedSaleOrderAPIServer) UserDuplicateListOrder(context.Context, *UserDuplicateListOrderRequest) (*UserDuplicateListOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserDuplicateListOrder not implemented")
@@ -294,6 +310,24 @@ func _SaleOrderAPI_UserMakeOrderPayment_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SaleOrderAPIServer).UserMakeOrderPayment(ctx, req.(*UserMakeOrderPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SaleOrderAPI_UserSwitchEconomyCoverageHeldOrderShippingMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserSwitchEconomyCoverageHeldOrderShippingMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SaleOrderAPIServer).UserSwitchEconomyCoverageHeldOrderShippingMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SaleOrderAPI_UserSwitchEconomyCoverageHeldOrderShippingMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SaleOrderAPIServer).UserSwitchEconomyCoverageHeldOrderShippingMethod(ctx, req.(*UserSwitchEconomyCoverageHeldOrderShippingMethodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -524,6 +558,10 @@ var SaleOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserMakeOrderPayment",
 			Handler:    _SaleOrderAPI_UserMakeOrderPayment_Handler,
+		},
+		{
+			MethodName: "UserSwitchEconomyCoverageHeldOrderShippingMethod",
+			Handler:    _SaleOrderAPI_UserSwitchEconomyCoverageHeldOrderShippingMethod_Handler,
 		},
 		{
 			MethodName: "UserDuplicateListOrder",
