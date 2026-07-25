@@ -32,6 +32,7 @@ const (
 	NotificationInternalAPI_InternalSendWelcomeUserEmail_FullMethodName            = "/api.notification.v1.NotificationInternalAPI/InternalSendWelcomeUserEmail"
 	NotificationInternalAPI_InternalSendCreditUtilizationAlertEmail_FullMethodName = "/api.notification.v1.NotificationInternalAPI/InternalSendCreditUtilizationAlertEmail"
 	NotificationInternalAPI_InternalSendOrderPaymentFailedEmail_FullMethodName     = "/api.notification.v1.NotificationInternalAPI/InternalSendOrderPaymentFailedEmail"
+	NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_FullMethodName    = "/api.notification.v1.NotificationInternalAPI/InternalSendEconomyCoverageHoldEmail"
 	NotificationInternalAPI_InternalSendEmail_FullMethodName                       = "/api.notification.v1.NotificationInternalAPI/InternalSendEmail"
 )
 
@@ -52,6 +53,7 @@ type NotificationInternalAPIClient interface {
 	InternalSendWelcomeUserEmail(ctx context.Context, in *InternalSendWelcomeUserEmailRequest, opts ...grpc.CallOption) (*InternalSendWelcomeUserEmailResponse, error)
 	InternalSendCreditUtilizationAlertEmail(ctx context.Context, in *InternalSendCreditUtilizationAlertEmailRequest, opts ...grpc.CallOption) (*InternalSendCreditUtilizationAlertEmailResponse, error)
 	InternalSendOrderPaymentFailedEmail(ctx context.Context, in *InternalSendOrderPaymentFailedEmailRequest, opts ...grpc.CallOption) (*InternalSendOrderPaymentFailedEmailResponse, error)
+	InternalSendEconomyCoverageHoldEmail(ctx context.Context, in *InternalSendEconomyCoverageHoldEmailRequest, opts ...grpc.CallOption) (*InternalSendEconomyCoverageHoldEmailResponse, error)
 	InternalSendEmail(ctx context.Context, in *InternalSendEmailRequest, opts ...grpc.CallOption) (*InternalSendEmailResponse, error)
 }
 
@@ -193,6 +195,16 @@ func (c *notificationInternalAPIClient) InternalSendOrderPaymentFailedEmail(ctx 
 	return out, nil
 }
 
+func (c *notificationInternalAPIClient) InternalSendEconomyCoverageHoldEmail(ctx context.Context, in *InternalSendEconomyCoverageHoldEmailRequest, opts ...grpc.CallOption) (*InternalSendEconomyCoverageHoldEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalSendEconomyCoverageHoldEmailResponse)
+	err := c.cc.Invoke(ctx, NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *notificationInternalAPIClient) InternalSendEmail(ctx context.Context, in *InternalSendEmailRequest, opts ...grpc.CallOption) (*InternalSendEmailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalSendEmailResponse)
@@ -220,6 +232,7 @@ type NotificationInternalAPIServer interface {
 	InternalSendWelcomeUserEmail(context.Context, *InternalSendWelcomeUserEmailRequest) (*InternalSendWelcomeUserEmailResponse, error)
 	InternalSendCreditUtilizationAlertEmail(context.Context, *InternalSendCreditUtilizationAlertEmailRequest) (*InternalSendCreditUtilizationAlertEmailResponse, error)
 	InternalSendOrderPaymentFailedEmail(context.Context, *InternalSendOrderPaymentFailedEmailRequest) (*InternalSendOrderPaymentFailedEmailResponse, error)
+	InternalSendEconomyCoverageHoldEmail(context.Context, *InternalSendEconomyCoverageHoldEmailRequest) (*InternalSendEconomyCoverageHoldEmailResponse, error)
 	InternalSendEmail(context.Context, *InternalSendEmailRequest) (*InternalSendEmailResponse, error)
 }
 
@@ -268,6 +281,9 @@ func (UnimplementedNotificationInternalAPIServer) InternalSendCreditUtilizationA
 }
 func (UnimplementedNotificationInternalAPIServer) InternalSendOrderPaymentFailedEmail(context.Context, *InternalSendOrderPaymentFailedEmailRequest) (*InternalSendOrderPaymentFailedEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalSendOrderPaymentFailedEmail not implemented")
+}
+func (UnimplementedNotificationInternalAPIServer) InternalSendEconomyCoverageHoldEmail(context.Context, *InternalSendEconomyCoverageHoldEmailRequest) (*InternalSendEconomyCoverageHoldEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalSendEconomyCoverageHoldEmail not implemented")
 }
 func (UnimplementedNotificationInternalAPIServer) InternalSendEmail(context.Context, *InternalSendEmailRequest) (*InternalSendEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalSendEmail not implemented")
@@ -526,6 +542,24 @@ func _NotificationInternalAPI_InternalSendOrderPaymentFailedEmail_Handler(srv in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalSendEconomyCoverageHoldEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotificationInternalAPIServer).InternalSendEconomyCoverageHoldEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotificationInternalAPIServer).InternalSendEconomyCoverageHoldEmail(ctx, req.(*InternalSendEconomyCoverageHoldEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _NotificationInternalAPI_InternalSendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalSendEmailRequest)
 	if err := dec(in); err != nil {
@@ -602,6 +636,10 @@ var NotificationInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalSendOrderPaymentFailedEmail",
 			Handler:    _NotificationInternalAPI_InternalSendOrderPaymentFailedEmail_Handler,
+		},
+		{
+			MethodName: "InternalSendEconomyCoverageHoldEmail",
+			Handler:    _NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_Handler,
 		},
 		{
 			MethodName: "InternalSendEmail",
