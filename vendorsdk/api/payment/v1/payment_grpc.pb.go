@@ -8,6 +8,7 @@ package paymentv1
 
 import (
 	context "context"
+	v1 "github.com/gearment/gea-next/vendorsdk/common/type/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -39,6 +40,7 @@ const (
 	PaymentAPI_UserConfigPaymentLegalInfo_FullMethodName   = "/api.payment.v1.PaymentAPI/UserConfigPaymentLegalInfo"
 	PaymentAPI_UserGetPaymentLegalInfo_FullMethodName      = "/api.payment.v1.PaymentAPI/UserGetPaymentLegalInfo"
 	PaymentAPI_UserGetInvoiceInformation_FullMethodName    = "/api.payment.v1.PaymentAPI/UserGetInvoiceInformation"
+	PaymentAPI_UserExportInvoice_FullMethodName            = "/api.payment.v1.PaymentAPI/UserExportInvoice"
 	PaymentAPI_UserConfigInvoiceInformation_FullMethodName = "/api.payment.v1.PaymentAPI/UserConfigInvoiceInformation"
 )
 
@@ -70,6 +72,7 @@ type PaymentAPIClient interface {
 	UserGetPaymentLegalInfo(ctx context.Context, in *UserGetPaymentLegalInfoRequest, opts ...grpc.CallOption) (*UserGetPaymentLegalInfoResponse, error)
 	// invoice information
 	UserGetInvoiceInformation(ctx context.Context, in *UserGetInvoiceInformationRequest, opts ...grpc.CallOption) (*UserGetInvoiceInformationResponse, error)
+	UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.Response], error)
 	UserConfigInvoiceInformation(ctx context.Context, in *UserConfigInvoiceInformationRequest, opts ...grpc.CallOption) (*UserConfigInvoiceInformationResponse, error)
 }
 
@@ -281,6 +284,25 @@ func (c *paymentAPIClient) UserGetInvoiceInformation(ctx context.Context, in *Us
 	return out, nil
 }
 
+func (c *paymentAPIClient) UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.Response], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &PaymentAPI_ServiceDesc.Streams[0], PaymentAPI_UserExportInvoice_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[UserExportInvoiceRequest, v1.Response]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PaymentAPI_UserExportInvoiceClient = grpc.ServerStreamingClient[v1.Response]
+
 func (c *paymentAPIClient) UserConfigInvoiceInformation(ctx context.Context, in *UserConfigInvoiceInformationRequest, opts ...grpc.CallOption) (*UserConfigInvoiceInformationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserConfigInvoiceInformationResponse)
@@ -319,6 +341,7 @@ type PaymentAPIServer interface {
 	UserGetPaymentLegalInfo(context.Context, *UserGetPaymentLegalInfoRequest) (*UserGetPaymentLegalInfoResponse, error)
 	// invoice information
 	UserGetInvoiceInformation(context.Context, *UserGetInvoiceInformationRequest) (*UserGetInvoiceInformationResponse, error)
+	UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[v1.Response]) error
 	UserConfigInvoiceInformation(context.Context, *UserConfigInvoiceInformationRequest) (*UserConfigInvoiceInformationResponse, error)
 }
 
@@ -388,6 +411,9 @@ func (UnimplementedPaymentAPIServer) UserGetPaymentLegalInfo(context.Context, *U
 }
 func (UnimplementedPaymentAPIServer) UserGetInvoiceInformation(context.Context, *UserGetInvoiceInformationRequest) (*UserGetInvoiceInformationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserGetInvoiceInformation not implemented")
+}
+func (UnimplementedPaymentAPIServer) UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[v1.Response]) error {
+	return status.Errorf(codes.Unimplemented, "method UserExportInvoice not implemented")
 }
 func (UnimplementedPaymentAPIServer) UserConfigInvoiceInformation(context.Context, *UserConfigInvoiceInformationRequest) (*UserConfigInvoiceInformationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserConfigInvoiceInformation not implemented")
@@ -772,6 +798,17 @@ func _PaymentAPI_UserGetInvoiceInformation_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentAPI_UserExportInvoice_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UserExportInvoiceRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(PaymentAPIServer).UserExportInvoice(m, &grpc.GenericServerStream[UserExportInvoiceRequest, v1.Response]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PaymentAPI_UserExportInvoiceServer = grpc.ServerStreamingServer[v1.Response]
+
 func _PaymentAPI_UserConfigInvoiceInformation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserConfigInvoiceInformationRequest)
 	if err := dec(in); err != nil {
@@ -882,6 +919,12 @@ var PaymentAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PaymentAPI_UserConfigInvoiceInformation_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "UserExportInvoice",
+			Handler:       _PaymentAPI_UserExportInvoice_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/payment/v1/payment.proto",
 }
