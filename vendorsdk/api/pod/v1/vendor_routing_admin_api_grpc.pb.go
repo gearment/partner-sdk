@@ -19,30 +19,32 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentVendors"
-	VendorRoutingAdminAPI_StaffListFulfillmentDestinations_FullMethodName  = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentDestinations"
-	VendorRoutingAdminAPI_StaffListVendorRoutingRules_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorRoutingRules"
-	VendorRoutingAdminAPI_StaffGetVendorRoutingRule_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetVendorRoutingRule"
-	VendorRoutingAdminAPI_StaffCreateVendorRoutingRule_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateVendorRoutingRule"
-	VendorRoutingAdminAPI_StaffUpdateVendorRoutingRule_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateVendorRoutingRule"
-	VendorRoutingAdminAPI_StaffDeleteVendorRoutingRule_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteVendorRoutingRule"
-	VendorRoutingAdminAPI_StaffListVendorVariantMappings_FullMethodName    = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorVariantMappings"
-	VendorRoutingAdminAPI_StaffCreateVendorVariantMapping_FullMethodName   = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateVendorVariantMapping"
-	VendorRoutingAdminAPI_StaffUpdateVendorVariantMapping_FullMethodName   = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateVendorVariantMapping"
-	VendorRoutingAdminAPI_StaffDeleteVendorVariantMapping_FullMethodName   = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteVendorVariantMapping"
-	VendorRoutingAdminAPI_StaffPreviewOrderRouting_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffPreviewOrderRouting"
-	VendorRoutingAdminAPI_StaffListFulfillmentPackages_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentPackages"
-	VendorRoutingAdminAPI_StaffListRoutingDecisions_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffListRoutingDecisions"
-	VendorRoutingAdminAPI_StaffCountRoutingDecisionStats_FullMethodName    = "/api.pod.v1.VendorRoutingAdminAPI/StaffCountRoutingDecisionStats"
-	VendorRoutingAdminAPI_StaffOverrideRoutingDecision_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffOverrideRoutingDecision"
-	VendorRoutingAdminAPI_StaffReRouteDecision_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffReRouteDecision"
-	VendorRoutingAdminAPI_StaffManualRouteOrders_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffManualRouteOrders"
-	VendorRoutingAdminAPI_StaffGetDestinationLoad_FullMethodName           = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetDestinationLoad"
-	VendorRoutingAdminAPI_StaffListCapacityLines_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffListCapacityLines"
-	VendorRoutingAdminAPI_StaffGetCapacityMatrix_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetCapacityMatrix"
-	VendorRoutingAdminAPI_StaffUpdateCapacityLine_FullMethodName           = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateCapacityLine"
-	VendorRoutingAdminAPI_StaffSetMachineAvailability_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffSetMachineAvailability"
-	VendorRoutingAdminAPI_StaffUpdateFulfillmentDestination_FullMethodName = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentDestination"
+	VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentVendors"
+	VendorRoutingAdminAPI_StaffListFulfillmentDestinations_FullMethodName     = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentDestinations"
+	VendorRoutingAdminAPI_StaffListVendorRoutingRules_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorRoutingRules"
+	VendorRoutingAdminAPI_StaffGetVendorRoutingRule_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetVendorRoutingRule"
+	VendorRoutingAdminAPI_StaffCreateVendorRoutingRule_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateVendorRoutingRule"
+	VendorRoutingAdminAPI_StaffUpdateVendorRoutingRule_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateVendorRoutingRule"
+	VendorRoutingAdminAPI_StaffDeleteVendorRoutingRule_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteVendorRoutingRule"
+	VendorRoutingAdminAPI_StaffListVendorVariantMappings_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorVariantMappings"
+	VendorRoutingAdminAPI_StaffCreateVendorVariantMapping_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateVendorVariantMapping"
+	VendorRoutingAdminAPI_StaffUpdateVendorVariantMapping_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateVendorVariantMapping"
+	VendorRoutingAdminAPI_StaffDeleteVendorVariantMapping_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteVendorVariantMapping"
+	VendorRoutingAdminAPI_StaffPreviewOrderRouting_FullMethodName             = "/api.pod.v1.VendorRoutingAdminAPI/StaffPreviewOrderRouting"
+	VendorRoutingAdminAPI_StaffListFulfillmentPackages_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentPackages"
+	VendorRoutingAdminAPI_StaffListRoutingDecisions_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffListRoutingDecisions"
+	VendorRoutingAdminAPI_StaffCountRoutingDecisionStats_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffCountRoutingDecisionStats"
+	VendorRoutingAdminAPI_StaffListEconomyShippingSwitches_FullMethodName     = "/api.pod.v1.VendorRoutingAdminAPI/StaffListEconomyShippingSwitches"
+	VendorRoutingAdminAPI_StaffCountEconomyShippingSwitchStats_FullMethodName = "/api.pod.v1.VendorRoutingAdminAPI/StaffCountEconomyShippingSwitchStats"
+	VendorRoutingAdminAPI_StaffOverrideRoutingDecision_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffOverrideRoutingDecision"
+	VendorRoutingAdminAPI_StaffReRouteDecision_FullMethodName                 = "/api.pod.v1.VendorRoutingAdminAPI/StaffReRouteDecision"
+	VendorRoutingAdminAPI_StaffManualRouteOrders_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffManualRouteOrders"
+	VendorRoutingAdminAPI_StaffGetDestinationLoad_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetDestinationLoad"
+	VendorRoutingAdminAPI_StaffListCapacityLines_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffListCapacityLines"
+	VendorRoutingAdminAPI_StaffGetCapacityMatrix_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetCapacityMatrix"
+	VendorRoutingAdminAPI_StaffUpdateCapacityLine_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateCapacityLine"
+	VendorRoutingAdminAPI_StaffSetMachineAvailability_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffSetMachineAvailability"
+	VendorRoutingAdminAPI_StaffUpdateFulfillmentDestination_FullMethodName    = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentDestination"
 )
 
 // VendorRoutingAdminAPIClient is the client API for VendorRoutingAdminAPI service.
@@ -76,6 +78,16 @@ type VendorRoutingAdminAPIClient interface {
 	// --- Routing decisions (decision trace / queue, slice R3) ---
 	StaffListRoutingDecisions(ctx context.Context, in *StaffListRoutingDecisionsRequest, opts ...grpc.CallOption) (*StaffListRoutingDecisionsResponse, error)
 	StaffCountRoutingDecisionStats(ctx context.Context, in *StaffCountRoutingDecisionStatsRequest, opts ...grpc.CallOption) (*StaffCountRoutingDecisionStatsResponse, error)
+	// --- Economy shipping switches ---
+	//
+	// A different routing axis from the decisions above: those pick a
+	// destination, these pick a shipping method. An Economy order the carrier
+	// cannot serve becomes Standard and is repriced before charge.
+	//
+	// Support could only see this one order at a time, in that order's activity
+	// log, so nobody could answer "how many switched today, and why".
+	StaffListEconomyShippingSwitches(ctx context.Context, in *StaffListEconomyShippingSwitchesRequest, opts ...grpc.CallOption) (*StaffListEconomyShippingSwitchesResponse, error)
+	StaffCountEconomyShippingSwitchStats(ctx context.Context, in *StaffCountEconomyShippingSwitchStatsRequest, opts ...grpc.CallOption) (*StaffCountEconomyShippingSwitchStatsResponse, error)
 	// --- Review gate / manual routing (slice R3b) ---
 	StaffOverrideRoutingDecision(ctx context.Context, in *StaffOverrideRoutingDecisionRequest, opts ...grpc.CallOption) (*StaffOverrideRoutingDecisionResponse, error)
 	StaffReRouteDecision(ctx context.Context, in *StaffReRouteDecisionRequest, opts ...grpc.CallOption) (*StaffReRouteDecisionResponse, error)
@@ -248,6 +260,26 @@ func (c *vendorRoutingAdminAPIClient) StaffCountRoutingDecisionStats(ctx context
 	return out, nil
 }
 
+func (c *vendorRoutingAdminAPIClient) StaffListEconomyShippingSwitches(ctx context.Context, in *StaffListEconomyShippingSwitchesRequest, opts ...grpc.CallOption) (*StaffListEconomyShippingSwitchesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListEconomyShippingSwitchesResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffListEconomyShippingSwitches_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorRoutingAdminAPIClient) StaffCountEconomyShippingSwitchStats(ctx context.Context, in *StaffCountEconomyShippingSwitchStatsRequest, opts ...grpc.CallOption) (*StaffCountEconomyShippingSwitchStatsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCountEconomyShippingSwitchStatsResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffCountEconomyShippingSwitchStats_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vendorRoutingAdminAPIClient) StaffOverrideRoutingDecision(ctx context.Context, in *StaffOverrideRoutingDecisionRequest, opts ...grpc.CallOption) (*StaffOverrideRoutingDecisionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffOverrideRoutingDecisionResponse)
@@ -369,6 +401,16 @@ type VendorRoutingAdminAPIServer interface {
 	// --- Routing decisions (decision trace / queue, slice R3) ---
 	StaffListRoutingDecisions(context.Context, *StaffListRoutingDecisionsRequest) (*StaffListRoutingDecisionsResponse, error)
 	StaffCountRoutingDecisionStats(context.Context, *StaffCountRoutingDecisionStatsRequest) (*StaffCountRoutingDecisionStatsResponse, error)
+	// --- Economy shipping switches ---
+	//
+	// A different routing axis from the decisions above: those pick a
+	// destination, these pick a shipping method. An Economy order the carrier
+	// cannot serve becomes Standard and is repriced before charge.
+	//
+	// Support could only see this one order at a time, in that order's activity
+	// log, so nobody could answer "how many switched today, and why".
+	StaffListEconomyShippingSwitches(context.Context, *StaffListEconomyShippingSwitchesRequest) (*StaffListEconomyShippingSwitchesResponse, error)
+	StaffCountEconomyShippingSwitchStats(context.Context, *StaffCountEconomyShippingSwitchStatsRequest) (*StaffCountEconomyShippingSwitchStatsResponse, error)
 	// --- Review gate / manual routing (slice R3b) ---
 	StaffOverrideRoutingDecision(context.Context, *StaffOverrideRoutingDecisionRequest) (*StaffOverrideRoutingDecisionResponse, error)
 	StaffReRouteDecision(context.Context, *StaffReRouteDecisionRequest) (*StaffReRouteDecisionResponse, error)
@@ -434,6 +476,12 @@ func (UnimplementedVendorRoutingAdminAPIServer) StaffListRoutingDecisions(contex
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffCountRoutingDecisionStats(context.Context, *StaffCountRoutingDecisionStatsRequest) (*StaffCountRoutingDecisionStatsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCountRoutingDecisionStats not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffListEconomyShippingSwitches(context.Context, *StaffListEconomyShippingSwitchesRequest) (*StaffListEconomyShippingSwitchesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListEconomyShippingSwitches not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffCountEconomyShippingSwitchStats(context.Context, *StaffCountEconomyShippingSwitchStatsRequest) (*StaffCountEconomyShippingSwitchStatsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCountEconomyShippingSwitchStats not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffOverrideRoutingDecision(context.Context, *StaffOverrideRoutingDecisionRequest) (*StaffOverrideRoutingDecisionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffOverrideRoutingDecision not implemented")
@@ -752,6 +800,42 @@ func _VendorRoutingAdminAPI_StaffCountRoutingDecisionStats_Handler(srv interface
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorRoutingAdminAPI_StaffListEconomyShippingSwitches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListEconomyShippingSwitchesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffListEconomyShippingSwitches(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffListEconomyShippingSwitches_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffListEconomyShippingSwitches(ctx, req.(*StaffListEconomyShippingSwitchesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorRoutingAdminAPI_StaffCountEconomyShippingSwitchStats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCountEconomyShippingSwitchStatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffCountEconomyShippingSwitchStats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffCountEconomyShippingSwitchStats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffCountEconomyShippingSwitchStats(ctx, req.(*StaffCountEconomyShippingSwitchStatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VendorRoutingAdminAPI_StaffOverrideRoutingDecision_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffOverrideRoutingDecisionRequest)
 	if err := dec(in); err != nil {
@@ -980,6 +1064,14 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffCountRoutingDecisionStats",
 			Handler:    _VendorRoutingAdminAPI_StaffCountRoutingDecisionStats_Handler,
+		},
+		{
+			MethodName: "StaffListEconomyShippingSwitches",
+			Handler:    _VendorRoutingAdminAPI_StaffListEconomyShippingSwitches_Handler,
+		},
+		{
+			MethodName: "StaffCountEconomyShippingSwitchStats",
+			Handler:    _VendorRoutingAdminAPI_StaffCountEconomyShippingSwitchStats_Handler,
 		},
 		{
 			MethodName: "StaffOverrideRoutingDecision",
