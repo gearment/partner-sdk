@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	CreditAdminAPI_StaffCreateGCredit_FullMethodName                        = "/api.credit.v1.CreditAdminAPI/StaffCreateGCredit"
 	CreditAdminAPI_StaffUpdateGCredit_FullMethodName                        = "/api.credit.v1.CreditAdminAPI/StaffUpdateGCredit"
+	CreditAdminAPI_StaffListGCreditUsers_FullMethodName                     = "/api.credit.v1.CreditAdminAPI/StaffListGCreditUsers"
 	CreditAdminAPI_StaffGetGCreditDashboard_FullMethodName                  = "/api.credit.v1.CreditAdminAPI/StaffGetGCreditDashboard"
 	CreditAdminAPI_StaffGetCreditOverview_FullMethodName                    = "/api.credit.v1.CreditAdminAPI/StaffGetCreditOverview"
 	CreditAdminAPI_StaffListStatementHistory_FullMethodName                 = "/api.credit.v1.CreditAdminAPI/StaffListStatementHistory"
@@ -49,6 +50,7 @@ const (
 type CreditAdminAPIClient interface {
 	StaffCreateGCredit(ctx context.Context, in *StaffCreateGCreditRequest, opts ...grpc.CallOption) (*StaffCreateGCreditResponse, error)
 	StaffUpdateGCredit(ctx context.Context, in *StaffUpdateGCreditRequest, opts ...grpc.CallOption) (*StaffUpdateGCreditResponse, error)
+	StaffListGCreditUsers(ctx context.Context, in *StaffListGCreditUsersRequest, opts ...grpc.CallOption) (*StaffListGCreditUsersResponse, error)
 	StaffGetGCreditDashboard(ctx context.Context, in *StaffGetGCreditDashboardRequest, opts ...grpc.CallOption) (*StaffGetGCreditDashboardResponse, error)
 	StaffGetCreditOverview(ctx context.Context, in *StaffGetCreditOverviewRequest, opts ...grpc.CallOption) (*StaffGetCreditOverviewResponse, error)
 	StaffListStatementHistory(ctx context.Context, in *StaffListStatementHistoryRequest, opts ...grpc.CallOption) (*StaffListStatementHistoryResponse, error)
@@ -93,6 +95,16 @@ func (c *creditAdminAPIClient) StaffUpdateGCredit(ctx context.Context, in *Staff
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateGCreditResponse)
 	err := c.cc.Invoke(ctx, CreditAdminAPI_StaffUpdateGCredit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *creditAdminAPIClient) StaffListGCreditUsers(ctx context.Context, in *StaffListGCreditUsersRequest, opts ...grpc.CallOption) (*StaffListGCreditUsersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListGCreditUsersResponse)
+	err := c.cc.Invoke(ctx, CreditAdminAPI_StaffListGCreditUsers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -305,6 +317,7 @@ func (c *creditAdminAPIClient) StaffSummaryCreditStatementPaymentRequest(ctx con
 type CreditAdminAPIServer interface {
 	StaffCreateGCredit(context.Context, *StaffCreateGCreditRequest) (*StaffCreateGCreditResponse, error)
 	StaffUpdateGCredit(context.Context, *StaffUpdateGCreditRequest) (*StaffUpdateGCreditResponse, error)
+	StaffListGCreditUsers(context.Context, *StaffListGCreditUsersRequest) (*StaffListGCreditUsersResponse, error)
 	StaffGetGCreditDashboard(context.Context, *StaffGetGCreditDashboardRequest) (*StaffGetGCreditDashboardResponse, error)
 	StaffGetCreditOverview(context.Context, *StaffGetCreditOverviewRequest) (*StaffGetCreditOverviewResponse, error)
 	StaffListStatementHistory(context.Context, *StaffListStatementHistoryRequest) (*StaffListStatementHistoryResponse, error)
@@ -339,6 +352,9 @@ func (UnimplementedCreditAdminAPIServer) StaffCreateGCredit(context.Context, *St
 }
 func (UnimplementedCreditAdminAPIServer) StaffUpdateGCredit(context.Context, *StaffUpdateGCreditRequest) (*StaffUpdateGCreditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateGCredit not implemented")
+}
+func (UnimplementedCreditAdminAPIServer) StaffListGCreditUsers(context.Context, *StaffListGCreditUsersRequest) (*StaffListGCreditUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListGCreditUsers not implemented")
 }
 func (UnimplementedCreditAdminAPIServer) StaffGetGCreditDashboard(context.Context, *StaffGetGCreditDashboardRequest) (*StaffGetGCreditDashboardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetGCreditDashboard not implemented")
@@ -452,6 +468,24 @@ func _CreditAdminAPI_StaffUpdateGCredit_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CreditAdminAPIServer).StaffUpdateGCredit(ctx, req.(*StaffUpdateGCreditRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditAdminAPI_StaffListGCreditUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListGCreditUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditAdminAPIServer).StaffListGCreditUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditAdminAPI_StaffListGCreditUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditAdminAPIServer).StaffListGCreditUsers(ctx, req.(*StaffListGCreditUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -830,6 +864,10 @@ var CreditAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateGCredit",
 			Handler:    _CreditAdminAPI_StaffUpdateGCredit_Handler,
+		},
+		{
+			MethodName: "StaffListGCreditUsers",
+			Handler:    _CreditAdminAPI_StaffListGCreditUsers_Handler,
 		},
 		{
 			MethodName: "StaffGetGCreditDashboard",
