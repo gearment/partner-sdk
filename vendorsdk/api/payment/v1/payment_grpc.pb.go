@@ -8,7 +8,6 @@ package paymentv1
 
 import (
 	context "context"
-	v1 "github.com/gearment/gea-next/vendorsdk/common/type/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -40,7 +39,6 @@ const (
 	PaymentAPI_UserConfigPaymentLegalInfo_FullMethodName   = "/api.payment.v1.PaymentAPI/UserConfigPaymentLegalInfo"
 	PaymentAPI_UserGetPaymentLegalInfo_FullMethodName      = "/api.payment.v1.PaymentAPI/UserGetPaymentLegalInfo"
 	PaymentAPI_UserGetInvoiceInformation_FullMethodName    = "/api.payment.v1.PaymentAPI/UserGetInvoiceInformation"
-	PaymentAPI_UserExportInvoice_FullMethodName            = "/api.payment.v1.PaymentAPI/UserExportInvoice"
 	PaymentAPI_UserConfigInvoiceInformation_FullMethodName = "/api.payment.v1.PaymentAPI/UserConfigInvoiceInformation"
 )
 
@@ -72,7 +70,6 @@ type PaymentAPIClient interface {
 	UserGetPaymentLegalInfo(ctx context.Context, in *UserGetPaymentLegalInfoRequest, opts ...grpc.CallOption) (*UserGetPaymentLegalInfoResponse, error)
 	// invoice information
 	UserGetInvoiceInformation(ctx context.Context, in *UserGetInvoiceInformationRequest, opts ...grpc.CallOption) (*UserGetInvoiceInformationResponse, error)
-	UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.Response], error)
 	UserConfigInvoiceInformation(ctx context.Context, in *UserConfigInvoiceInformationRequest, opts ...grpc.CallOption) (*UserConfigInvoiceInformationResponse, error)
 }
 
@@ -284,25 +281,6 @@ func (c *paymentAPIClient) UserGetInvoiceInformation(ctx context.Context, in *Us
 	return out, nil
 }
 
-func (c *paymentAPIClient) UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.Response], error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &PaymentAPI_ServiceDesc.Streams[0], PaymentAPI_UserExportInvoice_FullMethodName, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &grpc.GenericClientStream[UserExportInvoiceRequest, v1.Response]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PaymentAPI_UserExportInvoiceClient = grpc.ServerStreamingClient[v1.Response]
-
 func (c *paymentAPIClient) UserConfigInvoiceInformation(ctx context.Context, in *UserConfigInvoiceInformationRequest, opts ...grpc.CallOption) (*UserConfigInvoiceInformationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserConfigInvoiceInformationResponse)
@@ -341,7 +319,6 @@ type PaymentAPIServer interface {
 	UserGetPaymentLegalInfo(context.Context, *UserGetPaymentLegalInfoRequest) (*UserGetPaymentLegalInfoResponse, error)
 	// invoice information
 	UserGetInvoiceInformation(context.Context, *UserGetInvoiceInformationRequest) (*UserGetInvoiceInformationResponse, error)
-	UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[v1.Response]) error
 	UserConfigInvoiceInformation(context.Context, *UserConfigInvoiceInformationRequest) (*UserConfigInvoiceInformationResponse, error)
 }
 
@@ -411,9 +388,6 @@ func (UnimplementedPaymentAPIServer) UserGetPaymentLegalInfo(context.Context, *U
 }
 func (UnimplementedPaymentAPIServer) UserGetInvoiceInformation(context.Context, *UserGetInvoiceInformationRequest) (*UserGetInvoiceInformationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserGetInvoiceInformation not implemented")
-}
-func (UnimplementedPaymentAPIServer) UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[v1.Response]) error {
-	return status.Errorf(codes.Unimplemented, "method UserExportInvoice not implemented")
 }
 func (UnimplementedPaymentAPIServer) UserConfigInvoiceInformation(context.Context, *UserConfigInvoiceInformationRequest) (*UserConfigInvoiceInformationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserConfigInvoiceInformation not implemented")
@@ -798,17 +772,6 @@ func _PaymentAPI_UserGetInvoiceInformation_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentAPI_UserExportInvoice_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(UserExportInvoiceRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(PaymentAPIServer).UserExportInvoice(m, &grpc.GenericServerStream[UserExportInvoiceRequest, v1.Response]{ServerStream: stream})
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PaymentAPI_UserExportInvoiceServer = grpc.ServerStreamingServer[v1.Response]
-
 func _PaymentAPI_UserConfigInvoiceInformation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserConfigInvoiceInformationRequest)
 	if err := dec(in); err != nil {
@@ -919,10 +882,107 @@ var PaymentAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PaymentAPI_UserConfigInvoiceInformation_Handler,
 		},
 	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/payment/v1/payment.proto",
+}
+
+const (
+	PaymentStreamAPI_UserExportInvoice_FullMethodName = "/api.payment.v1.PaymentStreamAPI/UserExportInvoice"
+)
+
+// PaymentStreamAPIClient is the client API for PaymentStreamAPI service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PaymentStreamAPIClient interface {
+	UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[UserExportInvoiceResponse], error)
+}
+
+type paymentStreamAPIClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPaymentStreamAPIClient(cc grpc.ClientConnInterface) PaymentStreamAPIClient {
+	return &paymentStreamAPIClient{cc}
+}
+
+func (c *paymentStreamAPIClient) UserExportInvoice(ctx context.Context, in *UserExportInvoiceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[UserExportInvoiceResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &PaymentStreamAPI_ServiceDesc.Streams[0], PaymentStreamAPI_UserExportInvoice_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[UserExportInvoiceRequest, UserExportInvoiceResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PaymentStreamAPI_UserExportInvoiceClient = grpc.ServerStreamingClient[UserExportInvoiceResponse]
+
+// PaymentStreamAPIServer is the server API for PaymentStreamAPI service.
+// All implementations should embed UnimplementedPaymentStreamAPIServer
+// for forward compatibility.
+type PaymentStreamAPIServer interface {
+	UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[UserExportInvoiceResponse]) error
+}
+
+// UnimplementedPaymentStreamAPIServer should be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedPaymentStreamAPIServer struct{}
+
+func (UnimplementedPaymentStreamAPIServer) UserExportInvoice(*UserExportInvoiceRequest, grpc.ServerStreamingServer[UserExportInvoiceResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method UserExportInvoice not implemented")
+}
+func (UnimplementedPaymentStreamAPIServer) testEmbeddedByValue() {}
+
+// UnsafePaymentStreamAPIServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PaymentStreamAPIServer will
+// result in compilation errors.
+type UnsafePaymentStreamAPIServer interface {
+	mustEmbedUnimplementedPaymentStreamAPIServer()
+}
+
+func RegisterPaymentStreamAPIServer(s grpc.ServiceRegistrar, srv PaymentStreamAPIServer) {
+	// If the following call pancis, it indicates UnimplementedPaymentStreamAPIServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&PaymentStreamAPI_ServiceDesc, srv)
+}
+
+func _PaymentStreamAPI_UserExportInvoice_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UserExportInvoiceRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(PaymentStreamAPIServer).UserExportInvoice(m, &grpc.GenericServerStream[UserExportInvoiceRequest, UserExportInvoiceResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PaymentStreamAPI_UserExportInvoiceServer = grpc.ServerStreamingServer[UserExportInvoiceResponse]
+
+// PaymentStreamAPI_ServiceDesc is the grpc.ServiceDesc for PaymentStreamAPI service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PaymentStreamAPI_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.payment.v1.PaymentStreamAPI",
+	HandlerType: (*PaymentStreamAPIServer)(nil),
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "UserExportInvoice",
-			Handler:       _PaymentAPI_UserExportInvoice_Handler,
+			Handler:       _PaymentStreamAPI_UserExportInvoice_Handler,
 			ServerStreams: true,
 		},
 	},
