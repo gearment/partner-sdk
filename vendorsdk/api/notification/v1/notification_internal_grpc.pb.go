@@ -19,21 +19,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NotificationInternalAPI_InternalSendInbox_FullMethodName                       = "/api.notification.v1.NotificationInternalAPI/InternalSendInbox"
-	NotificationInternalAPI_InternalSendTeamInvitationEmail_FullMethodName         = "/api.notification.v1.NotificationInternalAPI/InternalSendTeamInvitationEmail"
-	NotificationInternalAPI_InternalSendVerificationEmail_FullMethodName           = "/api.notification.v1.NotificationInternalAPI/InternalSendVerificationEmail"
-	NotificationInternalAPI_InternalSendVerificationOTPEmail_FullMethodName        = "/api.notification.v1.NotificationInternalAPI/InternalSendVerificationOTPEmail"
-	NotificationInternalAPI_InternalSendForgotPasswordEmail_FullMethodName         = "/api.notification.v1.NotificationInternalAPI/InternalSendForgotPasswordEmail"
-	NotificationInternalAPI_InternalSendSetupPasswordEmail_FullMethodName          = "/api.notification.v1.NotificationInternalAPI/InternalSendSetupPasswordEmail"
-	NotificationInternalAPI_InternalSendLinkAccountEmail_FullMethodName            = "/api.notification.v1.NotificationInternalAPI/InternalSendLinkAccountEmail"
-	NotificationInternalAPI_InternalSendExportFileEmail_FullMethodName             = "/api.notification.v1.NotificationInternalAPI/InternalSendExportFileEmail"
-	NotificationInternalAPI_InternalSendDownloadMediasEmail_FullMethodName         = "/api.notification.v1.NotificationInternalAPI/InternalSendDownloadMediasEmail"
-	NotificationInternalAPI_InternalSendTokenStoreExpiredEmail_FullMethodName      = "/api.notification.v1.NotificationInternalAPI/InternalSendTokenStoreExpiredEmail"
-	NotificationInternalAPI_InternalSendWelcomeUserEmail_FullMethodName            = "/api.notification.v1.NotificationInternalAPI/InternalSendWelcomeUserEmail"
-	NotificationInternalAPI_InternalSendCreditUtilizationAlertEmail_FullMethodName = "/api.notification.v1.NotificationInternalAPI/InternalSendCreditUtilizationAlertEmail"
-	NotificationInternalAPI_InternalSendOrderPaymentFailedEmail_FullMethodName     = "/api.notification.v1.NotificationInternalAPI/InternalSendOrderPaymentFailedEmail"
-	NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_FullMethodName    = "/api.notification.v1.NotificationInternalAPI/InternalSendEconomyCoverageHoldEmail"
-	NotificationInternalAPI_InternalSendEmail_FullMethodName                       = "/api.notification.v1.NotificationInternalAPI/InternalSendEmail"
+	NotificationInternalAPI_InternalSendInbox_FullMethodName                         = "/api.notification.v1.NotificationInternalAPI/InternalSendInbox"
+	NotificationInternalAPI_InternalSendTeamInvitationEmail_FullMethodName           = "/api.notification.v1.NotificationInternalAPI/InternalSendTeamInvitationEmail"
+	NotificationInternalAPI_InternalSendVerificationEmail_FullMethodName             = "/api.notification.v1.NotificationInternalAPI/InternalSendVerificationEmail"
+	NotificationInternalAPI_InternalSendVerificationOTPEmail_FullMethodName          = "/api.notification.v1.NotificationInternalAPI/InternalSendVerificationOTPEmail"
+	NotificationInternalAPI_InternalSendForgotPasswordEmail_FullMethodName           = "/api.notification.v1.NotificationInternalAPI/InternalSendForgotPasswordEmail"
+	NotificationInternalAPI_InternalSendSetupPasswordEmail_FullMethodName            = "/api.notification.v1.NotificationInternalAPI/InternalSendSetupPasswordEmail"
+	NotificationInternalAPI_InternalSendLinkAccountEmail_FullMethodName              = "/api.notification.v1.NotificationInternalAPI/InternalSendLinkAccountEmail"
+	NotificationInternalAPI_InternalSendExportFileEmail_FullMethodName               = "/api.notification.v1.NotificationInternalAPI/InternalSendExportFileEmail"
+	NotificationInternalAPI_InternalSendDownloadMediasEmail_FullMethodName           = "/api.notification.v1.NotificationInternalAPI/InternalSendDownloadMediasEmail"
+	NotificationInternalAPI_InternalSendTokenStoreExpiredEmail_FullMethodName        = "/api.notification.v1.NotificationInternalAPI/InternalSendTokenStoreExpiredEmail"
+	NotificationInternalAPI_InternalSendWelcomeUserEmail_FullMethodName              = "/api.notification.v1.NotificationInternalAPI/InternalSendWelcomeUserEmail"
+	NotificationInternalAPI_InternalSendCreditUtilizationAlertEmail_FullMethodName   = "/api.notification.v1.NotificationInternalAPI/InternalSendCreditUtilizationAlertEmail"
+	NotificationInternalAPI_InternalSendOrderPaymentFailedEmail_FullMethodName       = "/api.notification.v1.NotificationInternalAPI/InternalSendOrderPaymentFailedEmail"
+	NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_FullMethodName      = "/api.notification.v1.NotificationInternalAPI/InternalSendEconomyCoverageHoldEmail"
+	NotificationInternalAPI_InternalSendPaymentResolutionBlockedEmail_FullMethodName = "/api.notification.v1.NotificationInternalAPI/InternalSendPaymentResolutionBlockedEmail"
+	NotificationInternalAPI_InternalSendEmail_FullMethodName                         = "/api.notification.v1.NotificationInternalAPI/InternalSendEmail"
 )
 
 // NotificationInternalAPIClient is the client API for NotificationInternalAPI service.
@@ -54,6 +55,7 @@ type NotificationInternalAPIClient interface {
 	InternalSendCreditUtilizationAlertEmail(ctx context.Context, in *InternalSendCreditUtilizationAlertEmailRequest, opts ...grpc.CallOption) (*InternalSendCreditUtilizationAlertEmailResponse, error)
 	InternalSendOrderPaymentFailedEmail(ctx context.Context, in *InternalSendOrderPaymentFailedEmailRequest, opts ...grpc.CallOption) (*InternalSendOrderPaymentFailedEmailResponse, error)
 	InternalSendEconomyCoverageHoldEmail(ctx context.Context, in *InternalSendEconomyCoverageHoldEmailRequest, opts ...grpc.CallOption) (*InternalSendEconomyCoverageHoldEmailResponse, error)
+	InternalSendPaymentResolutionBlockedEmail(ctx context.Context, in *InternalSendPaymentResolutionBlockedEmailRequest, opts ...grpc.CallOption) (*InternalSendPaymentResolutionBlockedEmailResponse, error)
 	InternalSendEmail(ctx context.Context, in *InternalSendEmailRequest, opts ...grpc.CallOption) (*InternalSendEmailResponse, error)
 }
 
@@ -205,6 +207,16 @@ func (c *notificationInternalAPIClient) InternalSendEconomyCoverageHoldEmail(ctx
 	return out, nil
 }
 
+func (c *notificationInternalAPIClient) InternalSendPaymentResolutionBlockedEmail(ctx context.Context, in *InternalSendPaymentResolutionBlockedEmailRequest, opts ...grpc.CallOption) (*InternalSendPaymentResolutionBlockedEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalSendPaymentResolutionBlockedEmailResponse)
+	err := c.cc.Invoke(ctx, NotificationInternalAPI_InternalSendPaymentResolutionBlockedEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *notificationInternalAPIClient) InternalSendEmail(ctx context.Context, in *InternalSendEmailRequest, opts ...grpc.CallOption) (*InternalSendEmailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalSendEmailResponse)
@@ -233,6 +245,7 @@ type NotificationInternalAPIServer interface {
 	InternalSendCreditUtilizationAlertEmail(context.Context, *InternalSendCreditUtilizationAlertEmailRequest) (*InternalSendCreditUtilizationAlertEmailResponse, error)
 	InternalSendOrderPaymentFailedEmail(context.Context, *InternalSendOrderPaymentFailedEmailRequest) (*InternalSendOrderPaymentFailedEmailResponse, error)
 	InternalSendEconomyCoverageHoldEmail(context.Context, *InternalSendEconomyCoverageHoldEmailRequest) (*InternalSendEconomyCoverageHoldEmailResponse, error)
+	InternalSendPaymentResolutionBlockedEmail(context.Context, *InternalSendPaymentResolutionBlockedEmailRequest) (*InternalSendPaymentResolutionBlockedEmailResponse, error)
 	InternalSendEmail(context.Context, *InternalSendEmailRequest) (*InternalSendEmailResponse, error)
 }
 
@@ -284,6 +297,9 @@ func (UnimplementedNotificationInternalAPIServer) InternalSendOrderPaymentFailed
 }
 func (UnimplementedNotificationInternalAPIServer) InternalSendEconomyCoverageHoldEmail(context.Context, *InternalSendEconomyCoverageHoldEmailRequest) (*InternalSendEconomyCoverageHoldEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalSendEconomyCoverageHoldEmail not implemented")
+}
+func (UnimplementedNotificationInternalAPIServer) InternalSendPaymentResolutionBlockedEmail(context.Context, *InternalSendPaymentResolutionBlockedEmailRequest) (*InternalSendPaymentResolutionBlockedEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalSendPaymentResolutionBlockedEmail not implemented")
 }
 func (UnimplementedNotificationInternalAPIServer) InternalSendEmail(context.Context, *InternalSendEmailRequest) (*InternalSendEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalSendEmail not implemented")
@@ -560,6 +576,24 @@ func _NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_Handler(srv i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NotificationInternalAPI_InternalSendPaymentResolutionBlockedEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalSendPaymentResolutionBlockedEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotificationInternalAPIServer).InternalSendPaymentResolutionBlockedEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NotificationInternalAPI_InternalSendPaymentResolutionBlockedEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotificationInternalAPIServer).InternalSendPaymentResolutionBlockedEmail(ctx, req.(*InternalSendPaymentResolutionBlockedEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _NotificationInternalAPI_InternalSendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalSendEmailRequest)
 	if err := dec(in); err != nil {
@@ -640,6 +674,10 @@ var NotificationInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalSendEconomyCoverageHoldEmail",
 			Handler:    _NotificationInternalAPI_InternalSendEconomyCoverageHoldEmail_Handler,
+		},
+		{
+			MethodName: "InternalSendPaymentResolutionBlockedEmail",
+			Handler:    _NotificationInternalAPI_InternalSendPaymentResolutionBlockedEmail_Handler,
 		},
 		{
 			MethodName: "InternalSendEmail",

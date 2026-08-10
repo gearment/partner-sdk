@@ -1648,6 +1648,97 @@ func (*InternalSendEconomyCoverageHoldEmailResponse) Descriptor() ([]byte, []int
 	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{27}
 }
 
+// This request intentionally carries only the current recipient and a stable seller-safe
+// reference. Payment credentials, provider identifiers, and checkout data must never cross
+// this contract.
+type InternalSendPaymentResolutionBlockedEmailRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EmailAddress  string                 `protobuf:"bytes,1,opt,name=email_address,json=emailAddress,proto3" json:"email_address,omitempty"`
+	Reference     string                 `protobuf:"bytes,2,opt,name=reference,proto3" json:"reference,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailRequest) Reset() {
+	*x = InternalSendPaymentResolutionBlockedEmailRequest{}
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalSendPaymentResolutionBlockedEmailRequest) ProtoMessage() {}
+
+func (x *InternalSendPaymentResolutionBlockedEmailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalSendPaymentResolutionBlockedEmailRequest.ProtoReflect.Descriptor instead.
+func (*InternalSendPaymentResolutionBlockedEmailRequest) Descriptor() ([]byte, []int) {
+	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailRequest) GetEmailAddress() string {
+	if x != nil {
+		return x.EmailAddress
+	}
+	return ""
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailRequest) GetReference() string {
+	if x != nil {
+		return x.Reference
+	}
+	return ""
+}
+
+type InternalSendPaymentResolutionBlockedEmailResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailResponse) Reset() {
+	*x = InternalSendPaymentResolutionBlockedEmailResponse{}
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalSendPaymentResolutionBlockedEmailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalSendPaymentResolutionBlockedEmailResponse) ProtoMessage() {}
+
+func (x *InternalSendPaymentResolutionBlockedEmailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalSendPaymentResolutionBlockedEmailResponse.ProtoReflect.Descriptor instead.
+func (*InternalSendPaymentResolutionBlockedEmailResponse) Descriptor() ([]byte, []int) {
+	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{29}
+}
+
 type InternalSendEmailRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Data:
@@ -1677,7 +1768,7 @@ type InternalSendEmailRequest struct {
 
 func (x *InternalSendEmailRequest) Reset() {
 	*x = InternalSendEmailRequest{}
-	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[28]
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1689,7 +1780,7 @@ func (x *InternalSendEmailRequest) String() string {
 func (*InternalSendEmailRequest) ProtoMessage() {}
 
 func (x *InternalSendEmailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[28]
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1702,7 +1793,7 @@ func (x *InternalSendEmailRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalSendEmailRequest.ProtoReflect.Descriptor instead.
 func (*InternalSendEmailRequest) Descriptor() ([]byte, []int) {
-	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{28}
+	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *InternalSendEmailRequest) GetData() isInternalSendEmailRequest_Data {
@@ -1963,7 +2054,7 @@ type InternalSendEmailResponse struct {
 
 func (x *InternalSendEmailResponse) Reset() {
 	*x = InternalSendEmailResponse{}
-	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[29]
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1975,7 +2066,7 @@ func (x *InternalSendEmailResponse) String() string {
 func (*InternalSendEmailResponse) ProtoMessage() {}
 
 func (x *InternalSendEmailResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[29]
+	mi := &file_api_notification_v1_notification_internal_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1988,7 +2079,7 @@ func (x *InternalSendEmailResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalSendEmailResponse.ProtoReflect.Descriptor instead.
 func (*InternalSendEmailResponse) Descriptor() ([]byte, []int) {
-	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{29}
+	return file_api_notification_v1_notification_internal_proto_rawDescGZIP(), []int{31}
 }
 
 var File_api_notification_v1_notification_internal_proto protoreflect.FileDescriptor
@@ -2326,6 +2417,29 @@ var file_api_notification_v1_notification_internal_proto_rawDesc = string([]byte
 	0x6e, 0x22, 0x2e, 0x0a, 0x2c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e,
 	0x64, 0x45, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x43, 0x6f, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65,
 	0x48, 0x6f, 0x6c, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0xb8, 0x02, 0x0a, 0x30, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65,
+	0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x75, 0x74,
+	0x69, 0x6f, 0x6e, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x65, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0xda, 0x01, 0x0a, 0x0d, 0x65, 0x6d, 0x61, 0x69, 0x6c,
+	0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0xb4,
+	0x01, 0xba, 0x48, 0xb0, 0x01, 0xba, 0x01, 0xac, 0x01, 0x0a, 0x12, 0x65, 0x6d, 0x61, 0x69, 0x6c,
+	0x2e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x12, 0x36, 0x45,
+	0x6d, 0x61, 0x69, 0x6c, 0x20, 0x6d, 0x75, 0x73, 0x74, 0x20, 0x62, 0x65, 0x20, 0x69, 0x6e, 0x20,
+	0x76, 0x61, 0x6c, 0x69, 0x64, 0x20, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x20, 0x28, 0x65, 0x2e,
+	0x67, 0x2e, 0x2c, 0x20, 0x75, 0x73, 0x65, 0x72, 0x40, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65,
+	0x2e, 0x63, 0x6f, 0x6d, 0x29, 0x1a, 0x5e, 0x74, 0x68, 0x69, 0x73, 0x2e, 0x6d, 0x61, 0x74, 0x63,
+	0x68, 0x65, 0x73, 0x28, 0x27, 0x5e, 0x5b, 0x61, 0x2d, 0x7a, 0x41, 0x2d, 0x5a, 0x30, 0x2d, 0x39,
+	0x5f, 0x2b, 0x26, 0x2a, 0x2d, 0x5d, 0x2b, 0x28, 0x3f, 0x3a, 0x5c, 0x5c, 0x2e, 0x5b, 0x61, 0x2d,
+	0x7a, 0x41, 0x2d, 0x5a, 0x30, 0x2d, 0x39, 0x5f, 0x2b, 0x26, 0x2a, 0x2d, 0x5d, 0x2b, 0x29, 0x2a,
+	0x40, 0x28, 0x3f, 0x3a, 0x5b, 0x61, 0x2d, 0x7a, 0x41, 0x2d, 0x5a, 0x30, 0x2d, 0x39, 0x2d, 0x5d,
+	0x2b, 0x5c, 0x5c, 0x2e, 0x29, 0x2b, 0x5b, 0x61, 0x2d, 0x7a, 0x41, 0x2d, 0x5a, 0x5d, 0x7b, 0x32,
+	0x2c, 0x7d, 0x24, 0x27, 0x29, 0x52, 0x0c, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x12, 0x27, 0x0a, 0x09, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x09, 0xba, 0x48, 0x06, 0x72, 0x04, 0x10, 0x01, 0x18,
+	0x40, 0x52, 0x09, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x22, 0x33, 0x0a, 0x31,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d,
+	0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6c, 0x6f,
+	0x63, 0x6b, 0x65, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x22, 0xd2, 0x0d, 0x0a, 0x18, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65,
 	0x6e, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x6d,
 	0x0a, 0x1a, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x65, 0x61, 0x6d, 0x5f, 0x69, 0x6e, 0x76, 0x69,
@@ -2437,7 +2551,7 @@ var file_api_notification_v1_notification_internal_proto_rawDesc = string([]byte
 	0x0d, 0x75, 0x73, 0x65, 0x53, 0x68, 0x61, 0x72, 0x65, 0x64, 0x4c, 0x69, 0x6e, 0x6b, 0x42, 0x06,
 	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x1b, 0x0a, 0x19, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
 	0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x32, 0xca, 0x12, 0x0a, 0x17, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61,
+	0x6e, 0x73, 0x65, 0x32, 0x89, 0x14, 0x0a, 0x17, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61,
 	0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x50, 0x49, 0x12,
 	0x74, 0x0a, 0x11, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x49,
 	0x6e, 0x62, 0x6f, 0x78, 0x12, 0x2d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69, 0x66,
@@ -2578,30 +2692,42 @@ var file_api_notification_v1_notification_internal_proto_rawDesc = string([]byte
 	0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65,
 	0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x45, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x43,
 	0x6f, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x48, 0x6f, 0x6c, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x74, 0x0a, 0x11, 0x49, 0x6e,
-	0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12,
-	0x2d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xbc, 0x01, 0x0a, 0x29, 0x49,
+	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d, 0x65,
+	0x6e, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6c, 0x6f, 0x63,
+	0x6b, 0x65, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x45, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e,
+	0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x49,
+	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d, 0x65,
+	0x6e, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6c, 0x6f, 0x63,
+	0x6b, 0x65, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x46, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65,
-	0x6e, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e,
+	0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x75, 0x74,
+	0x69, 0x6f, 0x6e, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x65, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x74, 0x0a, 0x11, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x2d,
 	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
 	0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e,
-	0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x42, 0xed, 0x01, 0x0a, 0x17, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74,
-	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x42, 0x19, 0x4e, 0x6f,
-	0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
-	0x61, 0x6c, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x49, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67,
-	0x65, 0x61, 0x2d, 0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x64,
-	0x6b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x2f, 0x76, 0x31, 0x3b, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x41, 0x4e, 0x58, 0xaa, 0x02, 0x13, 0x41, 0x70, 0x69,
-	0x2e, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x56, 0x31,
-	0xca, 0x02, 0x13, 0x41, 0x70, 0x69, 0x5c, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1f, 0x41, 0x70, 0x69, 0x5c, 0x4e, 0x6f, 0x74,
-	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x15, 0x41, 0x70, 0x69, 0x3a, 0x3a,
-	0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x3a, 0x56, 0x31,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64,
+	0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0xed, 0x01, 0x0a, 0x17, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6e, 0x6f, 0x74, 0x69,
+	0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x42, 0x19, 0x4e, 0x6f, 0x74,
+	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61,
+	0x6c, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x49, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67, 0x65,
+	0x61, 0x2d, 0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x64, 0x6b,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x2f, 0x76, 0x31, 0x3b, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x41, 0x4e, 0x58, 0xaa, 0x02, 0x13, 0x41, 0x70, 0x69, 0x2e,
+	0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x56, 0x31, 0xca,
+	0x02, 0x13, 0x41, 0x70, 0x69, 0x5c, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1f, 0x41, 0x70, 0x69, 0x5c, 0x4e, 0x6f, 0x74, 0x69,
+	0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x15, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x4e,
+	0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x3a, 0x56, 0x31, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -2616,86 +2742,88 @@ func file_api_notification_v1_notification_internal_proto_rawDescGZIP() []byte {
 	return file_api_notification_v1_notification_internal_proto_rawDescData
 }
 
-var file_api_notification_v1_notification_internal_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_api_notification_v1_notification_internal_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_api_notification_v1_notification_internal_proto_goTypes = []any{
-	(*InternalSendWelcomeUserEmailRequest)(nil),             // 0: api.notification.v1.InternalSendWelcomeUserEmailRequest
-	(*InternalSendWelcomeUserEmailResponse)(nil),            // 1: api.notification.v1.InternalSendWelcomeUserEmailResponse
-	(*InternalSendTokenStoreExpiredEmailRequest)(nil),       // 2: api.notification.v1.InternalSendTokenStoreExpiredEmailRequest
-	(*InternalSendTokenStoreExpiredEmailResponse)(nil),      // 3: api.notification.v1.InternalSendTokenStoreExpiredEmailResponse
-	(*InternalSendSetupPasswordEmailRequest)(nil),           // 4: api.notification.v1.InternalSendSetupPasswordEmailRequest
-	(*InternalSendSetupPasswordEmailResponse)(nil),          // 5: api.notification.v1.InternalSendSetupPasswordEmailResponse
-	(*InternalSendLinkAccountEmailRequest)(nil),             // 6: api.notification.v1.InternalSendLinkAccountEmailRequest
-	(*InternalSendLinkAccountEmailResponse)(nil),            // 7: api.notification.v1.InternalSendLinkAccountEmailResponse
-	(*InternalSendDownloadMediasEmailRequest)(nil),          // 8: api.notification.v1.InternalSendDownloadMediasEmailRequest
-	(*InternalSendDownloadMediasEmailResponse)(nil),         // 9: api.notification.v1.InternalSendDownloadMediasEmailResponse
-	(*InternalSendExportFileEmailRequest)(nil),              // 10: api.notification.v1.InternalSendExportFileEmailRequest
-	(*InternalSendExportFileEmailResponse)(nil),             // 11: api.notification.v1.InternalSendExportFileEmailResponse
-	(*InternalSendForgotPasswordEmailRequest)(nil),          // 12: api.notification.v1.InternalSendForgotPasswordEmailRequest
-	(*InternalSendForgotPasswordEmailResponse)(nil),         // 13: api.notification.v1.InternalSendForgotPasswordEmailResponse
-	(*InternalSendVerificationEmailRequest)(nil),            // 14: api.notification.v1.InternalSendVerificationEmailRequest
-	(*InternalSendVerificationEmailResponse)(nil),           // 15: api.notification.v1.InternalSendVerificationEmailResponse
-	(*InternalSendTeamInvitationEmailRequest)(nil),          // 16: api.notification.v1.InternalSendTeamInvitationEmailRequest
-	(*InternalSendTeamInvitationEmailResponse)(nil),         // 17: api.notification.v1.InternalSendTeamInvitationEmailResponse
-	(*InternalSendInboxRequest)(nil),                        // 18: api.notification.v1.InternalSendInboxRequest
-	(*InternalSendInboxResponse)(nil),                       // 19: api.notification.v1.InternalSendInboxResponse
-	(*InternalSendVerificationOTPEmailRequest)(nil),         // 20: api.notification.v1.InternalSendVerificationOTPEmailRequest
-	(*InternalSendVerificationOTPEmailResponse)(nil),        // 21: api.notification.v1.InternalSendVerificationOTPEmailResponse
-	(*InternalSendCreditUtilizationAlertEmailRequest)(nil),  // 22: api.notification.v1.InternalSendCreditUtilizationAlertEmailRequest
-	(*InternalSendCreditUtilizationAlertEmailResponse)(nil), // 23: api.notification.v1.InternalSendCreditUtilizationAlertEmailResponse
-	(*InternalSendOrderPaymentFailedEmailRequest)(nil),      // 24: api.notification.v1.InternalSendOrderPaymentFailedEmailRequest
-	(*InternalSendOrderPaymentFailedEmailResponse)(nil),     // 25: api.notification.v1.InternalSendOrderPaymentFailedEmailResponse
-	(*InternalSendEconomyCoverageHoldEmailRequest)(nil),     // 26: api.notification.v1.InternalSendEconomyCoverageHoldEmailRequest
-	(*InternalSendEconomyCoverageHoldEmailResponse)(nil),    // 27: api.notification.v1.InternalSendEconomyCoverageHoldEmailResponse
-	(*InternalSendEmailRequest)(nil),                        // 28: api.notification.v1.InternalSendEmailRequest
-	(*InternalSendEmailResponse)(nil),                       // 29: api.notification.v1.InternalSendEmailResponse
-	nil,                                                     // 30: api.notification.v1.InternalSendInboxRequest.DataEntry
-	(*timestamppb.Timestamp)(nil),                           // 31: google.protobuf.Timestamp
-	(AppCode)(0),                                            // 32: api.notification.v1.AppCode
-	(InboxStrategy)(0),                                      // 33: api.notification.v1.InboxStrategy
-	(InboxMode)(0),                                          // 34: api.notification.v1.InboxMode
-	(InboxType)(0),                                          // 35: api.notification.v1.InboxType
-	(InboxScheme)(0),                                        // 36: api.notification.v1.InboxScheme
-	(*v1.Email_SendTeamInvitationData)(nil),                 // 37: backend.email.v1.Email.SendTeamInvitationData
-	(*v1.Email_VerificationEmailData)(nil),                  // 38: backend.email.v1.Email.VerificationEmailData
-	(*v1.Email_ForgotPasswordEmailData)(nil),                // 39: backend.email.v1.Email.ForgotPasswordEmailData
-	(*v1.Email_SetupPasswordEmailData)(nil),                 // 40: backend.email.v1.Email.SetupPasswordEmailData
-	(*v1.Email_LinkAccountEmailData)(nil),                   // 41: backend.email.v1.Email.LinkAccountEmailData
-	(*v1.Email_ExportFileEmailData)(nil),                    // 42: backend.email.v1.Email.ExportFileEmailData
-	(*v1.Email_DownloadMediasEmailData)(nil),                // 43: backend.email.v1.Email.DownloadMediasEmailData
-	(*v1.Email_TrackingOrderUpdatedEmailData)(nil),          // 44: backend.email.v1.Email.TrackingOrderUpdatedEmailData
-	(*v1.Email_SendDesktopAppRecommendationEmailData)(nil),  // 45: backend.email.v1.Email.SendDesktopAppRecommendationEmailData
-	(*v1.Email_SendTokenStoreExpiredEmailData)(nil),         // 46: backend.email.v1.Email.SendTokenStoreExpiredEmailData
-	(*v1.Email_WelcomeUserEmailData)(nil),                   // 47: backend.email.v1.Email.WelcomeUserEmailData
-	(*v1.Email_VerificationOTPEmailData)(nil),               // 48: backend.email.v1.Email.VerificationOTPEmailData
-	(*v1.Email_StaffExportCheckoutRequestEmailData)(nil),    // 49: backend.email.v1.Email.StaffExportCheckoutRequestEmailData
-	(*v1.Email_TrademarkDetectedEmailData)(nil),             // 50: backend.email.v1.Email.TrademarkDetectedEmailData
-	(v1.Email_MessagePriority)(0),                           // 51: backend.email.v1.Email.MessagePriority
+	(*InternalSendWelcomeUserEmailRequest)(nil),               // 0: api.notification.v1.InternalSendWelcomeUserEmailRequest
+	(*InternalSendWelcomeUserEmailResponse)(nil),              // 1: api.notification.v1.InternalSendWelcomeUserEmailResponse
+	(*InternalSendTokenStoreExpiredEmailRequest)(nil),         // 2: api.notification.v1.InternalSendTokenStoreExpiredEmailRequest
+	(*InternalSendTokenStoreExpiredEmailResponse)(nil),        // 3: api.notification.v1.InternalSendTokenStoreExpiredEmailResponse
+	(*InternalSendSetupPasswordEmailRequest)(nil),             // 4: api.notification.v1.InternalSendSetupPasswordEmailRequest
+	(*InternalSendSetupPasswordEmailResponse)(nil),            // 5: api.notification.v1.InternalSendSetupPasswordEmailResponse
+	(*InternalSendLinkAccountEmailRequest)(nil),               // 6: api.notification.v1.InternalSendLinkAccountEmailRequest
+	(*InternalSendLinkAccountEmailResponse)(nil),              // 7: api.notification.v1.InternalSendLinkAccountEmailResponse
+	(*InternalSendDownloadMediasEmailRequest)(nil),            // 8: api.notification.v1.InternalSendDownloadMediasEmailRequest
+	(*InternalSendDownloadMediasEmailResponse)(nil),           // 9: api.notification.v1.InternalSendDownloadMediasEmailResponse
+	(*InternalSendExportFileEmailRequest)(nil),                // 10: api.notification.v1.InternalSendExportFileEmailRequest
+	(*InternalSendExportFileEmailResponse)(nil),               // 11: api.notification.v1.InternalSendExportFileEmailResponse
+	(*InternalSendForgotPasswordEmailRequest)(nil),            // 12: api.notification.v1.InternalSendForgotPasswordEmailRequest
+	(*InternalSendForgotPasswordEmailResponse)(nil),           // 13: api.notification.v1.InternalSendForgotPasswordEmailResponse
+	(*InternalSendVerificationEmailRequest)(nil),              // 14: api.notification.v1.InternalSendVerificationEmailRequest
+	(*InternalSendVerificationEmailResponse)(nil),             // 15: api.notification.v1.InternalSendVerificationEmailResponse
+	(*InternalSendTeamInvitationEmailRequest)(nil),            // 16: api.notification.v1.InternalSendTeamInvitationEmailRequest
+	(*InternalSendTeamInvitationEmailResponse)(nil),           // 17: api.notification.v1.InternalSendTeamInvitationEmailResponse
+	(*InternalSendInboxRequest)(nil),                          // 18: api.notification.v1.InternalSendInboxRequest
+	(*InternalSendInboxResponse)(nil),                         // 19: api.notification.v1.InternalSendInboxResponse
+	(*InternalSendVerificationOTPEmailRequest)(nil),           // 20: api.notification.v1.InternalSendVerificationOTPEmailRequest
+	(*InternalSendVerificationOTPEmailResponse)(nil),          // 21: api.notification.v1.InternalSendVerificationOTPEmailResponse
+	(*InternalSendCreditUtilizationAlertEmailRequest)(nil),    // 22: api.notification.v1.InternalSendCreditUtilizationAlertEmailRequest
+	(*InternalSendCreditUtilizationAlertEmailResponse)(nil),   // 23: api.notification.v1.InternalSendCreditUtilizationAlertEmailResponse
+	(*InternalSendOrderPaymentFailedEmailRequest)(nil),        // 24: api.notification.v1.InternalSendOrderPaymentFailedEmailRequest
+	(*InternalSendOrderPaymentFailedEmailResponse)(nil),       // 25: api.notification.v1.InternalSendOrderPaymentFailedEmailResponse
+	(*InternalSendEconomyCoverageHoldEmailRequest)(nil),       // 26: api.notification.v1.InternalSendEconomyCoverageHoldEmailRequest
+	(*InternalSendEconomyCoverageHoldEmailResponse)(nil),      // 27: api.notification.v1.InternalSendEconomyCoverageHoldEmailResponse
+	(*InternalSendPaymentResolutionBlockedEmailRequest)(nil),  // 28: api.notification.v1.InternalSendPaymentResolutionBlockedEmailRequest
+	(*InternalSendPaymentResolutionBlockedEmailResponse)(nil), // 29: api.notification.v1.InternalSendPaymentResolutionBlockedEmailResponse
+	(*InternalSendEmailRequest)(nil),                          // 30: api.notification.v1.InternalSendEmailRequest
+	(*InternalSendEmailResponse)(nil),                         // 31: api.notification.v1.InternalSendEmailResponse
+	nil,                                                       // 32: api.notification.v1.InternalSendInboxRequest.DataEntry
+	(*timestamppb.Timestamp)(nil),                             // 33: google.protobuf.Timestamp
+	(AppCode)(0),                                              // 34: api.notification.v1.AppCode
+	(InboxStrategy)(0),                                        // 35: api.notification.v1.InboxStrategy
+	(InboxMode)(0),                                            // 36: api.notification.v1.InboxMode
+	(InboxType)(0),                                            // 37: api.notification.v1.InboxType
+	(InboxScheme)(0),                                          // 38: api.notification.v1.InboxScheme
+	(*v1.Email_SendTeamInvitationData)(nil),                   // 39: backend.email.v1.Email.SendTeamInvitationData
+	(*v1.Email_VerificationEmailData)(nil),                    // 40: backend.email.v1.Email.VerificationEmailData
+	(*v1.Email_ForgotPasswordEmailData)(nil),                  // 41: backend.email.v1.Email.ForgotPasswordEmailData
+	(*v1.Email_SetupPasswordEmailData)(nil),                   // 42: backend.email.v1.Email.SetupPasswordEmailData
+	(*v1.Email_LinkAccountEmailData)(nil),                     // 43: backend.email.v1.Email.LinkAccountEmailData
+	(*v1.Email_ExportFileEmailData)(nil),                      // 44: backend.email.v1.Email.ExportFileEmailData
+	(*v1.Email_DownloadMediasEmailData)(nil),                  // 45: backend.email.v1.Email.DownloadMediasEmailData
+	(*v1.Email_TrackingOrderUpdatedEmailData)(nil),            // 46: backend.email.v1.Email.TrackingOrderUpdatedEmailData
+	(*v1.Email_SendDesktopAppRecommendationEmailData)(nil),    // 47: backend.email.v1.Email.SendDesktopAppRecommendationEmailData
+	(*v1.Email_SendTokenStoreExpiredEmailData)(nil),           // 48: backend.email.v1.Email.SendTokenStoreExpiredEmailData
+	(*v1.Email_WelcomeUserEmailData)(nil),                     // 49: backend.email.v1.Email.WelcomeUserEmailData
+	(*v1.Email_VerificationOTPEmailData)(nil),                 // 50: backend.email.v1.Email.VerificationOTPEmailData
+	(*v1.Email_StaffExportCheckoutRequestEmailData)(nil),      // 51: backend.email.v1.Email.StaffExportCheckoutRequestEmailData
+	(*v1.Email_TrademarkDetectedEmailData)(nil),               // 52: backend.email.v1.Email.TrademarkDetectedEmailData
+	(v1.Email_MessagePriority)(0),                             // 53: backend.email.v1.Email.MessagePriority
 }
 var file_api_notification_v1_notification_internal_proto_depIdxs = []int32{
-	31, // 0: api.notification.v1.InternalSendForgotPasswordEmailRequest.expired_at:type_name -> google.protobuf.Timestamp
-	32, // 1: api.notification.v1.InternalSendInboxRequest.app_code:type_name -> api.notification.v1.AppCode
-	33, // 2: api.notification.v1.InternalSendInboxRequest.strategy:type_name -> api.notification.v1.InboxStrategy
-	34, // 3: api.notification.v1.InternalSendInboxRequest.mode:type_name -> api.notification.v1.InboxMode
-	30, // 4: api.notification.v1.InternalSendInboxRequest.data:type_name -> api.notification.v1.InternalSendInboxRequest.DataEntry
-	35, // 5: api.notification.v1.InternalSendInboxRequest.type:type_name -> api.notification.v1.InboxType
-	36, // 6: api.notification.v1.InternalSendInboxRequest.scheme:type_name -> api.notification.v1.InboxScheme
-	31, // 7: api.notification.v1.InternalSendInboxRequest.created_at:type_name -> google.protobuf.Timestamp
-	31, // 8: api.notification.v1.InternalSendInboxRequest.updated_at:type_name -> google.protobuf.Timestamp
-	37, // 9: api.notification.v1.InternalSendEmailRequest.send_team_invitation_email:type_name -> backend.email.v1.Email.SendTeamInvitationData
-	38, // 10: api.notification.v1.InternalSendEmailRequest.verification_email:type_name -> backend.email.v1.Email.VerificationEmailData
-	39, // 11: api.notification.v1.InternalSendEmailRequest.forgot_password_email:type_name -> backend.email.v1.Email.ForgotPasswordEmailData
-	40, // 12: api.notification.v1.InternalSendEmailRequest.setup_password_email:type_name -> backend.email.v1.Email.SetupPasswordEmailData
-	41, // 13: api.notification.v1.InternalSendEmailRequest.link_account_email:type_name -> backend.email.v1.Email.LinkAccountEmailData
-	42, // 14: api.notification.v1.InternalSendEmailRequest.export_file_email:type_name -> backend.email.v1.Email.ExportFileEmailData
-	43, // 15: api.notification.v1.InternalSendEmailRequest.download_medias_email:type_name -> backend.email.v1.Email.DownloadMediasEmailData
-	44, // 16: api.notification.v1.InternalSendEmailRequest.tracking_order_updated_email:type_name -> backend.email.v1.Email.TrackingOrderUpdatedEmailData
-	45, // 17: api.notification.v1.InternalSendEmailRequest.send_desktop_app_recommendation_email:type_name -> backend.email.v1.Email.SendDesktopAppRecommendationEmailData
-	46, // 18: api.notification.v1.InternalSendEmailRequest.send_token_store_expired_email:type_name -> backend.email.v1.Email.SendTokenStoreExpiredEmailData
-	47, // 19: api.notification.v1.InternalSendEmailRequest.welcome_user_email:type_name -> backend.email.v1.Email.WelcomeUserEmailData
-	48, // 20: api.notification.v1.InternalSendEmailRequest.verification_otp_email:type_name -> backend.email.v1.Email.VerificationOTPEmailData
-	49, // 21: api.notification.v1.InternalSendEmailRequest.staff_export_checkout_request_email:type_name -> backend.email.v1.Email.StaffExportCheckoutRequestEmailData
-	50, // 22: api.notification.v1.InternalSendEmailRequest.trademark_detected_email:type_name -> backend.email.v1.Email.TrademarkDetectedEmailData
-	51, // 23: api.notification.v1.InternalSendEmailRequest.priority:type_name -> backend.email.v1.Email.MessagePriority
+	33, // 0: api.notification.v1.InternalSendForgotPasswordEmailRequest.expired_at:type_name -> google.protobuf.Timestamp
+	34, // 1: api.notification.v1.InternalSendInboxRequest.app_code:type_name -> api.notification.v1.AppCode
+	35, // 2: api.notification.v1.InternalSendInboxRequest.strategy:type_name -> api.notification.v1.InboxStrategy
+	36, // 3: api.notification.v1.InternalSendInboxRequest.mode:type_name -> api.notification.v1.InboxMode
+	32, // 4: api.notification.v1.InternalSendInboxRequest.data:type_name -> api.notification.v1.InternalSendInboxRequest.DataEntry
+	37, // 5: api.notification.v1.InternalSendInboxRequest.type:type_name -> api.notification.v1.InboxType
+	38, // 6: api.notification.v1.InternalSendInboxRequest.scheme:type_name -> api.notification.v1.InboxScheme
+	33, // 7: api.notification.v1.InternalSendInboxRequest.created_at:type_name -> google.protobuf.Timestamp
+	33, // 8: api.notification.v1.InternalSendInboxRequest.updated_at:type_name -> google.protobuf.Timestamp
+	39, // 9: api.notification.v1.InternalSendEmailRequest.send_team_invitation_email:type_name -> backend.email.v1.Email.SendTeamInvitationData
+	40, // 10: api.notification.v1.InternalSendEmailRequest.verification_email:type_name -> backend.email.v1.Email.VerificationEmailData
+	41, // 11: api.notification.v1.InternalSendEmailRequest.forgot_password_email:type_name -> backend.email.v1.Email.ForgotPasswordEmailData
+	42, // 12: api.notification.v1.InternalSendEmailRequest.setup_password_email:type_name -> backend.email.v1.Email.SetupPasswordEmailData
+	43, // 13: api.notification.v1.InternalSendEmailRequest.link_account_email:type_name -> backend.email.v1.Email.LinkAccountEmailData
+	44, // 14: api.notification.v1.InternalSendEmailRequest.export_file_email:type_name -> backend.email.v1.Email.ExportFileEmailData
+	45, // 15: api.notification.v1.InternalSendEmailRequest.download_medias_email:type_name -> backend.email.v1.Email.DownloadMediasEmailData
+	46, // 16: api.notification.v1.InternalSendEmailRequest.tracking_order_updated_email:type_name -> backend.email.v1.Email.TrackingOrderUpdatedEmailData
+	47, // 17: api.notification.v1.InternalSendEmailRequest.send_desktop_app_recommendation_email:type_name -> backend.email.v1.Email.SendDesktopAppRecommendationEmailData
+	48, // 18: api.notification.v1.InternalSendEmailRequest.send_token_store_expired_email:type_name -> backend.email.v1.Email.SendTokenStoreExpiredEmailData
+	49, // 19: api.notification.v1.InternalSendEmailRequest.welcome_user_email:type_name -> backend.email.v1.Email.WelcomeUserEmailData
+	50, // 20: api.notification.v1.InternalSendEmailRequest.verification_otp_email:type_name -> backend.email.v1.Email.VerificationOTPEmailData
+	51, // 21: api.notification.v1.InternalSendEmailRequest.staff_export_checkout_request_email:type_name -> backend.email.v1.Email.StaffExportCheckoutRequestEmailData
+	52, // 22: api.notification.v1.InternalSendEmailRequest.trademark_detected_email:type_name -> backend.email.v1.Email.TrademarkDetectedEmailData
+	53, // 23: api.notification.v1.InternalSendEmailRequest.priority:type_name -> backend.email.v1.Email.MessagePriority
 	18, // 24: api.notification.v1.NotificationInternalAPI.InternalSendInbox:input_type -> api.notification.v1.InternalSendInboxRequest
 	16, // 25: api.notification.v1.NotificationInternalAPI.InternalSendTeamInvitationEmail:input_type -> api.notification.v1.InternalSendTeamInvitationEmailRequest
 	14, // 26: api.notification.v1.NotificationInternalAPI.InternalSendVerificationEmail:input_type -> api.notification.v1.InternalSendVerificationEmailRequest
@@ -2710,24 +2838,26 @@ var file_api_notification_v1_notification_internal_proto_depIdxs = []int32{
 	22, // 35: api.notification.v1.NotificationInternalAPI.InternalSendCreditUtilizationAlertEmail:input_type -> api.notification.v1.InternalSendCreditUtilizationAlertEmailRequest
 	24, // 36: api.notification.v1.NotificationInternalAPI.InternalSendOrderPaymentFailedEmail:input_type -> api.notification.v1.InternalSendOrderPaymentFailedEmailRequest
 	26, // 37: api.notification.v1.NotificationInternalAPI.InternalSendEconomyCoverageHoldEmail:input_type -> api.notification.v1.InternalSendEconomyCoverageHoldEmailRequest
-	28, // 38: api.notification.v1.NotificationInternalAPI.InternalSendEmail:input_type -> api.notification.v1.InternalSendEmailRequest
-	19, // 39: api.notification.v1.NotificationInternalAPI.InternalSendInbox:output_type -> api.notification.v1.InternalSendInboxResponse
-	17, // 40: api.notification.v1.NotificationInternalAPI.InternalSendTeamInvitationEmail:output_type -> api.notification.v1.InternalSendTeamInvitationEmailResponse
-	15, // 41: api.notification.v1.NotificationInternalAPI.InternalSendVerificationEmail:output_type -> api.notification.v1.InternalSendVerificationEmailResponse
-	21, // 42: api.notification.v1.NotificationInternalAPI.InternalSendVerificationOTPEmail:output_type -> api.notification.v1.InternalSendVerificationOTPEmailResponse
-	13, // 43: api.notification.v1.NotificationInternalAPI.InternalSendForgotPasswordEmail:output_type -> api.notification.v1.InternalSendForgotPasswordEmailResponse
-	5,  // 44: api.notification.v1.NotificationInternalAPI.InternalSendSetupPasswordEmail:output_type -> api.notification.v1.InternalSendSetupPasswordEmailResponse
-	7,  // 45: api.notification.v1.NotificationInternalAPI.InternalSendLinkAccountEmail:output_type -> api.notification.v1.InternalSendLinkAccountEmailResponse
-	11, // 46: api.notification.v1.NotificationInternalAPI.InternalSendExportFileEmail:output_type -> api.notification.v1.InternalSendExportFileEmailResponse
-	9,  // 47: api.notification.v1.NotificationInternalAPI.InternalSendDownloadMediasEmail:output_type -> api.notification.v1.InternalSendDownloadMediasEmailResponse
-	3,  // 48: api.notification.v1.NotificationInternalAPI.InternalSendTokenStoreExpiredEmail:output_type -> api.notification.v1.InternalSendTokenStoreExpiredEmailResponse
-	1,  // 49: api.notification.v1.NotificationInternalAPI.InternalSendWelcomeUserEmail:output_type -> api.notification.v1.InternalSendWelcomeUserEmailResponse
-	23, // 50: api.notification.v1.NotificationInternalAPI.InternalSendCreditUtilizationAlertEmail:output_type -> api.notification.v1.InternalSendCreditUtilizationAlertEmailResponse
-	25, // 51: api.notification.v1.NotificationInternalAPI.InternalSendOrderPaymentFailedEmail:output_type -> api.notification.v1.InternalSendOrderPaymentFailedEmailResponse
-	27, // 52: api.notification.v1.NotificationInternalAPI.InternalSendEconomyCoverageHoldEmail:output_type -> api.notification.v1.InternalSendEconomyCoverageHoldEmailResponse
-	29, // 53: api.notification.v1.NotificationInternalAPI.InternalSendEmail:output_type -> api.notification.v1.InternalSendEmailResponse
-	39, // [39:54] is the sub-list for method output_type
-	24, // [24:39] is the sub-list for method input_type
+	28, // 38: api.notification.v1.NotificationInternalAPI.InternalSendPaymentResolutionBlockedEmail:input_type -> api.notification.v1.InternalSendPaymentResolutionBlockedEmailRequest
+	30, // 39: api.notification.v1.NotificationInternalAPI.InternalSendEmail:input_type -> api.notification.v1.InternalSendEmailRequest
+	19, // 40: api.notification.v1.NotificationInternalAPI.InternalSendInbox:output_type -> api.notification.v1.InternalSendInboxResponse
+	17, // 41: api.notification.v1.NotificationInternalAPI.InternalSendTeamInvitationEmail:output_type -> api.notification.v1.InternalSendTeamInvitationEmailResponse
+	15, // 42: api.notification.v1.NotificationInternalAPI.InternalSendVerificationEmail:output_type -> api.notification.v1.InternalSendVerificationEmailResponse
+	21, // 43: api.notification.v1.NotificationInternalAPI.InternalSendVerificationOTPEmail:output_type -> api.notification.v1.InternalSendVerificationOTPEmailResponse
+	13, // 44: api.notification.v1.NotificationInternalAPI.InternalSendForgotPasswordEmail:output_type -> api.notification.v1.InternalSendForgotPasswordEmailResponse
+	5,  // 45: api.notification.v1.NotificationInternalAPI.InternalSendSetupPasswordEmail:output_type -> api.notification.v1.InternalSendSetupPasswordEmailResponse
+	7,  // 46: api.notification.v1.NotificationInternalAPI.InternalSendLinkAccountEmail:output_type -> api.notification.v1.InternalSendLinkAccountEmailResponse
+	11, // 47: api.notification.v1.NotificationInternalAPI.InternalSendExportFileEmail:output_type -> api.notification.v1.InternalSendExportFileEmailResponse
+	9,  // 48: api.notification.v1.NotificationInternalAPI.InternalSendDownloadMediasEmail:output_type -> api.notification.v1.InternalSendDownloadMediasEmailResponse
+	3,  // 49: api.notification.v1.NotificationInternalAPI.InternalSendTokenStoreExpiredEmail:output_type -> api.notification.v1.InternalSendTokenStoreExpiredEmailResponse
+	1,  // 50: api.notification.v1.NotificationInternalAPI.InternalSendWelcomeUserEmail:output_type -> api.notification.v1.InternalSendWelcomeUserEmailResponse
+	23, // 51: api.notification.v1.NotificationInternalAPI.InternalSendCreditUtilizationAlertEmail:output_type -> api.notification.v1.InternalSendCreditUtilizationAlertEmailResponse
+	25, // 52: api.notification.v1.NotificationInternalAPI.InternalSendOrderPaymentFailedEmail:output_type -> api.notification.v1.InternalSendOrderPaymentFailedEmailResponse
+	27, // 53: api.notification.v1.NotificationInternalAPI.InternalSendEconomyCoverageHoldEmail:output_type -> api.notification.v1.InternalSendEconomyCoverageHoldEmailResponse
+	29, // 54: api.notification.v1.NotificationInternalAPI.InternalSendPaymentResolutionBlockedEmail:output_type -> api.notification.v1.InternalSendPaymentResolutionBlockedEmailResponse
+	31, // 55: api.notification.v1.NotificationInternalAPI.InternalSendEmail:output_type -> api.notification.v1.InternalSendEmailResponse
+	40, // [40:56] is the sub-list for method output_type
+	24, // [24:40] is the sub-list for method input_type
 	24, // [24:24] is the sub-list for extension type_name
 	24, // [24:24] is the sub-list for extension extendee
 	0,  // [0:24] is the sub-list for field type_name
@@ -2739,7 +2869,7 @@ func file_api_notification_v1_notification_internal_proto_init() {
 		return
 	}
 	file_api_notification_v1_notification_data_proto_init()
-	file_api_notification_v1_notification_internal_proto_msgTypes[28].OneofWrappers = []any{
+	file_api_notification_v1_notification_internal_proto_msgTypes[30].OneofWrappers = []any{
 		(*InternalSendEmailRequest_SendTeamInvitationEmail)(nil),
 		(*InternalSendEmailRequest_VerificationEmail)(nil),
 		(*InternalSendEmailRequest_ForgotPasswordEmail)(nil),
@@ -2761,7 +2891,7 @@ func file_api_notification_v1_notification_internal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_notification_v1_notification_internal_proto_rawDesc), len(file_api_notification_v1_notification_internal_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   31,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
