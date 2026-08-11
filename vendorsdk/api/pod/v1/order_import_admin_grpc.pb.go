@@ -22,6 +22,7 @@ const (
 	OrderImportAdminAPI_StaffListOrderImportSession_FullMethodName             = "/api.pod.v1.OrderImportAdminAPI/StaffListOrderImportSession"
 	OrderImportAdminAPI_StaffCountOrderImportSessionOrderStatus_FullMethodName = "/api.pod.v1.OrderImportAdminAPI/StaffCountOrderImportSessionOrderStatus"
 	OrderImportAdminAPI_StaffListOrderImport_FullMethodName                    = "/api.pod.v1.OrderImportAdminAPI/StaffListOrderImport"
+	OrderImportAdminAPI_StaffRetryOrderDraftImportVerification_FullMethodName  = "/api.pod.v1.OrderImportAdminAPI/StaffRetryOrderDraftImportVerification"
 )
 
 // OrderImportAdminAPIClient is the client API for OrderImportAdminAPI service.
@@ -31,6 +32,7 @@ type OrderImportAdminAPIClient interface {
 	StaffListOrderImportSession(ctx context.Context, in *StaffListOrderImportSessionRequest, opts ...grpc.CallOption) (*StaffListOrderImportSessionResponse, error)
 	StaffCountOrderImportSessionOrderStatus(ctx context.Context, in *StaffCountOrderImportSessionOrderStatusRequest, opts ...grpc.CallOption) (*StaffCountOrderImportSessionOrderStatusResponse, error)
 	StaffListOrderImport(ctx context.Context, in *StaffListOrderImportRequest, opts ...grpc.CallOption) (*StaffListOrderImportResponse, error)
+	StaffRetryOrderDraftImportVerification(ctx context.Context, in *StaffRetryOrderDraftImportVerificationRequest, opts ...grpc.CallOption) (*StaffRetryOrderDraftImportVerificationResponse, error)
 }
 
 type orderImportAdminAPIClient struct {
@@ -71,6 +73,16 @@ func (c *orderImportAdminAPIClient) StaffListOrderImport(ctx context.Context, in
 	return out, nil
 }
 
+func (c *orderImportAdminAPIClient) StaffRetryOrderDraftImportVerification(ctx context.Context, in *StaffRetryOrderDraftImportVerificationRequest, opts ...grpc.CallOption) (*StaffRetryOrderDraftImportVerificationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffRetryOrderDraftImportVerificationResponse)
+	err := c.cc.Invoke(ctx, OrderImportAdminAPI_StaffRetryOrderDraftImportVerification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderImportAdminAPIServer is the server API for OrderImportAdminAPI service.
 // All implementations should embed UnimplementedOrderImportAdminAPIServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type OrderImportAdminAPIServer interface {
 	StaffListOrderImportSession(context.Context, *StaffListOrderImportSessionRequest) (*StaffListOrderImportSessionResponse, error)
 	StaffCountOrderImportSessionOrderStatus(context.Context, *StaffCountOrderImportSessionOrderStatusRequest) (*StaffCountOrderImportSessionOrderStatusResponse, error)
 	StaffListOrderImport(context.Context, *StaffListOrderImportRequest) (*StaffListOrderImportResponse, error)
+	StaffRetryOrderDraftImportVerification(context.Context, *StaffRetryOrderDraftImportVerificationRequest) (*StaffRetryOrderDraftImportVerificationResponse, error)
 }
 
 // UnimplementedOrderImportAdminAPIServer should be embedded to have
@@ -95,6 +108,9 @@ func (UnimplementedOrderImportAdminAPIServer) StaffCountOrderImportSessionOrderS
 }
 func (UnimplementedOrderImportAdminAPIServer) StaffListOrderImport(context.Context, *StaffListOrderImportRequest) (*StaffListOrderImportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListOrderImport not implemented")
+}
+func (UnimplementedOrderImportAdminAPIServer) StaffRetryOrderDraftImportVerification(context.Context, *StaffRetryOrderDraftImportVerificationRequest) (*StaffRetryOrderDraftImportVerificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffRetryOrderDraftImportVerification not implemented")
 }
 func (UnimplementedOrderImportAdminAPIServer) testEmbeddedByValue() {}
 
@@ -170,6 +186,24 @@ func _OrderImportAdminAPI_StaffListOrderImport_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderImportAdminAPI_StaffRetryOrderDraftImportVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffRetryOrderDraftImportVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderImportAdminAPIServer).StaffRetryOrderDraftImportVerification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderImportAdminAPI_StaffRetryOrderDraftImportVerification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderImportAdminAPIServer).StaffRetryOrderDraftImportVerification(ctx, req.(*StaffRetryOrderDraftImportVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderImportAdminAPI_ServiceDesc is the grpc.ServiceDesc for OrderImportAdminAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -188,6 +222,10 @@ var OrderImportAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListOrderImport",
 			Handler:    _OrderImportAdminAPI_StaffListOrderImport_Handler,
+		},
+		{
+			MethodName: "StaffRetryOrderDraftImportVerification",
+			Handler:    _OrderImportAdminAPI_StaffRetryOrderDraftImportVerification_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
