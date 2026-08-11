@@ -22,6 +22,7 @@ const (
 	OperationIssueAdminAPI_StaffListOpIssue_FullMethodName            = "/api.pod.v1.OperationIssueAdminAPI/StaffListOpIssue"
 	OperationIssueAdminAPI_StaffCountOpIssueStatus_FullMethodName     = "/api.pod.v1.OperationIssueAdminAPI/StaffCountOpIssueStatus"
 	OperationIssueAdminAPI_StaffGetOpIssue_FullMethodName             = "/api.pod.v1.OperationIssueAdminAPI/StaffGetOpIssue"
+	OperationIssueAdminAPI_StaffListOpTeamMember_FullMethodName       = "/api.pod.v1.OperationIssueAdminAPI/StaffListOpTeamMember"
 	OperationIssueAdminAPI_StaffCreateOpIssue_FullMethodName          = "/api.pod.v1.OperationIssueAdminAPI/StaffCreateOpIssue"
 	OperationIssueAdminAPI_StaffClaimOpIssue_FullMethodName           = "/api.pod.v1.OperationIssueAdminAPI/StaffClaimOpIssue"
 	OperationIssueAdminAPI_StaffTransferOpIssue_FullMethodName        = "/api.pod.v1.OperationIssueAdminAPI/StaffTransferOpIssue"
@@ -32,9 +33,12 @@ const (
 	OperationIssueAdminAPI_StaffUnblockOpIssue_FullMethodName         = "/api.pod.v1.OperationIssueAdminAPI/StaffUnblockOpIssue"
 	OperationIssueAdminAPI_StaffAddOpIssueComment_FullMethodName      = "/api.pod.v1.OperationIssueAdminAPI/StaffAddOpIssueComment"
 	OperationIssueAdminAPI_StaffUpdateOpIssueSeverity_FullMethodName  = "/api.pod.v1.OperationIssueAdminAPI/StaffUpdateOpIssueSeverity"
+	OperationIssueAdminAPI_StaffUpdateOpIssueETA_FullMethodName       = "/api.pod.v1.OperationIssueAdminAPI/StaffUpdateOpIssueETA"
 	OperationIssueAdminAPI_StaffSplitOpIssueByFacility_FullMethodName = "/api.pod.v1.OperationIssueAdminAPI/StaffSplitOpIssueByFacility"
 	OperationIssueAdminAPI_StaffSpawnWorkItem_FullMethodName          = "/api.pod.v1.OperationIssueAdminAPI/StaffSpawnWorkItem"
 	OperationIssueAdminAPI_StaffAttachExternalRef_FullMethodName      = "/api.pod.v1.OperationIssueAdminAPI/StaffAttachExternalRef"
+	OperationIssueAdminAPI_StaffUpsertOpTeamMember_FullMethodName     = "/api.pod.v1.OperationIssueAdminAPI/StaffUpsertOpTeamMember"
+	OperationIssueAdminAPI_StaffDeleteOpTeamMember_FullMethodName     = "/api.pod.v1.OperationIssueAdminAPI/StaffDeleteOpTeamMember"
 	OperationIssueAdminAPI_SystemIngestEvent_FullMethodName           = "/api.pod.v1.OperationIssueAdminAPI/SystemIngestEvent"
 )
 
@@ -48,6 +52,7 @@ type OperationIssueAdminAPIClient interface {
 	StaffListOpIssue(ctx context.Context, in *StaffListOpIssueRequest, opts ...grpc.CallOption) (*StaffListOpIssueResponse, error)
 	StaffCountOpIssueStatus(ctx context.Context, in *StaffCountOpIssueStatusRequest, opts ...grpc.CallOption) (*StaffCountOpIssueStatusResponse, error)
 	StaffGetOpIssue(ctx context.Context, in *StaffGetOpIssueRequest, opts ...grpc.CallOption) (*StaffGetOpIssueResponse, error)
+	StaffListOpTeamMember(ctx context.Context, in *StaffListOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffListOpTeamMemberResponse, error)
 	// Commands
 	StaffCreateOpIssue(ctx context.Context, in *StaffCreateOpIssueRequest, opts ...grpc.CallOption) (*StaffCreateOpIssueResponse, error)
 	StaffClaimOpIssue(ctx context.Context, in *StaffClaimOpIssueRequest, opts ...grpc.CallOption) (*StaffClaimOpIssueResponse, error)
@@ -59,9 +64,12 @@ type OperationIssueAdminAPIClient interface {
 	StaffUnblockOpIssue(ctx context.Context, in *StaffUnblockOpIssueRequest, opts ...grpc.CallOption) (*StaffUnblockOpIssueResponse, error)
 	StaffAddOpIssueComment(ctx context.Context, in *StaffAddOpIssueCommentRequest, opts ...grpc.CallOption) (*StaffAddOpIssueCommentResponse, error)
 	StaffUpdateOpIssueSeverity(ctx context.Context, in *StaffUpdateOpIssueSeverityRequest, opts ...grpc.CallOption) (*StaffUpdateOpIssueSeverityResponse, error)
+	StaffUpdateOpIssueETA(ctx context.Context, in *StaffUpdateOpIssueETARequest, opts ...grpc.CallOption) (*StaffUpdateOpIssueETAResponse, error)
 	StaffSplitOpIssueByFacility(ctx context.Context, in *StaffSplitOpIssueByFacilityRequest, opts ...grpc.CallOption) (*StaffSplitOpIssueByFacilityResponse, error)
 	StaffSpawnWorkItem(ctx context.Context, in *StaffSpawnWorkItemRequest, opts ...grpc.CallOption) (*StaffSpawnWorkItemResponse, error)
 	StaffAttachExternalRef(ctx context.Context, in *StaffAttachExternalRefRequest, opts ...grpc.CallOption) (*StaffAttachExternalRefResponse, error)
+	StaffUpsertOpTeamMember(ctx context.Context, in *StaffUpsertOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffUpsertOpTeamMemberResponse, error)
+	StaffDeleteOpTeamMember(ctx context.Context, in *StaffDeleteOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffDeleteOpTeamMemberResponse, error)
 	SystemIngestEvent(ctx context.Context, in *SystemIngestEventRequest, opts ...grpc.CallOption) (*SystemIngestEventResponse, error)
 }
 
@@ -97,6 +105,16 @@ func (c *operationIssueAdminAPIClient) StaffGetOpIssue(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGetOpIssueResponse)
 	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffGetOpIssue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *operationIssueAdminAPIClient) StaffListOpTeamMember(ctx context.Context, in *StaffListOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffListOpTeamMemberResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListOpTeamMemberResponse)
+	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffListOpTeamMember_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -203,6 +221,16 @@ func (c *operationIssueAdminAPIClient) StaffUpdateOpIssueSeverity(ctx context.Co
 	return out, nil
 }
 
+func (c *operationIssueAdminAPIClient) StaffUpdateOpIssueETA(ctx context.Context, in *StaffUpdateOpIssueETARequest, opts ...grpc.CallOption) (*StaffUpdateOpIssueETAResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateOpIssueETAResponse)
+	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffUpdateOpIssueETA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *operationIssueAdminAPIClient) StaffSplitOpIssueByFacility(ctx context.Context, in *StaffSplitOpIssueByFacilityRequest, opts ...grpc.CallOption) (*StaffSplitOpIssueByFacilityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffSplitOpIssueByFacilityResponse)
@@ -233,6 +261,26 @@ func (c *operationIssueAdminAPIClient) StaffAttachExternalRef(ctx context.Contex
 	return out, nil
 }
 
+func (c *operationIssueAdminAPIClient) StaffUpsertOpTeamMember(ctx context.Context, in *StaffUpsertOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffUpsertOpTeamMemberResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpsertOpTeamMemberResponse)
+	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffUpsertOpTeamMember_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *operationIssueAdminAPIClient) StaffDeleteOpTeamMember(ctx context.Context, in *StaffDeleteOpTeamMemberRequest, opts ...grpc.CallOption) (*StaffDeleteOpTeamMemberResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteOpTeamMemberResponse)
+	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffDeleteOpTeamMember_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *operationIssueAdminAPIClient) SystemIngestEvent(ctx context.Context, in *SystemIngestEventRequest, opts ...grpc.CallOption) (*SystemIngestEventResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SystemIngestEventResponse)
@@ -253,6 +301,7 @@ type OperationIssueAdminAPIServer interface {
 	StaffListOpIssue(context.Context, *StaffListOpIssueRequest) (*StaffListOpIssueResponse, error)
 	StaffCountOpIssueStatus(context.Context, *StaffCountOpIssueStatusRequest) (*StaffCountOpIssueStatusResponse, error)
 	StaffGetOpIssue(context.Context, *StaffGetOpIssueRequest) (*StaffGetOpIssueResponse, error)
+	StaffListOpTeamMember(context.Context, *StaffListOpTeamMemberRequest) (*StaffListOpTeamMemberResponse, error)
 	// Commands
 	StaffCreateOpIssue(context.Context, *StaffCreateOpIssueRequest) (*StaffCreateOpIssueResponse, error)
 	StaffClaimOpIssue(context.Context, *StaffClaimOpIssueRequest) (*StaffClaimOpIssueResponse, error)
@@ -264,9 +313,12 @@ type OperationIssueAdminAPIServer interface {
 	StaffUnblockOpIssue(context.Context, *StaffUnblockOpIssueRequest) (*StaffUnblockOpIssueResponse, error)
 	StaffAddOpIssueComment(context.Context, *StaffAddOpIssueCommentRequest) (*StaffAddOpIssueCommentResponse, error)
 	StaffUpdateOpIssueSeverity(context.Context, *StaffUpdateOpIssueSeverityRequest) (*StaffUpdateOpIssueSeverityResponse, error)
+	StaffUpdateOpIssueETA(context.Context, *StaffUpdateOpIssueETARequest) (*StaffUpdateOpIssueETAResponse, error)
 	StaffSplitOpIssueByFacility(context.Context, *StaffSplitOpIssueByFacilityRequest) (*StaffSplitOpIssueByFacilityResponse, error)
 	StaffSpawnWorkItem(context.Context, *StaffSpawnWorkItemRequest) (*StaffSpawnWorkItemResponse, error)
 	StaffAttachExternalRef(context.Context, *StaffAttachExternalRefRequest) (*StaffAttachExternalRefResponse, error)
+	StaffUpsertOpTeamMember(context.Context, *StaffUpsertOpTeamMemberRequest) (*StaffUpsertOpTeamMemberResponse, error)
+	StaffDeleteOpTeamMember(context.Context, *StaffDeleteOpTeamMemberRequest) (*StaffDeleteOpTeamMemberResponse, error)
 	SystemIngestEvent(context.Context, *SystemIngestEventRequest) (*SystemIngestEventResponse, error)
 }
 
@@ -285,6 +337,9 @@ func (UnimplementedOperationIssueAdminAPIServer) StaffCountOpIssueStatus(context
 }
 func (UnimplementedOperationIssueAdminAPIServer) StaffGetOpIssue(context.Context, *StaffGetOpIssueRequest) (*StaffGetOpIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetOpIssue not implemented")
+}
+func (UnimplementedOperationIssueAdminAPIServer) StaffListOpTeamMember(context.Context, *StaffListOpTeamMemberRequest) (*StaffListOpTeamMemberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListOpTeamMember not implemented")
 }
 func (UnimplementedOperationIssueAdminAPIServer) StaffCreateOpIssue(context.Context, *StaffCreateOpIssueRequest) (*StaffCreateOpIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateOpIssue not implemented")
@@ -316,6 +371,9 @@ func (UnimplementedOperationIssueAdminAPIServer) StaffAddOpIssueComment(context.
 func (UnimplementedOperationIssueAdminAPIServer) StaffUpdateOpIssueSeverity(context.Context, *StaffUpdateOpIssueSeverityRequest) (*StaffUpdateOpIssueSeverityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOpIssueSeverity not implemented")
 }
+func (UnimplementedOperationIssueAdminAPIServer) StaffUpdateOpIssueETA(context.Context, *StaffUpdateOpIssueETARequest) (*StaffUpdateOpIssueETAResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOpIssueETA not implemented")
+}
 func (UnimplementedOperationIssueAdminAPIServer) StaffSplitOpIssueByFacility(context.Context, *StaffSplitOpIssueByFacilityRequest) (*StaffSplitOpIssueByFacilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffSplitOpIssueByFacility not implemented")
 }
@@ -324,6 +382,12 @@ func (UnimplementedOperationIssueAdminAPIServer) StaffSpawnWorkItem(context.Cont
 }
 func (UnimplementedOperationIssueAdminAPIServer) StaffAttachExternalRef(context.Context, *StaffAttachExternalRefRequest) (*StaffAttachExternalRefResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffAttachExternalRef not implemented")
+}
+func (UnimplementedOperationIssueAdminAPIServer) StaffUpsertOpTeamMember(context.Context, *StaffUpsertOpTeamMemberRequest) (*StaffUpsertOpTeamMemberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpsertOpTeamMember not implemented")
+}
+func (UnimplementedOperationIssueAdminAPIServer) StaffDeleteOpTeamMember(context.Context, *StaffDeleteOpTeamMemberRequest) (*StaffDeleteOpTeamMemberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteOpTeamMember not implemented")
 }
 func (UnimplementedOperationIssueAdminAPIServer) SystemIngestEvent(context.Context, *SystemIngestEventRequest) (*SystemIngestEventResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SystemIngestEvent not implemented")
@@ -398,6 +462,24 @@ func _OperationIssueAdminAPI_StaffGetOpIssue_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OperationIssueAdminAPIServer).StaffGetOpIssue(ctx, req.(*StaffGetOpIssueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OperationIssueAdminAPI_StaffListOpTeamMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListOpTeamMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationIssueAdminAPIServer).StaffListOpTeamMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OperationIssueAdminAPI_StaffListOpTeamMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationIssueAdminAPIServer).StaffListOpTeamMember(ctx, req.(*StaffListOpTeamMemberRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -582,6 +664,24 @@ func _OperationIssueAdminAPI_StaffUpdateOpIssueSeverity_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OperationIssueAdminAPI_StaffUpdateOpIssueETA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateOpIssueETARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationIssueAdminAPIServer).StaffUpdateOpIssueETA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OperationIssueAdminAPI_StaffUpdateOpIssueETA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationIssueAdminAPIServer).StaffUpdateOpIssueETA(ctx, req.(*StaffUpdateOpIssueETARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OperationIssueAdminAPI_StaffSplitOpIssueByFacility_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffSplitOpIssueByFacilityRequest)
 	if err := dec(in); err != nil {
@@ -636,6 +736,42 @@ func _OperationIssueAdminAPI_StaffAttachExternalRef_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OperationIssueAdminAPI_StaffUpsertOpTeamMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpsertOpTeamMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationIssueAdminAPIServer).StaffUpsertOpTeamMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OperationIssueAdminAPI_StaffUpsertOpTeamMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationIssueAdminAPIServer).StaffUpsertOpTeamMember(ctx, req.(*StaffUpsertOpTeamMemberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OperationIssueAdminAPI_StaffDeleteOpTeamMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteOpTeamMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationIssueAdminAPIServer).StaffDeleteOpTeamMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OperationIssueAdminAPI_StaffDeleteOpTeamMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationIssueAdminAPIServer).StaffDeleteOpTeamMember(ctx, req.(*StaffDeleteOpTeamMemberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OperationIssueAdminAPI_SystemIngestEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SystemIngestEventRequest)
 	if err := dec(in); err != nil {
@@ -672,6 +808,10 @@ var OperationIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetOpIssue",
 			Handler:    _OperationIssueAdminAPI_StaffGetOpIssue_Handler,
+		},
+		{
+			MethodName: "StaffListOpTeamMember",
+			Handler:    _OperationIssueAdminAPI_StaffListOpTeamMember_Handler,
 		},
 		{
 			MethodName: "StaffCreateOpIssue",
@@ -714,6 +854,10 @@ var OperationIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OperationIssueAdminAPI_StaffUpdateOpIssueSeverity_Handler,
 		},
 		{
+			MethodName: "StaffUpdateOpIssueETA",
+			Handler:    _OperationIssueAdminAPI_StaffUpdateOpIssueETA_Handler,
+		},
+		{
 			MethodName: "StaffSplitOpIssueByFacility",
 			Handler:    _OperationIssueAdminAPI_StaffSplitOpIssueByFacility_Handler,
 		},
@@ -724,6 +868,14 @@ var OperationIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffAttachExternalRef",
 			Handler:    _OperationIssueAdminAPI_StaffAttachExternalRef_Handler,
+		},
+		{
+			MethodName: "StaffUpsertOpTeamMember",
+			Handler:    _OperationIssueAdminAPI_StaffUpsertOpTeamMember_Handler,
+		},
+		{
+			MethodName: "StaffDeleteOpTeamMember",
+			Handler:    _OperationIssueAdminAPI_StaffDeleteOpTeamMember_Handler,
 		},
 		{
 			MethodName: "SystemIngestEvent",
