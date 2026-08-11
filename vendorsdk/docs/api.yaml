@@ -37,6 +37,15 @@ tags:
        Base URL: https://api.gearment.com/
        Authentication: API Key (header: X-API-Key, X-API-Secret)
     x-displayName: Order
+  - name: api.order.v1.VendorShippingCoverageAPI
+    description: |-
+      VendorShippingCoverageAPI answers a shipping question that arises before an
+       order exists, so an integration does not have to submit an order to find out
+       how it will be handled.
+
+       Base URL: https://apiv2.gearment.com/integration-handler
+       Authentication: client key and secret (headers: X-Gearment-Client-Key, X-Gearment-Client-Secret)
+    x-displayName: ShippingCoverage
   - name: api.support.v1.VendorSupportAPI
     description: VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
     x-displayName: Support
@@ -1306,6 +1315,52 @@ paths:
         "500":
           $ref: '#/components/responses/InternalError'
       security: []
+  /api/v3/shipping/economy/coverage/check:
+    post:
+      tags:
+        - api.order.v1.VendorShippingCoverageAPI
+      summary: Check Economy Coverage
+      description: |-
+        Check destinations against the Economy carrier's US coverage
+
+         POST /api/v3/shipping/economy/coverage/check
+
+         Economy is carried by a single carrier that does not serve every US ZIP.
+         An Economy order to a ZIP outside that coverage is not refused - it is
+         moved to Standard before it is charged, and priced as a Standard order.
+         This endpoint reports coverage so that the repricing is not a surprise.
+
+         Coverage is the most common reason an order cannot ship Economy, but not
+         the only one: parcel weight and the originating marketplace are checked
+         when the order itself is created, and offshore and military destinations
+         are refused Economy outright. A covered ZIP therefore means "not excluded
+         by carrier coverage", not "guaranteed Economy".
+      operationId: api.order.v1.VendorShippingCoverageAPI.VendorCheckEconomyCoverage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorCheckEconomyCoverageRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorCheckEconomyCoverageResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
   /api/v3/support/requests:
     get:
       tags:
@@ -3106,6 +3161,10 @@ components:
           description: Partner-claimed sales channel where this order was originally placed.
           nullable: true
           $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
+        shipping_substitution:
+          title: shipping_substitution
+          description: Shipping-method substitution applied before payment.
+          $ref: '#/components/schemas/common.type.v1.ShippingSubstitution'
       title: VendorOrder
       additionalProperties: false
     api.order.v1.VendorOrder.Short:
@@ -3268,6 +3327,10 @@ components:
           description: Partner-claimed sales channel where this order was originally placed.
           nullable: true
           $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
+        shipping_substitution:
+          title: shipping_substitution
+          description: Shipping-method substitution applied before payment.
+          $ref: '#/components/schemas/common.type.v1.ShippingSubstitution'
       title: Short
       additionalProperties: false
       description: |-
@@ -3467,6 +3530,10 @@ components:
           description: Partner-claimed sales channel where this order was originally placed.
           nullable: true
           $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
+        shipping_substitution:
+          title: shipping_substitution
+          description: Shipping-method substitution applied before payment.
+          $ref: '#/components/schemas/common.type.v1.ShippingSubstitution'
       title: VendorOrderDraft
       additionalProperties: false
     api.order.v1.VendorOrderDraft.Short:
@@ -3633,6 +3700,10 @@ components:
           description: Partner-claimed sales channel where this order was originally placed.
           nullable: true
           $ref: '#/components/schemas/api.order.v1.OriginSalesChannel'
+        shipping_substitution:
+          title: shipping_substitution
+          description: Shipping-method substitution applied before payment.
+          $ref: '#/components/schemas/common.type.v1.ShippingSubstitution'
       title: Short
       additionalProperties: false
       description: |-
@@ -4477,6 +4548,10 @@ components:
           title: order_handle_fee
           description: Order handling fee
           $ref: '#/components/schemas/common.type.v1.Money'
+        shipping_substitution:
+          title: shipping_substitution
+          description: Shipping-method substitution reflected in this quote.
+          $ref: '#/components/schemas/common.type.v1.ShippingSubstitution'
       title: OrderPriceQuote
       additionalProperties: false
     api.order.v1.VendorOrderPriceCalculation.Shipping:
@@ -4997,6 +5072,23 @@ components:
         - 3
         - STORAGE_TYPE_EXTERNAL
         - 4
+    common.type.v1.ShippingSubstitution:
+      type: object
+      properties:
+        from:
+          type: string
+          title: from
+          description: Original shipping method.
+        to:
+          type: string
+          title: to
+          description: Substituted shipping method.
+        reason:
+          type: string
+          title: reason
+          description: Stable substitution reason code.
+      title: ShippingSubstitution
+      additionalProperties: false
     google.protobuf.BoolValue:
       type: boolean
       description: |-
@@ -5006,6 +5098,79 @@ components:
 
          Not recommended for use in new APIs, but still useful for legacy APIs and
          has no plan to be removed.
+    api.order.v1.VendorCheckEconomyCoverageRequest:
+      type: object
+      properties:
+        zip_codes:
+          type: array
+          items:
+            type: string
+            maxLength: 10
+            minLength: 5
+            maxItems: 100
+            minItems: 1
+          title: zip_codes
+          maxItems: 100
+          minItems: 1
+          description: |-
+            US ZIP codes to check. Five digits; a ZIP+4 is matched on its first five.
+             Up to 100 per call.
+      title: VendorCheckEconomyCoverageRequest
+      additionalProperties: false
+    api.order.v1.VendorCheckEconomyCoverageResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message describing the result
+        data:
+          title: data
+          description: Coverage answer for the requested ZIP codes
+          $ref: '#/components/schemas/api.order.v1.VendorEconomyCoverage'
+      title: VendorCheckEconomyCoverageResponse
+      additionalProperties: false
+    api.order.v1.VendorEconomyCoverage:
+      type: object
+      properties:
+        coverage_version:
+          type: string
+          title: coverage_version
+          description: |-
+            Identifier of the coverage edition this answer came from. It changes when
+             the carrier republishes coverage; compare it to decide whether a cached
+             answer is still current.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorEconomyCoverageZip'
+          title: results
+          description: One entry per requested ZIP, in the order requested.
+      title: VendorEconomyCoverage
+      additionalProperties: false
+    api.order.v1.VendorEconomyCoverageZip:
+      type: object
+      properties:
+        zip_code:
+          type: string
+          title: zip_code
+          description: 'The ZIP as matched: five digits, normalised from what was sent.'
+        covered:
+          type: boolean
+          title: covered
+          description: Whether the destination is inside the carrier's current coverage.
+        reason:
+          type: string
+          title: reason
+          description: |-
+            Populated only when covered is false. `uncovered_zip` is the same reason
+             code reported on an order that was moved to Standard.
+      title: VendorEconomyCoverageZip
+      additionalProperties: false
     api.support.v1.CreateSupportRequestRequest:
       type: object
       properties:
