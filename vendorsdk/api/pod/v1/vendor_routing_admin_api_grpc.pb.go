@@ -42,6 +42,7 @@ const (
 	VendorRoutingAdminAPI_StaffGetDestinationLoad_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetDestinationLoad"
 	VendorRoutingAdminAPI_StaffListCapacityLines_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffListCapacityLines"
 	VendorRoutingAdminAPI_StaffGetCapacityMatrix_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetCapacityMatrix"
+	VendorRoutingAdminAPI_StaffGetProductionVolume_FullMethodName             = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetProductionVolume"
 	VendorRoutingAdminAPI_StaffUpdateCapacityLine_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateCapacityLine"
 	VendorRoutingAdminAPI_StaffSetMachineAvailability_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffSetMachineAvailability"
 	VendorRoutingAdminAPI_StaffUpdateFulfillmentDestination_FullMethodName    = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentDestination"
@@ -97,6 +98,7 @@ type VendorRoutingAdminAPIClient interface {
 	// --- Capacity matrix (slice R10a) ---
 	StaffListCapacityLines(ctx context.Context, in *StaffListCapacityLinesRequest, opts ...grpc.CallOption) (*StaffListCapacityLinesResponse, error)
 	StaffGetCapacityMatrix(ctx context.Context, in *StaffGetCapacityMatrixRequest, opts ...grpc.CallOption) (*StaffGetCapacityMatrixResponse, error)
+	StaffGetProductionVolume(ctx context.Context, in *StaffGetProductionVolumeRequest, opts ...grpc.CallOption) (*StaffGetProductionVolumeResponse, error)
 	StaffUpdateCapacityLine(ctx context.Context, in *StaffUpdateCapacityLineRequest, opts ...grpc.CallOption) (*StaffUpdateCapacityLineResponse, error)
 	StaffSetMachineAvailability(ctx context.Context, in *StaffSetMachineAvailabilityRequest, opts ...grpc.CallOption) (*StaffSetMachineAvailabilityResponse, error)
 	StaffUpdateFulfillmentDestination(ctx context.Context, in *StaffUpdateFulfillmentDestinationRequest, opts ...grpc.CallOption) (*StaffUpdateFulfillmentDestinationResponse, error)
@@ -340,6 +342,16 @@ func (c *vendorRoutingAdminAPIClient) StaffGetCapacityMatrix(ctx context.Context
 	return out, nil
 }
 
+func (c *vendorRoutingAdminAPIClient) StaffGetProductionVolume(ctx context.Context, in *StaffGetProductionVolumeRequest, opts ...grpc.CallOption) (*StaffGetProductionVolumeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetProductionVolumeResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffGetProductionVolume_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vendorRoutingAdminAPIClient) StaffUpdateCapacityLine(ctx context.Context, in *StaffUpdateCapacityLineRequest, opts ...grpc.CallOption) (*StaffUpdateCapacityLineResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateCapacityLineResponse)
@@ -420,6 +432,7 @@ type VendorRoutingAdminAPIServer interface {
 	// --- Capacity matrix (slice R10a) ---
 	StaffListCapacityLines(context.Context, *StaffListCapacityLinesRequest) (*StaffListCapacityLinesResponse, error)
 	StaffGetCapacityMatrix(context.Context, *StaffGetCapacityMatrixRequest) (*StaffGetCapacityMatrixResponse, error)
+	StaffGetProductionVolume(context.Context, *StaffGetProductionVolumeRequest) (*StaffGetProductionVolumeResponse, error)
 	StaffUpdateCapacityLine(context.Context, *StaffUpdateCapacityLineRequest) (*StaffUpdateCapacityLineResponse, error)
 	StaffSetMachineAvailability(context.Context, *StaffSetMachineAvailabilityRequest) (*StaffSetMachineAvailabilityResponse, error)
 	StaffUpdateFulfillmentDestination(context.Context, *StaffUpdateFulfillmentDestinationRequest) (*StaffUpdateFulfillmentDestinationResponse, error)
@@ -500,6 +513,9 @@ func (UnimplementedVendorRoutingAdminAPIServer) StaffListCapacityLines(context.C
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffGetCapacityMatrix(context.Context, *StaffGetCapacityMatrixRequest) (*StaffGetCapacityMatrixResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetCapacityMatrix not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffGetProductionVolume(context.Context, *StaffGetProductionVolumeRequest) (*StaffGetProductionVolumeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetProductionVolume not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffUpdateCapacityLine(context.Context, *StaffUpdateCapacityLineRequest) (*StaffUpdateCapacityLineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateCapacityLine not implemented")
@@ -944,6 +960,24 @@ func _VendorRoutingAdminAPI_StaffGetCapacityMatrix_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorRoutingAdminAPI_StaffGetProductionVolume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetProductionVolumeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffGetProductionVolume(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffGetProductionVolume_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffGetProductionVolume(ctx, req.(*StaffGetProductionVolumeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VendorRoutingAdminAPI_StaffUpdateCapacityLine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffUpdateCapacityLineRequest)
 	if err := dec(in); err != nil {
@@ -1096,6 +1130,10 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetCapacityMatrix",
 			Handler:    _VendorRoutingAdminAPI_StaffGetCapacityMatrix_Handler,
+		},
+		{
+			MethodName: "StaffGetProductionVolume",
+			Handler:    _VendorRoutingAdminAPI_StaffGetProductionVolume_Handler,
 		},
 		{
 			MethodName: "StaffUpdateCapacityLine",
