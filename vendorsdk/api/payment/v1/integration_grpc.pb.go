@@ -35,6 +35,7 @@ const (
 	PaymentInternalAPI_InternalCreateRefundRequestForMigration_FullMethodName       = "/api.payment.v1.PaymentInternalAPI/InternalCreateRefundRequestForMigration"
 	PaymentInternalAPI_InternalCreateCheckoutRequestForMigration_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalCreateCheckoutRequestForMigration"
 	PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByOrderID"
+	PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByTxnRef"
 	PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestDetailByOrderID"
 )
 
@@ -61,6 +62,7 @@ type PaymentInternalAPIClient interface {
 	InternalCreateRefundRequestForMigration(ctx context.Context, in *InternalCreateRefundRequestForMigrationRequest, opts ...grpc.CallOption) (*InternalCreateRefundRequestForMigrationResponse, error)
 	InternalCreateCheckoutRequestForMigration(ctx context.Context, in *InternalCreateCheckoutRequestForMigrationRequest, opts ...grpc.CallOption) (*InternalCreateCheckoutRequestForMigrationResponse, error)
 	InternalGetCheckoutRequestByOrderID(ctx context.Context, in *InternalGetCheckoutRequestByOrderIDRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestByOrderIDResponse, error)
+	InternalGetCheckoutRequestByTxnRef(ctx context.Context, in *InternalGetCheckoutRequestByTxnRefRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestByTxnRefResponse, error)
 	InternalGetCheckoutRequestDetailByOrderID(ctx context.Context, in *InternalGetCheckoutRequestDetailByOrderIDRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error)
 }
 
@@ -232,6 +234,16 @@ func (c *paymentInternalAPIClient) InternalGetCheckoutRequestByOrderID(ctx conte
 	return out, nil
 }
 
+func (c *paymentInternalAPIClient) InternalGetCheckoutRequestByTxnRef(ctx context.Context, in *InternalGetCheckoutRequestByTxnRefRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestByTxnRefResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetCheckoutRequestByTxnRefResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *paymentInternalAPIClient) InternalGetCheckoutRequestDetailByOrderID(ctx context.Context, in *InternalGetCheckoutRequestDetailByOrderIDRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalGetCheckoutRequestDetailByOrderIDResponse)
@@ -265,6 +277,7 @@ type PaymentInternalAPIServer interface {
 	InternalCreateRefundRequestForMigration(context.Context, *InternalCreateRefundRequestForMigrationRequest) (*InternalCreateRefundRequestForMigrationResponse, error)
 	InternalCreateCheckoutRequestForMigration(context.Context, *InternalCreateCheckoutRequestForMigrationRequest) (*InternalCreateCheckoutRequestForMigrationResponse, error)
 	InternalGetCheckoutRequestByOrderID(context.Context, *InternalGetCheckoutRequestByOrderIDRequest) (*InternalGetCheckoutRequestByOrderIDResponse, error)
+	InternalGetCheckoutRequestByTxnRef(context.Context, *InternalGetCheckoutRequestByTxnRefRequest) (*InternalGetCheckoutRequestByTxnRefResponse, error)
 	InternalGetCheckoutRequestDetailByOrderID(context.Context, *InternalGetCheckoutRequestDetailByOrderIDRequest) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error)
 }
 
@@ -322,6 +335,9 @@ func (UnimplementedPaymentInternalAPIServer) InternalCreateCheckoutRequestForMig
 }
 func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestByOrderID(context.Context, *InternalGetCheckoutRequestByOrderIDRequest) (*InternalGetCheckoutRequestByOrderIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestByOrderID not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestByTxnRef(context.Context, *InternalGetCheckoutRequestByTxnRefRequest) (*InternalGetCheckoutRequestByTxnRefResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestByTxnRef not implemented")
 }
 func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestDetailByOrderID(context.Context, *InternalGetCheckoutRequestDetailByOrderIDRequest) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestDetailByOrderID not implemented")
@@ -634,6 +650,24 @@ func _PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetCheckoutRequestByTxnRefRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalGetCheckoutRequestByTxnRef(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalGetCheckoutRequestByTxnRef(ctx, req.(*InternalGetCheckoutRequestByTxnRefRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalGetCheckoutRequestDetailByOrderIDRequest)
 	if err := dec(in); err != nil {
@@ -722,6 +756,10 @@ var PaymentInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalGetCheckoutRequestByOrderID",
 			Handler:    _PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_Handler,
+		},
+		{
+			MethodName: "InternalGetCheckoutRequestByTxnRef",
+			Handler:    _PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_Handler,
 		},
 		{
 			MethodName: "InternalGetCheckoutRequestDetailByOrderID",
