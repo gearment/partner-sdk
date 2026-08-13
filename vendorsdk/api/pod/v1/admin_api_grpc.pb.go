@@ -29,6 +29,7 @@ const (
 	OrderAdminAPI_StaffCountOrderForExport_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffCountOrderForExport"
 	OrderAdminAPI_StaffCountOrderLineItemForExport_FullMethodName     = "/api.pod.v1.OrderAdminAPI/StaffCountOrderLineItemForExport"
 	OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesOrder"
+	OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesUnit"
 	OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffGetStatisticSalesUnits"
 	OrderAdminAPI_StaffGetChargedProductTypeTrend_FullMethodName      = "/api.pod.v1.OrderAdminAPI/StaffGetChargedProductTypeTrend"
 	OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffListSalesUnitsByUser"
@@ -69,6 +70,7 @@ type OrderAdminAPIClient interface {
 	StaffCountOrderForExport(ctx context.Context, in *StaffCountOrderForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(ctx context.Context, in *StaffCountOrderLineItemForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderLineItemForExportResponse, error)
 	StaffStatisticSalesOrder(ctx context.Context, in *StaffStatisticSalesOrderRequest, opts ...grpc.CallOption) (*StaffStatisticSalesOrderResponse, error)
+	StaffStatisticSalesUnit(ctx context.Context, in *StaffStatisticSalesUnitRequest, opts ...grpc.CallOption) (*StaffStatisticSalesUnitResponse, error)
 	StaffGetStatisticSalesUnits(ctx context.Context, in *StaffGetStatisticSalesUnitsRequest, opts ...grpc.CallOption) (*StaffGetStatisticSalesUnitsResponse, error)
 	StaffGetChargedProductTypeTrend(ctx context.Context, in *StaffGetChargedProductTypeTrendRequest, opts ...grpc.CallOption) (*StaffGetChargedProductTypeTrendResponse, error)
 	StaffListSalesUnitsByUser(ctx context.Context, in *StaffListSalesUnitsByUserRequest, opts ...grpc.CallOption) (*StaffListSalesUnitsByUserResponse, error)
@@ -188,6 +190,16 @@ func (c *orderAdminAPIClient) StaffStatisticSalesOrder(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffStatisticSalesOrderResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffStatisticSalesUnit(ctx context.Context, in *StaffStatisticSalesUnitRequest, opts ...grpc.CallOption) (*StaffStatisticSalesUnitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffStatisticSalesUnitResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -457,6 +469,7 @@ type OrderAdminAPIServer interface {
 	StaffCountOrderForExport(context.Context, *StaffCountOrderForExportRequest) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(context.Context, *StaffCountOrderLineItemForExportRequest) (*StaffCountOrderLineItemForExportResponse, error)
 	StaffStatisticSalesOrder(context.Context, *StaffStatisticSalesOrderRequest) (*StaffStatisticSalesOrderResponse, error)
+	StaffStatisticSalesUnit(context.Context, *StaffStatisticSalesUnitRequest) (*StaffStatisticSalesUnitResponse, error)
 	StaffGetStatisticSalesUnits(context.Context, *StaffGetStatisticSalesUnitsRequest) (*StaffGetStatisticSalesUnitsResponse, error)
 	StaffGetChargedProductTypeTrend(context.Context, *StaffGetChargedProductTypeTrendRequest) (*StaffGetChargedProductTypeTrendResponse, error)
 	StaffListSalesUnitsByUser(context.Context, *StaffListSalesUnitsByUserRequest) (*StaffListSalesUnitsByUserResponse, error)
@@ -517,6 +530,9 @@ func (UnimplementedOrderAdminAPIServer) StaffCountOrderLineItemForExport(context
 }
 func (UnimplementedOrderAdminAPIServer) StaffStatisticSalesOrder(context.Context, *StaffStatisticSalesOrderRequest) (*StaffStatisticSalesOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffStatisticSalesOrder not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffStatisticSalesUnit(context.Context, *StaffStatisticSalesUnitRequest) (*StaffStatisticSalesUnitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffStatisticSalesUnit not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffGetStatisticSalesUnits(context.Context, *StaffGetStatisticSalesUnitsRequest) (*StaffGetStatisticSalesUnitsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetStatisticSalesUnits not implemented")
@@ -771,6 +787,24 @@ func _OrderAdminAPI_StaffStatisticSalesOrder_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffStatisticSalesOrder(ctx, req.(*StaffStatisticSalesOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffStatisticSalesUnit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffStatisticSalesUnitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffStatisticSalesUnit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffStatisticSalesUnit(ctx, req.(*StaffStatisticSalesUnitRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1267,6 +1301,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffStatisticSalesOrder",
 			Handler:    _OrderAdminAPI_StaffStatisticSalesOrder_Handler,
+		},
+		{
+			MethodName: "StaffStatisticSalesUnit",
+			Handler:    _OrderAdminAPI_StaffStatisticSalesUnit_Handler,
 		},
 		{
 			MethodName: "StaffGetStatisticSalesUnits",
