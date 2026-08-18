@@ -19,18 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ActivityAPI_UserGetActivity_FullMethodName                = "/api.audit.v1.ActivityAPI/UserGetActivity"
-	ActivityAPI_UserListTeamMemberActivity_FullMethodName     = "/api.audit.v1.ActivityAPI/UserListTeamMemberActivity"
-	ActivityAPI_UserListTeamActivity_FullMethodName           = "/api.audit.v1.ActivityAPI/UserListTeamActivity"
-	ActivityAPI_UserListTeamSettingActivity_FullMethodName    = "/api.audit.v1.ActivityAPI/UserListTeamSettingActivity"
-	ActivityAPI_UserListStoreActivity_FullMethodName          = "/api.audit.v1.ActivityAPI/UserListStoreActivity"
-	ActivityAPI_UserListOrderActivity_FullMethodName          = "/api.audit.v1.ActivityAPI/UserListOrderActivity"
-	ActivityAPI_UserListPaymentActivity_FullMethodName        = "/api.audit.v1.ActivityAPI/UserListPaymentActivity"
-	ActivityAPI_StaffListCreditActivity_FullMethodName        = "/api.audit.v1.ActivityAPI/StaffListCreditActivity"
-	ActivityAPI_StaffGetCreditActivity_FullMethodName         = "/api.audit.v1.ActivityAPI/StaffGetCreditActivity"
-	ActivityAPI_StaffListOrderActivity_FullMethodName         = "/api.audit.v1.ActivityAPI/StaffListOrderActivity"
-	ActivityAPI_StaffListTeamPriceTierActivity_FullMethodName = "/api.audit.v1.ActivityAPI/StaffListTeamPriceTierActivity"
-	ActivityAPI_StaffListTeamConfigActivity_FullMethodName    = "/api.audit.v1.ActivityAPI/StaffListTeamConfigActivity"
+	ActivityAPI_UserGetActivity_FullMethodName                     = "/api.audit.v1.ActivityAPI/UserGetActivity"
+	ActivityAPI_UserListTeamMemberActivity_FullMethodName          = "/api.audit.v1.ActivityAPI/UserListTeamMemberActivity"
+	ActivityAPI_UserListTeamActivity_FullMethodName                = "/api.audit.v1.ActivityAPI/UserListTeamActivity"
+	ActivityAPI_UserListTeamSettingActivity_FullMethodName         = "/api.audit.v1.ActivityAPI/UserListTeamSettingActivity"
+	ActivityAPI_UserListStoreActivity_FullMethodName               = "/api.audit.v1.ActivityAPI/UserListStoreActivity"
+	ActivityAPI_UserListOrderActivity_FullMethodName               = "/api.audit.v1.ActivityAPI/UserListOrderActivity"
+	ActivityAPI_UserListPaymentActivity_FullMethodName             = "/api.audit.v1.ActivityAPI/UserListPaymentActivity"
+	ActivityAPI_UserListLinkedPaymentMethodActivity_FullMethodName = "/api.audit.v1.ActivityAPI/UserListLinkedPaymentMethodActivity"
+	ActivityAPI_StaffListCreditActivity_FullMethodName             = "/api.audit.v1.ActivityAPI/StaffListCreditActivity"
+	ActivityAPI_StaffGetCreditActivity_FullMethodName              = "/api.audit.v1.ActivityAPI/StaffGetCreditActivity"
+	ActivityAPI_StaffListOrderActivity_FullMethodName              = "/api.audit.v1.ActivityAPI/StaffListOrderActivity"
+	ActivityAPI_StaffListTeamPriceTierActivity_FullMethodName      = "/api.audit.v1.ActivityAPI/StaffListTeamPriceTierActivity"
+	ActivityAPI_StaffListTeamConfigActivity_FullMethodName         = "/api.audit.v1.ActivityAPI/StaffListTeamConfigActivity"
 )
 
 // ActivityAPIClient is the client API for ActivityAPI service.
@@ -44,6 +45,7 @@ type ActivityAPIClient interface {
 	UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListOrderActivity(ctx context.Context, in *UserListOrderActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListPaymentActivity(ctx context.Context, in *UserListPaymentActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
+	UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	StaffListCreditActivity(ctx context.Context, in *StaffListCreditActivityRequest, opts ...grpc.CallOption) (*StaffListCreditActivityResponse, error)
 	StaffGetCreditActivity(ctx context.Context, in *StaffGetCreditActivityRequest, opts ...grpc.CallOption) (*StaffGetCreditActivityResponse, error)
 	StaffListOrderActivity(ctx context.Context, in *StaffListOrderActivityRequest, opts ...grpc.CallOption) (*StaffListOrderActivityResponse, error)
@@ -129,6 +131,16 @@ func (c *activityAPIClient) UserListPaymentActivity(ctx context.Context, in *Use
 	return out, nil
 }
 
+func (c *activityAPIClient) UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListActivityResponse)
+	err := c.cc.Invoke(ctx, ActivityAPI_UserListLinkedPaymentMethodActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *activityAPIClient) StaffListCreditActivity(ctx context.Context, in *StaffListCreditActivityRequest, opts ...grpc.CallOption) (*StaffListCreditActivityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListCreditActivityResponse)
@@ -190,6 +202,7 @@ type ActivityAPIServer interface {
 	UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityResponse, error)
 	UserListOrderActivity(context.Context, *UserListOrderActivityRequest) (*UserListActivityResponse, error)
 	UserListPaymentActivity(context.Context, *UserListPaymentActivityRequest) (*UserListActivityResponse, error)
+	UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityResponse, error)
 	StaffListCreditActivity(context.Context, *StaffListCreditActivityRequest) (*StaffListCreditActivityResponse, error)
 	StaffGetCreditActivity(context.Context, *StaffGetCreditActivityRequest) (*StaffGetCreditActivityResponse, error)
 	StaffListOrderActivity(context.Context, *StaffListOrderActivityRequest) (*StaffListOrderActivityResponse, error)
@@ -224,6 +237,9 @@ func (UnimplementedActivityAPIServer) UserListOrderActivity(context.Context, *Us
 }
 func (UnimplementedActivityAPIServer) UserListPaymentActivity(context.Context, *UserListPaymentActivityRequest) (*UserListActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListPaymentActivity not implemented")
+}
+func (UnimplementedActivityAPIServer) UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListLinkedPaymentMethodActivity not implemented")
 }
 func (UnimplementedActivityAPIServer) StaffListCreditActivity(context.Context, *StaffListCreditActivityRequest) (*StaffListCreditActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListCreditActivity not implemented")
@@ -386,6 +402,24 @@ func _ActivityAPI_UserListPaymentActivity_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ActivityAPI_UserListLinkedPaymentMethodActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListLinkedPaymentMethodActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityAPIServer).UserListLinkedPaymentMethodActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ActivityAPI_UserListLinkedPaymentMethodActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityAPIServer).UserListLinkedPaymentMethodActivity(ctx, req.(*UserListLinkedPaymentMethodActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ActivityAPI_StaffListCreditActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffListCreditActivityRequest)
 	if err := dec(in); err != nil {
@@ -510,6 +544,10 @@ var ActivityAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserListPaymentActivity",
 			Handler:    _ActivityAPI_UserListPaymentActivity_Handler,
+		},
+		{
+			MethodName: "UserListLinkedPaymentMethodActivity",
+			Handler:    _ActivityAPI_UserListLinkedPaymentMethodActivity_Handler,
 		},
 		{
 			MethodName: "StaffListCreditActivity",
