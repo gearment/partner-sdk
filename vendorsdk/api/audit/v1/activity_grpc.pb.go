@@ -32,6 +32,8 @@ const (
 	ActivityAPI_StaffListOrderActivity_FullMethodName              = "/api.audit.v1.ActivityAPI/StaffListOrderActivity"
 	ActivityAPI_StaffListTeamPriceTierActivity_FullMethodName      = "/api.audit.v1.ActivityAPI/StaffListTeamPriceTierActivity"
 	ActivityAPI_StaffListTeamConfigActivity_FullMethodName         = "/api.audit.v1.ActivityAPI/StaffListTeamConfigActivity"
+	ActivityAPI_UserListSellerConfigGeneralActivity_FullMethodName = "/api.audit.v1.ActivityAPI/UserListSellerConfigGeneralActivity"
+	ActivityAPI_UserListTeamMemberAuditActivity_FullMethodName     = "/api.audit.v1.ActivityAPI/UserListTeamMemberAuditActivity"
 )
 
 // ActivityAPIClient is the client API for ActivityAPI service.
@@ -45,12 +47,14 @@ type ActivityAPIClient interface {
 	UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListOrderActivity(ctx context.Context, in *UserListOrderActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListPaymentActivity(ctx context.Context, in *UserListPaymentActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
-	UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
+	UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error)
 	StaffListCreditActivity(ctx context.Context, in *StaffListCreditActivityRequest, opts ...grpc.CallOption) (*StaffListCreditActivityResponse, error)
 	StaffGetCreditActivity(ctx context.Context, in *StaffGetCreditActivityRequest, opts ...grpc.CallOption) (*StaffGetCreditActivityResponse, error)
 	StaffListOrderActivity(ctx context.Context, in *StaffListOrderActivityRequest, opts ...grpc.CallOption) (*StaffListOrderActivityResponse, error)
 	StaffListTeamPriceTierActivity(ctx context.Context, in *StaffListTeamPriceTierActivityRequest, opts ...grpc.CallOption) (*StaffListTeamPriceTierActivityResponse, error)
 	StaffListTeamConfigActivity(ctx context.Context, in *StaffListTeamConfigActivityRequest, opts ...grpc.CallOption) (*StaffListTeamConfigActivityResponse, error)
+	UserListSellerConfigGeneralActivity(ctx context.Context, in *UserListSellerConfigGeneralActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error)
+	UserListTeamMemberAuditActivity(ctx context.Context, in *UserListTeamMemberAuditActivityRequest, opts ...grpc.CallOption) (*UserListTeamMemberAuditActivityResponse, error)
 }
 
 type activityAPIClient struct {
@@ -131,9 +135,9 @@ func (c *activityAPIClient) UserListPaymentActivity(ctx context.Context, in *Use
 	return out, nil
 }
 
-func (c *activityAPIClient) UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error) {
+func (c *activityAPIClient) UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserListActivityResponse)
+	out := new(UserListActivityCursorResponse)
 	err := c.cc.Invoke(ctx, ActivityAPI_UserListLinkedPaymentMethodActivity_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -191,6 +195,26 @@ func (c *activityAPIClient) StaffListTeamConfigActivity(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *activityAPIClient) UserListSellerConfigGeneralActivity(ctx context.Context, in *UserListSellerConfigGeneralActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListActivityCursorResponse)
+	err := c.cc.Invoke(ctx, ActivityAPI_UserListSellerConfigGeneralActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityAPIClient) UserListTeamMemberAuditActivity(ctx context.Context, in *UserListTeamMemberAuditActivityRequest, opts ...grpc.CallOption) (*UserListTeamMemberAuditActivityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListTeamMemberAuditActivityResponse)
+	err := c.cc.Invoke(ctx, ActivityAPI_UserListTeamMemberAuditActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ActivityAPIServer is the server API for ActivityAPI service.
 // All implementations should embed UnimplementedActivityAPIServer
 // for forward compatibility.
@@ -202,12 +226,14 @@ type ActivityAPIServer interface {
 	UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityResponse, error)
 	UserListOrderActivity(context.Context, *UserListOrderActivityRequest) (*UserListActivityResponse, error)
 	UserListPaymentActivity(context.Context, *UserListPaymentActivityRequest) (*UserListActivityResponse, error)
-	UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityResponse, error)
+	UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityCursorResponse, error)
 	StaffListCreditActivity(context.Context, *StaffListCreditActivityRequest) (*StaffListCreditActivityResponse, error)
 	StaffGetCreditActivity(context.Context, *StaffGetCreditActivityRequest) (*StaffGetCreditActivityResponse, error)
 	StaffListOrderActivity(context.Context, *StaffListOrderActivityRequest) (*StaffListOrderActivityResponse, error)
 	StaffListTeamPriceTierActivity(context.Context, *StaffListTeamPriceTierActivityRequest) (*StaffListTeamPriceTierActivityResponse, error)
 	StaffListTeamConfigActivity(context.Context, *StaffListTeamConfigActivityRequest) (*StaffListTeamConfigActivityResponse, error)
+	UserListSellerConfigGeneralActivity(context.Context, *UserListSellerConfigGeneralActivityRequest) (*UserListActivityCursorResponse, error)
+	UserListTeamMemberAuditActivity(context.Context, *UserListTeamMemberAuditActivityRequest) (*UserListTeamMemberAuditActivityResponse, error)
 }
 
 // UnimplementedActivityAPIServer should be embedded to have
@@ -238,7 +264,7 @@ func (UnimplementedActivityAPIServer) UserListOrderActivity(context.Context, *Us
 func (UnimplementedActivityAPIServer) UserListPaymentActivity(context.Context, *UserListPaymentActivityRequest) (*UserListActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListPaymentActivity not implemented")
 }
-func (UnimplementedActivityAPIServer) UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityResponse, error) {
+func (UnimplementedActivityAPIServer) UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityCursorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListLinkedPaymentMethodActivity not implemented")
 }
 func (UnimplementedActivityAPIServer) StaffListCreditActivity(context.Context, *StaffListCreditActivityRequest) (*StaffListCreditActivityResponse, error) {
@@ -255,6 +281,12 @@ func (UnimplementedActivityAPIServer) StaffListTeamPriceTierActivity(context.Con
 }
 func (UnimplementedActivityAPIServer) StaffListTeamConfigActivity(context.Context, *StaffListTeamConfigActivityRequest) (*StaffListTeamConfigActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListTeamConfigActivity not implemented")
+}
+func (UnimplementedActivityAPIServer) UserListSellerConfigGeneralActivity(context.Context, *UserListSellerConfigGeneralActivityRequest) (*UserListActivityCursorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListSellerConfigGeneralActivity not implemented")
+}
+func (UnimplementedActivityAPIServer) UserListTeamMemberAuditActivity(context.Context, *UserListTeamMemberAuditActivityRequest) (*UserListTeamMemberAuditActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListTeamMemberAuditActivity not implemented")
 }
 func (UnimplementedActivityAPIServer) testEmbeddedByValue() {}
 
@@ -510,6 +542,42 @@ func _ActivityAPI_StaffListTeamConfigActivity_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ActivityAPI_UserListSellerConfigGeneralActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListSellerConfigGeneralActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityAPIServer).UserListSellerConfigGeneralActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ActivityAPI_UserListSellerConfigGeneralActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityAPIServer).UserListSellerConfigGeneralActivity(ctx, req.(*UserListSellerConfigGeneralActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ActivityAPI_UserListTeamMemberAuditActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListTeamMemberAuditActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityAPIServer).UserListTeamMemberAuditActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ActivityAPI_UserListTeamMemberAuditActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityAPIServer).UserListTeamMemberAuditActivity(ctx, req.(*UserListTeamMemberAuditActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ActivityAPI_ServiceDesc is the grpc.ServiceDesc for ActivityAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -568,6 +636,14 @@ var ActivityAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListTeamConfigActivity",
 			Handler:    _ActivityAPI_StaffListTeamConfigActivity_Handler,
+		},
+		{
+			MethodName: "UserListSellerConfigGeneralActivity",
+			Handler:    _ActivityAPI_UserListSellerConfigGeneralActivity_Handler,
+		},
+		{
+			MethodName: "UserListTeamMemberAuditActivity",
+			Handler:    _ActivityAPI_UserListTeamMemberAuditActivity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
