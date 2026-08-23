@@ -4731,13 +4731,14 @@ func (x *UserListAvailableShippingServiceRequest) GetLineItems() []*LineItemList
 }
 
 type ShippingOptionListAvailableShippingService struct {
-	state         protoimpl.MessageState                                          `protogen:"open.v1"`
-	Code          string                                                          `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name          string                                                          `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Status        ShippingOptionListAvailableShippingService_ShippingOptionStatus `protobuf:"varint,3,opt,name=status,proto3,enum=api.pod.v1.ShippingOptionListAvailableShippingService_ShippingOptionStatus" json:"status,omitempty"`
-	Description   string                                                          `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState                                          `protogen:"open.v1"`
+	Code           string                                                          `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name           string                                                          `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Status         ShippingOptionListAvailableShippingService_ShippingOptionStatus `protobuf:"varint,3,opt,name=status,proto3,enum=api.pod.v1.ShippingOptionListAvailableShippingService_ShippingOptionStatus" json:"status,omitempty"`
+	Description    string                                                          `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	DisabledReason *ShippingOptionListAvailableShippingService_DisabledReason      `protobuf:"bytes,5,opt,name=disabled_reason,json=disabledReason,proto3" json:"disabled_reason,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ShippingOptionListAvailableShippingService) Reset() {
@@ -4796,6 +4797,13 @@ func (x *ShippingOptionListAvailableShippingService) GetDescription() string {
 		return x.Description
 	}
 	return ""
+}
+
+func (x *ShippingOptionListAvailableShippingService) GetDisabledReason() *ShippingOptionListAvailableShippingService_DisabledReason {
+	if x != nil {
+		return x.DisabledReason
+	}
+	return nil
 }
 
 type UserListAvailableShippingServiceResponse struct {
@@ -11834,6 +11842,58 @@ func (x *OrderDraft_CheckoutShort_Item) GetQuantity() int32 {
 	return 0
 }
 
+type ShippingOptionListAvailableShippingService_DisabledReason struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ShippingOptionListAvailableShippingService_DisabledReason) Reset() {
+	*x = ShippingOptionListAvailableShippingService_DisabledReason{}
+	mi := &file_api_pod_v1_order_draft_proto_msgTypes[144]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ShippingOptionListAvailableShippingService_DisabledReason) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShippingOptionListAvailableShippingService_DisabledReason) ProtoMessage() {}
+
+func (x *ShippingOptionListAvailableShippingService_DisabledReason) ProtoReflect() protoreflect.Message {
+	mi := &file_api_pod_v1_order_draft_proto_msgTypes[144]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShippingOptionListAvailableShippingService_DisabledReason.ProtoReflect.Descriptor instead.
+func (*ShippingOptionListAvailableShippingService_DisabledReason) Descriptor() ([]byte, []int) {
+	return file_api_pod_v1_order_draft_proto_rawDescGZIP(), []int{51, 0}
+}
+
+func (x *ShippingOptionListAvailableShippingService_DisabledReason) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *ShippingOptionListAvailableShippingService_DisabledReason) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type UserCountOrderDraftStatusResponse_Record struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        OrderDraft_Status      `protobuf:"varint,1,opt,name=status,proto3,enum=api.pod.v1.OrderDraft_Status" json:"status,omitempty"`
@@ -11844,7 +11904,7 @@ type UserCountOrderDraftStatusResponse_Record struct {
 
 func (x *UserCountOrderDraftStatusResponse_Record) Reset() {
 	*x = UserCountOrderDraftStatusResponse_Record{}
-	mi := &file_api_pod_v1_order_draft_proto_msgTypes[144]
+	mi := &file_api_pod_v1_order_draft_proto_msgTypes[145]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11856,7 +11916,7 @@ func (x *UserCountOrderDraftStatusResponse_Record) String() string {
 func (*UserCountOrderDraftStatusResponse_Record) ProtoMessage() {}
 
 func (x *UserCountOrderDraftStatusResponse_Record) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_order_draft_proto_msgTypes[144]
+	mi := &file_api_pod_v1_order_draft_proto_msgTypes[145]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14138,7 +14198,7 @@ var file_api_pod_v1_order_draft_proto_rawDesc = string([]byte{
 	0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x6e,
 	0x65, 0x49, 0x74, 0x65, 0x6d, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62,
 	0x6c, 0x65, 0x53, 0x68, 0x69, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x52, 0x09, 0x6c, 0x69, 0x6e, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x22, 0xf0, 0x02, 0x0a,
+	0x65, 0x52, 0x09, 0x6c, 0x69, 0x6e, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x22, 0xa0, 0x04, 0x0a,
 	0x2a, 0x53, 0x68, 0x69, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x4c,
 	0x69, 0x73, 0x74, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x53, 0x68, 0x69, 0x70,
 	0x70, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x63,
@@ -14152,7 +14212,18 @@ var file_api_pod_v1_order_draft_proto_rawDesc = string([]byte{
 	0x70, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
 	0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63,
 	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x92, 0x01, 0x0a, 0x14, 0x53,
+	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x6e, 0x0a, 0x0f, 0x64, 0x69,
+	0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x5f, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x45, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31,
+	0x2e, 0x53, 0x68, 0x69, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x4c,
+	0x69, 0x73, 0x74, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x53, 0x68, 0x69, 0x70,
+	0x70, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x44, 0x69, 0x73, 0x61,
+	0x62, 0x6c, 0x65, 0x64, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x52, 0x0e, 0x64, 0x69, 0x73, 0x61,
+	0x62, 0x6c, 0x65, 0x64, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x1a, 0x3e, 0x0a, 0x0e, 0x44, 0x69,
+	0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x92, 0x01, 0x0a, 0x14, 0x53,
 	0x68, 0x69, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61,
 	0x74, 0x75, 0x73, 0x12, 0x28, 0x0a, 0x17, 0x53, 0x48, 0x49, 0x50, 0x50, 0x49, 0x4e, 0x47, 0x5f,
 	0x4f, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00,
@@ -14929,7 +15000,7 @@ func file_api_pod_v1_order_draft_proto_rawDescGZIP() []byte {
 }
 
 var file_api_pod_v1_order_draft_proto_enumTypes = make([]protoimpl.EnumInfo, 16)
-var file_api_pod_v1_order_draft_proto_msgTypes = make([]protoimpl.MessageInfo, 145)
+var file_api_pod_v1_order_draft_proto_msgTypes = make([]protoimpl.MessageInfo, 146)
 var file_api_pod_v1_order_draft_proto_goTypes = []any{
 	(ShippingVerificationStatus)(0),                                         // 0: api.pod.v1.ShippingVerificationStatus
 	(ProductMatchingStatus)(0),                                              // 1: api.pod.v1.ProductMatchingStatus
@@ -15091,56 +15162,57 @@ var file_api_pod_v1_order_draft_proto_goTypes = []any{
 	(*OrderDraft_Note)(nil),                                                 // 157: api.pod.v1.OrderDraft.Note
 	(*OrderDraft_TeamTier)(nil),                                             // 158: api.pod.v1.OrderDraft.TeamTier
 	(*OrderDraft_CheckoutShort_Item)(nil),                                   // 159: api.pod.v1.OrderDraft.CheckoutShort.Item
-	(*UserCountOrderDraftStatusResponse_Record)(nil),                        // 160: api.pod.v1.UserCountOrderDraftStatusResponse.Record
-	(v1.OrderDraftImportStatus)(0),                                          // 161: backend.pod.v1.OrderDraftImportStatus
-	(*v11.Paging)(nil),                                                      // 162: common.type.v1.Paging
-	(*v11.PagingResponse)(nil),                                              // 163: common.type.v1.PagingResponse
-	(*timestamppb.Timestamp)(nil),                                           // 164: google.protobuf.Timestamp
-	(v12.MarketplacePlatform)(0),                                            // 165: common.platform.v1.MarketplacePlatform
-	(v1.OrderDraftImportSessionStatus)(0),                                   // 166: backend.pod.v1.OrderDraftImportSessionStatus
-	(*OrderPriceQuote)(nil),                                                 // 167: api.pod.v1.OrderPriceQuote
-	(*v11.File)(nil),                                                        // 168: common.type.v1.File
-	(*v11.Money)(nil),                                                       // 169: common.type.v1.Money
-	(*OptionGroup_Value)(nil),                                               // 170: api.pod.v1.OptionGroup.Value
-	(*wrapperspb.StringValue)(nil),                                          // 171: google.protobuf.StringValue
-	(v13.MediaStorage)(0),                                                   // 172: common.media.v1.MediaStorage
+	(*ShippingOptionListAvailableShippingService_DisabledReason)(nil),       // 160: api.pod.v1.ShippingOptionListAvailableShippingService.DisabledReason
+	(*UserCountOrderDraftStatusResponse_Record)(nil),                        // 161: api.pod.v1.UserCountOrderDraftStatusResponse.Record
+	(v1.OrderDraftImportStatus)(0),                                          // 162: backend.pod.v1.OrderDraftImportStatus
+	(*v11.Paging)(nil),                                                      // 163: common.type.v1.Paging
+	(*v11.PagingResponse)(nil),                                              // 164: common.type.v1.PagingResponse
+	(*timestamppb.Timestamp)(nil),                                           // 165: google.protobuf.Timestamp
+	(v12.MarketplacePlatform)(0),                                            // 166: common.platform.v1.MarketplacePlatform
+	(v1.OrderDraftImportSessionStatus)(0),                                   // 167: backend.pod.v1.OrderDraftImportSessionStatus
+	(*OrderPriceQuote)(nil),                                                 // 168: api.pod.v1.OrderPriceQuote
+	(*v11.File)(nil),                                                        // 169: common.type.v1.File
+	(*v11.Money)(nil),                                                       // 170: common.type.v1.Money
+	(*OptionGroup_Value)(nil),                                               // 171: api.pod.v1.OptionGroup.Value
+	(*wrapperspb.StringValue)(nil),                                          // 172: google.protobuf.StringValue
+	(v13.MediaStorage)(0),                                                   // 173: common.media.v1.MediaStorage
 }
 var file_api_pod_v1_order_draft_proto_depIdxs = []int32{
-	161, // 0: api.pod.v1.UserCountOrderDraftImportRequest.status:type_name -> backend.pod.v1.OrderDraftImportStatus
-	162, // 1: api.pod.v1.UserListOrderImportRequest.paging:type_name -> common.type.v1.Paging
-	161, // 2: api.pod.v1.UserListOrderImportRequest.status:type_name -> backend.pod.v1.OrderDraftImportStatus
+	162, // 0: api.pod.v1.UserCountOrderDraftImportRequest.status:type_name -> backend.pod.v1.OrderDraftImportStatus
+	163, // 1: api.pod.v1.UserListOrderImportRequest.paging:type_name -> common.type.v1.Paging
+	162, // 2: api.pod.v1.UserListOrderImportRequest.status:type_name -> backend.pod.v1.OrderDraftImportStatus
 	22,  // 3: api.pod.v1.UserListOrderImportResponse.data:type_name -> api.pod.v1.OrderDraftImport
-	163, // 4: api.pod.v1.UserListOrderImportResponse.pagination:type_name -> common.type.v1.PagingResponse
-	164, // 5: api.pod.v1.UserListOrderImportResponse.auto_switched_to_standard_finalized_at:type_name -> google.protobuf.Timestamp
-	161, // 6: api.pod.v1.OrderDraftImport.status:type_name -> backend.pod.v1.OrderDraftImportStatus
-	164, // 7: api.pod.v1.OrderDraftImport.created_at:type_name -> google.protobuf.Timestamp
-	162, // 8: api.pod.v1.UserListOrderImportSessionRequest.paging:type_name -> common.type.v1.Paging
-	165, // 9: api.pod.v1.UserListOrderImportSessionRequest.platform:type_name -> common.platform.v1.MarketplacePlatform
-	166, // 10: api.pod.v1.UserListOrderImportSessionRequest.status:type_name -> backend.pod.v1.OrderDraftImportSessionStatus
-	164, // 11: api.pod.v1.UserListOrderImportSessionRequest.start_time:type_name -> google.protobuf.Timestamp
-	164, // 12: api.pod.v1.UserListOrderImportSessionRequest.end_time:type_name -> google.protobuf.Timestamp
+	164, // 4: api.pod.v1.UserListOrderImportResponse.pagination:type_name -> common.type.v1.PagingResponse
+	165, // 5: api.pod.v1.UserListOrderImportResponse.auto_switched_to_standard_finalized_at:type_name -> google.protobuf.Timestamp
+	162, // 6: api.pod.v1.OrderDraftImport.status:type_name -> backend.pod.v1.OrderDraftImportStatus
+	165, // 7: api.pod.v1.OrderDraftImport.created_at:type_name -> google.protobuf.Timestamp
+	163, // 8: api.pod.v1.UserListOrderImportSessionRequest.paging:type_name -> common.type.v1.Paging
+	166, // 9: api.pod.v1.UserListOrderImportSessionRequest.platform:type_name -> common.platform.v1.MarketplacePlatform
+	167, // 10: api.pod.v1.UserListOrderImportSessionRequest.status:type_name -> backend.pod.v1.OrderDraftImportSessionStatus
+	165, // 11: api.pod.v1.UserListOrderImportSessionRequest.start_time:type_name -> google.protobuf.Timestamp
+	165, // 12: api.pod.v1.UserListOrderImportSessionRequest.end_time:type_name -> google.protobuf.Timestamp
 	25,  // 13: api.pod.v1.UserListOrderImportSessionResponse.data:type_name -> api.pod.v1.OrderDraftImportSession
-	163, // 14: api.pod.v1.UserListOrderImportSessionResponse.pagination:type_name -> common.type.v1.PagingResponse
-	165, // 15: api.pod.v1.OrderDraftImportSession.platform:type_name -> common.platform.v1.MarketplacePlatform
-	164, // 16: api.pod.v1.OrderDraftImportSession.request_time:type_name -> google.protobuf.Timestamp
-	164, // 17: api.pod.v1.OrderDraftImportSession.complete_time:type_name -> google.protobuf.Timestamp
-	166, // 18: api.pod.v1.OrderDraftImportSession.status:type_name -> backend.pod.v1.OrderDraftImportSessionStatus
-	164, // 19: api.pod.v1.OrderDraftImportSession.auto_switched_to_standard_finalized_at:type_name -> google.protobuf.Timestamp
-	165, // 20: api.pod.v1.UserPreCreateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	164, // 14: api.pod.v1.UserListOrderImportSessionResponse.pagination:type_name -> common.type.v1.PagingResponse
+	166, // 15: api.pod.v1.OrderDraftImportSession.platform:type_name -> common.platform.v1.MarketplacePlatform
+	165, // 16: api.pod.v1.OrderDraftImportSession.request_time:type_name -> google.protobuf.Timestamp
+	165, // 17: api.pod.v1.OrderDraftImportSession.complete_time:type_name -> google.protobuf.Timestamp
+	167, // 18: api.pod.v1.OrderDraftImportSession.status:type_name -> backend.pod.v1.OrderDraftImportSessionStatus
+	165, // 19: api.pod.v1.OrderDraftImportSession.auto_switched_to_standard_finalized_at:type_name -> google.protobuf.Timestamp
+	166, // 20: api.pod.v1.UserPreCreateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	137, // 21: api.pod.v1.UserPreCreateOrderDraftRequest.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
 	141, // 22: api.pod.v1.UserPreCreateOrderDraftRequest.address:type_name -> api.pod.v1.OrderDraft.Address
 	113, // 23: api.pod.v1.UserPreCreateOrderDraftRequest.line_items:type_name -> api.pod.v1.UserPreCreateOrderDraftRequest.CreateOrderDraftLineItem
 	150, // 24: api.pod.v1.UserPreCreateOrderDraftRequest.gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
-	165, // 25: api.pod.v1.UserSaveMappingLineItemRequest.platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 25: api.pod.v1.UserSaveMappingLineItemRequest.platform:type_name -> common.platform.v1.MarketplacePlatform
 	140, // 26: api.pod.v1.UserSaveMappingLineItemRequest.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
 	141, // 27: api.pod.v1.UserUpdateOrderDraftAddressInformationRequest.address:type_name -> api.pod.v1.OrderDraft.Address
 	137, // 28: api.pod.v1.UserUpdateOrderDraftAddressInformationRequest.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
-	165, // 29: api.pod.v1.UserCreateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 29: api.pod.v1.UserCreateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	137, // 30: api.pod.v1.UserCreateOrderDraftRequest.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
 	141, // 31: api.pod.v1.UserCreateOrderDraftRequest.address:type_name -> api.pod.v1.OrderDraft.Address
 	114, // 32: api.pod.v1.UserCreateOrderDraftRequest.line_items:type_name -> api.pod.v1.UserCreateOrderDraftRequest.LineItem
 	150, // 33: api.pod.v1.UserCreateOrderDraftRequest.gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
-	165, // 34: api.pod.v1.UserUpdateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 34: api.pod.v1.UserUpdateOrderDraftRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	61,  // 35: api.pod.v1.UserUpdateOrderDraftRequest.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
 	137, // 36: api.pod.v1.UserUpdateOrderDraftRequest.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
 	141, // 37: api.pod.v1.UserUpdateOrderDraftRequest.address:type_name -> api.pod.v1.OrderDraft.Address
@@ -15153,9 +15225,9 @@ var file_api_pod_v1_order_draft_proto_depIdxs = []int32{
 	119, // 44: api.pod.v1.LineItem.variant:type_name -> api.pod.v1.LineItem.Variant
 	120, // 45: api.pod.v1.LineItem.product:type_name -> api.pod.v1.LineItem.Product
 	4,   // 46: api.pod.v1.LineItem.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
-	165, // 47: api.pod.v1.LineItem.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 47: api.pod.v1.LineItem.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	3,   // 48: api.pod.v1.LineItem.stock_status:type_name -> api.pod.v1.LineItem.StockStatus
-	165, // 49: api.pod.v1.UserCreateOrderDraftLabelRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 49: api.pod.v1.UserCreateOrderDraftLabelRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	61,  // 50: api.pod.v1.UserCreateOrderDraftLabelRequest.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
 	123, // 51: api.pod.v1.UserCreateOrderDraftLabelRequest.line_items:type_name -> api.pod.v1.UserCreateOrderDraftLabelRequest.CreateOrderDraftLineItemLabel
 	150, // 52: api.pod.v1.UserCreateOrderDraftLabelRequest.gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
@@ -15166,7 +15238,7 @@ var file_api_pod_v1_order_draft_proto_depIdxs = []int32{
 	140, // 57: api.pod.v1.LineItemMatchProduct.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
 	124, // 58: api.pod.v1.LineItemMatchProduct.origin_options:type_name -> api.pod.v1.LineItemMatchProduct.OriginOption
 	125, // 59: api.pod.v1.LineItemMatchProduct.variant:type_name -> api.pod.v1.LineItemMatchProduct.Variant
-	165, // 60: api.pod.v1.LineItemMatchProduct.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 60: api.pod.v1.LineItemMatchProduct.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	145, // 61: api.pod.v1.UserListOrderDraftRequest.filter:type_name -> api.pod.v1.OrderDraft.ListingFilter
 	146, // 62: api.pod.v1.UserListOrderDraftRequest.search:type_name -> api.pod.v1.OrderDraft.ListingSearch
 	142, // 63: api.pod.v1.UserListOrderDraftResponse.data:type_name -> api.pod.v1.OrderDraft.Short
@@ -15180,13 +15252,13 @@ var file_api_pod_v1_order_draft_proto_depIdxs = []int32{
 	132, // 71: api.pod.v1.UserListColorForOrderDraftFilterResponse.data:type_name -> api.pod.v1.UserListColorForOrderDraftFilterResponse.Color
 	52,  // 72: api.pod.v1.UserListSizeForOrderDraftFilterRequest.filter:type_name -> api.pod.v1.OptionFilterForOrderDraftFilter
 	133, // 73: api.pod.v1.UserListSizeForOrderDraftFilterResponse.data:type_name -> api.pod.v1.UserListSizeForOrderDraftFilterResponse.Size
-	165, // 74: api.pod.v1.UserGetOrderPriceRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	166, // 74: api.pod.v1.UserGetOrderPriceRequest.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	134, // 75: api.pod.v1.UserGetOrderPriceRequest.billing:type_name -> api.pod.v1.OrderPriceCalculation.Billing
 	135, // 76: api.pod.v1.UserGetOrderPriceRequest.shipping:type_name -> api.pod.v1.OrderPriceCalculation.Shipping
 	136, // 77: api.pod.v1.UserGetOrderPriceRequest.line_items:type_name -> api.pod.v1.OrderPriceCalculation.LineItem
 	150, // 78: api.pod.v1.UserGetOrderPriceRequest.gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
-	167, // 79: api.pod.v1.UserGetOrderPriceResponse.price_quote:type_name -> api.pod.v1.OrderPriceQuote
-	165, // 80: api.pod.v1.OrderDraft.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	168, // 79: api.pod.v1.UserGetOrderPriceResponse.price_quote:type_name -> api.pod.v1.OrderPriceQuote
+	166, // 80: api.pod.v1.OrderDraft.order_platform:type_name -> common.platform.v1.MarketplacePlatform
 	4,   // 81: api.pod.v1.OrderDraft.create_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
 	5,   // 82: api.pod.v1.OrderDraft.fulfillment_vendor:type_name -> api.pod.v1.OrderDraft.FulfillmentVendor
 	6,   // 83: api.pod.v1.OrderDraft.priority:type_name -> api.pod.v1.OrderDraft.FulfillmentPriority
@@ -15194,249 +15266,250 @@ var file_api_pod_v1_order_draft_proto_depIdxs = []int32{
 	139, // 85: api.pod.v1.OrderDraft.shipping_option:type_name -> api.pod.v1.OrderDraft.ShippingOption
 	140, // 86: api.pod.v1.OrderDraft.print_option:type_name -> api.pod.v1.OrderDraft.PrintingOption
 	137, // 87: api.pod.v1.OrderDraft.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
-	164, // 88: api.pod.v1.OrderDraft.order_date:type_name -> google.protobuf.Timestamp
+	165, // 88: api.pod.v1.OrderDraft.order_date:type_name -> google.protobuf.Timestamp
 	7,   // 89: api.pod.v1.OrderDraft.status:type_name -> api.pod.v1.OrderDraft.Status
 	61,  // 90: api.pod.v1.OrderDraft.shipping_label:type_name -> api.pod.v1.ShippingLabelOrderDraft
 	0,   // 91: api.pod.v1.OrderDraft.shipping_verification_status:type_name -> api.pod.v1.ShippingVerificationStatus
 	1,   // 92: api.pod.v1.OrderDraft.product_matching_status:type_name -> api.pod.v1.ProductMatchingStatus
 	141, // 93: api.pod.v1.OrderDraft.addresses:type_name -> api.pod.v1.OrderDraft.Address
 	36,  // 94: api.pod.v1.OrderDraft.line_items:type_name -> api.pod.v1.LineItem
-	164, // 95: api.pod.v1.OrderDraft.approved_at:type_name -> google.protobuf.Timestamp
+	165, // 95: api.pod.v1.OrderDraft.approved_at:type_name -> google.protobuf.Timestamp
 	150, // 96: api.pod.v1.OrderDraft.gift_messages:type_name -> api.pod.v1.OrderDraft.GiftMessage
-	168, // 97: api.pod.v1.ShippingLabelOrderDraft.label_file:type_name -> common.type.v1.File
+	169, // 97: api.pod.v1.ShippingLabelOrderDraft.label_file:type_name -> common.type.v1.File
 	39,  // 98: api.pod.v1.UserMatchProductBatchOrdersRequest.line_items:type_name -> api.pod.v1.MatchProductLineItem
 	64,  // 99: api.pod.v1.UserListAvailableShippingServiceRequest.address:type_name -> api.pod.v1.AddressListAvailableShippingService
 	65,  // 100: api.pod.v1.UserListAvailableShippingServiceRequest.line_items:type_name -> api.pod.v1.LineItemListAvailableShippingService
 	14,  // 101: api.pod.v1.ShippingOptionListAvailableShippingService.status:type_name -> api.pod.v1.ShippingOptionListAvailableShippingService.ShippingOptionStatus
-	67,  // 102: api.pod.v1.UserListAvailableShippingServiceResponse.shipping_options:type_name -> api.pod.v1.ShippingOptionListAvailableShippingService
-	147, // 103: api.pod.v1.UserCheckoutOrderDraftRequest.details:type_name -> api.pod.v1.OrderDraft.CheckoutDetail
-	147, // 104: api.pod.v1.UserPreCheckoutOrderDraftRequest.details:type_name -> api.pod.v1.OrderDraft.CheckoutDetail
-	15,  // 105: api.pod.v1.ResponseApproveOrderDrafts.status:type_name -> api.pod.v1.ResponseApproveOrderDrafts.ResponseApproveOrderDraftsStatus
-	76,  // 106: api.pod.v1.UserApproveOrderDraftsResponse.data:type_name -> api.pod.v1.ResponseApproveOrderDrafts
-	60,  // 107: api.pod.v1.UserGetOrderDraftResponse.data:type_name -> api.pod.v1.OrderDraft
-	143, // 108: api.pod.v1.UserListOrderDraftForCheckoutResponse.data:type_name -> api.pod.v1.OrderDraft.CheckoutShort
-	164, // 109: api.pod.v1.UserListOrderDraftForCheckoutResponse.rush_checkout_session_expire_at:type_name -> google.protobuf.Timestamp
-	145, // 110: api.pod.v1.UserCountOrderDraftStatusRequest.filter:type_name -> api.pod.v1.OrderDraft.ListingFilter
-	146, // 111: api.pod.v1.UserCountOrderDraftStatusRequest.search:type_name -> api.pod.v1.OrderDraft.ListingSearch
-	160, // 112: api.pod.v1.UserCountOrderDraftStatusResponse.data:type_name -> api.pod.v1.UserCountOrderDraftStatusResponse.Record
-	150, // 113: api.pod.v1.UserUpdateGiftMessageInOrderDraftRequest.list_gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
-	100, // 114: api.pod.v1.UserListGiftMessageInOrderDraftDetailResponse.data:type_name -> api.pod.v1.GiftMessageInOrderDraft
-	164, // 115: api.pod.v1.GiftMessageInOrderDraft.created_at:type_name -> google.protobuf.Timestamp
-	164, // 116: api.pod.v1.GiftMessageInOrderDraft.updated_at:type_name -> google.protobuf.Timestamp
-	8,   // 117: api.pod.v1.GiftMessageInOrderDraft.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
-	101, // 118: api.pod.v1.GiftMessageInOrderDraft.template:type_name -> api.pod.v1.GiftMessageTemplateInOrderDraft
-	169, // 119: api.pod.v1.GiftMessageTemplateInOrderDraft.price:type_name -> common.type.v1.Money
-	61,  // 120: api.pod.v1.UserUpdateLabelOrderDraftRequest.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
-	112, // 121: api.pod.v1.UserParseAddressResponse.address:type_name -> api.pod.v1.ParsedAddress
-	140, // 122: api.pod.v1.UserPreCreateOrderDraftRequest.CreateOrderDraftLineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	168, // 123: api.pod.v1.UserPreCreateOrderDraftRequest.CreateOrderDraftLineItem.item_barcode_file:type_name -> common.type.v1.File
-	140, // 124: api.pod.v1.UserCreateOrderDraftRequest.LineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	140, // 125: api.pod.v1.UserUpdateOrderDraftRequest.UpdateOrderDraftLineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	168, // 126: api.pod.v1.UserUpdateOrderDraftRequest.UpdateOrderDraftLineItem.item_barcode_file:type_name -> common.type.v1.File
-	168, // 127: api.pod.v1.LineItem.LineItemFulfillmentOption.barcode_file:type_name -> common.type.v1.File
-	170, // 128: api.pod.v1.LineItem.Variant.option_1:type_name -> api.pod.v1.OptionGroup.Value
-	170, // 129: api.pod.v1.LineItem.Variant.option_2:type_name -> api.pod.v1.OptionGroup.Value
-	170, // 130: api.pod.v1.LineItem.Variant.option_3:type_name -> api.pod.v1.OptionGroup.Value
-	169, // 131: api.pod.v1.LineItem.Variant.price:type_name -> common.type.v1.Money
-	169, // 132: api.pod.v1.LineItem.Variant.price_gm:type_name -> common.type.v1.Money
-	122, // 133: api.pod.v1.LineItem.Variant.product_images:type_name -> api.pod.v1.LineItem.ProductImage
-	121, // 134: api.pod.v1.LineItem.Product.print_locations:type_name -> api.pod.v1.LineItem.ProductPrintLocation
-	168, // 135: api.pod.v1.UserCreateOrderDraftLabelRequest.CreateOrderDraftLineItemLabel.item_barcode_file:type_name -> common.type.v1.File
-	140, // 136: api.pod.v1.UserCreateOrderDraftLabelRequest.CreateOrderDraftLineItemLabel.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	169, // 137: api.pod.v1.LineItemMatchProduct.Variant.price:type_name -> common.type.v1.Money
-	126, // 138: api.pod.v1.LineItemMatchProduct.Variant.product_images:type_name -> api.pod.v1.LineItemMatchProduct.ProductImage
-	165, // 139: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaPlatform.value:type_name -> common.platform.v1.MarketplacePlatform
-	12,  // 140: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaCreatedMethod.value:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
-	13,  // 141: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaOption.value:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
-	171, // 142: api.pod.v1.OrderDraft.BillingOption.ioss_number:type_name -> google.protobuf.StringValue
-	169, // 143: api.pod.v1.OrderDraft.BillingOption.ioss_value:type_name -> common.type.v1.Money
-	171, // 144: api.pod.v1.OrderDraft.BillingOption.tax_number:type_name -> google.protobuf.StringValue
-	169, // 145: api.pod.v1.OrderDraft.BillingOption.tax_value:type_name -> common.type.v1.Money
-	10,  // 146: api.pod.v1.OrderDraft.FulfillmentOption.print_type:type_name -> api.pod.v1.OrderDraft.PrintType
-	168, // 147: api.pod.v1.OrderDraft.PrintingOption.design_file:type_name -> common.type.v1.File
-	172, // 148: api.pod.v1.OrderDraft.PrintingOption.storage_id:type_name -> common.media.v1.MediaStorage
-	11,  // 149: api.pod.v1.OrderDraft.Address.type:type_name -> api.pod.v1.OrderDraft.Address.Type
-	164, // 150: api.pod.v1.OrderDraft.Short.created_at:type_name -> google.protobuf.Timestamp
-	164, // 151: api.pod.v1.OrderDraft.Short.updated_at:type_name -> google.protobuf.Timestamp
-	164, // 152: api.pod.v1.OrderDraft.Short.approved_at:type_name -> google.protobuf.Timestamp
-	164, // 153: api.pod.v1.OrderDraft.Short.order_date:type_name -> google.protobuf.Timestamp
-	4,   // 154: api.pod.v1.OrderDraft.Short.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
-	169, // 155: api.pod.v1.OrderDraft.Short.total:type_name -> common.type.v1.Money
-	7,   // 156: api.pod.v1.OrderDraft.Short.status:type_name -> api.pod.v1.OrderDraft.Status
-	61,  // 157: api.pod.v1.OrderDraft.Short.shipping_labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
-	144, // 158: api.pod.v1.OrderDraft.Short.recipient:type_name -> api.pod.v1.OrderDraft.FullName
-	165, // 159: api.pod.v1.OrderDraft.CheckoutShort.order_platform:type_name -> common.platform.v1.MarketplacePlatform
-	167, // 160: api.pod.v1.OrderDraft.CheckoutShort.price_quote:type_name -> api.pod.v1.OrderPriceQuote
-	159, // 161: api.pod.v1.OrderDraft.CheckoutShort.items:type_name -> api.pod.v1.OrderDraft.CheckoutShort.Item
-	7,   // 162: api.pod.v1.OrderDraft.ListingFilter.status:type_name -> api.pod.v1.OrderDraft.Status
-	164, // 163: api.pod.v1.OrderDraft.ListingFilter.from:type_name -> google.protobuf.Timestamp
-	164, // 164: api.pod.v1.OrderDraft.ListingFilter.to:type_name -> google.protobuf.Timestamp
-	165, // 165: api.pod.v1.OrderDraft.ListingFilter.platforms:type_name -> common.platform.v1.MarketplacePlatform
-	12,  // 166: api.pod.v1.OrderDraft.ListingFilter.created_methods:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
-	13,  // 167: api.pod.v1.OrderDraft.ListingFilter.options:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
-	167, // 168: api.pod.v1.OrderDraft.CheckoutDetail.price_quote:type_name -> api.pod.v1.OrderPriceQuote
-	169, // 169: api.pod.v1.OrderDraft.GiftMessageTemplate.price:type_name -> common.type.v1.Money
-	8,   // 170: api.pod.v1.OrderDraft.GiftMessage.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
-	148, // 171: api.pod.v1.OrderDraft.GiftMessage.template:type_name -> api.pod.v1.OrderDraft.GiftMessageTemplate
-	149, // 172: api.pod.v1.OrderDraft.GiftMessage.origin_data:type_name -> api.pod.v1.OrderDraft.GiftMessageOriginData
-	8,   // 173: api.pod.v1.OrderDraft.GiftMessageAdmin.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
-	169, // 174: api.pod.v1.OrderDraft.GiftMessageAdmin.price:type_name -> common.type.v1.Money
-	149, // 175: api.pod.v1.OrderDraft.GiftMessageAdmin.origin_data:type_name -> api.pod.v1.OrderDraft.GiftMessageOriginData
-	7,   // 176: api.pod.v1.OrderDraft.StaffListingFilter.status:type_name -> api.pod.v1.OrderDraft.Status
-	164, // 177: api.pod.v1.OrderDraft.StaffListingFilter.from:type_name -> google.protobuf.Timestamp
-	164, // 178: api.pod.v1.OrderDraft.StaffListingFilter.to:type_name -> google.protobuf.Timestamp
-	165, // 179: api.pod.v1.OrderDraft.StaffListingFilter.platforms:type_name -> common.platform.v1.MarketplacePlatform
-	12,  // 180: api.pod.v1.OrderDraft.StaffListingFilter.created_methods:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
-	13,  // 181: api.pod.v1.OrderDraft.StaffListingFilter.options:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
-	9,   // 182: api.pod.v1.OrderDraft.StaffListingFilter.order_location:type_name -> api.pod.v1.OrderDraft.OrderDraftLocationOption
-	164, // 183: api.pod.v1.OrderDraft.Admin.created_at:type_name -> google.protobuf.Timestamp
-	164, // 184: api.pod.v1.OrderDraft.Admin.updated_at:type_name -> google.protobuf.Timestamp
-	164, // 185: api.pod.v1.OrderDraft.Admin.approved_at:type_name -> google.protobuf.Timestamp
-	164, // 186: api.pod.v1.OrderDraft.Admin.order_date:type_name -> google.protobuf.Timestamp
-	169, // 187: api.pod.v1.OrderDraft.Admin.total:type_name -> common.type.v1.Money
-	7,   // 188: api.pod.v1.OrderDraft.Admin.status:type_name -> api.pod.v1.OrderDraft.Status
-	61,  // 189: api.pod.v1.OrderDraft.Admin.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
-	61,  // 190: api.pod.v1.OrderDraft.Admin.shipping_labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
-	165, // 191: api.pod.v1.OrderDraft.Admin.platform:type_name -> common.platform.v1.MarketplacePlatform
-	144, // 192: api.pod.v1.OrderDraft.Admin.recipient:type_name -> api.pod.v1.OrderDraft.FullName
-	4,   // 193: api.pod.v1.OrderDraft.Admin.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
-	157, // 194: api.pod.v1.OrderDraft.Admin.notes:type_name -> api.pod.v1.OrderDraft.Note
-	165, // 195: api.pod.v1.OrderDraft.DetailAdmin.order_platform:type_name -> common.platform.v1.MarketplacePlatform
-	4,   // 196: api.pod.v1.OrderDraft.DetailAdmin.create_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
-	5,   // 197: api.pod.v1.OrderDraft.DetailAdmin.fulfillment_vendor:type_name -> api.pod.v1.OrderDraft.FulfillmentVendor
-	6,   // 198: api.pod.v1.OrderDraft.DetailAdmin.priority:type_name -> api.pod.v1.OrderDraft.FulfillmentPriority
-	138, // 199: api.pod.v1.OrderDraft.DetailAdmin.fulfillment_option:type_name -> api.pod.v1.OrderDraft.FulfillmentOption
-	139, // 200: api.pod.v1.OrderDraft.DetailAdmin.shipping_option:type_name -> api.pod.v1.OrderDraft.ShippingOption
-	140, // 201: api.pod.v1.OrderDraft.DetailAdmin.print_option:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	137, // 202: api.pod.v1.OrderDraft.DetailAdmin.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
-	164, // 203: api.pod.v1.OrderDraft.DetailAdmin.order_date:type_name -> google.protobuf.Timestamp
-	7,   // 204: api.pod.v1.OrderDraft.DetailAdmin.status:type_name -> api.pod.v1.OrderDraft.Status
-	61,  // 205: api.pod.v1.OrderDraft.DetailAdmin.shipping_label:type_name -> api.pod.v1.ShippingLabelOrderDraft
-	0,   // 206: api.pod.v1.OrderDraft.DetailAdmin.shipping_verification_status:type_name -> api.pod.v1.ShippingVerificationStatus
-	1,   // 207: api.pod.v1.OrderDraft.DetailAdmin.product_matching_status:type_name -> api.pod.v1.ProductMatchingStatus
-	141, // 208: api.pod.v1.OrderDraft.DetailAdmin.addresses:type_name -> api.pod.v1.OrderDraft.Address
-	156, // 209: api.pod.v1.OrderDraft.DetailAdmin.line_items:type_name -> api.pod.v1.OrderDraft.LineItemAdmin
-	164, // 210: api.pod.v1.OrderDraft.DetailAdmin.approved_at:type_name -> google.protobuf.Timestamp
-	151, // 211: api.pod.v1.OrderDraft.DetailAdmin.gift_messages:type_name -> api.pod.v1.OrderDraft.GiftMessageAdmin
-	169, // 212: api.pod.v1.OrderDraft.DetailAdmin.order_subtotal:type_name -> common.type.v1.Money
-	169, // 213: api.pod.v1.OrderDraft.DetailAdmin.order_tax:type_name -> common.type.v1.Money
-	169, // 214: api.pod.v1.OrderDraft.DetailAdmin.order_fee:type_name -> common.type.v1.Money
-	169, // 215: api.pod.v1.OrderDraft.DetailAdmin.order_discount:type_name -> common.type.v1.Money
-	169, // 216: api.pod.v1.OrderDraft.DetailAdmin.order_total:type_name -> common.type.v1.Money
-	169, // 217: api.pod.v1.OrderDraft.DetailAdmin.order_gift_message_fee:type_name -> common.type.v1.Money
-	169, // 218: api.pod.v1.OrderDraft.DetailAdmin.order_shipping_fee:type_name -> common.type.v1.Money
-	169, // 219: api.pod.v1.OrderDraft.DetailAdmin.order_handle_fee:type_name -> common.type.v1.Money
-	169, // 220: api.pod.v1.OrderDraft.DetailAdmin.order_surcharge:type_name -> common.type.v1.Money
-	169, // 221: api.pod.v1.OrderDraft.DetailAdmin.order_rush_fee:type_name -> common.type.v1.Money
-	157, // 222: api.pod.v1.OrderDraft.DetailAdmin.notes:type_name -> api.pod.v1.OrderDraft.Note
-	158, // 223: api.pod.v1.OrderDraft.DetailAdmin.team_tier:type_name -> api.pod.v1.OrderDraft.TeamTier
-	140, // 224: api.pod.v1.OrderDraft.LineItemAdmin.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
-	116, // 225: api.pod.v1.OrderDraft.LineItemAdmin.origin_options:type_name -> api.pod.v1.LineItem.OriginOptions
-	117, // 226: api.pod.v1.OrderDraft.LineItemAdmin.line_item_product_option:type_name -> api.pod.v1.LineItem.LineItemProductOption
-	118, // 227: api.pod.v1.OrderDraft.LineItemAdmin.fulfillment_option:type_name -> api.pod.v1.LineItem.LineItemFulfillmentOption
-	119, // 228: api.pod.v1.OrderDraft.LineItemAdmin.variant:type_name -> api.pod.v1.LineItem.Variant
-	120, // 229: api.pod.v1.OrderDraft.LineItemAdmin.product:type_name -> api.pod.v1.LineItem.Product
-	4,   // 230: api.pod.v1.OrderDraft.LineItemAdmin.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
-	165, // 231: api.pod.v1.OrderDraft.LineItemAdmin.order_platform:type_name -> common.platform.v1.MarketplacePlatform
-	3,   // 232: api.pod.v1.OrderDraft.LineItemAdmin.stock_status:type_name -> api.pod.v1.LineItem.StockStatus
-	170, // 233: api.pod.v1.OrderDraft.LineItemAdmin.option_1:type_name -> api.pod.v1.OptionGroup.Value
-	170, // 234: api.pod.v1.OrderDraft.LineItemAdmin.option_2:type_name -> api.pod.v1.OptionGroup.Value
-	169, // 235: api.pod.v1.OrderDraft.LineItemAdmin.line_tax:type_name -> common.type.v1.Money
-	169, // 236: api.pod.v1.OrderDraft.LineItemAdmin.line_fee:type_name -> common.type.v1.Money
-	169, // 237: api.pod.v1.OrderDraft.LineItemAdmin.line_discount:type_name -> common.type.v1.Money
-	169, // 238: api.pod.v1.OrderDraft.LineItemAdmin.line_subtotal:type_name -> common.type.v1.Money
-	169, // 239: api.pod.v1.OrderDraft.LineItemAdmin.line_total:type_name -> common.type.v1.Money
-	169, // 240: api.pod.v1.OrderDraft.LineItemAdmin.item_price:type_name -> common.type.v1.Money
-	169, // 241: api.pod.v1.OrderDraft.LineItemAdmin.item_fee:type_name -> common.type.v1.Money
-	169, // 242: api.pod.v1.OrderDraft.LineItemAdmin.item_discount:type_name -> common.type.v1.Money
-	169, // 243: api.pod.v1.OrderDraft.LineItemAdmin.unit_base_price:type_name -> common.type.v1.Money
-	169, // 244: api.pod.v1.OrderDraft.LineItemAdmin.line_shipping_fee:type_name -> common.type.v1.Money
-	7,   // 245: api.pod.v1.UserCountOrderDraftStatusResponse.Record.status:type_name -> api.pod.v1.OrderDraft.Status
-	26,  // 246: api.pod.v1.OrderDraftAPI.UserPreCreateOrderDraft:input_type -> api.pod.v1.UserPreCreateOrderDraftRequest
-	32,  // 247: api.pod.v1.OrderDraftAPI.UserCreateOrderDraft:input_type -> api.pod.v1.UserCreateOrderDraftRequest
-	96,  // 248: api.pod.v1.OrderDraftAPI.UserUpdateGiftMessageInOrderDraft:input_type -> api.pod.v1.UserUpdateGiftMessageInOrderDraftRequest
-	34,  // 249: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraft:input_type -> api.pod.v1.UserUpdateOrderDraftRequest
-	40,  // 250: api.pod.v1.OrderDraftAPI.UserMatchProductOrder:input_type -> api.pod.v1.UserMatchProductOrderRequest
-	62,  // 251: api.pod.v1.OrderDraftAPI.UserMatchProductBatchOrders:input_type -> api.pod.v1.UserMatchProductBatchOrdersRequest
-	42,  // 252: api.pod.v1.OrderDraftAPI.UserListItemsLineOrders:input_type -> api.pod.v1.UserListItemsLineOrdersRequest
-	37,  // 253: api.pod.v1.OrderDraftAPI.UserCreateOrderDraftLabel:input_type -> api.pod.v1.UserCreateOrderDraftLabelRequest
-	75,  // 254: api.pod.v1.OrderDraftAPI.UserApproveOrderDrafts:input_type -> api.pod.v1.UserApproveOrderDraftsRequest
-	77,  // 255: api.pod.v1.OrderDraftAPI.UserSubmitApprovalOrderDraft:input_type -> api.pod.v1.UserSubmitApprovalOrderDraftRequest
-	80,  // 256: api.pod.v1.OrderDraftAPI.UserMarkAsValidOrderDraftAddress:input_type -> api.pod.v1.UserMarkAsValidOrderDraftAddressRequest
-	92,  // 257: api.pod.v1.OrderDraftAPI.UserDuplicateOrderDraft:input_type -> api.pod.v1.UserDuplicateOrderDraftRequest
-	94,  // 258: api.pod.v1.OrderDraftAPI.UserDuplicateListOrderDraft:input_type -> api.pod.v1.UserDuplicateListOrderDraftRequest
-	45,  // 259: api.pod.v1.OrderDraftAPI.UserListOrderDraft:input_type -> api.pod.v1.UserListOrderDraftRequest
-	47,  // 260: api.pod.v1.OrderDraftAPI.UserListOrderDraftFilterCriteria:input_type -> api.pod.v1.UserListOrderDraftFilterCriteriaRequest
-	50,  // 261: api.pod.v1.OrderDraftAPI.UserListProductForOrderDraftFilter:input_type -> api.pod.v1.UserListProductForOrderDraftFilterRequest
-	53,  // 262: api.pod.v1.OrderDraftAPI.UserListColorForOrderDraftFilter:input_type -> api.pod.v1.UserListColorForOrderDraftFilterRequest
-	55,  // 263: api.pod.v1.OrderDraftAPI.UserListSizeForOrderDraftFilter:input_type -> api.pod.v1.UserListSizeForOrderDraftFilterRequest
-	58,  // 264: api.pod.v1.OrderDraftAPI.UserGetOrderPrice:input_type -> api.pod.v1.UserGetOrderPriceRequest
-	66,  // 265: api.pod.v1.OrderDraftAPI.UserListAvailableShippingService:input_type -> api.pod.v1.UserListAvailableShippingServiceRequest
-	73,  // 266: api.pod.v1.OrderDraftAPI.UserVerifyOrderDraft:input_type -> api.pod.v1.UserVerifyOrderDraftRequest
-	69,  // 267: api.pod.v1.OrderDraftAPI.UserCheckoutOrderDraft:input_type -> api.pod.v1.UserCheckoutOrderDraftRequest
-	71,  // 268: api.pod.v1.OrderDraftAPI.UserPreCheckoutOrderDraft:input_type -> api.pod.v1.UserPreCheckoutOrderDraftRequest
-	82,  // 269: api.pod.v1.OrderDraftAPI.UserGetOrderDraft:input_type -> api.pod.v1.UserGetOrderDraftRequest
-	84,  // 270: api.pod.v1.OrderDraftAPI.UserListOrderDraftForCheckout:input_type -> api.pod.v1.UserListOrderDraftForCheckoutRequest
-	85,  // 271: api.pod.v1.OrderDraftAPI.UserArchiveOrderDraft:input_type -> api.pod.v1.UserArchiveOrderDraftRequest
-	88,  // 272: api.pod.v1.OrderDraftAPI.UserRestoreOrderDraft:input_type -> api.pod.v1.UserRestoreOrderDraftRequest
-	28,  // 273: api.pod.v1.OrderDraftAPI.UserSaveMappingLineItem:input_type -> api.pod.v1.UserSaveMappingLineItemRequest
-	30,  // 274: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraftAddressInformation:input_type -> api.pod.v1.UserUpdateOrderDraftAddressInformationRequest
-	90,  // 275: api.pod.v1.OrderDraftAPI.UserCountOrderDraftStatus:input_type -> api.pod.v1.UserCountOrderDraftStatusRequest
-	98,  // 276: api.pod.v1.OrderDraftAPI.UserListGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserListGiftMessageInOrderDraftDetailRequest
-	102, // 277: api.pod.v1.OrderDraftAPI.UserDeleteGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserDeleteGiftMessageInOrderDraftDetailRequest
-	104, // 278: api.pod.v1.OrderDraftAPI.UserAddGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserAddGiftMessageInOrderDraftDetailRequest
-	23,  // 279: api.pod.v1.OrderDraftAPI.UserListOrderImportSession:input_type -> api.pod.v1.UserListOrderImportSessionRequest
-	20,  // 280: api.pod.v1.OrderDraftAPI.UserListOrderImport:input_type -> api.pod.v1.UserListOrderImportRequest
-	18,  // 281: api.pod.v1.OrderDraftAPI.UserCountOrderDraftImport:input_type -> api.pod.v1.UserCountOrderDraftImportRequest
-	106, // 282: api.pod.v1.OrderDraftAPI.UserUpdateLabelOrderDraft:input_type -> api.pod.v1.UserUpdateLabelOrderDraftRequest
-	16,  // 283: api.pod.v1.OrderDraftAPI.UserCountAllOrderDraft:input_type -> api.pod.v1.UserCountAllOrderDraftRequest
-	108, // 284: api.pod.v1.OrderDraftAPI.UserCancelSessionListOrderDraftForCheckout:input_type -> api.pod.v1.UserCancelSessionListOrderDraftForCheckoutRequest
-	110, // 285: api.pod.v1.OrderDraftAPI.UserParseAddress:input_type -> api.pod.v1.UserParseAddressRequest
-	27,  // 286: api.pod.v1.OrderDraftAPI.UserPreCreateOrderDraft:output_type -> api.pod.v1.UserPreCreateOrderDraftResponse
-	33,  // 287: api.pod.v1.OrderDraftAPI.UserCreateOrderDraft:output_type -> api.pod.v1.UserCreateOrderDraftResponse
-	97,  // 288: api.pod.v1.OrderDraftAPI.UserUpdateGiftMessageInOrderDraft:output_type -> api.pod.v1.UserUpdateGiftMessageInOrderDraftResponse
-	35,  // 289: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraft:output_type -> api.pod.v1.UserUpdateOrderDraftResponse
-	41,  // 290: api.pod.v1.OrderDraftAPI.UserMatchProductOrder:output_type -> api.pod.v1.UserMatchProductOrderResponse
-	63,  // 291: api.pod.v1.OrderDraftAPI.UserMatchProductBatchOrders:output_type -> api.pod.v1.UserMatchProductBatchOrdersResponse
-	43,  // 292: api.pod.v1.OrderDraftAPI.UserListItemsLineOrders:output_type -> api.pod.v1.UserListItemsLineOrdersResponse
-	38,  // 293: api.pod.v1.OrderDraftAPI.UserCreateOrderDraftLabel:output_type -> api.pod.v1.UserCreateOrderDraftLabelResponse
-	79,  // 294: api.pod.v1.OrderDraftAPI.UserApproveOrderDrafts:output_type -> api.pod.v1.UserApproveOrderDraftsResponse
-	78,  // 295: api.pod.v1.OrderDraftAPI.UserSubmitApprovalOrderDraft:output_type -> api.pod.v1.UserSubmitApprovalOrderDraftResponse
-	81,  // 296: api.pod.v1.OrderDraftAPI.UserMarkAsValidOrderDraftAddress:output_type -> api.pod.v1.UserMarkAsValidOrderDraftAddressResponse
-	93,  // 297: api.pod.v1.OrderDraftAPI.UserDuplicateOrderDraft:output_type -> api.pod.v1.UserDuplicateOrderDraftResponse
-	95,  // 298: api.pod.v1.OrderDraftAPI.UserDuplicateListOrderDraft:output_type -> api.pod.v1.UserDuplicateListOrderDraftResponse
-	46,  // 299: api.pod.v1.OrderDraftAPI.UserListOrderDraft:output_type -> api.pod.v1.UserListOrderDraftResponse
-	48,  // 300: api.pod.v1.OrderDraftAPI.UserListOrderDraftFilterCriteria:output_type -> api.pod.v1.UserListOrderDraftFilterCriteriaResponse
-	51,  // 301: api.pod.v1.OrderDraftAPI.UserListProductForOrderDraftFilter:output_type -> api.pod.v1.UserListProductForOrderDraftFilterResponse
-	54,  // 302: api.pod.v1.OrderDraftAPI.UserListColorForOrderDraftFilter:output_type -> api.pod.v1.UserListColorForOrderDraftFilterResponse
-	56,  // 303: api.pod.v1.OrderDraftAPI.UserListSizeForOrderDraftFilter:output_type -> api.pod.v1.UserListSizeForOrderDraftFilterResponse
-	59,  // 304: api.pod.v1.OrderDraftAPI.UserGetOrderPrice:output_type -> api.pod.v1.UserGetOrderPriceResponse
-	68,  // 305: api.pod.v1.OrderDraftAPI.UserListAvailableShippingService:output_type -> api.pod.v1.UserListAvailableShippingServiceResponse
-	74,  // 306: api.pod.v1.OrderDraftAPI.UserVerifyOrderDraft:output_type -> api.pod.v1.UserVerifyOrderDraftResponse
-	70,  // 307: api.pod.v1.OrderDraftAPI.UserCheckoutOrderDraft:output_type -> api.pod.v1.UserCheckoutOrderDraftResponse
-	72,  // 308: api.pod.v1.OrderDraftAPI.UserPreCheckoutOrderDraft:output_type -> api.pod.v1.UserPreCheckoutOrderDraftResponse
-	83,  // 309: api.pod.v1.OrderDraftAPI.UserGetOrderDraft:output_type -> api.pod.v1.UserGetOrderDraftResponse
-	87,  // 310: api.pod.v1.OrderDraftAPI.UserListOrderDraftForCheckout:output_type -> api.pod.v1.UserListOrderDraftForCheckoutResponse
-	86,  // 311: api.pod.v1.OrderDraftAPI.UserArchiveOrderDraft:output_type -> api.pod.v1.UserArchiveOrderDraftResponse
-	89,  // 312: api.pod.v1.OrderDraftAPI.UserRestoreOrderDraft:output_type -> api.pod.v1.UserRestoreOrderDraftResponse
-	29,  // 313: api.pod.v1.OrderDraftAPI.UserSaveMappingLineItem:output_type -> api.pod.v1.UserSaveMappingLineItemResponse
-	31,  // 314: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraftAddressInformation:output_type -> api.pod.v1.UserUpdateOrderDraftAddressInformationResponse
-	91,  // 315: api.pod.v1.OrderDraftAPI.UserCountOrderDraftStatus:output_type -> api.pod.v1.UserCountOrderDraftStatusResponse
-	99,  // 316: api.pod.v1.OrderDraftAPI.UserListGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserListGiftMessageInOrderDraftDetailResponse
-	103, // 317: api.pod.v1.OrderDraftAPI.UserDeleteGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserDeleteGiftMessageInOrderDraftDetailResponse
-	105, // 318: api.pod.v1.OrderDraftAPI.UserAddGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserAddGiftMessageInOrderDraftDetailResponse
-	24,  // 319: api.pod.v1.OrderDraftAPI.UserListOrderImportSession:output_type -> api.pod.v1.UserListOrderImportSessionResponse
-	21,  // 320: api.pod.v1.OrderDraftAPI.UserListOrderImport:output_type -> api.pod.v1.UserListOrderImportResponse
-	19,  // 321: api.pod.v1.OrderDraftAPI.UserCountOrderDraftImport:output_type -> api.pod.v1.UserCountOrderDraftImportResponse
-	107, // 322: api.pod.v1.OrderDraftAPI.UserUpdateLabelOrderDraft:output_type -> api.pod.v1.UserUpdateLabelOrderDraftResponse
-	17,  // 323: api.pod.v1.OrderDraftAPI.UserCountAllOrderDraft:output_type -> api.pod.v1.UserCountAllOrderDraftResponse
-	109, // 324: api.pod.v1.OrderDraftAPI.UserCancelSessionListOrderDraftForCheckout:output_type -> api.pod.v1.UserCancelSessionListOrderDraftForCheckoutResponse
-	111, // 325: api.pod.v1.OrderDraftAPI.UserParseAddress:output_type -> api.pod.v1.UserParseAddressResponse
-	286, // [286:326] is the sub-list for method output_type
-	246, // [246:286] is the sub-list for method input_type
-	246, // [246:246] is the sub-list for extension type_name
-	246, // [246:246] is the sub-list for extension extendee
-	0,   // [0:246] is the sub-list for field type_name
+	160, // 102: api.pod.v1.ShippingOptionListAvailableShippingService.disabled_reason:type_name -> api.pod.v1.ShippingOptionListAvailableShippingService.DisabledReason
+	67,  // 103: api.pod.v1.UserListAvailableShippingServiceResponse.shipping_options:type_name -> api.pod.v1.ShippingOptionListAvailableShippingService
+	147, // 104: api.pod.v1.UserCheckoutOrderDraftRequest.details:type_name -> api.pod.v1.OrderDraft.CheckoutDetail
+	147, // 105: api.pod.v1.UserPreCheckoutOrderDraftRequest.details:type_name -> api.pod.v1.OrderDraft.CheckoutDetail
+	15,  // 106: api.pod.v1.ResponseApproveOrderDrafts.status:type_name -> api.pod.v1.ResponseApproveOrderDrafts.ResponseApproveOrderDraftsStatus
+	76,  // 107: api.pod.v1.UserApproveOrderDraftsResponse.data:type_name -> api.pod.v1.ResponseApproveOrderDrafts
+	60,  // 108: api.pod.v1.UserGetOrderDraftResponse.data:type_name -> api.pod.v1.OrderDraft
+	143, // 109: api.pod.v1.UserListOrderDraftForCheckoutResponse.data:type_name -> api.pod.v1.OrderDraft.CheckoutShort
+	165, // 110: api.pod.v1.UserListOrderDraftForCheckoutResponse.rush_checkout_session_expire_at:type_name -> google.protobuf.Timestamp
+	145, // 111: api.pod.v1.UserCountOrderDraftStatusRequest.filter:type_name -> api.pod.v1.OrderDraft.ListingFilter
+	146, // 112: api.pod.v1.UserCountOrderDraftStatusRequest.search:type_name -> api.pod.v1.OrderDraft.ListingSearch
+	161, // 113: api.pod.v1.UserCountOrderDraftStatusResponse.data:type_name -> api.pod.v1.UserCountOrderDraftStatusResponse.Record
+	150, // 114: api.pod.v1.UserUpdateGiftMessageInOrderDraftRequest.list_gift_message:type_name -> api.pod.v1.OrderDraft.GiftMessage
+	100, // 115: api.pod.v1.UserListGiftMessageInOrderDraftDetailResponse.data:type_name -> api.pod.v1.GiftMessageInOrderDraft
+	165, // 116: api.pod.v1.GiftMessageInOrderDraft.created_at:type_name -> google.protobuf.Timestamp
+	165, // 117: api.pod.v1.GiftMessageInOrderDraft.updated_at:type_name -> google.protobuf.Timestamp
+	8,   // 118: api.pod.v1.GiftMessageInOrderDraft.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
+	101, // 119: api.pod.v1.GiftMessageInOrderDraft.template:type_name -> api.pod.v1.GiftMessageTemplateInOrderDraft
+	170, // 120: api.pod.v1.GiftMessageTemplateInOrderDraft.price:type_name -> common.type.v1.Money
+	61,  // 121: api.pod.v1.UserUpdateLabelOrderDraftRequest.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
+	112, // 122: api.pod.v1.UserParseAddressResponse.address:type_name -> api.pod.v1.ParsedAddress
+	140, // 123: api.pod.v1.UserPreCreateOrderDraftRequest.CreateOrderDraftLineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	169, // 124: api.pod.v1.UserPreCreateOrderDraftRequest.CreateOrderDraftLineItem.item_barcode_file:type_name -> common.type.v1.File
+	140, // 125: api.pod.v1.UserCreateOrderDraftRequest.LineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	140, // 126: api.pod.v1.UserUpdateOrderDraftRequest.UpdateOrderDraftLineItem.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	169, // 127: api.pod.v1.UserUpdateOrderDraftRequest.UpdateOrderDraftLineItem.item_barcode_file:type_name -> common.type.v1.File
+	169, // 128: api.pod.v1.LineItem.LineItemFulfillmentOption.barcode_file:type_name -> common.type.v1.File
+	171, // 129: api.pod.v1.LineItem.Variant.option_1:type_name -> api.pod.v1.OptionGroup.Value
+	171, // 130: api.pod.v1.LineItem.Variant.option_2:type_name -> api.pod.v1.OptionGroup.Value
+	171, // 131: api.pod.v1.LineItem.Variant.option_3:type_name -> api.pod.v1.OptionGroup.Value
+	170, // 132: api.pod.v1.LineItem.Variant.price:type_name -> common.type.v1.Money
+	170, // 133: api.pod.v1.LineItem.Variant.price_gm:type_name -> common.type.v1.Money
+	122, // 134: api.pod.v1.LineItem.Variant.product_images:type_name -> api.pod.v1.LineItem.ProductImage
+	121, // 135: api.pod.v1.LineItem.Product.print_locations:type_name -> api.pod.v1.LineItem.ProductPrintLocation
+	169, // 136: api.pod.v1.UserCreateOrderDraftLabelRequest.CreateOrderDraftLineItemLabel.item_barcode_file:type_name -> common.type.v1.File
+	140, // 137: api.pod.v1.UserCreateOrderDraftLabelRequest.CreateOrderDraftLineItemLabel.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	170, // 138: api.pod.v1.LineItemMatchProduct.Variant.price:type_name -> common.type.v1.Money
+	126, // 139: api.pod.v1.LineItemMatchProduct.Variant.product_images:type_name -> api.pod.v1.LineItemMatchProduct.ProductImage
+	166, // 140: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaPlatform.value:type_name -> common.platform.v1.MarketplacePlatform
+	12,  // 141: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaCreatedMethod.value:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
+	13,  // 142: api.pod.v1.UserListOrderDraftFilterCriteriaResponse.CriteriaOption.value:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
+	172, // 143: api.pod.v1.OrderDraft.BillingOption.ioss_number:type_name -> google.protobuf.StringValue
+	170, // 144: api.pod.v1.OrderDraft.BillingOption.ioss_value:type_name -> common.type.v1.Money
+	172, // 145: api.pod.v1.OrderDraft.BillingOption.tax_number:type_name -> google.protobuf.StringValue
+	170, // 146: api.pod.v1.OrderDraft.BillingOption.tax_value:type_name -> common.type.v1.Money
+	10,  // 147: api.pod.v1.OrderDraft.FulfillmentOption.print_type:type_name -> api.pod.v1.OrderDraft.PrintType
+	169, // 148: api.pod.v1.OrderDraft.PrintingOption.design_file:type_name -> common.type.v1.File
+	173, // 149: api.pod.v1.OrderDraft.PrintingOption.storage_id:type_name -> common.media.v1.MediaStorage
+	11,  // 150: api.pod.v1.OrderDraft.Address.type:type_name -> api.pod.v1.OrderDraft.Address.Type
+	165, // 151: api.pod.v1.OrderDraft.Short.created_at:type_name -> google.protobuf.Timestamp
+	165, // 152: api.pod.v1.OrderDraft.Short.updated_at:type_name -> google.protobuf.Timestamp
+	165, // 153: api.pod.v1.OrderDraft.Short.approved_at:type_name -> google.protobuf.Timestamp
+	165, // 154: api.pod.v1.OrderDraft.Short.order_date:type_name -> google.protobuf.Timestamp
+	4,   // 155: api.pod.v1.OrderDraft.Short.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
+	170, // 156: api.pod.v1.OrderDraft.Short.total:type_name -> common.type.v1.Money
+	7,   // 157: api.pod.v1.OrderDraft.Short.status:type_name -> api.pod.v1.OrderDraft.Status
+	61,  // 158: api.pod.v1.OrderDraft.Short.shipping_labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
+	144, // 159: api.pod.v1.OrderDraft.Short.recipient:type_name -> api.pod.v1.OrderDraft.FullName
+	166, // 160: api.pod.v1.OrderDraft.CheckoutShort.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	168, // 161: api.pod.v1.OrderDraft.CheckoutShort.price_quote:type_name -> api.pod.v1.OrderPriceQuote
+	159, // 162: api.pod.v1.OrderDraft.CheckoutShort.items:type_name -> api.pod.v1.OrderDraft.CheckoutShort.Item
+	7,   // 163: api.pod.v1.OrderDraft.ListingFilter.status:type_name -> api.pod.v1.OrderDraft.Status
+	165, // 164: api.pod.v1.OrderDraft.ListingFilter.from:type_name -> google.protobuf.Timestamp
+	165, // 165: api.pod.v1.OrderDraft.ListingFilter.to:type_name -> google.protobuf.Timestamp
+	166, // 166: api.pod.v1.OrderDraft.ListingFilter.platforms:type_name -> common.platform.v1.MarketplacePlatform
+	12,  // 167: api.pod.v1.OrderDraft.ListingFilter.created_methods:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
+	13,  // 168: api.pod.v1.OrderDraft.ListingFilter.options:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
+	168, // 169: api.pod.v1.OrderDraft.CheckoutDetail.price_quote:type_name -> api.pod.v1.OrderPriceQuote
+	170, // 170: api.pod.v1.OrderDraft.GiftMessageTemplate.price:type_name -> common.type.v1.Money
+	8,   // 171: api.pod.v1.OrderDraft.GiftMessage.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
+	148, // 172: api.pod.v1.OrderDraft.GiftMessage.template:type_name -> api.pod.v1.OrderDraft.GiftMessageTemplate
+	149, // 173: api.pod.v1.OrderDraft.GiftMessage.origin_data:type_name -> api.pod.v1.OrderDraft.GiftMessageOriginData
+	8,   // 174: api.pod.v1.OrderDraft.GiftMessageAdmin.type:type_name -> api.pod.v1.OrderDraft.GiftMessageType
+	170, // 175: api.pod.v1.OrderDraft.GiftMessageAdmin.price:type_name -> common.type.v1.Money
+	149, // 176: api.pod.v1.OrderDraft.GiftMessageAdmin.origin_data:type_name -> api.pod.v1.OrderDraft.GiftMessageOriginData
+	7,   // 177: api.pod.v1.OrderDraft.StaffListingFilter.status:type_name -> api.pod.v1.OrderDraft.Status
+	165, // 178: api.pod.v1.OrderDraft.StaffListingFilter.from:type_name -> google.protobuf.Timestamp
+	165, // 179: api.pod.v1.OrderDraft.StaffListingFilter.to:type_name -> google.protobuf.Timestamp
+	166, // 180: api.pod.v1.OrderDraft.StaffListingFilter.platforms:type_name -> common.platform.v1.MarketplacePlatform
+	12,  // 181: api.pod.v1.OrderDraft.StaffListingFilter.created_methods:type_name -> api.pod.v1.OrderDraft.ListingFilter.CreatedMethod
+	13,  // 182: api.pod.v1.OrderDraft.StaffListingFilter.options:type_name -> api.pod.v1.OrderDraft.ListingFilter.Option
+	9,   // 183: api.pod.v1.OrderDraft.StaffListingFilter.order_location:type_name -> api.pod.v1.OrderDraft.OrderDraftLocationOption
+	165, // 184: api.pod.v1.OrderDraft.Admin.created_at:type_name -> google.protobuf.Timestamp
+	165, // 185: api.pod.v1.OrderDraft.Admin.updated_at:type_name -> google.protobuf.Timestamp
+	165, // 186: api.pod.v1.OrderDraft.Admin.approved_at:type_name -> google.protobuf.Timestamp
+	165, // 187: api.pod.v1.OrderDraft.Admin.order_date:type_name -> google.protobuf.Timestamp
+	170, // 188: api.pod.v1.OrderDraft.Admin.total:type_name -> common.type.v1.Money
+	7,   // 189: api.pod.v1.OrderDraft.Admin.status:type_name -> api.pod.v1.OrderDraft.Status
+	61,  // 190: api.pod.v1.OrderDraft.Admin.labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
+	61,  // 191: api.pod.v1.OrderDraft.Admin.shipping_labels:type_name -> api.pod.v1.ShippingLabelOrderDraft
+	166, // 192: api.pod.v1.OrderDraft.Admin.platform:type_name -> common.platform.v1.MarketplacePlatform
+	144, // 193: api.pod.v1.OrderDraft.Admin.recipient:type_name -> api.pod.v1.OrderDraft.FullName
+	4,   // 194: api.pod.v1.OrderDraft.Admin.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
+	157, // 195: api.pod.v1.OrderDraft.Admin.notes:type_name -> api.pod.v1.OrderDraft.Note
+	166, // 196: api.pod.v1.OrderDraft.DetailAdmin.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	4,   // 197: api.pod.v1.OrderDraft.DetailAdmin.create_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
+	5,   // 198: api.pod.v1.OrderDraft.DetailAdmin.fulfillment_vendor:type_name -> api.pod.v1.OrderDraft.FulfillmentVendor
+	6,   // 199: api.pod.v1.OrderDraft.DetailAdmin.priority:type_name -> api.pod.v1.OrderDraft.FulfillmentPriority
+	138, // 200: api.pod.v1.OrderDraft.DetailAdmin.fulfillment_option:type_name -> api.pod.v1.OrderDraft.FulfillmentOption
+	139, // 201: api.pod.v1.OrderDraft.DetailAdmin.shipping_option:type_name -> api.pod.v1.OrderDraft.ShippingOption
+	140, // 202: api.pod.v1.OrderDraft.DetailAdmin.print_option:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	137, // 203: api.pod.v1.OrderDraft.DetailAdmin.billing_option:type_name -> api.pod.v1.OrderDraft.BillingOption
+	165, // 204: api.pod.v1.OrderDraft.DetailAdmin.order_date:type_name -> google.protobuf.Timestamp
+	7,   // 205: api.pod.v1.OrderDraft.DetailAdmin.status:type_name -> api.pod.v1.OrderDraft.Status
+	61,  // 206: api.pod.v1.OrderDraft.DetailAdmin.shipping_label:type_name -> api.pod.v1.ShippingLabelOrderDraft
+	0,   // 207: api.pod.v1.OrderDraft.DetailAdmin.shipping_verification_status:type_name -> api.pod.v1.ShippingVerificationStatus
+	1,   // 208: api.pod.v1.OrderDraft.DetailAdmin.product_matching_status:type_name -> api.pod.v1.ProductMatchingStatus
+	141, // 209: api.pod.v1.OrderDraft.DetailAdmin.addresses:type_name -> api.pod.v1.OrderDraft.Address
+	156, // 210: api.pod.v1.OrderDraft.DetailAdmin.line_items:type_name -> api.pod.v1.OrderDraft.LineItemAdmin
+	165, // 211: api.pod.v1.OrderDraft.DetailAdmin.approved_at:type_name -> google.protobuf.Timestamp
+	151, // 212: api.pod.v1.OrderDraft.DetailAdmin.gift_messages:type_name -> api.pod.v1.OrderDraft.GiftMessageAdmin
+	170, // 213: api.pod.v1.OrderDraft.DetailAdmin.order_subtotal:type_name -> common.type.v1.Money
+	170, // 214: api.pod.v1.OrderDraft.DetailAdmin.order_tax:type_name -> common.type.v1.Money
+	170, // 215: api.pod.v1.OrderDraft.DetailAdmin.order_fee:type_name -> common.type.v1.Money
+	170, // 216: api.pod.v1.OrderDraft.DetailAdmin.order_discount:type_name -> common.type.v1.Money
+	170, // 217: api.pod.v1.OrderDraft.DetailAdmin.order_total:type_name -> common.type.v1.Money
+	170, // 218: api.pod.v1.OrderDraft.DetailAdmin.order_gift_message_fee:type_name -> common.type.v1.Money
+	170, // 219: api.pod.v1.OrderDraft.DetailAdmin.order_shipping_fee:type_name -> common.type.v1.Money
+	170, // 220: api.pod.v1.OrderDraft.DetailAdmin.order_handle_fee:type_name -> common.type.v1.Money
+	170, // 221: api.pod.v1.OrderDraft.DetailAdmin.order_surcharge:type_name -> common.type.v1.Money
+	170, // 222: api.pod.v1.OrderDraft.DetailAdmin.order_rush_fee:type_name -> common.type.v1.Money
+	157, // 223: api.pod.v1.OrderDraft.DetailAdmin.notes:type_name -> api.pod.v1.OrderDraft.Note
+	158, // 224: api.pod.v1.OrderDraft.DetailAdmin.team_tier:type_name -> api.pod.v1.OrderDraft.TeamTier
+	140, // 225: api.pod.v1.OrderDraft.LineItemAdmin.printing_options:type_name -> api.pod.v1.OrderDraft.PrintingOption
+	116, // 226: api.pod.v1.OrderDraft.LineItemAdmin.origin_options:type_name -> api.pod.v1.LineItem.OriginOptions
+	117, // 227: api.pod.v1.OrderDraft.LineItemAdmin.line_item_product_option:type_name -> api.pod.v1.LineItem.LineItemProductOption
+	118, // 228: api.pod.v1.OrderDraft.LineItemAdmin.fulfillment_option:type_name -> api.pod.v1.LineItem.LineItemFulfillmentOption
+	119, // 229: api.pod.v1.OrderDraft.LineItemAdmin.variant:type_name -> api.pod.v1.LineItem.Variant
+	120, // 230: api.pod.v1.OrderDraft.LineItemAdmin.product:type_name -> api.pod.v1.LineItem.Product
+	4,   // 231: api.pod.v1.OrderDraft.LineItemAdmin.created_method:type_name -> api.pod.v1.OrderDraft.CreatedMethod
+	166, // 232: api.pod.v1.OrderDraft.LineItemAdmin.order_platform:type_name -> common.platform.v1.MarketplacePlatform
+	3,   // 233: api.pod.v1.OrderDraft.LineItemAdmin.stock_status:type_name -> api.pod.v1.LineItem.StockStatus
+	171, // 234: api.pod.v1.OrderDraft.LineItemAdmin.option_1:type_name -> api.pod.v1.OptionGroup.Value
+	171, // 235: api.pod.v1.OrderDraft.LineItemAdmin.option_2:type_name -> api.pod.v1.OptionGroup.Value
+	170, // 236: api.pod.v1.OrderDraft.LineItemAdmin.line_tax:type_name -> common.type.v1.Money
+	170, // 237: api.pod.v1.OrderDraft.LineItemAdmin.line_fee:type_name -> common.type.v1.Money
+	170, // 238: api.pod.v1.OrderDraft.LineItemAdmin.line_discount:type_name -> common.type.v1.Money
+	170, // 239: api.pod.v1.OrderDraft.LineItemAdmin.line_subtotal:type_name -> common.type.v1.Money
+	170, // 240: api.pod.v1.OrderDraft.LineItemAdmin.line_total:type_name -> common.type.v1.Money
+	170, // 241: api.pod.v1.OrderDraft.LineItemAdmin.item_price:type_name -> common.type.v1.Money
+	170, // 242: api.pod.v1.OrderDraft.LineItemAdmin.item_fee:type_name -> common.type.v1.Money
+	170, // 243: api.pod.v1.OrderDraft.LineItemAdmin.item_discount:type_name -> common.type.v1.Money
+	170, // 244: api.pod.v1.OrderDraft.LineItemAdmin.unit_base_price:type_name -> common.type.v1.Money
+	170, // 245: api.pod.v1.OrderDraft.LineItemAdmin.line_shipping_fee:type_name -> common.type.v1.Money
+	7,   // 246: api.pod.v1.UserCountOrderDraftStatusResponse.Record.status:type_name -> api.pod.v1.OrderDraft.Status
+	26,  // 247: api.pod.v1.OrderDraftAPI.UserPreCreateOrderDraft:input_type -> api.pod.v1.UserPreCreateOrderDraftRequest
+	32,  // 248: api.pod.v1.OrderDraftAPI.UserCreateOrderDraft:input_type -> api.pod.v1.UserCreateOrderDraftRequest
+	96,  // 249: api.pod.v1.OrderDraftAPI.UserUpdateGiftMessageInOrderDraft:input_type -> api.pod.v1.UserUpdateGiftMessageInOrderDraftRequest
+	34,  // 250: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraft:input_type -> api.pod.v1.UserUpdateOrderDraftRequest
+	40,  // 251: api.pod.v1.OrderDraftAPI.UserMatchProductOrder:input_type -> api.pod.v1.UserMatchProductOrderRequest
+	62,  // 252: api.pod.v1.OrderDraftAPI.UserMatchProductBatchOrders:input_type -> api.pod.v1.UserMatchProductBatchOrdersRequest
+	42,  // 253: api.pod.v1.OrderDraftAPI.UserListItemsLineOrders:input_type -> api.pod.v1.UserListItemsLineOrdersRequest
+	37,  // 254: api.pod.v1.OrderDraftAPI.UserCreateOrderDraftLabel:input_type -> api.pod.v1.UserCreateOrderDraftLabelRequest
+	75,  // 255: api.pod.v1.OrderDraftAPI.UserApproveOrderDrafts:input_type -> api.pod.v1.UserApproveOrderDraftsRequest
+	77,  // 256: api.pod.v1.OrderDraftAPI.UserSubmitApprovalOrderDraft:input_type -> api.pod.v1.UserSubmitApprovalOrderDraftRequest
+	80,  // 257: api.pod.v1.OrderDraftAPI.UserMarkAsValidOrderDraftAddress:input_type -> api.pod.v1.UserMarkAsValidOrderDraftAddressRequest
+	92,  // 258: api.pod.v1.OrderDraftAPI.UserDuplicateOrderDraft:input_type -> api.pod.v1.UserDuplicateOrderDraftRequest
+	94,  // 259: api.pod.v1.OrderDraftAPI.UserDuplicateListOrderDraft:input_type -> api.pod.v1.UserDuplicateListOrderDraftRequest
+	45,  // 260: api.pod.v1.OrderDraftAPI.UserListOrderDraft:input_type -> api.pod.v1.UserListOrderDraftRequest
+	47,  // 261: api.pod.v1.OrderDraftAPI.UserListOrderDraftFilterCriteria:input_type -> api.pod.v1.UserListOrderDraftFilterCriteriaRequest
+	50,  // 262: api.pod.v1.OrderDraftAPI.UserListProductForOrderDraftFilter:input_type -> api.pod.v1.UserListProductForOrderDraftFilterRequest
+	53,  // 263: api.pod.v1.OrderDraftAPI.UserListColorForOrderDraftFilter:input_type -> api.pod.v1.UserListColorForOrderDraftFilterRequest
+	55,  // 264: api.pod.v1.OrderDraftAPI.UserListSizeForOrderDraftFilter:input_type -> api.pod.v1.UserListSizeForOrderDraftFilterRequest
+	58,  // 265: api.pod.v1.OrderDraftAPI.UserGetOrderPrice:input_type -> api.pod.v1.UserGetOrderPriceRequest
+	66,  // 266: api.pod.v1.OrderDraftAPI.UserListAvailableShippingService:input_type -> api.pod.v1.UserListAvailableShippingServiceRequest
+	73,  // 267: api.pod.v1.OrderDraftAPI.UserVerifyOrderDraft:input_type -> api.pod.v1.UserVerifyOrderDraftRequest
+	69,  // 268: api.pod.v1.OrderDraftAPI.UserCheckoutOrderDraft:input_type -> api.pod.v1.UserCheckoutOrderDraftRequest
+	71,  // 269: api.pod.v1.OrderDraftAPI.UserPreCheckoutOrderDraft:input_type -> api.pod.v1.UserPreCheckoutOrderDraftRequest
+	82,  // 270: api.pod.v1.OrderDraftAPI.UserGetOrderDraft:input_type -> api.pod.v1.UserGetOrderDraftRequest
+	84,  // 271: api.pod.v1.OrderDraftAPI.UserListOrderDraftForCheckout:input_type -> api.pod.v1.UserListOrderDraftForCheckoutRequest
+	85,  // 272: api.pod.v1.OrderDraftAPI.UserArchiveOrderDraft:input_type -> api.pod.v1.UserArchiveOrderDraftRequest
+	88,  // 273: api.pod.v1.OrderDraftAPI.UserRestoreOrderDraft:input_type -> api.pod.v1.UserRestoreOrderDraftRequest
+	28,  // 274: api.pod.v1.OrderDraftAPI.UserSaveMappingLineItem:input_type -> api.pod.v1.UserSaveMappingLineItemRequest
+	30,  // 275: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraftAddressInformation:input_type -> api.pod.v1.UserUpdateOrderDraftAddressInformationRequest
+	90,  // 276: api.pod.v1.OrderDraftAPI.UserCountOrderDraftStatus:input_type -> api.pod.v1.UserCountOrderDraftStatusRequest
+	98,  // 277: api.pod.v1.OrderDraftAPI.UserListGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserListGiftMessageInOrderDraftDetailRequest
+	102, // 278: api.pod.v1.OrderDraftAPI.UserDeleteGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserDeleteGiftMessageInOrderDraftDetailRequest
+	104, // 279: api.pod.v1.OrderDraftAPI.UserAddGiftMessageInOrderDraftDetail:input_type -> api.pod.v1.UserAddGiftMessageInOrderDraftDetailRequest
+	23,  // 280: api.pod.v1.OrderDraftAPI.UserListOrderImportSession:input_type -> api.pod.v1.UserListOrderImportSessionRequest
+	20,  // 281: api.pod.v1.OrderDraftAPI.UserListOrderImport:input_type -> api.pod.v1.UserListOrderImportRequest
+	18,  // 282: api.pod.v1.OrderDraftAPI.UserCountOrderDraftImport:input_type -> api.pod.v1.UserCountOrderDraftImportRequest
+	106, // 283: api.pod.v1.OrderDraftAPI.UserUpdateLabelOrderDraft:input_type -> api.pod.v1.UserUpdateLabelOrderDraftRequest
+	16,  // 284: api.pod.v1.OrderDraftAPI.UserCountAllOrderDraft:input_type -> api.pod.v1.UserCountAllOrderDraftRequest
+	108, // 285: api.pod.v1.OrderDraftAPI.UserCancelSessionListOrderDraftForCheckout:input_type -> api.pod.v1.UserCancelSessionListOrderDraftForCheckoutRequest
+	110, // 286: api.pod.v1.OrderDraftAPI.UserParseAddress:input_type -> api.pod.v1.UserParseAddressRequest
+	27,  // 287: api.pod.v1.OrderDraftAPI.UserPreCreateOrderDraft:output_type -> api.pod.v1.UserPreCreateOrderDraftResponse
+	33,  // 288: api.pod.v1.OrderDraftAPI.UserCreateOrderDraft:output_type -> api.pod.v1.UserCreateOrderDraftResponse
+	97,  // 289: api.pod.v1.OrderDraftAPI.UserUpdateGiftMessageInOrderDraft:output_type -> api.pod.v1.UserUpdateGiftMessageInOrderDraftResponse
+	35,  // 290: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraft:output_type -> api.pod.v1.UserUpdateOrderDraftResponse
+	41,  // 291: api.pod.v1.OrderDraftAPI.UserMatchProductOrder:output_type -> api.pod.v1.UserMatchProductOrderResponse
+	63,  // 292: api.pod.v1.OrderDraftAPI.UserMatchProductBatchOrders:output_type -> api.pod.v1.UserMatchProductBatchOrdersResponse
+	43,  // 293: api.pod.v1.OrderDraftAPI.UserListItemsLineOrders:output_type -> api.pod.v1.UserListItemsLineOrdersResponse
+	38,  // 294: api.pod.v1.OrderDraftAPI.UserCreateOrderDraftLabel:output_type -> api.pod.v1.UserCreateOrderDraftLabelResponse
+	79,  // 295: api.pod.v1.OrderDraftAPI.UserApproveOrderDrafts:output_type -> api.pod.v1.UserApproveOrderDraftsResponse
+	78,  // 296: api.pod.v1.OrderDraftAPI.UserSubmitApprovalOrderDraft:output_type -> api.pod.v1.UserSubmitApprovalOrderDraftResponse
+	81,  // 297: api.pod.v1.OrderDraftAPI.UserMarkAsValidOrderDraftAddress:output_type -> api.pod.v1.UserMarkAsValidOrderDraftAddressResponse
+	93,  // 298: api.pod.v1.OrderDraftAPI.UserDuplicateOrderDraft:output_type -> api.pod.v1.UserDuplicateOrderDraftResponse
+	95,  // 299: api.pod.v1.OrderDraftAPI.UserDuplicateListOrderDraft:output_type -> api.pod.v1.UserDuplicateListOrderDraftResponse
+	46,  // 300: api.pod.v1.OrderDraftAPI.UserListOrderDraft:output_type -> api.pod.v1.UserListOrderDraftResponse
+	48,  // 301: api.pod.v1.OrderDraftAPI.UserListOrderDraftFilterCriteria:output_type -> api.pod.v1.UserListOrderDraftFilterCriteriaResponse
+	51,  // 302: api.pod.v1.OrderDraftAPI.UserListProductForOrderDraftFilter:output_type -> api.pod.v1.UserListProductForOrderDraftFilterResponse
+	54,  // 303: api.pod.v1.OrderDraftAPI.UserListColorForOrderDraftFilter:output_type -> api.pod.v1.UserListColorForOrderDraftFilterResponse
+	56,  // 304: api.pod.v1.OrderDraftAPI.UserListSizeForOrderDraftFilter:output_type -> api.pod.v1.UserListSizeForOrderDraftFilterResponse
+	59,  // 305: api.pod.v1.OrderDraftAPI.UserGetOrderPrice:output_type -> api.pod.v1.UserGetOrderPriceResponse
+	68,  // 306: api.pod.v1.OrderDraftAPI.UserListAvailableShippingService:output_type -> api.pod.v1.UserListAvailableShippingServiceResponse
+	74,  // 307: api.pod.v1.OrderDraftAPI.UserVerifyOrderDraft:output_type -> api.pod.v1.UserVerifyOrderDraftResponse
+	70,  // 308: api.pod.v1.OrderDraftAPI.UserCheckoutOrderDraft:output_type -> api.pod.v1.UserCheckoutOrderDraftResponse
+	72,  // 309: api.pod.v1.OrderDraftAPI.UserPreCheckoutOrderDraft:output_type -> api.pod.v1.UserPreCheckoutOrderDraftResponse
+	83,  // 310: api.pod.v1.OrderDraftAPI.UserGetOrderDraft:output_type -> api.pod.v1.UserGetOrderDraftResponse
+	87,  // 311: api.pod.v1.OrderDraftAPI.UserListOrderDraftForCheckout:output_type -> api.pod.v1.UserListOrderDraftForCheckoutResponse
+	86,  // 312: api.pod.v1.OrderDraftAPI.UserArchiveOrderDraft:output_type -> api.pod.v1.UserArchiveOrderDraftResponse
+	89,  // 313: api.pod.v1.OrderDraftAPI.UserRestoreOrderDraft:output_type -> api.pod.v1.UserRestoreOrderDraftResponse
+	29,  // 314: api.pod.v1.OrderDraftAPI.UserSaveMappingLineItem:output_type -> api.pod.v1.UserSaveMappingLineItemResponse
+	31,  // 315: api.pod.v1.OrderDraftAPI.UserUpdateOrderDraftAddressInformation:output_type -> api.pod.v1.UserUpdateOrderDraftAddressInformationResponse
+	91,  // 316: api.pod.v1.OrderDraftAPI.UserCountOrderDraftStatus:output_type -> api.pod.v1.UserCountOrderDraftStatusResponse
+	99,  // 317: api.pod.v1.OrderDraftAPI.UserListGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserListGiftMessageInOrderDraftDetailResponse
+	103, // 318: api.pod.v1.OrderDraftAPI.UserDeleteGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserDeleteGiftMessageInOrderDraftDetailResponse
+	105, // 319: api.pod.v1.OrderDraftAPI.UserAddGiftMessageInOrderDraftDetail:output_type -> api.pod.v1.UserAddGiftMessageInOrderDraftDetailResponse
+	24,  // 320: api.pod.v1.OrderDraftAPI.UserListOrderImportSession:output_type -> api.pod.v1.UserListOrderImportSessionResponse
+	21,  // 321: api.pod.v1.OrderDraftAPI.UserListOrderImport:output_type -> api.pod.v1.UserListOrderImportResponse
+	19,  // 322: api.pod.v1.OrderDraftAPI.UserCountOrderDraftImport:output_type -> api.pod.v1.UserCountOrderDraftImportResponse
+	107, // 323: api.pod.v1.OrderDraftAPI.UserUpdateLabelOrderDraft:output_type -> api.pod.v1.UserUpdateLabelOrderDraftResponse
+	17,  // 324: api.pod.v1.OrderDraftAPI.UserCountAllOrderDraft:output_type -> api.pod.v1.UserCountAllOrderDraftResponse
+	109, // 325: api.pod.v1.OrderDraftAPI.UserCancelSessionListOrderDraftForCheckout:output_type -> api.pod.v1.UserCancelSessionListOrderDraftForCheckoutResponse
+	111, // 326: api.pod.v1.OrderDraftAPI.UserParseAddress:output_type -> api.pod.v1.UserParseAddressResponse
+	287, // [287:327] is the sub-list for method output_type
+	247, // [247:287] is the sub-list for method input_type
+	247, // [247:247] is the sub-list for extension type_name
+	247, // [247:247] is the sub-list for extension extendee
+	0,   // [0:247] is the sub-list for field type_name
 }
 
 func init() { file_api_pod_v1_order_draft_proto_init() }
@@ -15471,7 +15544,7 @@ func file_api_pod_v1_order_draft_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_pod_v1_order_draft_proto_rawDesc), len(file_api_pod_v1_order_draft_proto_rawDesc)),
 			NumEnums:      16,
-			NumMessages:   145,
+			NumMessages:   146,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
