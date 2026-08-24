@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName                   = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
 	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                     = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
+	ShippingInternalAPI_InternalCancelUnusedShippingLabel_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalCancelUnusedShippingLabel"
 	ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName                           = "/api.shipping.v1.ShippingInternalAPI/InternalVoidGofoLabel"
 	ShippingInternalAPI_InternalGofoVoidCapability_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalGofoVoidCapability"
 	ShippingInternalAPI_InternalCreateUSPSScanForm_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalCreateUSPSScanForm"
@@ -36,6 +37,9 @@ const (
 type ShippingInternalAPIClient interface {
 	InternalPurchaseShippingLabel(ctx context.Context, in *InternalPurchaseShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseShippingLabelResponse, error)
 	InternalCancelShippingLabel(ctx context.Context, in *InternalCancelShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelShippingLabelResponse, error)
+	// A separate RPC makes old replicas fail closed during rollout, rather than
+	// silently treating an unknown safety field as an unconditional cancel.
+	InternalCancelUnusedShippingLabel(ctx context.Context, in *InternalCancelUnusedShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelUnusedShippingLabelResponse, error)
 	InternalVoidGofoLabel(ctx context.Context, in *InternalVoidGofoLabelRequest, opts ...grpc.CallOption) (*InternalVoidGofoLabelResponse, error)
 	InternalGofoVoidCapability(ctx context.Context, in *InternalGofoVoidCapabilityRequest, opts ...grpc.CallOption) (*InternalGofoVoidCapabilityResponse, error)
 	InternalCreateUSPSScanForm(ctx context.Context, in *InternalCreateUSPSScanFormRequest, opts ...grpc.CallOption) (*InternalCreateUSPSScanFormResponse, error)
@@ -67,6 +71,16 @@ func (c *shippingInternalAPIClient) InternalCancelShippingLabel(ctx context.Cont
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalCancelShippingLabelResponse)
 	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalCancelUnusedShippingLabel(ctx context.Context, in *InternalCancelUnusedShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelUnusedShippingLabelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalCancelUnusedShippingLabelResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalCancelUnusedShippingLabel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,6 +163,9 @@ func (c *shippingInternalAPIClient) InternalListShippingCostLedgerByTrackingNumb
 type ShippingInternalAPIServer interface {
 	InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error)
 	InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error)
+	// A separate RPC makes old replicas fail closed during rollout, rather than
+	// silently treating an unknown safety field as an unconditional cancel.
+	InternalCancelUnusedShippingLabel(context.Context, *InternalCancelUnusedShippingLabelRequest) (*InternalCancelUnusedShippingLabelResponse, error)
 	InternalVoidGofoLabel(context.Context, *InternalVoidGofoLabelRequest) (*InternalVoidGofoLabelResponse, error)
 	InternalGofoVoidCapability(context.Context, *InternalGofoVoidCapabilityRequest) (*InternalGofoVoidCapabilityResponse, error)
 	InternalCreateUSPSScanForm(context.Context, *InternalCreateUSPSScanFormRequest) (*InternalCreateUSPSScanFormResponse, error)
@@ -170,6 +187,9 @@ func (UnimplementedShippingInternalAPIServer) InternalPurchaseShippingLabel(cont
 }
 func (UnimplementedShippingInternalAPIServer) InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelShippingLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalCancelUnusedShippingLabel(context.Context, *InternalCancelUnusedShippingLabelRequest) (*InternalCancelUnusedShippingLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelUnusedShippingLabel not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) InternalVoidGofoLabel(context.Context, *InternalVoidGofoLabelRequest) (*InternalVoidGofoLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVoidGofoLabel not implemented")
@@ -244,6 +264,24 @@ func _ShippingInternalAPI_InternalCancelShippingLabel_Handler(srv interface{}, c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShippingInternalAPIServer).InternalCancelShippingLabel(ctx, req.(*InternalCancelShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalCancelUnusedShippingLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalCancelUnusedShippingLabelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalCancelUnusedShippingLabel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalCancelUnusedShippingLabel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalCancelUnusedShippingLabel(ctx, req.(*InternalCancelUnusedShippingLabelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -388,6 +426,10 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalCancelShippingLabel",
 			Handler:    _ShippingInternalAPI_InternalCancelShippingLabel_Handler,
+		},
+		{
+			MethodName: "InternalCancelUnusedShippingLabel",
+			Handler:    _ShippingInternalAPI_InternalCancelUnusedShippingLabel_Handler,
 		},
 		{
 			MethodName: "InternalVoidGofoLabel",
