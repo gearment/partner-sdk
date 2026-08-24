@@ -28,6 +28,7 @@ const (
 	OperationIssueAdminAPI_StaffTransferOpIssue_FullMethodName        = "/api.pod.v1.OperationIssueAdminAPI/StaffTransferOpIssue"
 	OperationIssueAdminAPI_StaffResolveOpIssue_FullMethodName         = "/api.pod.v1.OperationIssueAdminAPI/StaffResolveOpIssue"
 	OperationIssueAdminAPI_StaffCloseOpIssue_FullMethodName           = "/api.pod.v1.OperationIssueAdminAPI/StaffCloseOpIssue"
+	OperationIssueAdminAPI_StaffDeleteOpIssue_FullMethodName          = "/api.pod.v1.OperationIssueAdminAPI/StaffDeleteOpIssue"
 	OperationIssueAdminAPI_StaffReopenOpIssue_FullMethodName          = "/api.pod.v1.OperationIssueAdminAPI/StaffReopenOpIssue"
 	OperationIssueAdminAPI_StaffBlockOpIssue_FullMethodName           = "/api.pod.v1.OperationIssueAdminAPI/StaffBlockOpIssue"
 	OperationIssueAdminAPI_StaffUnblockOpIssue_FullMethodName         = "/api.pod.v1.OperationIssueAdminAPI/StaffUnblockOpIssue"
@@ -59,6 +60,7 @@ type OperationIssueAdminAPIClient interface {
 	StaffTransferOpIssue(ctx context.Context, in *StaffTransferOpIssueRequest, opts ...grpc.CallOption) (*StaffTransferOpIssueResponse, error)
 	StaffResolveOpIssue(ctx context.Context, in *StaffResolveOpIssueRequest, opts ...grpc.CallOption) (*StaffResolveOpIssueResponse, error)
 	StaffCloseOpIssue(ctx context.Context, in *StaffCloseOpIssueRequest, opts ...grpc.CallOption) (*StaffCloseOpIssueResponse, error)
+	StaffDeleteOpIssue(ctx context.Context, in *StaffDeleteOpIssueRequest, opts ...grpc.CallOption) (*StaffDeleteOpIssueResponse, error)
 	StaffReopenOpIssue(ctx context.Context, in *StaffReopenOpIssueRequest, opts ...grpc.CallOption) (*StaffReopenOpIssueResponse, error)
 	StaffBlockOpIssue(ctx context.Context, in *StaffBlockOpIssueRequest, opts ...grpc.CallOption) (*StaffBlockOpIssueResponse, error)
 	StaffUnblockOpIssue(ctx context.Context, in *StaffUnblockOpIssueRequest, opts ...grpc.CallOption) (*StaffUnblockOpIssueResponse, error)
@@ -165,6 +167,16 @@ func (c *operationIssueAdminAPIClient) StaffCloseOpIssue(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffCloseOpIssueResponse)
 	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffCloseOpIssue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *operationIssueAdminAPIClient) StaffDeleteOpIssue(ctx context.Context, in *StaffDeleteOpIssueRequest, opts ...grpc.CallOption) (*StaffDeleteOpIssueResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteOpIssueResponse)
+	err := c.cc.Invoke(ctx, OperationIssueAdminAPI_StaffDeleteOpIssue_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -308,6 +320,7 @@ type OperationIssueAdminAPIServer interface {
 	StaffTransferOpIssue(context.Context, *StaffTransferOpIssueRequest) (*StaffTransferOpIssueResponse, error)
 	StaffResolveOpIssue(context.Context, *StaffResolveOpIssueRequest) (*StaffResolveOpIssueResponse, error)
 	StaffCloseOpIssue(context.Context, *StaffCloseOpIssueRequest) (*StaffCloseOpIssueResponse, error)
+	StaffDeleteOpIssue(context.Context, *StaffDeleteOpIssueRequest) (*StaffDeleteOpIssueResponse, error)
 	StaffReopenOpIssue(context.Context, *StaffReopenOpIssueRequest) (*StaffReopenOpIssueResponse, error)
 	StaffBlockOpIssue(context.Context, *StaffBlockOpIssueRequest) (*StaffBlockOpIssueResponse, error)
 	StaffUnblockOpIssue(context.Context, *StaffUnblockOpIssueRequest) (*StaffUnblockOpIssueResponse, error)
@@ -355,6 +368,9 @@ func (UnimplementedOperationIssueAdminAPIServer) StaffResolveOpIssue(context.Con
 }
 func (UnimplementedOperationIssueAdminAPIServer) StaffCloseOpIssue(context.Context, *StaffCloseOpIssueRequest) (*StaffCloseOpIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCloseOpIssue not implemented")
+}
+func (UnimplementedOperationIssueAdminAPIServer) StaffDeleteOpIssue(context.Context, *StaffDeleteOpIssueRequest) (*StaffDeleteOpIssueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteOpIssue not implemented")
 }
 func (UnimplementedOperationIssueAdminAPIServer) StaffReopenOpIssue(context.Context, *StaffReopenOpIssueRequest) (*StaffReopenOpIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffReopenOpIssue not implemented")
@@ -570,6 +586,24 @@ func _OperationIssueAdminAPI_StaffCloseOpIssue_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OperationIssueAdminAPIServer).StaffCloseOpIssue(ctx, req.(*StaffCloseOpIssueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OperationIssueAdminAPI_StaffDeleteOpIssue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteOpIssueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationIssueAdminAPIServer).StaffDeleteOpIssue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OperationIssueAdminAPI_StaffDeleteOpIssue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationIssueAdminAPIServer).StaffDeleteOpIssue(ctx, req.(*StaffDeleteOpIssueRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -832,6 +866,10 @@ var OperationIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffCloseOpIssue",
 			Handler:    _OperationIssueAdminAPI_StaffCloseOpIssue_Handler,
+		},
+		{
+			MethodName: "StaffDeleteOpIssue",
+			Handler:    _OperationIssueAdminAPI_StaffDeleteOpIssue_Handler,
 		},
 		{
 			MethodName: "StaffReopenOpIssue",
