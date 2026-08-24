@@ -983,6 +983,95 @@ func (x *StaffCloseOpIssueResponse) GetMessage() string {
 	return ""
 }
 
+// StaffDeleteOpIssue
+type StaffDeleteOpIssueRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OpIssueId     string                 `protobuf:"bytes,1,opt,name=op_issue_id,json=opIssueId,proto3" json:"op_issue_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StaffDeleteOpIssueRequest) Reset() {
+	*x = StaffDeleteOpIssueRequest{}
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StaffDeleteOpIssueRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StaffDeleteOpIssueRequest) ProtoMessage() {}
+
+func (x *StaffDeleteOpIssueRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StaffDeleteOpIssueRequest.ProtoReflect.Descriptor instead.
+func (*StaffDeleteOpIssueRequest) Descriptor() ([]byte, []int) {
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *StaffDeleteOpIssueRequest) GetOpIssueId() string {
+	if x != nil {
+		return x.OpIssueId
+	}
+	return ""
+}
+
+type StaffDeleteOpIssueResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StaffDeleteOpIssueResponse) Reset() {
+	*x = StaffDeleteOpIssueResponse{}
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StaffDeleteOpIssueResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StaffDeleteOpIssueResponse) ProtoMessage() {}
+
+func (x *StaffDeleteOpIssueResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StaffDeleteOpIssueResponse.ProtoReflect.Descriptor instead.
+func (*StaffDeleteOpIssueResponse) Descriptor() ([]byte, []int) {
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *StaffDeleteOpIssueResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 // StaffReopenOpIssue
 type StaffReopenOpIssueRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -994,7 +1083,7 @@ type StaffReopenOpIssueRequest struct {
 
 func (x *StaffReopenOpIssueRequest) Reset() {
 	*x = StaffReopenOpIssueRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[16]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1006,7 +1095,7 @@ func (x *StaffReopenOpIssueRequest) String() string {
 func (*StaffReopenOpIssueRequest) ProtoMessage() {}
 
 func (x *StaffReopenOpIssueRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[16]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1019,7 +1108,7 @@ func (x *StaffReopenOpIssueRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffReopenOpIssueRequest.ProtoReflect.Descriptor instead.
 func (*StaffReopenOpIssueRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{16}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *StaffReopenOpIssueRequest) GetOpIssueId() string {
@@ -1045,7 +1134,7 @@ type StaffReopenOpIssueResponse struct {
 
 func (x *StaffReopenOpIssueResponse) Reset() {
 	*x = StaffReopenOpIssueResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[17]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1057,7 +1146,7 @@ func (x *StaffReopenOpIssueResponse) String() string {
 func (*StaffReopenOpIssueResponse) ProtoMessage() {}
 
 func (x *StaffReopenOpIssueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[17]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1070,7 +1159,7 @@ func (x *StaffReopenOpIssueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffReopenOpIssueResponse.ProtoReflect.Descriptor instead.
 func (*StaffReopenOpIssueResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{17}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *StaffReopenOpIssueResponse) GetMessage() string {
@@ -1092,7 +1181,7 @@ type StaffBlockOpIssueRequest struct {
 
 func (x *StaffBlockOpIssueRequest) Reset() {
 	*x = StaffBlockOpIssueRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[18]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1104,7 +1193,7 @@ func (x *StaffBlockOpIssueRequest) String() string {
 func (*StaffBlockOpIssueRequest) ProtoMessage() {}
 
 func (x *StaffBlockOpIssueRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[18]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1117,7 +1206,7 @@ func (x *StaffBlockOpIssueRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffBlockOpIssueRequest.ProtoReflect.Descriptor instead.
 func (*StaffBlockOpIssueRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{18}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *StaffBlockOpIssueRequest) GetOpIssueId() string {
@@ -1150,7 +1239,7 @@ type StaffBlockOpIssueResponse struct {
 
 func (x *StaffBlockOpIssueResponse) Reset() {
 	*x = StaffBlockOpIssueResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[19]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1162,7 +1251,7 @@ func (x *StaffBlockOpIssueResponse) String() string {
 func (*StaffBlockOpIssueResponse) ProtoMessage() {}
 
 func (x *StaffBlockOpIssueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[19]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1175,7 +1264,7 @@ func (x *StaffBlockOpIssueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffBlockOpIssueResponse.ProtoReflect.Descriptor instead.
 func (*StaffBlockOpIssueResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{19}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *StaffBlockOpIssueResponse) GetMessage() string {
@@ -1197,7 +1286,7 @@ type StaffUnblockOpIssueRequest struct {
 
 func (x *StaffUnblockOpIssueRequest) Reset() {
 	*x = StaffUnblockOpIssueRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[20]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1209,7 +1298,7 @@ func (x *StaffUnblockOpIssueRequest) String() string {
 func (*StaffUnblockOpIssueRequest) ProtoMessage() {}
 
 func (x *StaffUnblockOpIssueRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[20]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1222,7 +1311,7 @@ func (x *StaffUnblockOpIssueRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUnblockOpIssueRequest.ProtoReflect.Descriptor instead.
 func (*StaffUnblockOpIssueRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{20}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *StaffUnblockOpIssueRequest) GetOpIssueId() string {
@@ -1255,7 +1344,7 @@ type StaffUnblockOpIssueResponse struct {
 
 func (x *StaffUnblockOpIssueResponse) Reset() {
 	*x = StaffUnblockOpIssueResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[21]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1267,7 +1356,7 @@ func (x *StaffUnblockOpIssueResponse) String() string {
 func (*StaffUnblockOpIssueResponse) ProtoMessage() {}
 
 func (x *StaffUnblockOpIssueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[21]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1280,7 +1369,7 @@ func (x *StaffUnblockOpIssueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUnblockOpIssueResponse.ProtoReflect.Descriptor instead.
 func (*StaffUnblockOpIssueResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{21}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *StaffUnblockOpIssueResponse) GetMessage() string {
@@ -1307,7 +1396,7 @@ type StaffAddOpIssueCommentRequest struct {
 
 func (x *StaffAddOpIssueCommentRequest) Reset() {
 	*x = StaffAddOpIssueCommentRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[22]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1319,7 +1408,7 @@ func (x *StaffAddOpIssueCommentRequest) String() string {
 func (*StaffAddOpIssueCommentRequest) ProtoMessage() {}
 
 func (x *StaffAddOpIssueCommentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[22]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1332,7 +1421,7 @@ func (x *StaffAddOpIssueCommentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffAddOpIssueCommentRequest.ProtoReflect.Descriptor instead.
 func (*StaffAddOpIssueCommentRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{22}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *StaffAddOpIssueCommentRequest) GetOpIssueId() string {
@@ -1379,7 +1468,7 @@ type StaffAddOpIssueCommentResponse struct {
 
 func (x *StaffAddOpIssueCommentResponse) Reset() {
 	*x = StaffAddOpIssueCommentResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[23]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1391,7 +1480,7 @@ func (x *StaffAddOpIssueCommentResponse) String() string {
 func (*StaffAddOpIssueCommentResponse) ProtoMessage() {}
 
 func (x *StaffAddOpIssueCommentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[23]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1404,7 +1493,7 @@ func (x *StaffAddOpIssueCommentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffAddOpIssueCommentResponse.ProtoReflect.Descriptor instead.
 func (*StaffAddOpIssueCommentResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{23}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *StaffAddOpIssueCommentResponse) GetMessage() string {
@@ -1426,7 +1515,7 @@ type StaffUpdateOpIssueSeverityRequest struct {
 
 func (x *StaffUpdateOpIssueSeverityRequest) Reset() {
 	*x = StaffUpdateOpIssueSeverityRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[24]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1438,7 +1527,7 @@ func (x *StaffUpdateOpIssueSeverityRequest) String() string {
 func (*StaffUpdateOpIssueSeverityRequest) ProtoMessage() {}
 
 func (x *StaffUpdateOpIssueSeverityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[24]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1451,7 +1540,7 @@ func (x *StaffUpdateOpIssueSeverityRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use StaffUpdateOpIssueSeverityRequest.ProtoReflect.Descriptor instead.
 func (*StaffUpdateOpIssueSeverityRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{24}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *StaffUpdateOpIssueSeverityRequest) GetOpIssueId() string {
@@ -1484,7 +1573,7 @@ type StaffUpdateOpIssueSeverityResponse struct {
 
 func (x *StaffUpdateOpIssueSeverityResponse) Reset() {
 	*x = StaffUpdateOpIssueSeverityResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[25]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1496,7 +1585,7 @@ func (x *StaffUpdateOpIssueSeverityResponse) String() string {
 func (*StaffUpdateOpIssueSeverityResponse) ProtoMessage() {}
 
 func (x *StaffUpdateOpIssueSeverityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[25]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1509,7 +1598,7 @@ func (x *StaffUpdateOpIssueSeverityResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use StaffUpdateOpIssueSeverityResponse.ProtoReflect.Descriptor instead.
 func (*StaffUpdateOpIssueSeverityResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{25}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *StaffUpdateOpIssueSeverityResponse) GetMessage() string {
@@ -1531,7 +1620,7 @@ type StaffUpdateOpIssueETARequest struct {
 
 func (x *StaffUpdateOpIssueETARequest) Reset() {
 	*x = StaffUpdateOpIssueETARequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[26]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1543,7 +1632,7 @@ func (x *StaffUpdateOpIssueETARequest) String() string {
 func (*StaffUpdateOpIssueETARequest) ProtoMessage() {}
 
 func (x *StaffUpdateOpIssueETARequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[26]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1556,7 +1645,7 @@ func (x *StaffUpdateOpIssueETARequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUpdateOpIssueETARequest.ProtoReflect.Descriptor instead.
 func (*StaffUpdateOpIssueETARequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{26}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *StaffUpdateOpIssueETARequest) GetOpIssueId() string {
@@ -1589,7 +1678,7 @@ type StaffUpdateOpIssueETAResponse struct {
 
 func (x *StaffUpdateOpIssueETAResponse) Reset() {
 	*x = StaffUpdateOpIssueETAResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[27]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1601,7 +1690,7 @@ func (x *StaffUpdateOpIssueETAResponse) String() string {
 func (*StaffUpdateOpIssueETAResponse) ProtoMessage() {}
 
 func (x *StaffUpdateOpIssueETAResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[27]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1614,7 +1703,7 @@ func (x *StaffUpdateOpIssueETAResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUpdateOpIssueETAResponse.ProtoReflect.Descriptor instead.
 func (*StaffUpdateOpIssueETAResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{27}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *StaffUpdateOpIssueETAResponse) GetMessage() string {
@@ -1635,7 +1724,7 @@ type StaffSplitOpIssueByFacilityRequest struct {
 
 func (x *StaffSplitOpIssueByFacilityRequest) Reset() {
 	*x = StaffSplitOpIssueByFacilityRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[28]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1647,7 +1736,7 @@ func (x *StaffSplitOpIssueByFacilityRequest) String() string {
 func (*StaffSplitOpIssueByFacilityRequest) ProtoMessage() {}
 
 func (x *StaffSplitOpIssueByFacilityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[28]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1660,7 +1749,7 @@ func (x *StaffSplitOpIssueByFacilityRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use StaffSplitOpIssueByFacilityRequest.ProtoReflect.Descriptor instead.
 func (*StaffSplitOpIssueByFacilityRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{28}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *StaffSplitOpIssueByFacilityRequest) GetOpIssueId() string {
@@ -1687,7 +1776,7 @@ type StaffSplitOpIssueByFacilityResponse struct {
 
 func (x *StaffSplitOpIssueByFacilityResponse) Reset() {
 	*x = StaffSplitOpIssueByFacilityResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[29]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1699,7 +1788,7 @@ func (x *StaffSplitOpIssueByFacilityResponse) String() string {
 func (*StaffSplitOpIssueByFacilityResponse) ProtoMessage() {}
 
 func (x *StaffSplitOpIssueByFacilityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[29]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1712,7 +1801,7 @@ func (x *StaffSplitOpIssueByFacilityResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use StaffSplitOpIssueByFacilityResponse.ProtoReflect.Descriptor instead.
 func (*StaffSplitOpIssueByFacilityResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{29}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *StaffSplitOpIssueByFacilityResponse) GetMessage() string {
@@ -1749,7 +1838,7 @@ type StaffSpawnWorkItemRequest struct {
 
 func (x *StaffSpawnWorkItemRequest) Reset() {
 	*x = StaffSpawnWorkItemRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[30]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1761,7 +1850,7 @@ func (x *StaffSpawnWorkItemRequest) String() string {
 func (*StaffSpawnWorkItemRequest) ProtoMessage() {}
 
 func (x *StaffSpawnWorkItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[30]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1774,7 +1863,7 @@ func (x *StaffSpawnWorkItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffSpawnWorkItemRequest.ProtoReflect.Descriptor instead.
 func (*StaffSpawnWorkItemRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{30}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *StaffSpawnWorkItemRequest) GetParentId() string {
@@ -1865,7 +1954,7 @@ type StaffSpawnWorkItemResponse struct {
 
 func (x *StaffSpawnWorkItemResponse) Reset() {
 	*x = StaffSpawnWorkItemResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[31]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1877,7 +1966,7 @@ func (x *StaffSpawnWorkItemResponse) String() string {
 func (*StaffSpawnWorkItemResponse) ProtoMessage() {}
 
 func (x *StaffSpawnWorkItemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[31]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1890,7 +1979,7 @@ func (x *StaffSpawnWorkItemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffSpawnWorkItemResponse.ProtoReflect.Descriptor instead.
 func (*StaffSpawnWorkItemResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{31}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *StaffSpawnWorkItemResponse) GetOpIssueId() string {
@@ -1925,7 +2014,7 @@ type StaffAttachExternalRefRequest struct {
 
 func (x *StaffAttachExternalRefRequest) Reset() {
 	*x = StaffAttachExternalRefRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[32]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1937,7 +2026,7 @@ func (x *StaffAttachExternalRefRequest) String() string {
 func (*StaffAttachExternalRefRequest) ProtoMessage() {}
 
 func (x *StaffAttachExternalRefRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[32]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1950,7 +2039,7 @@ func (x *StaffAttachExternalRefRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffAttachExternalRefRequest.ProtoReflect.Descriptor instead.
 func (*StaffAttachExternalRefRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{32}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *StaffAttachExternalRefRequest) GetOpIssueId() string {
@@ -1977,7 +2066,7 @@ type StaffAttachExternalRefResponse struct {
 
 func (x *StaffAttachExternalRefResponse) Reset() {
 	*x = StaffAttachExternalRefResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[33]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1989,7 +2078,7 @@ func (x *StaffAttachExternalRefResponse) String() string {
 func (*StaffAttachExternalRefResponse) ProtoMessage() {}
 
 func (x *StaffAttachExternalRefResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[33]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2002,7 +2091,7 @@ func (x *StaffAttachExternalRefResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffAttachExternalRefResponse.ProtoReflect.Descriptor instead.
 func (*StaffAttachExternalRefResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{33}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *StaffAttachExternalRefResponse) GetMessage() string {
@@ -2035,7 +2124,7 @@ type OperationTeamMember struct {
 
 func (x *OperationTeamMember) Reset() {
 	*x = OperationTeamMember{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[34]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2047,7 +2136,7 @@ func (x *OperationTeamMember) String() string {
 func (*OperationTeamMember) ProtoMessage() {}
 
 func (x *OperationTeamMember) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[34]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2060,7 +2149,7 @@ func (x *OperationTeamMember) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperationTeamMember.ProtoReflect.Descriptor instead.
 func (*OperationTeamMember) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{34}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *OperationTeamMember) GetId() int64 {
@@ -2123,7 +2212,7 @@ type StaffListOpTeamMemberRequest struct {
 
 func (x *StaffListOpTeamMemberRequest) Reset() {
 	*x = StaffListOpTeamMemberRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[35]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2135,7 +2224,7 @@ func (x *StaffListOpTeamMemberRequest) String() string {
 func (*StaffListOpTeamMemberRequest) ProtoMessage() {}
 
 func (x *StaffListOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[35]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2148,7 +2237,7 @@ func (x *StaffListOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffListOpTeamMemberRequest.ProtoReflect.Descriptor instead.
 func (*StaffListOpTeamMemberRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{35}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *StaffListOpTeamMemberRequest) GetTeams() []OperationTeam {
@@ -2174,7 +2263,7 @@ type StaffListOpTeamMemberResponse struct {
 
 func (x *StaffListOpTeamMemberResponse) Reset() {
 	*x = StaffListOpTeamMemberResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[36]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2186,7 +2275,7 @@ func (x *StaffListOpTeamMemberResponse) String() string {
 func (*StaffListOpTeamMemberResponse) ProtoMessage() {}
 
 func (x *StaffListOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[36]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2199,7 +2288,7 @@ func (x *StaffListOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffListOpTeamMemberResponse.ProtoReflect.Descriptor instead.
 func (*StaffListOpTeamMemberResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{36}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *StaffListOpTeamMemberResponse) GetData() []*OperationTeamMember {
@@ -2221,7 +2310,7 @@ type StaffUpsertOpTeamMemberRequest struct {
 
 func (x *StaffUpsertOpTeamMemberRequest) Reset() {
 	*x = StaffUpsertOpTeamMemberRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[37]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2233,7 +2322,7 @@ func (x *StaffUpsertOpTeamMemberRequest) String() string {
 func (*StaffUpsertOpTeamMemberRequest) ProtoMessage() {}
 
 func (x *StaffUpsertOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[37]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2246,7 +2335,7 @@ func (x *StaffUpsertOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUpsertOpTeamMemberRequest.ProtoReflect.Descriptor instead.
 func (*StaffUpsertOpTeamMemberRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{37}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *StaffUpsertOpTeamMemberRequest) GetStaffId() string {
@@ -2280,7 +2369,7 @@ type StaffUpsertOpTeamMemberResponse struct {
 
 func (x *StaffUpsertOpTeamMemberResponse) Reset() {
 	*x = StaffUpsertOpTeamMemberResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[38]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2292,7 +2381,7 @@ func (x *StaffUpsertOpTeamMemberResponse) String() string {
 func (*StaffUpsertOpTeamMemberResponse) ProtoMessage() {}
 
 func (x *StaffUpsertOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[38]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2305,7 +2394,7 @@ func (x *StaffUpsertOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffUpsertOpTeamMemberResponse.ProtoReflect.Descriptor instead.
 func (*StaffUpsertOpTeamMemberResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{38}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *StaffUpsertOpTeamMemberResponse) GetMessage() string {
@@ -2332,7 +2421,7 @@ type StaffDeleteOpTeamMemberRequest struct {
 
 func (x *StaffDeleteOpTeamMemberRequest) Reset() {
 	*x = StaffDeleteOpTeamMemberRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[39]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2344,7 +2433,7 @@ func (x *StaffDeleteOpTeamMemberRequest) String() string {
 func (*StaffDeleteOpTeamMemberRequest) ProtoMessage() {}
 
 func (x *StaffDeleteOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[39]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2357,7 +2446,7 @@ func (x *StaffDeleteOpTeamMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffDeleteOpTeamMemberRequest.ProtoReflect.Descriptor instead.
 func (*StaffDeleteOpTeamMemberRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{39}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *StaffDeleteOpTeamMemberRequest) GetId() int64 {
@@ -2376,7 +2465,7 @@ type StaffDeleteOpTeamMemberResponse struct {
 
 func (x *StaffDeleteOpTeamMemberResponse) Reset() {
 	*x = StaffDeleteOpTeamMemberResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[40]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2388,7 +2477,7 @@ func (x *StaffDeleteOpTeamMemberResponse) String() string {
 func (*StaffDeleteOpTeamMemberResponse) ProtoMessage() {}
 
 func (x *StaffDeleteOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[40]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2401,7 +2490,7 @@ func (x *StaffDeleteOpTeamMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StaffDeleteOpTeamMemberResponse.ProtoReflect.Descriptor instead.
 func (*StaffDeleteOpTeamMemberResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{40}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *StaffDeleteOpTeamMemberResponse) GetMessage() string {
@@ -2427,7 +2516,7 @@ type SystemIngestEventRequest struct {
 
 func (x *SystemIngestEventRequest) Reset() {
 	*x = SystemIngestEventRequest{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[41]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2439,7 +2528,7 @@ func (x *SystemIngestEventRequest) String() string {
 func (*SystemIngestEventRequest) ProtoMessage() {}
 
 func (x *SystemIngestEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[41]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2452,7 +2541,7 @@ func (x *SystemIngestEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemIngestEventRequest.ProtoReflect.Descriptor instead.
 func (*SystemIngestEventRequest) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{41}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *SystemIngestEventRequest) GetSourceEventId() string {
@@ -2515,7 +2604,7 @@ type SystemIngestEventResponse struct {
 
 func (x *SystemIngestEventResponse) Reset() {
 	*x = SystemIngestEventResponse{}
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[42]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2527,7 +2616,7 @@ func (x *SystemIngestEventResponse) String() string {
 func (*SystemIngestEventResponse) ProtoMessage() {}
 
 func (x *SystemIngestEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[42]
+	mi := &file_api_pod_v1_api_operation_issue_admin_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2540,7 +2629,7 @@ func (x *SystemIngestEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemIngestEventResponse.ProtoReflect.Descriptor instead.
 func (*SystemIngestEventResponse) Descriptor() ([]byte, []int) {
-	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{42}
+	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *SystemIngestEventResponse) GetOpIssueIds() []string {
@@ -2742,6 +2831,14 @@ var file_api_pod_v1_api_operation_issue_admin_proto_rawDesc = string([]byte{
 	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xba, 0x48, 0x05, 0x72, 0x03, 0x18,
 	0xe8, 0x07, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0x35, 0x0a, 0x19, 0x53, 0x74,
 	0x61, 0x66, 0x66, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x22, 0x46, 0x0a, 0x19, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29,
+	0x0a, 0x0b, 0x6f, 0x70, 0x5f, 0x69, 0x73, 0x73, 0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x42, 0x09, 0xba, 0x48, 0x06, 0x72, 0x04, 0x10, 0x01, 0x18, 0x32, 0x52, 0x09,
+	0x6f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x49, 0x64, 0x22, 0x36, 0x0a, 0x1a, 0x53, 0x74, 0x61,
+	0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
 	0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
 	0x65, 0x22, 0x6a, 0x0a, 0x19, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e,
@@ -3006,7 +3103,7 @@ var file_api_pod_v1_api_operation_issue_admin_proto_rawDesc = string([]byte{
 	0x31, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x73, 0x73, 0x75, 0x65,
 	0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69,
 	0x74, 0x69, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0x93,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0xfa,
 	0x12, 0x0a, 0x16, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x73, 0x73, 0x75,
 	0x65, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x41, 0x50, 0x49, 0x12, 0x62, 0x0a, 0x10, 0x53, 0x74, 0x61,
 	0x66, 0x66, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x12, 0x23, 0x2e,
@@ -3068,102 +3165,109 @@ var file_api_pod_v1_api_operation_issue_admin_proto_rawDesc = string([]byte{
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
 	0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x4f,
 	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x65, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x12, 0x65, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f,
 	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x12, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64,
-	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f,
+	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f,
 	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e,
 	0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66,
-	0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x62, 0x0a, 0x11, 0x53, 0x74, 0x61, 0x66, 0x66,
-	0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x12, 0x24, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x42,
-	0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e,
-	0x53, 0x74, 0x61, 0x66, 0x66, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75,
-	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x68, 0x0a, 0x13, 0x53,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x65, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x66, 0x66,
+	0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x12, 0x25, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66,
+	0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76,
+	0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x6f, 0x70, 0x65, 0x6e, 0x4f, 0x70, 0x49,
+	0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x62,
+	0x0a, 0x11, 0x53, 0x74, 0x61, 0x66, 0x66, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73,
+	0x73, 0x75, 0x65, 0x12, 0x24, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31,
+	0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73,
+	0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x42, 0x6c, 0x6f, 0x63,
+	0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x68, 0x0a, 0x13, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x6e, 0x62, 0x6c, 0x6f,
+	0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x12, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x6e, 0x62, 0x6c,
+	0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x27, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53,
 	0x74, 0x61, 0x66, 0x66, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73,
-	0x75, 0x65, 0x12, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e,
-	0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73,
-	0x73, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x6e, 0x62,
-	0x6c, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x71, 0x0a, 0x16, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64,
-	0x64, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12,
-	0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61,
-	0x66, 0x66, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x43, 0x6f, 0x6d, 0x6d,
-	0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x64,
-	0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x7d, 0x0a, 0x1a, 0x53, 0x74, 0x61, 0x66,
-	0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65,
-	0x76, 0x65, 0x72, 0x69, 0x74, 0x79, 0x12, 0x2d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64,
-	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f,
-	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65, 0x76, 0x65, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e,
-	0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70,
-	0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65, 0x76, 0x65, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x6e, 0x0a, 0x15, 0x53, 0x74, 0x61, 0x66, 0x66,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x45, 0x54, 0x41,
-	0x12, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65,
-	0x45, 0x54, 0x41, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x45, 0x54, 0x41, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x80, 0x01, 0x0a, 0x1b, 0x53, 0x74, 0x61, 0x66,
+	0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x71, 0x0a, 0x16,
+	0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x43,
+	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64,
+	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x49, 0x73,
+	0x73, 0x75, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53,
+	0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x43, 0x6f,
+	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x7d, 0x0a, 0x1a, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70,
+	0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65, 0x76, 0x65, 0x72, 0x69, 0x74, 0x79, 0x12, 0x2d, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65, 0x76,
+	0x65, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x53, 0x65, 0x76, 0x65,
+	0x72, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x6e,
+	0x0a, 0x15, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49,
+	0x73, 0x73, 0x75, 0x65, 0x45, 0x54, 0x41, 0x12, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
+	0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x45, 0x54, 0x41, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53,
+	0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75,
+	0x65, 0x45, 0x54, 0x41, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x80,
+	0x01, 0x0a, 0x1b, 0x53, 0x74, 0x61, 0x66, 0x66, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f, 0x70, 0x49,
+	0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x46, 0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x12, 0x2e,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66,
 	0x66, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x46,
-	0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x12, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
-	0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f,
-	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x46, 0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
-	0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f,
-	0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x46, 0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x65, 0x0a, 0x12, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x57, 0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d,
-	0x12, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x57, 0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
+	0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66,
+	0x66, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f, 0x70, 0x49, 0x73, 0x73, 0x75, 0x65, 0x42, 0x79, 0x46,
+	0x61, 0x63, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x65, 0x0a, 0x12, 0x53, 0x74, 0x61, 0x66, 0x66, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x57,
+	0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f,
 	0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x57,
-	0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x12, 0x71, 0x0a, 0x16, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68,
-	0x45, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x52, 0x65, 0x66, 0x12, 0x29, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x74,
-	0x74, 0x61, 0x63, 0x68, 0x45, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x52, 0x65, 0x66, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64,
-	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x45,
-	0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x52, 0x65, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x00, 0x12, 0x74, 0x0a, 0x17, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x73,
-	0x65, 0x72, 0x74, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12,
-	0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61,
-	0x66, 0x66, 0x55, 0x70, 0x73, 0x65, 0x72, 0x74, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65,
-	0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70,
-	0x73, 0x65, 0x72, 0x74, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x74, 0x0a, 0x17, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d,
-	0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e,
-	0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70,
-	0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53,
-	0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d,
-	0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x62, 0x0a, 0x11, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x49, 0x6e, 0x67, 0x65, 0x73, 0x74,
-	0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x24, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e,
-	0x76, 0x31, 0x2e, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x49, 0x6e, 0x67, 0x65, 0x73, 0x74, 0x45,
-	0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x49,
-	0x6e, 0x67, 0x65, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x00, 0x42, 0xb0, 0x01, 0x0a, 0x0e, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x42, 0x1b, 0x41, 0x70, 0x69, 0x4f, 0x70, 0x65, 0x72,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x73, 0x73, 0x75, 0x65, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x50,
-	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67, 0x65, 0x61, 0x2d,
-	0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x64, 0x6b, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x70, 0x6f, 0x64, 0x2f, 0x76, 0x31, 0x3b, 0x70, 0x6f, 0x64, 0x76, 0x31, 0xa2,
-	0x02, 0x03, 0x41, 0x50, 0x58, 0xaa, 0x02, 0x0a, 0x41, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x64, 0x2e,
-	0x56, 0x31, 0xca, 0x02, 0x0a, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x6f, 0x64, 0x5c, 0x56, 0x31, 0xe2,
-	0x02, 0x16, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x6f, 0x64, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a,
-	0x50, 0x6f, 0x64, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66,
+	0x66, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x57, 0x6f, 0x72, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x71, 0x0a, 0x16, 0x53, 0x74, 0x61, 0x66,
+	0x66, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x45, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x52,
+	0x65, 0x66, 0x12, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x45, 0x78, 0x74, 0x65, 0x72,
+	0x6e, 0x61, 0x6c, 0x52, 0x65, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66,
+	0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x45, 0x78, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x52, 0x65,
+	0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x74, 0x0a, 0x17, 0x53,
+	0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x73, 0x65, 0x72, 0x74, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d,
+	0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64,
+	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x73, 0x65, 0x72, 0x74, 0x4f,
+	0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x74, 0x61, 0x66, 0x66, 0x55, 0x70, 0x73, 0x65, 0x72, 0x74, 0x4f, 0x70, 0x54, 0x65, 0x61,
+	0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x74, 0x0a, 0x17, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x2a, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65,
+	0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70,
+	0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x66, 0x66, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x4f, 0x70, 0x54, 0x65, 0x61, 0x6d, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x62, 0x0a, 0x11, 0x53, 0x79, 0x73, 0x74, 0x65,
+	0x6d, 0x49, 0x6e, 0x67, 0x65, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x24, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d,
+	0x49, 0x6e, 0x67, 0x65, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x49, 0x6e, 0x67, 0x65, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0xb0, 0x01, 0x0a, 0x0e,
+	0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x42, 0x1b,
+	0x41, 0x70, 0x69, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x73, 0x73, 0x75,
+	0x65, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x37, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65,
+	0x6e, 0x74, 0x2f, 0x67, 0x65, 0x61, 0x2d, 0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64,
+	0x6f, 0x72, 0x73, 0x64, 0x6b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6f, 0x64, 0x2f, 0x76, 0x31,
+	0x3b, 0x70, 0x6f, 0x64, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x41, 0x50, 0x58, 0xaa, 0x02, 0x0a, 0x41,
+	0x70, 0x69, 0x2e, 0x50, 0x6f, 0x64, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0a, 0x41, 0x70, 0x69, 0x5c,
+	0x50, 0x6f, 0x64, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x16, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x6f, 0x64,
+	0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea,
+	0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x50, 0x6f, 0x64, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -3178,7 +3282,7 @@ func file_api_pod_v1_api_operation_issue_admin_proto_rawDescGZIP() []byte {
 	return file_api_pod_v1_api_operation_issue_admin_proto_rawDescData
 }
 
-var file_api_pod_v1_api_operation_issue_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_api_pod_v1_api_operation_issue_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_api_pod_v1_api_operation_issue_admin_proto_goTypes = []any{
 	(*StaffCreateOpIssueRequest)(nil),           // 0: api.pod.v1.StaffCreateOpIssueRequest
 	(*StaffCreateOpIssueResponse)(nil),          // 1: api.pod.v1.StaffCreateOpIssueResponse
@@ -3196,134 +3300,138 @@ var file_api_pod_v1_api_operation_issue_admin_proto_goTypes = []any{
 	(*StaffResolveOpIssueResponse)(nil),         // 13: api.pod.v1.StaffResolveOpIssueResponse
 	(*StaffCloseOpIssueRequest)(nil),            // 14: api.pod.v1.StaffCloseOpIssueRequest
 	(*StaffCloseOpIssueResponse)(nil),           // 15: api.pod.v1.StaffCloseOpIssueResponse
-	(*StaffReopenOpIssueRequest)(nil),           // 16: api.pod.v1.StaffReopenOpIssueRequest
-	(*StaffReopenOpIssueResponse)(nil),          // 17: api.pod.v1.StaffReopenOpIssueResponse
-	(*StaffBlockOpIssueRequest)(nil),            // 18: api.pod.v1.StaffBlockOpIssueRequest
-	(*StaffBlockOpIssueResponse)(nil),           // 19: api.pod.v1.StaffBlockOpIssueResponse
-	(*StaffUnblockOpIssueRequest)(nil),          // 20: api.pod.v1.StaffUnblockOpIssueRequest
-	(*StaffUnblockOpIssueResponse)(nil),         // 21: api.pod.v1.StaffUnblockOpIssueResponse
-	(*StaffAddOpIssueCommentRequest)(nil),       // 22: api.pod.v1.StaffAddOpIssueCommentRequest
-	(*StaffAddOpIssueCommentResponse)(nil),      // 23: api.pod.v1.StaffAddOpIssueCommentResponse
-	(*StaffUpdateOpIssueSeverityRequest)(nil),   // 24: api.pod.v1.StaffUpdateOpIssueSeverityRequest
-	(*StaffUpdateOpIssueSeverityResponse)(nil),  // 25: api.pod.v1.StaffUpdateOpIssueSeverityResponse
-	(*StaffUpdateOpIssueETARequest)(nil),        // 26: api.pod.v1.StaffUpdateOpIssueETARequest
-	(*StaffUpdateOpIssueETAResponse)(nil),       // 27: api.pod.v1.StaffUpdateOpIssueETAResponse
-	(*StaffSplitOpIssueByFacilityRequest)(nil),  // 28: api.pod.v1.StaffSplitOpIssueByFacilityRequest
-	(*StaffSplitOpIssueByFacilityResponse)(nil), // 29: api.pod.v1.StaffSplitOpIssueByFacilityResponse
-	(*StaffSpawnWorkItemRequest)(nil),           // 30: api.pod.v1.StaffSpawnWorkItemRequest
-	(*StaffSpawnWorkItemResponse)(nil),          // 31: api.pod.v1.StaffSpawnWorkItemResponse
-	(*StaffAttachExternalRefRequest)(nil),       // 32: api.pod.v1.StaffAttachExternalRefRequest
-	(*StaffAttachExternalRefResponse)(nil),      // 33: api.pod.v1.StaffAttachExternalRefResponse
-	(*OperationTeamMember)(nil),                 // 34: api.pod.v1.OperationTeamMember
-	(*StaffListOpTeamMemberRequest)(nil),        // 35: api.pod.v1.StaffListOpTeamMemberRequest
-	(*StaffListOpTeamMemberResponse)(nil),       // 36: api.pod.v1.StaffListOpTeamMemberResponse
-	(*StaffUpsertOpTeamMemberRequest)(nil),      // 37: api.pod.v1.StaffUpsertOpTeamMemberRequest
-	(*StaffUpsertOpTeamMemberResponse)(nil),     // 38: api.pod.v1.StaffUpsertOpTeamMemberResponse
-	(*StaffDeleteOpTeamMemberRequest)(nil),      // 39: api.pod.v1.StaffDeleteOpTeamMemberRequest
-	(*StaffDeleteOpTeamMemberResponse)(nil),     // 40: api.pod.v1.StaffDeleteOpTeamMemberResponse
-	(*SystemIngestEventRequest)(nil),            // 41: api.pod.v1.SystemIngestEventRequest
-	(*SystemIngestEventResponse)(nil),           // 42: api.pod.v1.SystemIngestEventResponse
-	(OperationIssueKind)(0),                     // 43: api.pod.v1.OperationIssueKind
-	(OperationIssueCategory)(0),                 // 44: api.pod.v1.OperationIssueCategory
-	(OperationIssueSeverity)(0),                 // 45: api.pod.v1.OperationIssueSeverity
-	(OperationTeam)(0),                          // 46: api.pod.v1.OperationTeam
-	(*OperationIssueExternalRef)(nil),           // 47: api.pod.v1.OperationIssueExternalRef
-	(*timestamppb.Timestamp)(nil),               // 48: google.protobuf.Timestamp
-	(*OperationIssue_StaffListingFilter)(nil),   // 49: api.pod.v1.OperationIssue.StaffListingFilter
-	(*OperationIssue_StaffListingSearch)(nil),   // 50: api.pod.v1.OperationIssue.StaffListingSearch
-	(*OperationIssue_Short)(nil),                // 51: api.pod.v1.OperationIssue.Short
-	(*OperationIssueStatusCount)(nil),           // 52: api.pod.v1.OperationIssueStatusCount
-	(*OperationIssue)(nil),                      // 53: api.pod.v1.OperationIssue
-	(*OperationIssueActivity)(nil),              // 54: api.pod.v1.OperationIssueActivity
-	(OperationResolutionCode)(0),                // 55: api.pod.v1.OperationResolutionCode
-	(OperationIssueActivityType)(0),             // 56: api.pod.v1.OperationIssueActivityType
-	(OperationIssueStatus)(0),                   // 57: api.pod.v1.OperationIssueStatus
+	(*StaffDeleteOpIssueRequest)(nil),           // 16: api.pod.v1.StaffDeleteOpIssueRequest
+	(*StaffDeleteOpIssueResponse)(nil),          // 17: api.pod.v1.StaffDeleteOpIssueResponse
+	(*StaffReopenOpIssueRequest)(nil),           // 18: api.pod.v1.StaffReopenOpIssueRequest
+	(*StaffReopenOpIssueResponse)(nil),          // 19: api.pod.v1.StaffReopenOpIssueResponse
+	(*StaffBlockOpIssueRequest)(nil),            // 20: api.pod.v1.StaffBlockOpIssueRequest
+	(*StaffBlockOpIssueResponse)(nil),           // 21: api.pod.v1.StaffBlockOpIssueResponse
+	(*StaffUnblockOpIssueRequest)(nil),          // 22: api.pod.v1.StaffUnblockOpIssueRequest
+	(*StaffUnblockOpIssueResponse)(nil),         // 23: api.pod.v1.StaffUnblockOpIssueResponse
+	(*StaffAddOpIssueCommentRequest)(nil),       // 24: api.pod.v1.StaffAddOpIssueCommentRequest
+	(*StaffAddOpIssueCommentResponse)(nil),      // 25: api.pod.v1.StaffAddOpIssueCommentResponse
+	(*StaffUpdateOpIssueSeverityRequest)(nil),   // 26: api.pod.v1.StaffUpdateOpIssueSeverityRequest
+	(*StaffUpdateOpIssueSeverityResponse)(nil),  // 27: api.pod.v1.StaffUpdateOpIssueSeverityResponse
+	(*StaffUpdateOpIssueETARequest)(nil),        // 28: api.pod.v1.StaffUpdateOpIssueETARequest
+	(*StaffUpdateOpIssueETAResponse)(nil),       // 29: api.pod.v1.StaffUpdateOpIssueETAResponse
+	(*StaffSplitOpIssueByFacilityRequest)(nil),  // 30: api.pod.v1.StaffSplitOpIssueByFacilityRequest
+	(*StaffSplitOpIssueByFacilityResponse)(nil), // 31: api.pod.v1.StaffSplitOpIssueByFacilityResponse
+	(*StaffSpawnWorkItemRequest)(nil),           // 32: api.pod.v1.StaffSpawnWorkItemRequest
+	(*StaffSpawnWorkItemResponse)(nil),          // 33: api.pod.v1.StaffSpawnWorkItemResponse
+	(*StaffAttachExternalRefRequest)(nil),       // 34: api.pod.v1.StaffAttachExternalRefRequest
+	(*StaffAttachExternalRefResponse)(nil),      // 35: api.pod.v1.StaffAttachExternalRefResponse
+	(*OperationTeamMember)(nil),                 // 36: api.pod.v1.OperationTeamMember
+	(*StaffListOpTeamMemberRequest)(nil),        // 37: api.pod.v1.StaffListOpTeamMemberRequest
+	(*StaffListOpTeamMemberResponse)(nil),       // 38: api.pod.v1.StaffListOpTeamMemberResponse
+	(*StaffUpsertOpTeamMemberRequest)(nil),      // 39: api.pod.v1.StaffUpsertOpTeamMemberRequest
+	(*StaffUpsertOpTeamMemberResponse)(nil),     // 40: api.pod.v1.StaffUpsertOpTeamMemberResponse
+	(*StaffDeleteOpTeamMemberRequest)(nil),      // 41: api.pod.v1.StaffDeleteOpTeamMemberRequest
+	(*StaffDeleteOpTeamMemberResponse)(nil),     // 42: api.pod.v1.StaffDeleteOpTeamMemberResponse
+	(*SystemIngestEventRequest)(nil),            // 43: api.pod.v1.SystemIngestEventRequest
+	(*SystemIngestEventResponse)(nil),           // 44: api.pod.v1.SystemIngestEventResponse
+	(OperationIssueKind)(0),                     // 45: api.pod.v1.OperationIssueKind
+	(OperationIssueCategory)(0),                 // 46: api.pod.v1.OperationIssueCategory
+	(OperationIssueSeverity)(0),                 // 47: api.pod.v1.OperationIssueSeverity
+	(OperationTeam)(0),                          // 48: api.pod.v1.OperationTeam
+	(*OperationIssueExternalRef)(nil),           // 49: api.pod.v1.OperationIssueExternalRef
+	(*timestamppb.Timestamp)(nil),               // 50: google.protobuf.Timestamp
+	(*OperationIssue_StaffListingFilter)(nil),   // 51: api.pod.v1.OperationIssue.StaffListingFilter
+	(*OperationIssue_StaffListingSearch)(nil),   // 52: api.pod.v1.OperationIssue.StaffListingSearch
+	(*OperationIssue_Short)(nil),                // 53: api.pod.v1.OperationIssue.Short
+	(*OperationIssueStatusCount)(nil),           // 54: api.pod.v1.OperationIssueStatusCount
+	(*OperationIssue)(nil),                      // 55: api.pod.v1.OperationIssue
+	(*OperationIssueActivity)(nil),              // 56: api.pod.v1.OperationIssueActivity
+	(OperationResolutionCode)(0),                // 57: api.pod.v1.OperationResolutionCode
+	(OperationIssueActivityType)(0),             // 58: api.pod.v1.OperationIssueActivityType
+	(OperationIssueStatus)(0),                   // 59: api.pod.v1.OperationIssueStatus
 }
 var file_api_pod_v1_api_operation_issue_admin_proto_depIdxs = []int32{
-	43, // 0: api.pod.v1.StaffCreateOpIssueRequest.kind:type_name -> api.pod.v1.OperationIssueKind
-	44, // 1: api.pod.v1.StaffCreateOpIssueRequest.category:type_name -> api.pod.v1.OperationIssueCategory
-	45, // 2: api.pod.v1.StaffCreateOpIssueRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
-	46, // 3: api.pod.v1.StaffCreateOpIssueRequest.owning_team:type_name -> api.pod.v1.OperationTeam
-	46, // 4: api.pod.v1.StaffCreateOpIssueRequest.watchers:type_name -> api.pod.v1.OperationTeam
-	47, // 5: api.pod.v1.StaffCreateOpIssueRequest.external_refs:type_name -> api.pod.v1.OperationIssueExternalRef
-	48, // 6: api.pod.v1.StaffCreateOpIssueRequest.estimated_resolution_at:type_name -> google.protobuf.Timestamp
-	49, // 7: api.pod.v1.StaffListOpIssueRequest.filter:type_name -> api.pod.v1.OperationIssue.StaffListingFilter
-	50, // 8: api.pod.v1.StaffListOpIssueRequest.search:type_name -> api.pod.v1.OperationIssue.StaffListingSearch
-	51, // 9: api.pod.v1.StaffListOpIssueResponse.data:type_name -> api.pod.v1.OperationIssue.Short
-	49, // 10: api.pod.v1.StaffCountOpIssueStatusRequest.filter:type_name -> api.pod.v1.OperationIssue.StaffListingFilter
-	50, // 11: api.pod.v1.StaffCountOpIssueStatusRequest.search:type_name -> api.pod.v1.OperationIssue.StaffListingSearch
-	52, // 12: api.pod.v1.StaffCountOpIssueStatusResponse.data:type_name -> api.pod.v1.OperationIssueStatusCount
-	53, // 13: api.pod.v1.StaffGetOpIssueResponse.issue:type_name -> api.pod.v1.OperationIssue
-	54, // 14: api.pod.v1.StaffGetOpIssueResponse.activities:type_name -> api.pod.v1.OperationIssueActivity
-	46, // 15: api.pod.v1.StaffTransferOpIssueRequest.to_team:type_name -> api.pod.v1.OperationTeam
-	55, // 16: api.pod.v1.StaffResolveOpIssueRequest.resolution_code:type_name -> api.pod.v1.OperationResolutionCode
-	45, // 17: api.pod.v1.StaffUpdateOpIssueSeverityRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
-	48, // 18: api.pod.v1.StaffUpdateOpIssueETARequest.estimated_resolution_at:type_name -> google.protobuf.Timestamp
-	53, // 19: api.pod.v1.StaffSplitOpIssueByFacilityResponse.children:type_name -> api.pod.v1.OperationIssue
-	46, // 20: api.pod.v1.StaffSpawnWorkItemRequest.owning_team:type_name -> api.pod.v1.OperationTeam
-	44, // 21: api.pod.v1.StaffSpawnWorkItemRequest.category:type_name -> api.pod.v1.OperationIssueCategory
-	45, // 22: api.pod.v1.StaffSpawnWorkItemRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
-	46, // 23: api.pod.v1.StaffSpawnWorkItemRequest.watchers:type_name -> api.pod.v1.OperationTeam
-	53, // 24: api.pod.v1.StaffSpawnWorkItemResponse.issue:type_name -> api.pod.v1.OperationIssue
-	47, // 25: api.pod.v1.StaffAttachExternalRefRequest.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
-	47, // 26: api.pod.v1.StaffAttachExternalRefResponse.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
-	46, // 27: api.pod.v1.OperationTeamMember.operation_team:type_name -> api.pod.v1.OperationTeam
-	48, // 28: api.pod.v1.OperationTeamMember.created_at:type_name -> google.protobuf.Timestamp
-	48, // 29: api.pod.v1.OperationTeamMember.updated_at:type_name -> google.protobuf.Timestamp
-	46, // 30: api.pod.v1.StaffListOpTeamMemberRequest.teams:type_name -> api.pod.v1.OperationTeam
-	34, // 31: api.pod.v1.StaffListOpTeamMemberResponse.data:type_name -> api.pod.v1.OperationTeamMember
-	46, // 32: api.pod.v1.StaffUpsertOpTeamMemberRequest.operation_team:type_name -> api.pod.v1.OperationTeam
-	34, // 33: api.pod.v1.StaffUpsertOpTeamMemberResponse.member:type_name -> api.pod.v1.OperationTeamMember
-	47, // 34: api.pod.v1.SystemIngestEventRequest.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
-	56, // 35: api.pod.v1.SystemIngestEventRequest.activity_type:type_name -> api.pod.v1.OperationIssueActivityType
-	57, // 36: api.pod.v1.SystemIngestEventRequest.from_status:type_name -> api.pod.v1.OperationIssueStatus
-	57, // 37: api.pod.v1.SystemIngestEventRequest.to_status:type_name -> api.pod.v1.OperationIssueStatus
-	48, // 38: api.pod.v1.SystemIngestEventRequest.occurred_at:type_name -> google.protobuf.Timestamp
-	54, // 39: api.pod.v1.SystemIngestEventResponse.activities:type_name -> api.pod.v1.OperationIssueActivity
+	45, // 0: api.pod.v1.StaffCreateOpIssueRequest.kind:type_name -> api.pod.v1.OperationIssueKind
+	46, // 1: api.pod.v1.StaffCreateOpIssueRequest.category:type_name -> api.pod.v1.OperationIssueCategory
+	47, // 2: api.pod.v1.StaffCreateOpIssueRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
+	48, // 3: api.pod.v1.StaffCreateOpIssueRequest.owning_team:type_name -> api.pod.v1.OperationTeam
+	48, // 4: api.pod.v1.StaffCreateOpIssueRequest.watchers:type_name -> api.pod.v1.OperationTeam
+	49, // 5: api.pod.v1.StaffCreateOpIssueRequest.external_refs:type_name -> api.pod.v1.OperationIssueExternalRef
+	50, // 6: api.pod.v1.StaffCreateOpIssueRequest.estimated_resolution_at:type_name -> google.protobuf.Timestamp
+	51, // 7: api.pod.v1.StaffListOpIssueRequest.filter:type_name -> api.pod.v1.OperationIssue.StaffListingFilter
+	52, // 8: api.pod.v1.StaffListOpIssueRequest.search:type_name -> api.pod.v1.OperationIssue.StaffListingSearch
+	53, // 9: api.pod.v1.StaffListOpIssueResponse.data:type_name -> api.pod.v1.OperationIssue.Short
+	51, // 10: api.pod.v1.StaffCountOpIssueStatusRequest.filter:type_name -> api.pod.v1.OperationIssue.StaffListingFilter
+	52, // 11: api.pod.v1.StaffCountOpIssueStatusRequest.search:type_name -> api.pod.v1.OperationIssue.StaffListingSearch
+	54, // 12: api.pod.v1.StaffCountOpIssueStatusResponse.data:type_name -> api.pod.v1.OperationIssueStatusCount
+	55, // 13: api.pod.v1.StaffGetOpIssueResponse.issue:type_name -> api.pod.v1.OperationIssue
+	56, // 14: api.pod.v1.StaffGetOpIssueResponse.activities:type_name -> api.pod.v1.OperationIssueActivity
+	48, // 15: api.pod.v1.StaffTransferOpIssueRequest.to_team:type_name -> api.pod.v1.OperationTeam
+	57, // 16: api.pod.v1.StaffResolveOpIssueRequest.resolution_code:type_name -> api.pod.v1.OperationResolutionCode
+	47, // 17: api.pod.v1.StaffUpdateOpIssueSeverityRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
+	50, // 18: api.pod.v1.StaffUpdateOpIssueETARequest.estimated_resolution_at:type_name -> google.protobuf.Timestamp
+	55, // 19: api.pod.v1.StaffSplitOpIssueByFacilityResponse.children:type_name -> api.pod.v1.OperationIssue
+	48, // 20: api.pod.v1.StaffSpawnWorkItemRequest.owning_team:type_name -> api.pod.v1.OperationTeam
+	46, // 21: api.pod.v1.StaffSpawnWorkItemRequest.category:type_name -> api.pod.v1.OperationIssueCategory
+	47, // 22: api.pod.v1.StaffSpawnWorkItemRequest.severity:type_name -> api.pod.v1.OperationIssueSeverity
+	48, // 23: api.pod.v1.StaffSpawnWorkItemRequest.watchers:type_name -> api.pod.v1.OperationTeam
+	55, // 24: api.pod.v1.StaffSpawnWorkItemResponse.issue:type_name -> api.pod.v1.OperationIssue
+	49, // 25: api.pod.v1.StaffAttachExternalRefRequest.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
+	49, // 26: api.pod.v1.StaffAttachExternalRefResponse.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
+	48, // 27: api.pod.v1.OperationTeamMember.operation_team:type_name -> api.pod.v1.OperationTeam
+	50, // 28: api.pod.v1.OperationTeamMember.created_at:type_name -> google.protobuf.Timestamp
+	50, // 29: api.pod.v1.OperationTeamMember.updated_at:type_name -> google.protobuf.Timestamp
+	48, // 30: api.pod.v1.StaffListOpTeamMemberRequest.teams:type_name -> api.pod.v1.OperationTeam
+	36, // 31: api.pod.v1.StaffListOpTeamMemberResponse.data:type_name -> api.pod.v1.OperationTeamMember
+	48, // 32: api.pod.v1.StaffUpsertOpTeamMemberRequest.operation_team:type_name -> api.pod.v1.OperationTeam
+	36, // 33: api.pod.v1.StaffUpsertOpTeamMemberResponse.member:type_name -> api.pod.v1.OperationTeamMember
+	49, // 34: api.pod.v1.SystemIngestEventRequest.external_ref:type_name -> api.pod.v1.OperationIssueExternalRef
+	58, // 35: api.pod.v1.SystemIngestEventRequest.activity_type:type_name -> api.pod.v1.OperationIssueActivityType
+	59, // 36: api.pod.v1.SystemIngestEventRequest.from_status:type_name -> api.pod.v1.OperationIssueStatus
+	59, // 37: api.pod.v1.SystemIngestEventRequest.to_status:type_name -> api.pod.v1.OperationIssueStatus
+	50, // 38: api.pod.v1.SystemIngestEventRequest.occurred_at:type_name -> google.protobuf.Timestamp
+	56, // 39: api.pod.v1.SystemIngestEventResponse.activities:type_name -> api.pod.v1.OperationIssueActivity
 	2,  // 40: api.pod.v1.OperationIssueAdminAPI.StaffListOpIssue:input_type -> api.pod.v1.StaffListOpIssueRequest
 	4,  // 41: api.pod.v1.OperationIssueAdminAPI.StaffCountOpIssueStatus:input_type -> api.pod.v1.StaffCountOpIssueStatusRequest
 	6,  // 42: api.pod.v1.OperationIssueAdminAPI.StaffGetOpIssue:input_type -> api.pod.v1.StaffGetOpIssueRequest
-	35, // 43: api.pod.v1.OperationIssueAdminAPI.StaffListOpTeamMember:input_type -> api.pod.v1.StaffListOpTeamMemberRequest
+	37, // 43: api.pod.v1.OperationIssueAdminAPI.StaffListOpTeamMember:input_type -> api.pod.v1.StaffListOpTeamMemberRequest
 	0,  // 44: api.pod.v1.OperationIssueAdminAPI.StaffCreateOpIssue:input_type -> api.pod.v1.StaffCreateOpIssueRequest
 	8,  // 45: api.pod.v1.OperationIssueAdminAPI.StaffClaimOpIssue:input_type -> api.pod.v1.StaffClaimOpIssueRequest
 	10, // 46: api.pod.v1.OperationIssueAdminAPI.StaffTransferOpIssue:input_type -> api.pod.v1.StaffTransferOpIssueRequest
 	12, // 47: api.pod.v1.OperationIssueAdminAPI.StaffResolveOpIssue:input_type -> api.pod.v1.StaffResolveOpIssueRequest
 	14, // 48: api.pod.v1.OperationIssueAdminAPI.StaffCloseOpIssue:input_type -> api.pod.v1.StaffCloseOpIssueRequest
-	16, // 49: api.pod.v1.OperationIssueAdminAPI.StaffReopenOpIssue:input_type -> api.pod.v1.StaffReopenOpIssueRequest
-	18, // 50: api.pod.v1.OperationIssueAdminAPI.StaffBlockOpIssue:input_type -> api.pod.v1.StaffBlockOpIssueRequest
-	20, // 51: api.pod.v1.OperationIssueAdminAPI.StaffUnblockOpIssue:input_type -> api.pod.v1.StaffUnblockOpIssueRequest
-	22, // 52: api.pod.v1.OperationIssueAdminAPI.StaffAddOpIssueComment:input_type -> api.pod.v1.StaffAddOpIssueCommentRequest
-	24, // 53: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueSeverity:input_type -> api.pod.v1.StaffUpdateOpIssueSeverityRequest
-	26, // 54: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueETA:input_type -> api.pod.v1.StaffUpdateOpIssueETARequest
-	28, // 55: api.pod.v1.OperationIssueAdminAPI.StaffSplitOpIssueByFacility:input_type -> api.pod.v1.StaffSplitOpIssueByFacilityRequest
-	30, // 56: api.pod.v1.OperationIssueAdminAPI.StaffSpawnWorkItem:input_type -> api.pod.v1.StaffSpawnWorkItemRequest
-	32, // 57: api.pod.v1.OperationIssueAdminAPI.StaffAttachExternalRef:input_type -> api.pod.v1.StaffAttachExternalRefRequest
-	37, // 58: api.pod.v1.OperationIssueAdminAPI.StaffUpsertOpTeamMember:input_type -> api.pod.v1.StaffUpsertOpTeamMemberRequest
-	39, // 59: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpTeamMember:input_type -> api.pod.v1.StaffDeleteOpTeamMemberRequest
-	41, // 60: api.pod.v1.OperationIssueAdminAPI.SystemIngestEvent:input_type -> api.pod.v1.SystemIngestEventRequest
-	3,  // 61: api.pod.v1.OperationIssueAdminAPI.StaffListOpIssue:output_type -> api.pod.v1.StaffListOpIssueResponse
-	5,  // 62: api.pod.v1.OperationIssueAdminAPI.StaffCountOpIssueStatus:output_type -> api.pod.v1.StaffCountOpIssueStatusResponse
-	7,  // 63: api.pod.v1.OperationIssueAdminAPI.StaffGetOpIssue:output_type -> api.pod.v1.StaffGetOpIssueResponse
-	36, // 64: api.pod.v1.OperationIssueAdminAPI.StaffListOpTeamMember:output_type -> api.pod.v1.StaffListOpTeamMemberResponse
-	1,  // 65: api.pod.v1.OperationIssueAdminAPI.StaffCreateOpIssue:output_type -> api.pod.v1.StaffCreateOpIssueResponse
-	9,  // 66: api.pod.v1.OperationIssueAdminAPI.StaffClaimOpIssue:output_type -> api.pod.v1.StaffClaimOpIssueResponse
-	11, // 67: api.pod.v1.OperationIssueAdminAPI.StaffTransferOpIssue:output_type -> api.pod.v1.StaffTransferOpIssueResponse
-	13, // 68: api.pod.v1.OperationIssueAdminAPI.StaffResolveOpIssue:output_type -> api.pod.v1.StaffResolveOpIssueResponse
-	15, // 69: api.pod.v1.OperationIssueAdminAPI.StaffCloseOpIssue:output_type -> api.pod.v1.StaffCloseOpIssueResponse
-	17, // 70: api.pod.v1.OperationIssueAdminAPI.StaffReopenOpIssue:output_type -> api.pod.v1.StaffReopenOpIssueResponse
-	19, // 71: api.pod.v1.OperationIssueAdminAPI.StaffBlockOpIssue:output_type -> api.pod.v1.StaffBlockOpIssueResponse
-	21, // 72: api.pod.v1.OperationIssueAdminAPI.StaffUnblockOpIssue:output_type -> api.pod.v1.StaffUnblockOpIssueResponse
-	23, // 73: api.pod.v1.OperationIssueAdminAPI.StaffAddOpIssueComment:output_type -> api.pod.v1.StaffAddOpIssueCommentResponse
-	25, // 74: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueSeverity:output_type -> api.pod.v1.StaffUpdateOpIssueSeverityResponse
-	27, // 75: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueETA:output_type -> api.pod.v1.StaffUpdateOpIssueETAResponse
-	29, // 76: api.pod.v1.OperationIssueAdminAPI.StaffSplitOpIssueByFacility:output_type -> api.pod.v1.StaffSplitOpIssueByFacilityResponse
-	31, // 77: api.pod.v1.OperationIssueAdminAPI.StaffSpawnWorkItem:output_type -> api.pod.v1.StaffSpawnWorkItemResponse
-	33, // 78: api.pod.v1.OperationIssueAdminAPI.StaffAttachExternalRef:output_type -> api.pod.v1.StaffAttachExternalRefResponse
-	38, // 79: api.pod.v1.OperationIssueAdminAPI.StaffUpsertOpTeamMember:output_type -> api.pod.v1.StaffUpsertOpTeamMemberResponse
-	40, // 80: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpTeamMember:output_type -> api.pod.v1.StaffDeleteOpTeamMemberResponse
-	42, // 81: api.pod.v1.OperationIssueAdminAPI.SystemIngestEvent:output_type -> api.pod.v1.SystemIngestEventResponse
-	61, // [61:82] is the sub-list for method output_type
-	40, // [40:61] is the sub-list for method input_type
+	16, // 49: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpIssue:input_type -> api.pod.v1.StaffDeleteOpIssueRequest
+	18, // 50: api.pod.v1.OperationIssueAdminAPI.StaffReopenOpIssue:input_type -> api.pod.v1.StaffReopenOpIssueRequest
+	20, // 51: api.pod.v1.OperationIssueAdminAPI.StaffBlockOpIssue:input_type -> api.pod.v1.StaffBlockOpIssueRequest
+	22, // 52: api.pod.v1.OperationIssueAdminAPI.StaffUnblockOpIssue:input_type -> api.pod.v1.StaffUnblockOpIssueRequest
+	24, // 53: api.pod.v1.OperationIssueAdminAPI.StaffAddOpIssueComment:input_type -> api.pod.v1.StaffAddOpIssueCommentRequest
+	26, // 54: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueSeverity:input_type -> api.pod.v1.StaffUpdateOpIssueSeverityRequest
+	28, // 55: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueETA:input_type -> api.pod.v1.StaffUpdateOpIssueETARequest
+	30, // 56: api.pod.v1.OperationIssueAdminAPI.StaffSplitOpIssueByFacility:input_type -> api.pod.v1.StaffSplitOpIssueByFacilityRequest
+	32, // 57: api.pod.v1.OperationIssueAdminAPI.StaffSpawnWorkItem:input_type -> api.pod.v1.StaffSpawnWorkItemRequest
+	34, // 58: api.pod.v1.OperationIssueAdminAPI.StaffAttachExternalRef:input_type -> api.pod.v1.StaffAttachExternalRefRequest
+	39, // 59: api.pod.v1.OperationIssueAdminAPI.StaffUpsertOpTeamMember:input_type -> api.pod.v1.StaffUpsertOpTeamMemberRequest
+	41, // 60: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpTeamMember:input_type -> api.pod.v1.StaffDeleteOpTeamMemberRequest
+	43, // 61: api.pod.v1.OperationIssueAdminAPI.SystemIngestEvent:input_type -> api.pod.v1.SystemIngestEventRequest
+	3,  // 62: api.pod.v1.OperationIssueAdminAPI.StaffListOpIssue:output_type -> api.pod.v1.StaffListOpIssueResponse
+	5,  // 63: api.pod.v1.OperationIssueAdminAPI.StaffCountOpIssueStatus:output_type -> api.pod.v1.StaffCountOpIssueStatusResponse
+	7,  // 64: api.pod.v1.OperationIssueAdminAPI.StaffGetOpIssue:output_type -> api.pod.v1.StaffGetOpIssueResponse
+	38, // 65: api.pod.v1.OperationIssueAdminAPI.StaffListOpTeamMember:output_type -> api.pod.v1.StaffListOpTeamMemberResponse
+	1,  // 66: api.pod.v1.OperationIssueAdminAPI.StaffCreateOpIssue:output_type -> api.pod.v1.StaffCreateOpIssueResponse
+	9,  // 67: api.pod.v1.OperationIssueAdminAPI.StaffClaimOpIssue:output_type -> api.pod.v1.StaffClaimOpIssueResponse
+	11, // 68: api.pod.v1.OperationIssueAdminAPI.StaffTransferOpIssue:output_type -> api.pod.v1.StaffTransferOpIssueResponse
+	13, // 69: api.pod.v1.OperationIssueAdminAPI.StaffResolveOpIssue:output_type -> api.pod.v1.StaffResolveOpIssueResponse
+	15, // 70: api.pod.v1.OperationIssueAdminAPI.StaffCloseOpIssue:output_type -> api.pod.v1.StaffCloseOpIssueResponse
+	17, // 71: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpIssue:output_type -> api.pod.v1.StaffDeleteOpIssueResponse
+	19, // 72: api.pod.v1.OperationIssueAdminAPI.StaffReopenOpIssue:output_type -> api.pod.v1.StaffReopenOpIssueResponse
+	21, // 73: api.pod.v1.OperationIssueAdminAPI.StaffBlockOpIssue:output_type -> api.pod.v1.StaffBlockOpIssueResponse
+	23, // 74: api.pod.v1.OperationIssueAdminAPI.StaffUnblockOpIssue:output_type -> api.pod.v1.StaffUnblockOpIssueResponse
+	25, // 75: api.pod.v1.OperationIssueAdminAPI.StaffAddOpIssueComment:output_type -> api.pod.v1.StaffAddOpIssueCommentResponse
+	27, // 76: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueSeverity:output_type -> api.pod.v1.StaffUpdateOpIssueSeverityResponse
+	29, // 77: api.pod.v1.OperationIssueAdminAPI.StaffUpdateOpIssueETA:output_type -> api.pod.v1.StaffUpdateOpIssueETAResponse
+	31, // 78: api.pod.v1.OperationIssueAdminAPI.StaffSplitOpIssueByFacility:output_type -> api.pod.v1.StaffSplitOpIssueByFacilityResponse
+	33, // 79: api.pod.v1.OperationIssueAdminAPI.StaffSpawnWorkItem:output_type -> api.pod.v1.StaffSpawnWorkItemResponse
+	35, // 80: api.pod.v1.OperationIssueAdminAPI.StaffAttachExternalRef:output_type -> api.pod.v1.StaffAttachExternalRefResponse
+	40, // 81: api.pod.v1.OperationIssueAdminAPI.StaffUpsertOpTeamMember:output_type -> api.pod.v1.StaffUpsertOpTeamMemberResponse
+	42, // 82: api.pod.v1.OperationIssueAdminAPI.StaffDeleteOpTeamMember:output_type -> api.pod.v1.StaffDeleteOpTeamMemberResponse
+	44, // 83: api.pod.v1.OperationIssueAdminAPI.SystemIngestEvent:output_type -> api.pod.v1.SystemIngestEventResponse
+	62, // [62:84] is the sub-list for method output_type
+	40, // [40:62] is the sub-list for method input_type
 	40, // [40:40] is the sub-list for extension type_name
 	40, // [40:40] is the sub-list for extension extendee
 	0,  // [0:40] is the sub-list for field type_name
@@ -3341,7 +3449,7 @@ func file_api_pod_v1_api_operation_issue_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_pod_v1_api_operation_issue_admin_proto_rawDesc), len(file_api_pod_v1_api_operation_issue_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   43,
+			NumMessages:   45,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
