@@ -44,7 +44,7 @@ type ActivityAPIClient interface {
 	UserListTeamMemberActivity(ctx context.Context, in *UserListTeamMemberActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListTeamActivity(ctx context.Context, in *UserListTeamActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListTeamSettingActivity(ctx context.Context, in *UserListTeamSettingActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
-	UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
+	UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error)
 	UserListOrderActivity(ctx context.Context, in *UserListOrderActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListPaymentActivity(ctx context.Context, in *UserListPaymentActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error)
 	UserListLinkedPaymentMethodActivity(ctx context.Context, in *UserListLinkedPaymentMethodActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error)
@@ -105,9 +105,9 @@ func (c *activityAPIClient) UserListTeamSettingActivity(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *activityAPIClient) UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityResponse, error) {
+func (c *activityAPIClient) UserListStoreActivity(ctx context.Context, in *UserListStoreActivityRequest, opts ...grpc.CallOption) (*UserListActivityCursorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserListActivityResponse)
+	out := new(UserListActivityCursorResponse)
 	err := c.cc.Invoke(ctx, ActivityAPI_UserListStoreActivity_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -223,7 +223,7 @@ type ActivityAPIServer interface {
 	UserListTeamMemberActivity(context.Context, *UserListTeamMemberActivityRequest) (*UserListActivityResponse, error)
 	UserListTeamActivity(context.Context, *UserListTeamActivityRequest) (*UserListActivityResponse, error)
 	UserListTeamSettingActivity(context.Context, *UserListTeamSettingActivityRequest) (*UserListActivityResponse, error)
-	UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityResponse, error)
+	UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityCursorResponse, error)
 	UserListOrderActivity(context.Context, *UserListOrderActivityRequest) (*UserListActivityResponse, error)
 	UserListPaymentActivity(context.Context, *UserListPaymentActivityRequest) (*UserListActivityResponse, error)
 	UserListLinkedPaymentMethodActivity(context.Context, *UserListLinkedPaymentMethodActivityRequest) (*UserListActivityCursorResponse, error)
@@ -255,7 +255,7 @@ func (UnimplementedActivityAPIServer) UserListTeamActivity(context.Context, *Use
 func (UnimplementedActivityAPIServer) UserListTeamSettingActivity(context.Context, *UserListTeamSettingActivityRequest) (*UserListActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListTeamSettingActivity not implemented")
 }
-func (UnimplementedActivityAPIServer) UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityResponse, error) {
+func (UnimplementedActivityAPIServer) UserListStoreActivity(context.Context, *UserListStoreActivityRequest) (*UserListActivityCursorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListStoreActivity not implemented")
 }
 func (UnimplementedActivityAPIServer) UserListOrderActivity(context.Context, *UserListOrderActivityRequest) (*UserListActivityResponse, error) {
