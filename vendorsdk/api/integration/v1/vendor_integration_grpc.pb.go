@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	VendorIntegrationInternalAPI_InternalCleanupAndCancelVendorOrder_FullMethodName = "/api.integration.v1.VendorIntegrationInternalAPI/InternalCleanupAndCancelVendorOrder"
+	VendorIntegrationInternalAPI_InternalList3RdPartyOrderProgress_FullMethodName   = "/api.integration.v1.VendorIntegrationInternalAPI/InternalList3rdPartyOrderProgress"
 )
 
 // VendorIntegrationInternalAPIClient is the client API for VendorIntegrationInternalAPI service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VendorIntegrationInternalAPIClient interface {
 	InternalCleanupAndCancelVendorOrder(ctx context.Context, in *InternalCleanupAndCancelVendorOrderRequest, opts ...grpc.CallOption) (*InternalCleanupAndCancelVendorOrderResponse, error)
+	InternalList3RdPartyOrderProgress(ctx context.Context, in *InternalList3RdPartyOrderProgressRequest, opts ...grpc.CallOption) (*InternalList3RdPartyOrderProgressResponse, error)
 }
 
 type vendorIntegrationInternalAPIClient struct {
@@ -47,11 +49,22 @@ func (c *vendorIntegrationInternalAPIClient) InternalCleanupAndCancelVendorOrder
 	return out, nil
 }
 
+func (c *vendorIntegrationInternalAPIClient) InternalList3RdPartyOrderProgress(ctx context.Context, in *InternalList3RdPartyOrderProgressRequest, opts ...grpc.CallOption) (*InternalList3RdPartyOrderProgressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalList3RdPartyOrderProgressResponse)
+	err := c.cc.Invoke(ctx, VendorIntegrationInternalAPI_InternalList3RdPartyOrderProgress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorIntegrationInternalAPIServer is the server API for VendorIntegrationInternalAPI service.
 // All implementations should embed UnimplementedVendorIntegrationInternalAPIServer
 // for forward compatibility.
 type VendorIntegrationInternalAPIServer interface {
 	InternalCleanupAndCancelVendorOrder(context.Context, *InternalCleanupAndCancelVendorOrderRequest) (*InternalCleanupAndCancelVendorOrderResponse, error)
+	InternalList3RdPartyOrderProgress(context.Context, *InternalList3RdPartyOrderProgressRequest) (*InternalList3RdPartyOrderProgressResponse, error)
 }
 
 // UnimplementedVendorIntegrationInternalAPIServer should be embedded to have
@@ -63,6 +76,9 @@ type UnimplementedVendorIntegrationInternalAPIServer struct{}
 
 func (UnimplementedVendorIntegrationInternalAPIServer) InternalCleanupAndCancelVendorOrder(context.Context, *InternalCleanupAndCancelVendorOrderRequest) (*InternalCleanupAndCancelVendorOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCleanupAndCancelVendorOrder not implemented")
+}
+func (UnimplementedVendorIntegrationInternalAPIServer) InternalList3RdPartyOrderProgress(context.Context, *InternalList3RdPartyOrderProgressRequest) (*InternalList3RdPartyOrderProgressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalList3RdPartyOrderProgress not implemented")
 }
 func (UnimplementedVendorIntegrationInternalAPIServer) testEmbeddedByValue() {}
 
@@ -102,6 +118,24 @@ func _VendorIntegrationInternalAPI_InternalCleanupAndCancelVendorOrder_Handler(s
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorIntegrationInternalAPI_InternalList3RdPartyOrderProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalList3RdPartyOrderProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorIntegrationInternalAPIServer).InternalList3RdPartyOrderProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorIntegrationInternalAPI_InternalList3RdPartyOrderProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorIntegrationInternalAPIServer).InternalList3RdPartyOrderProgress(ctx, req.(*InternalList3RdPartyOrderProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorIntegrationInternalAPI_ServiceDesc is the grpc.ServiceDesc for VendorIntegrationInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -112,6 +146,10 @@ var VendorIntegrationInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalCleanupAndCancelVendorOrder",
 			Handler:    _VendorIntegrationInternalAPI_InternalCleanupAndCancelVendorOrder_Handler,
+		},
+		{
+			MethodName: "InternalList3rdPartyOrderProgress",
+			Handler:    _VendorIntegrationInternalAPI_InternalList3RdPartyOrderProgress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
