@@ -22,6 +22,7 @@ const (
 	OrderLegacyAPI_LegacyCancelOrder_FullMethodName                = "/api.pod.v1.OrderLegacyAPI/LegacyCancelOrder"
 	OrderLegacyAPI_LegacyHoldOrder_FullMethodName                  = "/api.pod.v1.OrderLegacyAPI/LegacyHoldOrder"
 	OrderLegacyAPI_LegacyResumeOrderOnHold_FullMethodName          = "/api.pod.v1.OrderLegacyAPI/LegacyResumeOrderOnHold"
+	OrderLegacyAPI_LegacySyncUpdatedOrder_FullMethodName           = "/api.pod.v1.OrderLegacyAPI/LegacySyncUpdatedOrder"
 	OrderLegacyAPI_InternalListOMSOrderSyncTracking_FullMethodName = "/api.pod.v1.OrderLegacyAPI/InternalListOMSOrderSyncTracking"
 )
 
@@ -32,6 +33,7 @@ type OrderLegacyAPIClient interface {
 	LegacyCancelOrder(ctx context.Context, in *LegacyCancelOrderRequest, opts ...grpc.CallOption) (*LegacyCancelOrderResponse, error)
 	LegacyHoldOrder(ctx context.Context, in *LegacyHoldOrderRequest, opts ...grpc.CallOption) (*LegacyHoldOrderResponse, error)
 	LegacyResumeOrderOnHold(ctx context.Context, in *LegacyResumeOrderOnHoldRequest, opts ...grpc.CallOption) (*LegacyResumeOrderOnHoldResponse, error)
+	LegacySyncUpdatedOrder(ctx context.Context, in *LegacySyncUpdatedOrderRequest, opts ...grpc.CallOption) (*LegacySyncUpdatedOrderResponse, error)
 	InternalListOMSOrderSyncTracking(ctx context.Context, in *InternalListOMSOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalListOMSOrderSyncTrackingResponse, error)
 }
 
@@ -73,6 +75,16 @@ func (c *orderLegacyAPIClient) LegacyResumeOrderOnHold(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *orderLegacyAPIClient) LegacySyncUpdatedOrder(ctx context.Context, in *LegacySyncUpdatedOrderRequest, opts ...grpc.CallOption) (*LegacySyncUpdatedOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacySyncUpdatedOrderResponse)
+	err := c.cc.Invoke(ctx, OrderLegacyAPI_LegacySyncUpdatedOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderLegacyAPIClient) InternalListOMSOrderSyncTracking(ctx context.Context, in *InternalListOMSOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalListOMSOrderSyncTrackingResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalListOMSOrderSyncTrackingResponse)
@@ -90,6 +102,7 @@ type OrderLegacyAPIServer interface {
 	LegacyCancelOrder(context.Context, *LegacyCancelOrderRequest) (*LegacyCancelOrderResponse, error)
 	LegacyHoldOrder(context.Context, *LegacyHoldOrderRequest) (*LegacyHoldOrderResponse, error)
 	LegacyResumeOrderOnHold(context.Context, *LegacyResumeOrderOnHoldRequest) (*LegacyResumeOrderOnHoldResponse, error)
+	LegacySyncUpdatedOrder(context.Context, *LegacySyncUpdatedOrderRequest) (*LegacySyncUpdatedOrderResponse, error)
 	InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error)
 }
 
@@ -108,6 +121,9 @@ func (UnimplementedOrderLegacyAPIServer) LegacyHoldOrder(context.Context, *Legac
 }
 func (UnimplementedOrderLegacyAPIServer) LegacyResumeOrderOnHold(context.Context, *LegacyResumeOrderOnHoldRequest) (*LegacyResumeOrderOnHoldResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LegacyResumeOrderOnHold not implemented")
+}
+func (UnimplementedOrderLegacyAPIServer) LegacySyncUpdatedOrder(context.Context, *LegacySyncUpdatedOrderRequest) (*LegacySyncUpdatedOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacySyncUpdatedOrder not implemented")
 }
 func (UnimplementedOrderLegacyAPIServer) InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListOMSOrderSyncTracking not implemented")
@@ -186,6 +202,24 @@ func _OrderLegacyAPI_LegacyResumeOrderOnHold_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderLegacyAPI_LegacySyncUpdatedOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacySyncUpdatedOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderLegacyAPIServer).LegacySyncUpdatedOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderLegacyAPI_LegacySyncUpdatedOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderLegacyAPIServer).LegacySyncUpdatedOrder(ctx, req.(*LegacySyncUpdatedOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderLegacyAPI_InternalListOMSOrderSyncTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalListOMSOrderSyncTrackingRequest)
 	if err := dec(in); err != nil {
@@ -222,6 +256,10 @@ var OrderLegacyAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LegacyResumeOrderOnHold",
 			Handler:    _OrderLegacyAPI_LegacyResumeOrderOnHold_Handler,
+		},
+		{
+			MethodName: "LegacySyncUpdatedOrder",
+			Handler:    _OrderLegacyAPI_LegacySyncUpdatedOrder_Handler,
 		},
 		{
 			MethodName: "InternalListOMSOrderSyncTracking",
