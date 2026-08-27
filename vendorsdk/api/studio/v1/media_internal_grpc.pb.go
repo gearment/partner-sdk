@@ -19,22 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MediaInternalAPI_InternalRecoverArchivedMedia_FullMethodName       = "/api.studio.v1.MediaInternalAPI/InternalRecoverArchivedMedia"
-	MediaInternalAPI_InternalUploadTeamMedia_FullMethodName            = "/api.studio.v1.MediaInternalAPI/InternalUploadTeamMedia"
-	MediaInternalAPI_InternalDownloadTeamMedia_FullMethodName          = "/api.studio.v1.MediaInternalAPI/InternalDownloadTeamMedia"
-	MediaInternalAPI_InternalDownloadTeamMedias_FullMethodName         = "/api.studio.v1.MediaInternalAPI/InternalDownloadTeamMedias"
-	MediaInternalAPI_InternalCreateMediaSharedLink_FullMethodName      = "/api.studio.v1.MediaInternalAPI/InternalCreateMediaSharedLink"
-	MediaInternalAPI_InternalUploadTeamMediaBatch_FullMethodName       = "/api.studio.v1.MediaInternalAPI/InternalUploadTeamMediaBatch"
-	MediaInternalAPI_InternalCheckTeamFileExists_FullMethodName        = "/api.studio.v1.MediaInternalAPI/InternalCheckTeamFileExists"
-	MediaInternalAPI_InternalUserUploadTeamMedia_FullMethodName        = "/api.studio.v1.MediaInternalAPI/InternalUserUploadTeamMedia"
-	MediaInternalAPI_InternalListMediaByIDs_FullMethodName             = "/api.studio.v1.MediaInternalAPI/InternalListMediaByIDs"
-	MediaInternalAPI_InternalListMediaImported_FullMethodName          = "/api.studio.v1.MediaInternalAPI/InternalListMediaImported"
-	MediaInternalAPI_InternalListMedia_FullMethodName                  = "/api.studio.v1.MediaInternalAPI/InternalListMedia"
-	MediaInternalAPI_InternalCreateMediaLegacy_FullMethodName          = "/api.studio.v1.MediaInternalAPI/InternalCreateMediaLegacy"
-	MediaInternalAPI_InternalStartUploadFileMultipart_FullMethodName   = "/api.studio.v1.MediaInternalAPI/InternalStartUploadFileMultipart"
-	MediaInternalAPI_InternalPresignMultipartUploadPart_FullMethodName = "/api.studio.v1.MediaInternalAPI/InternalPresignMultipartUploadPart"
-	MediaInternalAPI_InternalCompleteMultipartUpload_FullMethodName    = "/api.studio.v1.MediaInternalAPI/InternalCompleteMultipartUpload"
-	MediaInternalAPI_InternalAbortMultipartUpload_FullMethodName       = "/api.studio.v1.MediaInternalAPI/InternalAbortMultipartUpload"
+	MediaInternalAPI_InternalRecoverArchivedMedia_FullMethodName           = "/api.studio.v1.MediaInternalAPI/InternalRecoverArchivedMedia"
+	MediaInternalAPI_InternalUploadTeamMedia_FullMethodName                = "/api.studio.v1.MediaInternalAPI/InternalUploadTeamMedia"
+	MediaInternalAPI_InternalDownloadTeamMedia_FullMethodName              = "/api.studio.v1.MediaInternalAPI/InternalDownloadTeamMedia"
+	MediaInternalAPI_InternalDownloadTeamMedias_FullMethodName             = "/api.studio.v1.MediaInternalAPI/InternalDownloadTeamMedias"
+	MediaInternalAPI_InternalCreateMediaSharedLink_FullMethodName          = "/api.studio.v1.MediaInternalAPI/InternalCreateMediaSharedLink"
+	MediaInternalAPI_InternalUploadTeamMediaBatch_FullMethodName           = "/api.studio.v1.MediaInternalAPI/InternalUploadTeamMediaBatch"
+	MediaInternalAPI_InternalCheckTeamFileExists_FullMethodName            = "/api.studio.v1.MediaInternalAPI/InternalCheckTeamFileExists"
+	MediaInternalAPI_InternalUserUploadTeamMedia_FullMethodName            = "/api.studio.v1.MediaInternalAPI/InternalUserUploadTeamMedia"
+	MediaInternalAPI_InternalListMediaByIDs_FullMethodName                 = "/api.studio.v1.MediaInternalAPI/InternalListMediaByIDs"
+	MediaInternalAPI_InternalListMediaImported_FullMethodName              = "/api.studio.v1.MediaInternalAPI/InternalListMediaImported"
+	MediaInternalAPI_InternalListMedia_FullMethodName                      = "/api.studio.v1.MediaInternalAPI/InternalListMedia"
+	MediaInternalAPI_InternalCreateMediaLegacy_FullMethodName              = "/api.studio.v1.MediaInternalAPI/InternalCreateMediaLegacy"
+	MediaInternalAPI_InternalStartUploadFileMultipart_FullMethodName       = "/api.studio.v1.MediaInternalAPI/InternalStartUploadFileMultipart"
+	MediaInternalAPI_InternalPresignMultipartUploadPart_FullMethodName     = "/api.studio.v1.MediaInternalAPI/InternalPresignMultipartUploadPart"
+	MediaInternalAPI_InternalCompleteMultipartUpload_FullMethodName        = "/api.studio.v1.MediaInternalAPI/InternalCompleteMultipartUpload"
+	MediaInternalAPI_InternalAbortMultipartUpload_FullMethodName           = "/api.studio.v1.MediaInternalAPI/InternalAbortMultipartUpload"
+	MediaInternalAPI_InternalResolveOrderIssueEvidenceMedia_FullMethodName = "/api.studio.v1.MediaInternalAPI/InternalResolveOrderIssueEvidenceMedia"
 )
 
 // MediaInternalAPIClient is the client API for MediaInternalAPI service.
@@ -59,6 +60,10 @@ type MediaInternalAPIClient interface {
 	InternalPresignMultipartUploadPart(ctx context.Context, in *InternalPresignMultipartUploadPartRequest, opts ...grpc.CallOption) (*InternalPresignMultipartUploadPartResponse, error)
 	InternalCompleteMultipartUpload(ctx context.Context, in *InternalCompleteMultipartUploadRequest, opts ...grpc.CallOption) (*InternalCompleteMultipartUploadResponse, error)
 	InternalAbortMultipartUpload(ctx context.Context, in *InternalAbortMultipartUploadRequest, opts ...grpc.CallOption) (*InternalAbortMultipartUploadResponse, error)
+	// Resolves only staff-facing operation-issue evidence into a short-lived
+	// source URL. The server keeps the evidence ownership and storage checks
+	// here so downstream services cannot turn this API into a generic reader.
+	InternalResolveOrderIssueEvidenceMedia(ctx context.Context, in *InternalResolveOrderIssueEvidenceMediaRequest, opts ...grpc.CallOption) (*InternalResolveOrderIssueEvidenceMediaResponse, error)
 }
 
 type mediaInternalAPIClient struct {
@@ -229,6 +234,16 @@ func (c *mediaInternalAPIClient) InternalAbortMultipartUpload(ctx context.Contex
 	return out, nil
 }
 
+func (c *mediaInternalAPIClient) InternalResolveOrderIssueEvidenceMedia(ctx context.Context, in *InternalResolveOrderIssueEvidenceMediaRequest, opts ...grpc.CallOption) (*InternalResolveOrderIssueEvidenceMediaResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalResolveOrderIssueEvidenceMediaResponse)
+	err := c.cc.Invoke(ctx, MediaInternalAPI_InternalResolveOrderIssueEvidenceMedia_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MediaInternalAPIServer is the server API for MediaInternalAPI service.
 // All implementations should embed UnimplementedMediaInternalAPIServer
 // for forward compatibility.
@@ -251,6 +266,10 @@ type MediaInternalAPIServer interface {
 	InternalPresignMultipartUploadPart(context.Context, *InternalPresignMultipartUploadPartRequest) (*InternalPresignMultipartUploadPartResponse, error)
 	InternalCompleteMultipartUpload(context.Context, *InternalCompleteMultipartUploadRequest) (*InternalCompleteMultipartUploadResponse, error)
 	InternalAbortMultipartUpload(context.Context, *InternalAbortMultipartUploadRequest) (*InternalAbortMultipartUploadResponse, error)
+	// Resolves only staff-facing operation-issue evidence into a short-lived
+	// source URL. The server keeps the evidence ownership and storage checks
+	// here so downstream services cannot turn this API into a generic reader.
+	InternalResolveOrderIssueEvidenceMedia(context.Context, *InternalResolveOrderIssueEvidenceMediaRequest) (*InternalResolveOrderIssueEvidenceMediaResponse, error)
 }
 
 // UnimplementedMediaInternalAPIServer should be embedded to have
@@ -307,6 +326,9 @@ func (UnimplementedMediaInternalAPIServer) InternalCompleteMultipartUpload(conte
 }
 func (UnimplementedMediaInternalAPIServer) InternalAbortMultipartUpload(context.Context, *InternalAbortMultipartUploadRequest) (*InternalAbortMultipartUploadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalAbortMultipartUpload not implemented")
+}
+func (UnimplementedMediaInternalAPIServer) InternalResolveOrderIssueEvidenceMedia(context.Context, *InternalResolveOrderIssueEvidenceMediaRequest) (*InternalResolveOrderIssueEvidenceMediaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalResolveOrderIssueEvidenceMedia not implemented")
 }
 func (UnimplementedMediaInternalAPIServer) testEmbeddedByValue() {}
 
@@ -616,6 +638,24 @@ func _MediaInternalAPI_InternalAbortMultipartUpload_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MediaInternalAPI_InternalResolveOrderIssueEvidenceMedia_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalResolveOrderIssueEvidenceMediaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MediaInternalAPIServer).InternalResolveOrderIssueEvidenceMedia(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MediaInternalAPI_InternalResolveOrderIssueEvidenceMedia_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MediaInternalAPIServer).InternalResolveOrderIssueEvidenceMedia(ctx, req.(*InternalResolveOrderIssueEvidenceMediaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MediaInternalAPI_ServiceDesc is the grpc.ServiceDesc for MediaInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -686,6 +726,10 @@ var MediaInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalAbortMultipartUpload",
 			Handler:    _MediaInternalAPI_InternalAbortMultipartUpload_Handler,
+		},
+		{
+			MethodName: "InternalResolveOrderIssueEvidenceMedia",
+			Handler:    _MediaInternalAPI_InternalResolveOrderIssueEvidenceMedia_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
