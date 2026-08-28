@@ -32,8 +32,8 @@ const (
 	VendorRoutingAdminAPI_StaffDeleteVendorVariantMapping_FullMethodName      = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteVendorVariantMapping"
 	VendorRoutingAdminAPI_StaffPreviewOrderRouting_FullMethodName             = "/api.pod.v1.VendorRoutingAdminAPI/StaffPreviewOrderRouting"
 	VendorRoutingAdminAPI_StaffListFulfillmentPackages_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentPackages"
-	VendorRoutingAdminAPI_StaffList3RdPartyOrders_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffList3rdPartyOrders"
-	VendorRoutingAdminAPI_StaffCount3RdPartyOrders_FullMethodName             = "/api.pod.v1.VendorRoutingAdminAPI/StaffCount3rdPartyOrders"
+	VendorRoutingAdminAPI_StaffList3RdPartyOrder_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffList3rdPartyOrder"
+	VendorRoutingAdminAPI_StaffCount3RdPartyOrderStatus_FullMethodName        = "/api.pod.v1.VendorRoutingAdminAPI/StaffCount3rdPartyOrderStatus"
 	VendorRoutingAdminAPI_StaffGet3RdPartyOrder_FullMethodName                = "/api.pod.v1.VendorRoutingAdminAPI/StaffGet3rdPartyOrder"
 	VendorRoutingAdminAPI_StaffListRoutingDecisions_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffListRoutingDecisions"
 	VendorRoutingAdminAPI_StaffCountRoutingDecisionStats_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffCountRoutingDecisionStats"
@@ -79,8 +79,8 @@ type VendorRoutingAdminAPIClient interface {
 	StaffPreviewOrderRouting(ctx context.Context, in *StaffPreviewOrderRoutingRequest, opts ...grpc.CallOption) (*StaffPreviewOrderRoutingResponse, error)
 	// --- Routed packages (observability) ---
 	StaffListFulfillmentPackages(ctx context.Context, in *StaffListFulfillmentPackagesRequest, opts ...grpc.CallOption) (*StaffListFulfillmentPackagesResponse, error)
-	StaffList3RdPartyOrders(ctx context.Context, in *StaffList3RdPartyOrdersRequest, opts ...grpc.CallOption) (*StaffList3RdPartyOrdersResponse, error)
-	StaffCount3RdPartyOrders(ctx context.Context, in *StaffCount3RdPartyOrdersRequest, opts ...grpc.CallOption) (*StaffCount3RdPartyOrdersResponse, error)
+	StaffList3RdPartyOrder(ctx context.Context, in *StaffList3RdPartyOrderRequest, opts ...grpc.CallOption) (*StaffList3RdPartyOrderResponse, error)
+	StaffCount3RdPartyOrderStatus(ctx context.Context, in *StaffCount3RdPartyOrderStatusRequest, opts ...grpc.CallOption) (*StaffCount3RdPartyOrderStatusResponse, error)
 	StaffGet3RdPartyOrder(ctx context.Context, in *StaffGet3RdPartyOrderRequest, opts ...grpc.CallOption) (*StaffGet3RdPartyOrderResponse, error)
 	// --- Routing decisions (decision trace / queue, slice R3) ---
 	StaffListRoutingDecisions(ctx context.Context, in *StaffListRoutingDecisionsRequest, opts ...grpc.CallOption) (*StaffListRoutingDecisionsResponse, error)
@@ -248,20 +248,20 @@ func (c *vendorRoutingAdminAPIClient) StaffListFulfillmentPackages(ctx context.C
 	return out, nil
 }
 
-func (c *vendorRoutingAdminAPIClient) StaffList3RdPartyOrders(ctx context.Context, in *StaffList3RdPartyOrdersRequest, opts ...grpc.CallOption) (*StaffList3RdPartyOrdersResponse, error) {
+func (c *vendorRoutingAdminAPIClient) StaffList3RdPartyOrder(ctx context.Context, in *StaffList3RdPartyOrderRequest, opts ...grpc.CallOption) (*StaffList3RdPartyOrderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StaffList3RdPartyOrdersResponse)
-	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffList3RdPartyOrders_FullMethodName, in, out, cOpts...)
+	out := new(StaffList3RdPartyOrderResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffList3RdPartyOrder_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *vendorRoutingAdminAPIClient) StaffCount3RdPartyOrders(ctx context.Context, in *StaffCount3RdPartyOrdersRequest, opts ...grpc.CallOption) (*StaffCount3RdPartyOrdersResponse, error) {
+func (c *vendorRoutingAdminAPIClient) StaffCount3RdPartyOrderStatus(ctx context.Context, in *StaffCount3RdPartyOrderStatusRequest, opts ...grpc.CallOption) (*StaffCount3RdPartyOrderStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StaffCount3RdPartyOrdersResponse)
-	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffCount3RdPartyOrders_FullMethodName, in, out, cOpts...)
+	out := new(StaffCount3RdPartyOrderStatusResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffCount3RdPartyOrderStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -446,8 +446,8 @@ type VendorRoutingAdminAPIServer interface {
 	StaffPreviewOrderRouting(context.Context, *StaffPreviewOrderRoutingRequest) (*StaffPreviewOrderRoutingResponse, error)
 	// --- Routed packages (observability) ---
 	StaffListFulfillmentPackages(context.Context, *StaffListFulfillmentPackagesRequest) (*StaffListFulfillmentPackagesResponse, error)
-	StaffList3RdPartyOrders(context.Context, *StaffList3RdPartyOrdersRequest) (*StaffList3RdPartyOrdersResponse, error)
-	StaffCount3RdPartyOrders(context.Context, *StaffCount3RdPartyOrdersRequest) (*StaffCount3RdPartyOrdersResponse, error)
+	StaffList3RdPartyOrder(context.Context, *StaffList3RdPartyOrderRequest) (*StaffList3RdPartyOrderResponse, error)
+	StaffCount3RdPartyOrderStatus(context.Context, *StaffCount3RdPartyOrderStatusRequest) (*StaffCount3RdPartyOrderStatusResponse, error)
 	StaffGet3RdPartyOrder(context.Context, *StaffGet3RdPartyOrderRequest) (*StaffGet3RdPartyOrderResponse, error)
 	// --- Routing decisions (decision trace / queue, slice R3) ---
 	StaffListRoutingDecisions(context.Context, *StaffListRoutingDecisionsRequest) (*StaffListRoutingDecisionsResponse, error)
@@ -523,11 +523,11 @@ func (UnimplementedVendorRoutingAdminAPIServer) StaffPreviewOrderRouting(context
 func (UnimplementedVendorRoutingAdminAPIServer) StaffListFulfillmentPackages(context.Context, *StaffListFulfillmentPackagesRequest) (*StaffListFulfillmentPackagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFulfillmentPackages not implemented")
 }
-func (UnimplementedVendorRoutingAdminAPIServer) StaffList3RdPartyOrders(context.Context, *StaffList3RdPartyOrdersRequest) (*StaffList3RdPartyOrdersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StaffList3RdPartyOrders not implemented")
+func (UnimplementedVendorRoutingAdminAPIServer) StaffList3RdPartyOrder(context.Context, *StaffList3RdPartyOrderRequest) (*StaffList3RdPartyOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffList3RdPartyOrder not implemented")
 }
-func (UnimplementedVendorRoutingAdminAPIServer) StaffCount3RdPartyOrders(context.Context, *StaffCount3RdPartyOrdersRequest) (*StaffCount3RdPartyOrdersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StaffCount3RdPartyOrders not implemented")
+func (UnimplementedVendorRoutingAdminAPIServer) StaffCount3RdPartyOrderStatus(context.Context, *StaffCount3RdPartyOrderStatusRequest) (*StaffCount3RdPartyOrderStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCount3RdPartyOrderStatus not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffGet3RdPartyOrder(context.Context, *StaffGet3RdPartyOrderRequest) (*StaffGet3RdPartyOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGet3RdPartyOrder not implemented")
@@ -828,38 +828,38 @@ func _VendorRoutingAdminAPI_StaffListFulfillmentPackages_Handler(srv interface{}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VendorRoutingAdminAPI_StaffList3RdPartyOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StaffList3RdPartyOrdersRequest)
+func _VendorRoutingAdminAPI_StaffList3RdPartyOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffList3RdPartyOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VendorRoutingAdminAPIServer).StaffList3RdPartyOrders(ctx, in)
+		return srv.(VendorRoutingAdminAPIServer).StaffList3RdPartyOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VendorRoutingAdminAPI_StaffList3RdPartyOrders_FullMethodName,
+		FullMethod: VendorRoutingAdminAPI_StaffList3RdPartyOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VendorRoutingAdminAPIServer).StaffList3RdPartyOrders(ctx, req.(*StaffList3RdPartyOrdersRequest))
+		return srv.(VendorRoutingAdminAPIServer).StaffList3RdPartyOrder(ctx, req.(*StaffList3RdPartyOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VendorRoutingAdminAPI_StaffCount3RdPartyOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StaffCount3RdPartyOrdersRequest)
+func _VendorRoutingAdminAPI_StaffCount3RdPartyOrderStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCount3RdPartyOrderStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VendorRoutingAdminAPIServer).StaffCount3RdPartyOrders(ctx, in)
+		return srv.(VendorRoutingAdminAPIServer).StaffCount3RdPartyOrderStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VendorRoutingAdminAPI_StaffCount3RdPartyOrders_FullMethodName,
+		FullMethod: VendorRoutingAdminAPI_StaffCount3RdPartyOrderStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VendorRoutingAdminAPIServer).StaffCount3RdPartyOrders(ctx, req.(*StaffCount3RdPartyOrdersRequest))
+		return srv.(VendorRoutingAdminAPIServer).StaffCount3RdPartyOrderStatus(ctx, req.(*StaffCount3RdPartyOrderStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1194,12 +1194,12 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _VendorRoutingAdminAPI_StaffListFulfillmentPackages_Handler,
 		},
 		{
-			MethodName: "StaffList3rdPartyOrders",
-			Handler:    _VendorRoutingAdminAPI_StaffList3RdPartyOrders_Handler,
+			MethodName: "StaffList3rdPartyOrder",
+			Handler:    _VendorRoutingAdminAPI_StaffList3RdPartyOrder_Handler,
 		},
 		{
-			MethodName: "StaffCount3rdPartyOrders",
-			Handler:    _VendorRoutingAdminAPI_StaffCount3RdPartyOrders_Handler,
+			MethodName: "StaffCount3rdPartyOrderStatus",
+			Handler:    _VendorRoutingAdminAPI_StaffCount3RdPartyOrderStatus_Handler,
 		},
 		{
 			MethodName: "StaffGet3rdPartyOrder",
