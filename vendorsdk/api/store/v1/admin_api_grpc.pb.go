@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	StoreAdminAPI_StaffListStoreOfTeam_FullMethodName            = "/api.store.v1.StoreAdminAPI/StaffListStoreOfTeam"
-	StoreAdminAPI_StaffGetStore_FullMethodName                   = "/api.store.v1.StoreAdminAPI/StaffGetStore"
-	StoreAdminAPI_StaffListMarketplace_FullMethodName            = "/api.store.v1.StoreAdminAPI/StaffListMarketplace"
-	StoreAdminAPI_StaffListStoreForOrderFiltering_FullMethodName = "/api.store.v1.StoreAdminAPI/StaffListStoreForOrderFiltering"
+	StoreAdminAPI_StaffListStoreOfTeam_FullMethodName                   = "/api.store.v1.StoreAdminAPI/StaffListStoreOfTeam"
+	StoreAdminAPI_StaffGetStore_FullMethodName                          = "/api.store.v1.StoreAdminAPI/StaffGetStore"
+	StoreAdminAPI_StaffListMarketplace_FullMethodName                   = "/api.store.v1.StoreAdminAPI/StaffListMarketplace"
+	StoreAdminAPI_StaffListStoreForOrderFiltering_FullMethodName        = "/api.store.v1.StoreAdminAPI/StaffListStoreForOrderFiltering"
+	StoreAdminAPI_StaffListAmazonConfirmShipmentEvidence_FullMethodName = "/api.store.v1.StoreAdminAPI/StaffListAmazonConfirmShipmentEvidence"
 )
 
 // StoreAdminAPIClient is the client API for StoreAdminAPI service.
@@ -33,6 +34,7 @@ type StoreAdminAPIClient interface {
 	StaffGetStore(ctx context.Context, in *StaffGetStoreRequest, opts ...grpc.CallOption) (*StaffGetStoreResponse, error)
 	StaffListMarketplace(ctx context.Context, in *StaffListMarketplaceRequest, opts ...grpc.CallOption) (*StaffListMarketplaceResponse, error)
 	StaffListStoreForOrderFiltering(ctx context.Context, in *StaffListStoreForOrderFilteringRequest, opts ...grpc.CallOption) (*StaffListStoreForOrderFilteringResponse, error)
+	StaffListAmazonConfirmShipmentEvidence(ctx context.Context, in *StaffListAmazonConfirmShipmentEvidenceRequest, opts ...grpc.CallOption) (*StaffListAmazonConfirmShipmentEvidenceResponse, error)
 }
 
 type storeAdminAPIClient struct {
@@ -83,6 +85,16 @@ func (c *storeAdminAPIClient) StaffListStoreForOrderFiltering(ctx context.Contex
 	return out, nil
 }
 
+func (c *storeAdminAPIClient) StaffListAmazonConfirmShipmentEvidence(ctx context.Context, in *StaffListAmazonConfirmShipmentEvidenceRequest, opts ...grpc.CallOption) (*StaffListAmazonConfirmShipmentEvidenceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListAmazonConfirmShipmentEvidenceResponse)
+	err := c.cc.Invoke(ctx, StoreAdminAPI_StaffListAmazonConfirmShipmentEvidence_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StoreAdminAPIServer is the server API for StoreAdminAPI service.
 // All implementations should embed UnimplementedStoreAdminAPIServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type StoreAdminAPIServer interface {
 	StaffGetStore(context.Context, *StaffGetStoreRequest) (*StaffGetStoreResponse, error)
 	StaffListMarketplace(context.Context, *StaffListMarketplaceRequest) (*StaffListMarketplaceResponse, error)
 	StaffListStoreForOrderFiltering(context.Context, *StaffListStoreForOrderFilteringRequest) (*StaffListStoreForOrderFilteringResponse, error)
+	StaffListAmazonConfirmShipmentEvidence(context.Context, *StaffListAmazonConfirmShipmentEvidenceRequest) (*StaffListAmazonConfirmShipmentEvidenceResponse, error)
 }
 
 // UnimplementedStoreAdminAPIServer should be embedded to have
@@ -111,6 +124,9 @@ func (UnimplementedStoreAdminAPIServer) StaffListMarketplace(context.Context, *S
 }
 func (UnimplementedStoreAdminAPIServer) StaffListStoreForOrderFiltering(context.Context, *StaffListStoreForOrderFilteringRequest) (*StaffListStoreForOrderFilteringResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListStoreForOrderFiltering not implemented")
+}
+func (UnimplementedStoreAdminAPIServer) StaffListAmazonConfirmShipmentEvidence(context.Context, *StaffListAmazonConfirmShipmentEvidenceRequest) (*StaffListAmazonConfirmShipmentEvidenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListAmazonConfirmShipmentEvidence not implemented")
 }
 func (UnimplementedStoreAdminAPIServer) testEmbeddedByValue() {}
 
@@ -204,6 +220,24 @@ func _StoreAdminAPI_StaffListStoreForOrderFiltering_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StoreAdminAPI_StaffListAmazonConfirmShipmentEvidence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListAmazonConfirmShipmentEvidenceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StoreAdminAPIServer).StaffListAmazonConfirmShipmentEvidence(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StoreAdminAPI_StaffListAmazonConfirmShipmentEvidence_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StoreAdminAPIServer).StaffListAmazonConfirmShipmentEvidence(ctx, req.(*StaffListAmazonConfirmShipmentEvidenceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StoreAdminAPI_ServiceDesc is the grpc.ServiceDesc for StoreAdminAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -226,6 +260,10 @@ var StoreAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListStoreForOrderFiltering",
 			Handler:    _StoreAdminAPI_StaffListStoreForOrderFiltering_Handler,
+		},
+		{
+			MethodName: "StaffListAmazonConfirmShipmentEvidence",
+			Handler:    _StoreAdminAPI_StaffListAmazonConfirmShipmentEvidence_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
