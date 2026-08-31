@@ -24,6 +24,7 @@ const (
 	SaleOrderAPI_UserUpdateOrder_FullMethodName                                  = "/api.pod.v1.SaleOrderAPI/UserUpdateOrder"
 	SaleOrderAPI_UserDuplicateListOrder_FullMethodName                           = "/api.pod.v1.SaleOrderAPI/UserDuplicateListOrder"
 	SaleOrderAPI_UserCancelOrder_FullMethodName                                  = "/api.pod.v1.SaleOrderAPI/UserCancelOrder"
+	SaleOrderAPI_UserRequestBuyTracking_FullMethodName                           = "/api.pod.v1.SaleOrderAPI/UserRequestBuyTracking"
 	SaleOrderAPI_UserListOrder_FullMethodName                                    = "/api.pod.v1.SaleOrderAPI/UserListOrder"
 	SaleOrderAPI_UserListOrderIDsWithFilter_FullMethodName                       = "/api.pod.v1.SaleOrderAPI/UserListOrderIDsWithFilter"
 	SaleOrderAPI_UserGetOrder_FullMethodName                                     = "/api.pod.v1.SaleOrderAPI/UserGetOrder"
@@ -48,6 +49,7 @@ type SaleOrderAPIClient interface {
 	UserUpdateOrder(ctx context.Context, in *UserUpdateOrderRequest, opts ...grpc.CallOption) (*UserUpdateOrderResponse, error)
 	UserDuplicateListOrder(ctx context.Context, in *UserDuplicateListOrderRequest, opts ...grpc.CallOption) (*UserDuplicateListOrderResponse, error)
 	UserCancelOrder(ctx context.Context, in *UserCancelOrderRequest, opts ...grpc.CallOption) (*UserCancelOrderResponse, error)
+	UserRequestBuyTracking(ctx context.Context, in *UserRequestBuyTrackingRequest, opts ...grpc.CallOption) (*UserRequestBuyTrackingResponse, error)
 	UserListOrder(ctx context.Context, in *UserListOrderRequest, opts ...grpc.CallOption) (*UserListOrderResponse, error)
 	UserListOrderIDsWithFilter(ctx context.Context, in *UserListOrderIDsWithFilterRequest, opts ...grpc.CallOption) (*UserListOrderIDsWithFilterResponse, error)
 	UserGetOrder(ctx context.Context, in *UserGetOrderRequest, opts ...grpc.CallOption) (*UserGetOrderResponse, error)
@@ -113,6 +115,16 @@ func (c *saleOrderAPIClient) UserCancelOrder(ctx context.Context, in *UserCancel
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserCancelOrderResponse)
 	err := c.cc.Invoke(ctx, SaleOrderAPI_UserCancelOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *saleOrderAPIClient) UserRequestBuyTracking(ctx context.Context, in *UserRequestBuyTrackingRequest, opts ...grpc.CallOption) (*UserRequestBuyTrackingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserRequestBuyTrackingResponse)
+	err := c.cc.Invoke(ctx, SaleOrderAPI_UserRequestBuyTracking_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -240,6 +252,7 @@ type SaleOrderAPIServer interface {
 	UserUpdateOrder(context.Context, *UserUpdateOrderRequest) (*UserUpdateOrderResponse, error)
 	UserDuplicateListOrder(context.Context, *UserDuplicateListOrderRequest) (*UserDuplicateListOrderResponse, error)
 	UserCancelOrder(context.Context, *UserCancelOrderRequest) (*UserCancelOrderResponse, error)
+	UserRequestBuyTracking(context.Context, *UserRequestBuyTrackingRequest) (*UserRequestBuyTrackingResponse, error)
 	UserListOrder(context.Context, *UserListOrderRequest) (*UserListOrderResponse, error)
 	UserListOrderIDsWithFilter(context.Context, *UserListOrderIDsWithFilterRequest) (*UserListOrderIDsWithFilterResponse, error)
 	UserGetOrder(context.Context, *UserGetOrderRequest) (*UserGetOrderResponse, error)
@@ -274,6 +287,9 @@ func (UnimplementedSaleOrderAPIServer) UserDuplicateListOrder(context.Context, *
 }
 func (UnimplementedSaleOrderAPIServer) UserCancelOrder(context.Context, *UserCancelOrderRequest) (*UserCancelOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserCancelOrder not implemented")
+}
+func (UnimplementedSaleOrderAPIServer) UserRequestBuyTracking(context.Context, *UserRequestBuyTrackingRequest) (*UserRequestBuyTrackingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserRequestBuyTracking not implemented")
 }
 func (UnimplementedSaleOrderAPIServer) UserListOrder(context.Context, *UserListOrderRequest) (*UserListOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListOrder not implemented")
@@ -414,6 +430,24 @@ func _SaleOrderAPI_UserCancelOrder_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SaleOrderAPIServer).UserCancelOrder(ctx, req.(*UserCancelOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SaleOrderAPI_UserRequestBuyTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserRequestBuyTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SaleOrderAPIServer).UserRequestBuyTracking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SaleOrderAPI_UserRequestBuyTracking_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SaleOrderAPIServer).UserRequestBuyTracking(ctx, req.(*UserRequestBuyTrackingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -642,6 +676,10 @@ var SaleOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserCancelOrder",
 			Handler:    _SaleOrderAPI_UserCancelOrder_Handler,
+		},
+		{
+			MethodName: "UserRequestBuyTracking",
+			Handler:    _SaleOrderAPI_UserRequestBuyTracking_Handler,
 		},
 		{
 			MethodName: "UserListOrder",
