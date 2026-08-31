@@ -35,6 +35,7 @@ const (
 	UserAccountInternalAPI_InternalGetStaffInfo_FullMethodName                          = "/api.iam.v1.UserAccountInternalAPI/InternalGetStaffInfo"
 	UserAccountInternalAPI_InternalListStaffInfo_FullMethodName                         = "/api.iam.v1.UserAccountInternalAPI/InternalListStaffInfo"
 	UserAccountInternalAPI_InternalListTeamsByOwnerEmailParts_FullMethodName            = "/api.iam.v1.UserAccountInternalAPI/InternalListTeamsByOwnerEmailParts"
+	UserAccountInternalAPI_InternalListTeamsByOwnerEmails_FullMethodName                = "/api.iam.v1.UserAccountInternalAPI/InternalListTeamsByOwnerEmails"
 	UserAccountInternalAPI_InternalListTeamsByOwnerIDs_FullMethodName                   = "/api.iam.v1.UserAccountInternalAPI/InternalListTeamsByOwnerIDs"
 	UserAccountInternalAPI_InternalIsAccountVerified_FullMethodName                     = "/api.iam.v1.UserAccountInternalAPI/InternalIsAccountVerified"
 	UserAccountInternalAPI_InternalCountAllGMTeam_FullMethodName                        = "/api.iam.v1.UserAccountInternalAPI/InternalCountAllGMTeam"
@@ -65,6 +66,7 @@ type UserAccountInternalAPIClient interface {
 	InternalGetStaffInfo(ctx context.Context, in *InternalGetStaffInfoRequest, opts ...grpc.CallOption) (*InternalGetStaffInfoResponse, error)
 	InternalListStaffInfo(ctx context.Context, in *InternalListStaffInfoRequest, opts ...grpc.CallOption) (*InternalListStaffInfoResponse, error)
 	InternalListTeamsByOwnerEmailParts(ctx context.Context, in *InternalListTeamsByOwnerEmailPartsRequest, opts ...grpc.CallOption) (*InternalListTeamsByOwnerEmailPartsResponse, error)
+	InternalListTeamsByOwnerEmails(ctx context.Context, in *InternalListTeamsByOwnerEmailsRequest, opts ...grpc.CallOption) (*InternalListTeamsByOwnerEmailsResponse, error)
 	InternalListTeamsByOwnerIDs(ctx context.Context, in *InternalListTeamsByOwnerIDsRequest, opts ...grpc.CallOption) (*InternalListTeamsByOwnerIDsResponse, error)
 	InternalIsAccountVerified(ctx context.Context, in *InternalIsAccountVerifiedRequest, opts ...grpc.CallOption) (*InternalIsAccountVerifiedResponse, error)
 	InternalCountAllGMTeam(ctx context.Context, in *InternalCountAllGMTeamRequest, opts ...grpc.CallOption) (*InternalCountAllGMTeamResponse, error)
@@ -243,6 +245,16 @@ func (c *userAccountInternalAPIClient) InternalListTeamsByOwnerEmailParts(ctx co
 	return out, nil
 }
 
+func (c *userAccountInternalAPIClient) InternalListTeamsByOwnerEmails(ctx context.Context, in *InternalListTeamsByOwnerEmailsRequest, opts ...grpc.CallOption) (*InternalListTeamsByOwnerEmailsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListTeamsByOwnerEmailsResponse)
+	err := c.cc.Invoke(ctx, UserAccountInternalAPI_InternalListTeamsByOwnerEmails_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAccountInternalAPIClient) InternalListTeamsByOwnerIDs(ctx context.Context, in *InternalListTeamsByOwnerIDsRequest, opts ...grpc.CallOption) (*InternalListTeamsByOwnerIDsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalListTeamsByOwnerIDsResponse)
@@ -343,6 +355,7 @@ type UserAccountInternalAPIServer interface {
 	InternalGetStaffInfo(context.Context, *InternalGetStaffInfoRequest) (*InternalGetStaffInfoResponse, error)
 	InternalListStaffInfo(context.Context, *InternalListStaffInfoRequest) (*InternalListStaffInfoResponse, error)
 	InternalListTeamsByOwnerEmailParts(context.Context, *InternalListTeamsByOwnerEmailPartsRequest) (*InternalListTeamsByOwnerEmailPartsResponse, error)
+	InternalListTeamsByOwnerEmails(context.Context, *InternalListTeamsByOwnerEmailsRequest) (*InternalListTeamsByOwnerEmailsResponse, error)
 	InternalListTeamsByOwnerIDs(context.Context, *InternalListTeamsByOwnerIDsRequest) (*InternalListTeamsByOwnerIDsResponse, error)
 	InternalIsAccountVerified(context.Context, *InternalIsAccountVerifiedRequest) (*InternalIsAccountVerifiedResponse, error)
 	InternalCountAllGMTeam(context.Context, *InternalCountAllGMTeamRequest) (*InternalCountAllGMTeamResponse, error)
@@ -407,6 +420,9 @@ func (UnimplementedUserAccountInternalAPIServer) InternalListStaffInfo(context.C
 }
 func (UnimplementedUserAccountInternalAPIServer) InternalListTeamsByOwnerEmailParts(context.Context, *InternalListTeamsByOwnerEmailPartsRequest) (*InternalListTeamsByOwnerEmailPartsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListTeamsByOwnerEmailParts not implemented")
+}
+func (UnimplementedUserAccountInternalAPIServer) InternalListTeamsByOwnerEmails(context.Context, *InternalListTeamsByOwnerEmailsRequest) (*InternalListTeamsByOwnerEmailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListTeamsByOwnerEmails not implemented")
 }
 func (UnimplementedUserAccountInternalAPIServer) InternalListTeamsByOwnerIDs(context.Context, *InternalListTeamsByOwnerIDsRequest) (*InternalListTeamsByOwnerIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListTeamsByOwnerIDs not implemented")
@@ -740,6 +756,24 @@ func _UserAccountInternalAPI_InternalListTeamsByOwnerEmailParts_Handler(srv inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserAccountInternalAPI_InternalListTeamsByOwnerEmails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListTeamsByOwnerEmailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountInternalAPIServer).InternalListTeamsByOwnerEmails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountInternalAPI_InternalListTeamsByOwnerEmails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountInternalAPIServer).InternalListTeamsByOwnerEmails(ctx, req.(*InternalListTeamsByOwnerEmailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserAccountInternalAPI_InternalListTeamsByOwnerIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalListTeamsByOwnerIDsRequest)
 	if err := dec(in); err != nil {
@@ -954,6 +988,10 @@ var UserAccountInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalListTeamsByOwnerEmailParts",
 			Handler:    _UserAccountInternalAPI_InternalListTeamsByOwnerEmailParts_Handler,
+		},
+		{
+			MethodName: "InternalListTeamsByOwnerEmails",
+			Handler:    _UserAccountInternalAPI_InternalListTeamsByOwnerEmails_Handler,
 		},
 		{
 			MethodName: "InternalListTeamsByOwnerIDs",

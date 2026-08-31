@@ -25,6 +25,7 @@ const (
 	PaymentAdminAPI_StaffListTeamTransaction_FullMethodName                   = "/api.payment.v1.PaymentAdminAPI/StaffListTeamTransaction"
 	PaymentAdminAPI_StaffGetTeamTransaction_FullMethodName                    = "/api.payment.v1.PaymentAdminAPI/StaffGetTeamTransaction"
 	PaymentAdminAPI_StaffExportTeamTransaction_FullMethodName                 = "/api.payment.v1.PaymentAdminAPI/StaffExportTeamTransaction"
+	PaymentAdminAPI_StaffExportTransaction_FullMethodName                     = "/api.payment.v1.PaymentAdminAPI/StaffExportTransaction"
 	PaymentAdminAPI_StaffListTransactionExportSession_FullMethodName          = "/api.payment.v1.PaymentAdminAPI/StaffListTransactionExportSession"
 	PaymentAdminAPI_StaffGetTeamTransactionDetail_FullMethodName              = "/api.payment.v1.PaymentAdminAPI/StaffGetTeamTransactionDetail"
 	PaymentAdminAPI_StaffListTransaction_FullMethodName                       = "/api.payment.v1.PaymentAdminAPI/StaffListTransaction"
@@ -51,6 +52,10 @@ type PaymentAdminAPIClient interface {
 	StaffListTeamTransaction(ctx context.Context, in *StaffListTeamTransactionRequest, opts ...grpc.CallOption) (*StaffListTeamTransactionResponse, error)
 	StaffGetTeamTransaction(ctx context.Context, in *StaffGetTeamTransactionRequest, opts ...grpc.CallOption) (*StaffGetTeamTransactionResponse, error)
 	StaffExportTeamTransaction(ctx context.Context, in *StaffListTeamTransactionRequest, opts ...grpc.CallOption) (*StaffExportTeamTransactionResponse, error)
+	// Creates an asynchronous export for the global Finance Transactions screen.
+	// This is intentionally separate from StaffExportTeamTransaction, which is
+	// scoped to the existing per-team transaction screen.
+	StaffExportTransaction(ctx context.Context, in *StaffExportTransactionRequest, opts ...grpc.CallOption) (*StaffExportTransactionResponse, error)
 	StaffListTransactionExportSession(ctx context.Context, in *StaffListTransactionExportSessionRequest, opts ...grpc.CallOption) (*StaffListTransactionExportSessionResponse, error)
 	StaffGetTeamTransactionDetail(ctx context.Context, in *StaffGetTeamTransactionDetailRequest, opts ...grpc.CallOption) (*StaffGetTeamTransactionDetailResponse, error)
 	StaffListTransaction(ctx context.Context, in *StaffListTransactionRequest, opts ...grpc.CallOption) (*StaffListTransactionResponse, error)
@@ -129,6 +134,16 @@ func (c *paymentAdminAPIClient) StaffExportTeamTransaction(ctx context.Context, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffExportTeamTransactionResponse)
 	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffExportTeamTransaction_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffExportTransaction(ctx context.Context, in *StaffExportTransactionRequest, opts ...grpc.CallOption) (*StaffExportTransactionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffExportTransactionResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffExportTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -285,6 +300,10 @@ type PaymentAdminAPIServer interface {
 	StaffListTeamTransaction(context.Context, *StaffListTeamTransactionRequest) (*StaffListTeamTransactionResponse, error)
 	StaffGetTeamTransaction(context.Context, *StaffGetTeamTransactionRequest) (*StaffGetTeamTransactionResponse, error)
 	StaffExportTeamTransaction(context.Context, *StaffListTeamTransactionRequest) (*StaffExportTeamTransactionResponse, error)
+	// Creates an asynchronous export for the global Finance Transactions screen.
+	// This is intentionally separate from StaffExportTeamTransaction, which is
+	// scoped to the existing per-team transaction screen.
+	StaffExportTransaction(context.Context, *StaffExportTransactionRequest) (*StaffExportTransactionResponse, error)
 	StaffListTransactionExportSession(context.Context, *StaffListTransactionExportSessionRequest) (*StaffListTransactionExportSessionResponse, error)
 	StaffGetTeamTransactionDetail(context.Context, *StaffGetTeamTransactionDetailRequest) (*StaffGetTeamTransactionDetailResponse, error)
 	StaffListTransaction(context.Context, *StaffListTransactionRequest) (*StaffListTransactionResponse, error)
@@ -325,6 +344,9 @@ func (UnimplementedPaymentAdminAPIServer) StaffGetTeamTransaction(context.Contex
 }
 func (UnimplementedPaymentAdminAPIServer) StaffExportTeamTransaction(context.Context, *StaffListTeamTransactionRequest) (*StaffExportTeamTransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffExportTeamTransaction not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffExportTransaction(context.Context, *StaffExportTransactionRequest) (*StaffExportTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffExportTransaction not implemented")
 }
 func (UnimplementedPaymentAdminAPIServer) StaffListTransactionExportSession(context.Context, *StaffListTransactionExportSessionRequest) (*StaffListTransactionExportSessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListTransactionExportSession not implemented")
@@ -492,6 +514,24 @@ func _PaymentAdminAPI_StaffExportTeamTransaction_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PaymentAdminAPIServer).StaffExportTeamTransaction(ctx, req.(*StaffListTeamTransactionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffExportTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffExportTransactionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffExportTransaction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffExportTransaction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffExportTransaction(ctx, req.(*StaffExportTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -778,6 +818,10 @@ var PaymentAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffExportTeamTransaction",
 			Handler:    _PaymentAdminAPI_StaffExportTeamTransaction_Handler,
+		},
+		{
+			MethodName: "StaffExportTransaction",
+			Handler:    _PaymentAdminAPI_StaffExportTransaction_Handler,
 		},
 		{
 			MethodName: "StaffListTransactionExportSession",
