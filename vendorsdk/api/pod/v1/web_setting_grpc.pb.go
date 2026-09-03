@@ -43,6 +43,7 @@ const (
 	SellerSettingAPI_UserGetExportTemplate_FullMethodName                  = "/api.pod.v1.SellerSettingAPI/UserGetExportTemplate"
 	SellerSettingAPI_StaffGetTeamConfigPrintType_FullMethodName            = "/api.pod.v1.SellerSettingAPI/StaffGetTeamConfigPrintType"
 	SellerSettingAPI_StaffConfigTeamPrintType_FullMethodName               = "/api.pod.v1.SellerSettingAPI/StaffConfigTeamPrintType"
+	SellerSettingAPI_StaffListSellerConfigPrintingOptions_FullMethodName   = "/api.pod.v1.SellerSettingAPI/StaffListSellerConfigPrintingOptions"
 	SellerSettingAPI_StaffListReturnAddress_FullMethodName                 = "/api.pod.v1.SellerSettingAPI/StaffListReturnAddress"
 )
 
@@ -77,6 +78,7 @@ type SellerSettingAPIClient interface {
 	UserGetExportTemplate(ctx context.Context, in *UserGetExportTemplateRequest, opts ...grpc.CallOption) (*UserGetExportTemplateResponse, error)
 	StaffGetTeamConfigPrintType(ctx context.Context, in *StaffGetTeamConfigPrintTypeRequest, opts ...grpc.CallOption) (*StaffGetTeamConfigPrintTypeResponse, error)
 	StaffConfigTeamPrintType(ctx context.Context, in *StaffConfigTeamPrintTypeRequest, opts ...grpc.CallOption) (*StaffConfigTeamPrintTypeResponse, error)
+	StaffListSellerConfigPrintingOptions(ctx context.Context, in *StaffListSellerConfigPrintingOptionsRequest, opts ...grpc.CallOption) (*StaffListSellerConfigPrintingOptionsResponse, error)
 	StaffListReturnAddress(ctx context.Context, in *StaffListReturnAddressRequest, opts ...grpc.CallOption) (*StaffListReturnAddressResponse, error)
 }
 
@@ -328,6 +330,16 @@ func (c *sellerSettingAPIClient) StaffConfigTeamPrintType(ctx context.Context, i
 	return out, nil
 }
 
+func (c *sellerSettingAPIClient) StaffListSellerConfigPrintingOptions(ctx context.Context, in *StaffListSellerConfigPrintingOptionsRequest, opts ...grpc.CallOption) (*StaffListSellerConfigPrintingOptionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListSellerConfigPrintingOptionsResponse)
+	err := c.cc.Invoke(ctx, SellerSettingAPI_StaffListSellerConfigPrintingOptions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sellerSettingAPIClient) StaffListReturnAddress(ctx context.Context, in *StaffListReturnAddressRequest, opts ...grpc.CallOption) (*StaffListReturnAddressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListReturnAddressResponse)
@@ -369,6 +381,7 @@ type SellerSettingAPIServer interface {
 	UserGetExportTemplate(context.Context, *UserGetExportTemplateRequest) (*UserGetExportTemplateResponse, error)
 	StaffGetTeamConfigPrintType(context.Context, *StaffGetTeamConfigPrintTypeRequest) (*StaffGetTeamConfigPrintTypeResponse, error)
 	StaffConfigTeamPrintType(context.Context, *StaffConfigTeamPrintTypeRequest) (*StaffConfigTeamPrintTypeResponse, error)
+	StaffListSellerConfigPrintingOptions(context.Context, *StaffListSellerConfigPrintingOptionsRequest) (*StaffListSellerConfigPrintingOptionsResponse, error)
 	StaffListReturnAddress(context.Context, *StaffListReturnAddressRequest) (*StaffListReturnAddressResponse, error)
 }
 
@@ -450,6 +463,9 @@ func (UnimplementedSellerSettingAPIServer) StaffGetTeamConfigPrintType(context.C
 }
 func (UnimplementedSellerSettingAPIServer) StaffConfigTeamPrintType(context.Context, *StaffConfigTeamPrintTypeRequest) (*StaffConfigTeamPrintTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffConfigTeamPrintType not implemented")
+}
+func (UnimplementedSellerSettingAPIServer) StaffListSellerConfigPrintingOptions(context.Context, *StaffListSellerConfigPrintingOptionsRequest) (*StaffListSellerConfigPrintingOptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListSellerConfigPrintingOptions not implemented")
 }
 func (UnimplementedSellerSettingAPIServer) StaffListReturnAddress(context.Context, *StaffListReturnAddressRequest) (*StaffListReturnAddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListReturnAddress not implemented")
@@ -906,6 +922,24 @@ func _SellerSettingAPI_StaffConfigTeamPrintType_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SellerSettingAPI_StaffListSellerConfigPrintingOptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListSellerConfigPrintingOptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SellerSettingAPIServer).StaffListSellerConfigPrintingOptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SellerSettingAPI_StaffListSellerConfigPrintingOptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SellerSettingAPIServer).StaffListSellerConfigPrintingOptions(ctx, req.(*StaffListSellerConfigPrintingOptionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SellerSettingAPI_StaffListReturnAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffListReturnAddressRequest)
 	if err := dec(in); err != nil {
@@ -1026,6 +1060,10 @@ var SellerSettingAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffConfigTeamPrintType",
 			Handler:    _SellerSettingAPI_StaffConfigTeamPrintType_Handler,
+		},
+		{
+			MethodName: "StaffListSellerConfigPrintingOptions",
+			Handler:    _SellerSettingAPI_StaffListSellerConfigPrintingOptions_Handler,
 		},
 		{
 			MethodName: "StaffListReturnAddress",
