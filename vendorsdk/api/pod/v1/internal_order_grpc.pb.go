@@ -37,6 +37,7 @@ const (
 	OrderInternalAPI_InternalUpdateBulkFulfillmentPackage_FullMethodName                               = "/api.pod.v1.OrderInternalAPI/InternalUpdateBulkFulfillmentPackage"
 	OrderInternalAPI_InternalUpdateFulfillmentPackageVendorReference_FullMethodName                    = "/api.pod.v1.OrderInternalAPI/InternalUpdateFulfillmentPackageVendorReference"
 	OrderInternalAPI_InternalListFulfillmentPackageByVendorsAndStatuses_FullMethodName                 = "/api.pod.v1.OrderInternalAPI/InternalListFulfillmentPackageByVendorsAndStatuses"
+	OrderInternalAPI_InternalGetFulfillmentPackage_FullMethodName                                      = "/api.pod.v1.OrderInternalAPI/InternalGetFulfillmentPackage"
 	OrderInternalAPI_InternalGetProductByProductID_FullMethodName                                      = "/api.pod.v1.OrderInternalAPI/InternalGetProductByProductID"
 	OrderInternalAPI_InternalBuildIDGetterByDraftIDs_FullMethodName                                    = "/api.pod.v1.OrderInternalAPI/InternalBuildIDGetterByDraftIDs"
 	OrderInternalAPI_InternalBuildDraftIDGetterByIDs_FullMethodName                                    = "/api.pod.v1.OrderInternalAPI/InternalBuildDraftIDGetterByIDs"
@@ -83,6 +84,11 @@ type OrderInternalAPIClient interface {
 	InternalUpdateBulkFulfillmentPackage(ctx context.Context, in *InternalUpdateBulkFulfillmentPackageRequest, opts ...grpc.CallOption) (*InternalUpdateBulkFulfillmentPackageResponse, error)
 	InternalUpdateFulfillmentPackageVendorReference(ctx context.Context, in *InternalUpdateFulfillmentPackageVendorReferenceRequest, opts ...grpc.CallOption) (*InternalUpdateFulfillmentPackageVendorReferenceResponse, error)
 	InternalListFulfillmentPackageByVendorsAndStatuses(ctx context.Context, in *InternalListFulfillmentPackageByVendorsAndStatusesRequest, opts ...grpc.CallOption) (*InternalListFulfillmentPackageByVendorsAndStatusesResponse, error)
+	// InternalGetFulfillmentPackage reads one package's current vendor state.
+	// The vendor push queue holds a snapshot taken up to twenty minutes before
+	// the provider is called; this is how the sender checks the package still
+	// belongs to that vendor before it sends anything.
+	InternalGetFulfillmentPackage(ctx context.Context, in *InternalGetFulfillmentPackageRequest, opts ...grpc.CallOption) (*InternalGetFulfillmentPackageResponse, error)
 	InternalGetProductByProductID(ctx context.Context, in *InternalGetProductByProductIDRequest, opts ...grpc.CallOption) (*InternalGetProductByProductIDResponse, error)
 	InternalBuildIDGetterByDraftIDs(ctx context.Context, in *InternalBuildIDGetterByDraftIDsRequest, opts ...grpc.CallOption) (*InternalBuildIDGetterByDraftIDsResponse, error)
 	InternalBuildDraftIDGetterByIDs(ctx context.Context, in *InternalBuildDraftIDGetterByIDsRequest, opts ...grpc.CallOption) (*InternalBuildDraftIDGetterByIDsResponse, error)
@@ -286,6 +292,16 @@ func (c *orderInternalAPIClient) InternalListFulfillmentPackageByVendorsAndStatu
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalListFulfillmentPackageByVendorsAndStatusesResponse)
 	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalListFulfillmentPackageByVendorsAndStatuses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderInternalAPIClient) InternalGetFulfillmentPackage(ctx context.Context, in *InternalGetFulfillmentPackageRequest, opts ...grpc.CallOption) (*InternalGetFulfillmentPackageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetFulfillmentPackageResponse)
+	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalGetFulfillmentPackage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -507,6 +523,11 @@ type OrderInternalAPIServer interface {
 	InternalUpdateBulkFulfillmentPackage(context.Context, *InternalUpdateBulkFulfillmentPackageRequest) (*InternalUpdateBulkFulfillmentPackageResponse, error)
 	InternalUpdateFulfillmentPackageVendorReference(context.Context, *InternalUpdateFulfillmentPackageVendorReferenceRequest) (*InternalUpdateFulfillmentPackageVendorReferenceResponse, error)
 	InternalListFulfillmentPackageByVendorsAndStatuses(context.Context, *InternalListFulfillmentPackageByVendorsAndStatusesRequest) (*InternalListFulfillmentPackageByVendorsAndStatusesResponse, error)
+	// InternalGetFulfillmentPackage reads one package's current vendor state.
+	// The vendor push queue holds a snapshot taken up to twenty minutes before
+	// the provider is called; this is how the sender checks the package still
+	// belongs to that vendor before it sends anything.
+	InternalGetFulfillmentPackage(context.Context, *InternalGetFulfillmentPackageRequest) (*InternalGetFulfillmentPackageResponse, error)
 	InternalGetProductByProductID(context.Context, *InternalGetProductByProductIDRequest) (*InternalGetProductByProductIDResponse, error)
 	InternalBuildIDGetterByDraftIDs(context.Context, *InternalBuildIDGetterByDraftIDsRequest) (*InternalBuildIDGetterByDraftIDsResponse, error)
 	InternalBuildDraftIDGetterByIDs(context.Context, *InternalBuildDraftIDGetterByIDsRequest) (*InternalBuildDraftIDGetterByIDsResponse, error)
@@ -588,6 +609,9 @@ func (UnimplementedOrderInternalAPIServer) InternalUpdateFulfillmentPackageVendo
 }
 func (UnimplementedOrderInternalAPIServer) InternalListFulfillmentPackageByVendorsAndStatuses(context.Context, *InternalListFulfillmentPackageByVendorsAndStatusesRequest) (*InternalListFulfillmentPackageByVendorsAndStatusesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListFulfillmentPackageByVendorsAndStatuses not implemented")
+}
+func (UnimplementedOrderInternalAPIServer) InternalGetFulfillmentPackage(context.Context, *InternalGetFulfillmentPackageRequest) (*InternalGetFulfillmentPackageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetFulfillmentPackage not implemented")
 }
 func (UnimplementedOrderInternalAPIServer) InternalGetProductByProductID(context.Context, *InternalGetProductByProductIDRequest) (*InternalGetProductByProductIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetProductByProductID not implemented")
@@ -986,6 +1010,24 @@ func _OrderInternalAPI_InternalListFulfillmentPackageByVendorsAndStatuses_Handle
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderInternalAPIServer).InternalListFulfillmentPackageByVendorsAndStatuses(ctx, req.(*InternalListFulfillmentPackageByVendorsAndStatusesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderInternalAPI_InternalGetFulfillmentPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetFulfillmentPackageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderInternalAPIServer).InternalGetFulfillmentPackage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderInternalAPI_InternalGetFulfillmentPackage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderInternalAPIServer).InternalGetFulfillmentPackage(ctx, req.(*InternalGetFulfillmentPackageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1410,6 +1452,10 @@ var OrderInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalListFulfillmentPackageByVendorsAndStatuses",
 			Handler:    _OrderInternalAPI_InternalListFulfillmentPackageByVendorsAndStatuses_Handler,
+		},
+		{
+			MethodName: "InternalGetFulfillmentPackage",
+			Handler:    _OrderInternalAPI_InternalGetFulfillmentPackage_Handler,
 		},
 		{
 			MethodName: "InternalGetProductByProductID",
