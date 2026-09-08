@@ -7,11 +7,11 @@
 package podv1
 
 import (
-	v12 "github.com/gearment/gea-next/vendorsdk/api/shipping/v1"
-	v13 "github.com/gearment/gea-next/vendorsdk/common/fulfillment_vendor/v1"
+	v13 "github.com/gearment/gea-next/vendorsdk/api/shipping/v1"
+	v11 "github.com/gearment/gea-next/vendorsdk/common/fulfillment_vendor/v1"
 	_ "github.com/gearment/gea-next/vendorsdk/common/option/v1"
 	v1 "github.com/gearment/gea-next/vendorsdk/common/platform/v1"
-	v11 "github.com/gearment/gea-next/vendorsdk/common/type/v1"
+	v12 "github.com/gearment/gea-next/vendorsdk/common/type/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -377,7 +377,7 @@ type OrderAdmin struct {
 	CreatedMethod         Order_CreatedMethod               `protobuf:"varint,5,opt,name=created_method,json=createdMethod,proto3,enum=api.pod.v1.Order_CreatedMethod" json:"created_method,omitempty"`
 	OrderPlatform         v1.MarketplacePlatform            `protobuf:"varint,6,opt,name=order_platform,json=orderPlatform,proto3,enum=common.platform.v1.MarketplacePlatform" json:"order_platform,omitempty"`
 	PlatformRef           string                            `protobuf:"bytes,7,opt,name=platform_ref,json=platformRef,proto3" json:"platform_ref,omitempty"`
-	FulfillmentVendor     Order_FulfillmentVendor           `protobuf:"varint,8,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=api.pod.v1.Order_FulfillmentVendor" json:"fulfillment_vendor,omitempty"`
+	FulfillmentVendor     v11.FulfillmentVendorType         `protobuf:"varint,8,opt,name=fulfillment_vendor,json=fulfillmentVendor,proto3,enum=common.fulfillment_vendor.v1.FulfillmentVendorType" json:"fulfillment_vendor,omitempty"`
 	VendorRef             string                            `protobuf:"bytes,9,opt,name=vendor_ref,json=vendorRef,proto3" json:"vendor_ref,omitempty"`
 	Priority              Order_FulfillmentPriority         `protobuf:"varint,10,opt,name=priority,proto3,enum=api.pod.v1.Order_FulfillmentPriority" json:"priority,omitempty"`
 	FulfillmentOption     *Order_FulfillmentOption          `protobuf:"bytes,11,opt,name=fulfillment_option,json=fulfillmentOption,proto3" json:"fulfillment_option,omitempty"`
@@ -391,14 +391,14 @@ type OrderAdmin struct {
 	PrimaryPackageId      string                            `protobuf:"bytes,19,opt,name=primary_package_id,json=primaryPackageId,proto3" json:"primary_package_id,omitempty"`
 	PrimaryShipmentId     string                            `protobuf:"bytes,20,opt,name=primary_shipment_id,json=primaryShipmentId,proto3" json:"primary_shipment_id,omitempty"`
 	IsLabelAttached       bool                              `protobuf:"varint,21,opt,name=is_label_attached,json=isLabelAttached,proto3" json:"is_label_attached,omitempty"`
-	OrderSubtotal         *v11.Money                        `protobuf:"bytes,22,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
-	OrderTax              *v11.Money                        `protobuf:"bytes,23,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
-	OrderFee              *v11.Money                        `protobuf:"bytes,24,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
-	OrderDiscount         *v11.Money                        `protobuf:"bytes,25,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
-	OrderTotal            *v11.Money                        `protobuf:"bytes,26,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
-	OrderRedeem           *v11.Money                        `protobuf:"bytes,27,opt,name=order_redeem,json=orderRedeem,proto3" json:"order_redeem,omitempty"`
-	PaidTotal             *v11.Money                        `protobuf:"bytes,28,opt,name=paid_total,json=paidTotal,proto3" json:"paid_total,omitempty"`
-	PaidNeeded            *v11.Money                        `protobuf:"bytes,29,opt,name=paid_needed,json=paidNeeded,proto3" json:"paid_needed,omitempty"`
+	OrderSubtotal         *v12.Money                        `protobuf:"bytes,22,opt,name=order_subtotal,json=orderSubtotal,proto3" json:"order_subtotal,omitempty"`
+	OrderTax              *v12.Money                        `protobuf:"bytes,23,opt,name=order_tax,json=orderTax,proto3" json:"order_tax,omitempty"`
+	OrderFee              *v12.Money                        `protobuf:"bytes,24,opt,name=order_fee,json=orderFee,proto3" json:"order_fee,omitempty"`
+	OrderDiscount         *v12.Money                        `protobuf:"bytes,25,opt,name=order_discount,json=orderDiscount,proto3" json:"order_discount,omitempty"`
+	OrderTotal            *v12.Money                        `protobuf:"bytes,26,opt,name=order_total,json=orderTotal,proto3" json:"order_total,omitempty"`
+	OrderRedeem           *v12.Money                        `protobuf:"bytes,27,opt,name=order_redeem,json=orderRedeem,proto3" json:"order_redeem,omitempty"`
+	PaidTotal             *v12.Money                        `protobuf:"bytes,28,opt,name=paid_total,json=paidTotal,proto3" json:"paid_total,omitempty"`
+	PaidNeeded            *v12.Money                        `protobuf:"bytes,29,opt,name=paid_needed,json=paidNeeded,proto3" json:"paid_needed,omitempty"`
 	TrackingNo            string                            `protobuf:"bytes,30,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
 	CreatedAt             *timestamppb.Timestamp            `protobuf:"bytes,31,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt             *timestamppb.Timestamp            `protobuf:"bytes,32,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
@@ -406,12 +406,12 @@ type OrderAdmin struct {
 	StoreName             string                            `protobuf:"bytes,34,opt,name=store_name,json=storeName,proto3" json:"store_name,omitempty"`
 	Addresses             []*Order_Address                  `protobuf:"bytes,35,rep,name=addresses,proto3" json:"addresses,omitempty"`
 	Stages                []*Order_ProcessingStage          `protobuf:"bytes,36,rep,name=stages,proto3" json:"stages,omitempty"`
-	OrderGiftMessageFee   *v11.Money                        `protobuf:"bytes,37,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
-	OrderShippingFee      *v11.Money                        `protobuf:"bytes,38,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
-	OrderHandleFee        *v11.Money                        `protobuf:"bytes,39,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
-	OrderSurcharge        *v11.Money                        `protobuf:"bytes,40,opt,name=order_surcharge,json=orderSurcharge,proto3" json:"order_surcharge,omitempty"`
-	OrderRushFee          *v11.Money                        `protobuf:"bytes,41,opt,name=order_rush_fee,json=orderRushFee,proto3" json:"order_rush_fee,omitempty"`
-	OrderThankCardFee     *v11.Money                        `protobuf:"bytes,42,opt,name=order_thank_card_fee,json=orderThankCardFee,proto3" json:"order_thank_card_fee,omitempty"`
+	OrderGiftMessageFee   *v12.Money                        `protobuf:"bytes,37,opt,name=order_gift_message_fee,json=orderGiftMessageFee,proto3" json:"order_gift_message_fee,omitempty"`
+	OrderShippingFee      *v12.Money                        `protobuf:"bytes,38,opt,name=order_shipping_fee,json=orderShippingFee,proto3" json:"order_shipping_fee,omitempty"`
+	OrderHandleFee        *v12.Money                        `protobuf:"bytes,39,opt,name=order_handle_fee,json=orderHandleFee,proto3" json:"order_handle_fee,omitempty"`
+	OrderSurcharge        *v12.Money                        `protobuf:"bytes,40,opt,name=order_surcharge,json=orderSurcharge,proto3" json:"order_surcharge,omitempty"`
+	OrderRushFee          *v12.Money                        `protobuf:"bytes,41,opt,name=order_rush_fee,json=orderRushFee,proto3" json:"order_rush_fee,omitempty"`
+	OrderThankCardFee     *v12.Money                        `protobuf:"bytes,42,opt,name=order_thank_card_fee,json=orderThankCardFee,proto3" json:"order_thank_card_fee,omitempty"`
 	OrderTrackings        []*Order_OrderTracking            `protobuf:"bytes,43,rep,name=order_trackings,json=orderTrackings,proto3" json:"order_trackings,omitempty"`
 	GiftMessages          []*Order_GiftMessage              `protobuf:"bytes,44,rep,name=gift_messages,json=giftMessages,proto3" json:"gift_messages,omitempty"`
 	RefundStatus          Order_OrderRefundStatus           `protobuf:"varint,45,opt,name=refund_status,json=refundStatus,proto3,enum=api.pod.v1.Order_OrderRefundStatus" json:"refund_status,omitempty"`
@@ -420,7 +420,7 @@ type OrderAdmin struct {
 	FulfillmentOrderId    string                            `protobuf:"bytes,48,opt,name=fulfillment_order_id,json=fulfillmentOrderId,proto3" json:"fulfillment_order_id,omitempty"`
 	ReferenceId           string                            `protobuf:"bytes,53,opt,name=reference_id,json=referenceId,proto3" json:"reference_id,omitempty"`
 	CancelReason          *Order_CancelReason               `protobuf:"bytes,50,opt,name=cancel_reason,json=cancelReason,proto3" json:"cancel_reason,omitempty"`
-	RefundedTotal         *v11.Money                        `protobuf:"bytes,51,opt,name=refunded_total,json=refundedTotal,proto3" json:"refunded_total,omitempty"`
+	RefundedTotal         *v12.Money                        `protobuf:"bytes,51,opt,name=refunded_total,json=refundedTotal,proto3" json:"refunded_total,omitempty"`
 	UserId                string                            `protobuf:"bytes,52,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	InvoiceIds            []string                          `protobuf:"bytes,54,rep,name=invoice_ids,json=invoiceIds,proto3" json:"invoice_ids,omitempty"`
 	RefundTransactionIds  []string                          `protobuf:"bytes,55,rep,name=refund_transaction_ids,json=refundTransactionIds,proto3" json:"refund_transaction_ids,omitempty"`
@@ -440,8 +440,8 @@ type OrderAdmin struct {
 	Notes                 []*OrderDraft_Note                `protobuf:"bytes,69,rep,name=notes,proto3" json:"notes,omitempty"`
 	TeamTier              *OrderAdmin_TeamTier              `protobuf:"bytes,70,opt,name=team_tier,json=teamTier,proto3" json:"team_tier,omitempty"`
 	ScanTrademarkStatus   ScanTrademarkStatus               `protobuf:"varint,71,opt,name=scan_trademark_status,json=scanTrademarkStatus,proto3,enum=api.pod.v1.ScanTrademarkStatus" json:"scan_trademark_status,omitempty"`
-	TrackingStatus        v12.TrackingStatus                `protobuf:"varint,72,opt,name=tracking_status,json=trackingStatus,proto3,enum=api.shipping.v1.TrackingStatus" json:"tracking_status,omitempty"`
-	FulfillmentVendorInfo *v13.FulfillmentVendor            `protobuf:"bytes,73,opt,name=fulfillment_vendor_info,json=fulfillmentVendorInfo,proto3" json:"fulfillment_vendor_info,omitempty"`
+	TrackingStatus        v13.TrackingStatus                `protobuf:"varint,72,opt,name=tracking_status,json=trackingStatus,proto3,enum=api.shipping.v1.TrackingStatus" json:"tracking_status,omitempty"`
+	FulfillmentVendorInfo *v11.FulfillmentVendor            `protobuf:"bytes,73,opt,name=fulfillment_vendor_info,json=fulfillmentVendorInfo,proto3" json:"fulfillment_vendor_info,omitempty"`
 	OperationalIssues     []*OrderOperationalIssue          `protobuf:"bytes,74,rep,name=operational_issues,json=operationalIssues,proto3" json:"operational_issues,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
@@ -519,11 +519,11 @@ func (x *OrderAdmin) GetPlatformRef() string {
 	return ""
 }
 
-func (x *OrderAdmin) GetFulfillmentVendor() Order_FulfillmentVendor {
+func (x *OrderAdmin) GetFulfillmentVendor() v11.FulfillmentVendorType {
 	if x != nil {
 		return x.FulfillmentVendor
 	}
-	return Order_FULFILLMENT_VENDOR_UNKNOWN
+	return v11.FulfillmentVendorType(0)
 }
 
 func (x *OrderAdmin) GetVendorRef() string {
@@ -617,56 +617,56 @@ func (x *OrderAdmin) GetIsLabelAttached() bool {
 	return false
 }
 
-func (x *OrderAdmin) GetOrderSubtotal() *v11.Money {
+func (x *OrderAdmin) GetOrderSubtotal() *v12.Money {
 	if x != nil {
 		return x.OrderSubtotal
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderTax() *v11.Money {
+func (x *OrderAdmin) GetOrderTax() *v12.Money {
 	if x != nil {
 		return x.OrderTax
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderFee() *v11.Money {
+func (x *OrderAdmin) GetOrderFee() *v12.Money {
 	if x != nil {
 		return x.OrderFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderDiscount() *v11.Money {
+func (x *OrderAdmin) GetOrderDiscount() *v12.Money {
 	if x != nil {
 		return x.OrderDiscount
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderTotal() *v11.Money {
+func (x *OrderAdmin) GetOrderTotal() *v12.Money {
 	if x != nil {
 		return x.OrderTotal
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderRedeem() *v11.Money {
+func (x *OrderAdmin) GetOrderRedeem() *v12.Money {
 	if x != nil {
 		return x.OrderRedeem
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetPaidTotal() *v11.Money {
+func (x *OrderAdmin) GetPaidTotal() *v12.Money {
 	if x != nil {
 		return x.PaidTotal
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetPaidNeeded() *v11.Money {
+func (x *OrderAdmin) GetPaidNeeded() *v12.Money {
 	if x != nil {
 		return x.PaidNeeded
 	}
@@ -722,42 +722,42 @@ func (x *OrderAdmin) GetStages() []*Order_ProcessingStage {
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderGiftMessageFee() *v11.Money {
+func (x *OrderAdmin) GetOrderGiftMessageFee() *v12.Money {
 	if x != nil {
 		return x.OrderGiftMessageFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderShippingFee() *v11.Money {
+func (x *OrderAdmin) GetOrderShippingFee() *v12.Money {
 	if x != nil {
 		return x.OrderShippingFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderHandleFee() *v11.Money {
+func (x *OrderAdmin) GetOrderHandleFee() *v12.Money {
 	if x != nil {
 		return x.OrderHandleFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderSurcharge() *v11.Money {
+func (x *OrderAdmin) GetOrderSurcharge() *v12.Money {
 	if x != nil {
 		return x.OrderSurcharge
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderRushFee() *v11.Money {
+func (x *OrderAdmin) GetOrderRushFee() *v12.Money {
 	if x != nil {
 		return x.OrderRushFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin) GetOrderThankCardFee() *v11.Money {
+func (x *OrderAdmin) GetOrderThankCardFee() *v12.Money {
 	if x != nil {
 		return x.OrderThankCardFee
 	}
@@ -820,7 +820,7 @@ func (x *OrderAdmin) GetCancelReason() *Order_CancelReason {
 	return nil
 }
 
-func (x *OrderAdmin) GetRefundedTotal() *v11.Money {
+func (x *OrderAdmin) GetRefundedTotal() *v12.Money {
 	if x != nil {
 		return x.RefundedTotal
 	}
@@ -960,14 +960,14 @@ func (x *OrderAdmin) GetScanTrademarkStatus() ScanTrademarkStatus {
 	return ScanTrademarkStatus_SCAN_TRADEMARK_STATUS_UNSPECIFIED
 }
 
-func (x *OrderAdmin) GetTrackingStatus() v12.TrackingStatus {
+func (x *OrderAdmin) GetTrackingStatus() v13.TrackingStatus {
 	if x != nil {
 		return x.TrackingStatus
 	}
-	return v12.TrackingStatus(0)
+	return v13.TrackingStatus(0)
 }
 
-func (x *OrderAdmin) GetFulfillmentVendorInfo() *v13.FulfillmentVendor {
+func (x *OrderAdmin) GetFulfillmentVendorInfo() *v11.FulfillmentVendor {
 	if x != nil {
 		return x.FulfillmentVendorInfo
 	}
@@ -995,7 +995,7 @@ type OrderAdmin_Short struct {
 	ShippingLabels             []*OrderAdmin_ShippingLabel `protobuf:"bytes,10,rep,name=shipping_labels,json=shippingLabels,proto3" json:"shipping_labels,omitempty"`
 	TrackingNo                 string                      `protobuf:"bytes,11,opt,name=tracking_no,json=trackingNo,proto3" json:"tracking_no,omitempty"`
 	Recipient                  *Order_FullName             `protobuf:"bytes,12,opt,name=recipient,proto3" json:"recipient,omitempty"`
-	Total                      *v11.Money                  `protobuf:"bytes,13,opt,name=total,proto3" json:"total,omitempty"`
+	Total                      *v12.Money                  `protobuf:"bytes,13,opt,name=total,proto3" json:"total,omitempty"`
 	Quantity                   int32                       `protobuf:"varint,14,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	PlatformIconUrl            string                      `protobuf:"bytes,15,opt,name=platform_icon_url,json=platformIconUrl,proto3" json:"platform_icon_url,omitempty"`
 	Labels                     []*OrderAdmin_ShippingLabel `protobuf:"bytes,16,rep,name=labels,proto3" json:"labels,omitempty"`
@@ -1008,18 +1008,18 @@ type OrderAdmin_Short struct {
 	CustomerEmail              string                      `protobuf:"bytes,23,opt,name=customer_email,json=customerEmail,proto3" json:"customer_email,omitempty"`
 	RefundStatus               Order_OrderRefundStatus     `protobuf:"varint,24,opt,name=refund_status,json=refundStatus,proto3,enum=api.pod.v1.Order_OrderRefundStatus" json:"refund_status,omitempty"`
 	ErrorReason                string                      `protobuf:"bytes,25,opt,name=error_reason,json=errorReason,proto3" json:"error_reason,omitempty"` // sc_fulfillment_package.note
-	ShippingFee                *v11.Money                  `protobuf:"bytes,26,opt,name=shipping_fee,json=shippingFee,proto3" json:"shipping_fee,omitempty"`
-	Subtotal                   *v11.Money                  `protobuf:"bytes,27,opt,name=subtotal,proto3" json:"subtotal,omitempty"`
+	ShippingFee                *v12.Money                  `protobuf:"bytes,26,opt,name=shipping_fee,json=shippingFee,proto3" json:"shipping_fee,omitempty"`
+	Subtotal                   *v12.Money                  `protobuf:"bytes,27,opt,name=subtotal,proto3" json:"subtotal,omitempty"`
 	OrderRefunds               []*Order_OrderRefund        `protobuf:"bytes,28,rep,name=order_refunds,json=orderRefunds,proto3" json:"order_refunds,omitempty"`
 	Priority                   Order_FulfillmentPriority   `protobuf:"varint,29,opt,name=priority,proto3,enum=api.pod.v1.Order_FulfillmentPriority" json:"priority,omitempty"`
 	ProcessingStatus           Order_OrderStatus           `protobuf:"varint,30,opt,name=processing_status,json=processingStatus,proto3,enum=api.pod.v1.Order_OrderStatus" json:"processing_status,omitempty"`
 	IsMarkFulfilled            bool                        `protobuf:"varint,31,opt,name=is_mark_fulfilled,json=isMarkFulfilled,proto3" json:"is_mark_fulfilled,omitempty"`
 	IsRush                     bool                        `protobuf:"varint,32,opt,name=is_rush,json=isRush,proto3" json:"is_rush,omitempty"`
-	TotalRefunded              *v11.Money                  `protobuf:"bytes,33,opt,name=total_refunded,json=totalRefunded,proto3" json:"total_refunded,omitempty"`
+	TotalRefunded              *v12.Money                  `protobuf:"bytes,33,opt,name=total_refunded,json=totalRefunded,proto3" json:"total_refunded,omitempty"`
 	OrderTrackings             []*Order_OrderTracking      `protobuf:"bytes,34,rep,name=order_trackings,json=orderTrackings,proto3" json:"order_trackings,omitempty"`
 	CreatedMethod              Order_CreatedMethod         `protobuf:"varint,35,opt,name=created_method,json=createdMethod,proto3,enum=api.pod.v1.Order_CreatedMethod" json:"created_method,omitempty"`
 	OriginOrderId              string                      `protobuf:"bytes,36,opt,name=origin_order_id,json=originOrderId,proto3" json:"origin_order_id,omitempty"`
-	FulfillmentVendorInfo      *v13.FulfillmentVendor      `protobuf:"bytes,50,opt,name=fulfillment_vendor_info,json=fulfillmentVendorInfo,proto3" json:"fulfillment_vendor_info,omitempty"`
+	FulfillmentVendorInfo      *v11.FulfillmentVendor      `protobuf:"bytes,50,opt,name=fulfillment_vendor_info,json=fulfillmentVendorInfo,proto3" json:"fulfillment_vendor_info,omitempty"`
 	IsProcessingOnHold         bool                        `protobuf:"varint,39,opt,name=is_processing_on_hold,json=isProcessingOnHold,proto3" json:"is_processing_on_hold,omitempty"`
 	TeamOwnerEmail             string                      `protobuf:"bytes,40,opt,name=team_owner_email,json=teamOwnerEmail,proto3" json:"team_owner_email,omitempty"`
 	CreatedByEmail             string                      `protobuf:"bytes,41,opt,name=created_by_email,json=createdByEmail,proto3" json:"created_by_email,omitempty"`
@@ -1030,7 +1030,7 @@ type OrderAdmin_Short struct {
 	PlatformRefUrl             string                      `protobuf:"bytes,46,opt,name=platform_ref_url,json=platformRefUrl,proto3" json:"platform_ref_url,omitempty"`
 	BeforeCancelStatus         Order_OrderStatus           `protobuf:"varint,47,opt,name=before_cancel_status,json=beforeCancelStatus,proto3,enum=api.pod.v1.Order_OrderStatus" json:"before_cancel_status,omitempty"`
 	ScanTrademarkStatus        ScanTrademarkStatus         `protobuf:"varint,48,opt,name=scan_trademark_status,json=scanTrademarkStatus,proto3,enum=api.pod.v1.ScanTrademarkStatus" json:"scan_trademark_status,omitempty"`
-	TrackingStatus             v12.TrackingStatus          `protobuf:"varint,49,opt,name=tracking_status,json=trackingStatus,proto3,enum=api.shipping.v1.TrackingStatus" json:"tracking_status,omitempty"`
+	TrackingStatus             v13.TrackingStatus          `protobuf:"varint,49,opt,name=tracking_status,json=trackingStatus,proto3,enum=api.shipping.v1.TrackingStatus" json:"tracking_status,omitempty"`
 	OperationalIssues          []*OrderOperationalIssue    `protobuf:"bytes,74,rep,name=operational_issues,json=operationalIssues,proto3" json:"operational_issues,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
@@ -1150,7 +1150,7 @@ func (x *OrderAdmin_Short) GetRecipient() *Order_FullName {
 	return nil
 }
 
-func (x *OrderAdmin_Short) GetTotal() *v11.Money {
+func (x *OrderAdmin_Short) GetTotal() *v12.Money {
 	if x != nil {
 		return x.Total
 	}
@@ -1241,14 +1241,14 @@ func (x *OrderAdmin_Short) GetErrorReason() string {
 	return ""
 }
 
-func (x *OrderAdmin_Short) GetShippingFee() *v11.Money {
+func (x *OrderAdmin_Short) GetShippingFee() *v12.Money {
 	if x != nil {
 		return x.ShippingFee
 	}
 	return nil
 }
 
-func (x *OrderAdmin_Short) GetSubtotal() *v11.Money {
+func (x *OrderAdmin_Short) GetSubtotal() *v12.Money {
 	if x != nil {
 		return x.Subtotal
 	}
@@ -1290,7 +1290,7 @@ func (x *OrderAdmin_Short) GetIsRush() bool {
 	return false
 }
 
-func (x *OrderAdmin_Short) GetTotalRefunded() *v11.Money {
+func (x *OrderAdmin_Short) GetTotalRefunded() *v12.Money {
 	if x != nil {
 		return x.TotalRefunded
 	}
@@ -1318,7 +1318,7 @@ func (x *OrderAdmin_Short) GetOriginOrderId() string {
 	return ""
 }
 
-func (x *OrderAdmin_Short) GetFulfillmentVendorInfo() *v13.FulfillmentVendor {
+func (x *OrderAdmin_Short) GetFulfillmentVendorInfo() *v11.FulfillmentVendor {
 	if x != nil {
 		return x.FulfillmentVendorInfo
 	}
@@ -1395,11 +1395,11 @@ func (x *OrderAdmin_Short) GetScanTrademarkStatus() ScanTrademarkStatus {
 	return ScanTrademarkStatus_SCAN_TRADEMARK_STATUS_UNSPECIFIED
 }
 
-func (x *OrderAdmin_Short) GetTrackingStatus() v12.TrackingStatus {
+func (x *OrderAdmin_Short) GetTrackingStatus() v13.TrackingStatus {
 	if x != nil {
 		return x.TrackingStatus
 	}
-	return v12.TrackingStatus(0)
+	return v13.TrackingStatus(0)
 }
 
 func (x *OrderAdmin_Short) GetOperationalIssues() []*OrderOperationalIssue {
@@ -1414,7 +1414,7 @@ type OrderAdmin_OrderRefund struct {
 	RefundRequestId string                 `protobuf:"bytes,1,opt,name=refund_request_id,json=refundRequestId,proto3" json:"refund_request_id,omitempty"`
 	Type            RefundRequestType      `protobuf:"varint,2,opt,name=type,proto3,enum=api.pod.v1.RefundRequestType" json:"type,omitempty"`
 	TransactionId   string                 `protobuf:"bytes,3,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	Amount          *v11.Money             `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount          *v12.Money             `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 	Reason          string                 `protobuf:"bytes,5,opt,name=reason,proto3" json:"reason,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -1471,7 +1471,7 @@ func (x *OrderAdmin_OrderRefund) GetTransactionId() string {
 	return ""
 }
 
-func (x *OrderAdmin_OrderRefund) GetAmount() *v11.Money {
+func (x *OrderAdmin_OrderRefund) GetAmount() *v12.Money {
 	if x != nil {
 		return x.Amount
 	}
@@ -1487,7 +1487,7 @@ func (x *OrderAdmin_OrderRefund) GetReason() string {
 
 type OrderAdmin_ShippingLabel struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	LabelFile      *v11.File              `protobuf:"bytes,1,opt,name=label_file,json=labelFile,proto3" json:"label_file,omitempty"`
+	LabelFile      *v12.File              `protobuf:"bytes,1,opt,name=label_file,json=labelFile,proto3" json:"label_file,omitempty"`
 	IsLabelUpdated bool                   `protobuf:"varint,2,opt,name=is_label_updated,json=isLabelUpdated,proto3" json:"is_label_updated,omitempty"`
 	// Label ownership: "pod-label" = Gearment-purchased carrier label, "third-party-label" = seller-provided, "" = unknown.
 	Type          string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
@@ -1525,7 +1525,7 @@ func (*OrderAdmin_ShippingLabel) Descriptor() ([]byte, []int) {
 	return file_api_pod_v1_admin_api_type_proto_rawDescGZIP(), []int{1, 2}
 }
 
-func (x *OrderAdmin_ShippingLabel) GetLabelFile() *v11.File {
+func (x *OrderAdmin_ShippingLabel) GetLabelFile() *v12.File {
 	if x != nil {
 		return x.LabelFile
 	}
@@ -2338,7 +2338,7 @@ var file_api_pod_v1_admin_api_type_proto_rawDesc = string([]byte{
 	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x49, 0x73, 0x73, 0x75, 0x65, 0x54, 0x79, 0x70, 0x65,
 	0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69,
 	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73,
-	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xe9, 0x59, 0x0a, 0x0a, 0x4f, 0x72, 0x64,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xf9, 0x59, 0x0a, 0x0a, 0x4f, 0x72, 0x64,
 	0x65, 0x72, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72,
 	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72,
 	0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02,
@@ -2356,11 +2356,12 @@ var file_api_pod_v1_admin_api_type_proto_rawDesc = string([]byte{
 	0x0d, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x12, 0x21,
 	0x0a, 0x0c, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x5f, 0x72, 0x65, 0x66, 0x18, 0x07,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x52, 0x65,
-	0x66, 0x12, 0x52, 0x0a, 0x12, 0x66, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74,
-	0x5f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x23, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72,
-	0x2e, 0x46, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74, 0x56, 0x65, 0x6e, 0x64,
-	0x6f, 0x72, 0x52, 0x11, 0x66, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74, 0x56,
+	0x66, 0x12, 0x62, 0x0a, 0x12, 0x66, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74,
+	0x5f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x33, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x66, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65,
+	0x6e, 0x74, 0x5f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x46, 0x75, 0x6c,
+	0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x54, 0x79,
+	0x70, 0x65, 0x52, 0x11, 0x66, 0x75, 0x6c, 0x66, 0x69, 0x6c, 0x6c, 0x6d, 0x65, 0x6e, 0x74, 0x56,
 	0x65, 0x6e, 0x64, 0x6f, 0x72, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x5f,
 	0x72, 0x65, 0x66, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x76, 0x65, 0x6e, 0x64, 0x6f,
 	0x72, 0x52, 0x65, 0x66, 0x12, 0x41, 0x0a, 0x08, 0x70, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79,
@@ -3133,14 +3134,14 @@ var file_api_pod_v1_admin_api_type_proto_goTypes = []any{
 	(*OrderAdmin_CheckoutRequestDetail)(nil),                   // 17: api.pod.v1.OrderAdmin.CheckoutRequestDetail
 	(Order_CreatedMethod)(0),                                   // 18: api.pod.v1.Order.CreatedMethod
 	(v1.MarketplacePlatform)(0),                                // 19: common.platform.v1.MarketplacePlatform
-	(Order_FulfillmentVendor)(0),                               // 20: api.pod.v1.Order.FulfillmentVendor
+	(v11.FulfillmentVendorType)(0),                             // 20: common.fulfillment_vendor.v1.FulfillmentVendorType
 	(Order_FulfillmentPriority)(0),                             // 21: api.pod.v1.Order.FulfillmentPriority
 	(*Order_FulfillmentOption)(nil),                            // 22: api.pod.v1.Order.FulfillmentOption
 	(*Order_ShippingOption)(nil),                               // 23: api.pod.v1.Order.ShippingOption
 	(*Order_BillingOption)(nil),                                // 24: api.pod.v1.Order.BillingOption
 	(*timestamppb.Timestamp)(nil),                              // 25: google.protobuf.Timestamp
 	(Order_OrderStatus)(0),                                     // 26: api.pod.v1.Order.OrderStatus
-	(*v11.Money)(nil),                                          // 27: common.type.v1.Money
+	(*v12.Money)(nil),                                          // 27: common.type.v1.Money
 	(*Order_LineItem)(nil),                                     // 28: api.pod.v1.Order.LineItem
 	(*Order_Address)(nil),                                      // 29: api.pod.v1.Order.Address
 	(*Order_ProcessingStage)(nil),                              // 30: api.pod.v1.Order.ProcessingStage
@@ -3151,20 +3152,20 @@ var file_api_pod_v1_admin_api_type_proto_goTypes = []any{
 	(*Order_CancelReason)(nil),                                 // 35: api.pod.v1.Order.CancelReason
 	(*OrderDraft_Note)(nil),                                    // 36: api.pod.v1.OrderDraft.Note
 	(ScanTrademarkStatus)(0),                                   // 37: api.pod.v1.ScanTrademarkStatus
-	(v12.TrackingStatus)(0),                                    // 38: api.shipping.v1.TrackingStatus
-	(*v13.FulfillmentVendor)(nil),                              // 39: common.fulfillment_vendor.v1.FulfillmentVendor
+	(v13.TrackingStatus)(0),                                    // 38: api.shipping.v1.TrackingStatus
+	(*v11.FulfillmentVendor)(nil),                              // 39: common.fulfillment_vendor.v1.FulfillmentVendor
 	(*Order_FullName)(nil),                                     // 40: api.pod.v1.Order.FullName
 	(*Order_OrderRefund)(nil),                                  // 41: api.pod.v1.Order.OrderRefund
 	(Order_FulfillmentStatus)(0),                               // 42: api.pod.v1.Order.FulfillmentStatus
 	(OMSOrderSyncTrackingStatus)(0),                            // 43: api.pod.v1.OMSOrderSyncTrackingStatus
 	(RefundRequestType)(0),                                     // 44: api.pod.v1.RefundRequestType
-	(*v11.File)(nil),                                           // 45: common.type.v1.File
+	(*v12.File)(nil),                                           // 45: common.type.v1.File
 }
 var file_api_pod_v1_admin_api_type_proto_depIdxs = []int32{
 	0,  // 0: api.pod.v1.OrderOperationalIssue.type:type_name -> api.pod.v1.OrderOperationalIssueType
 	18, // 1: api.pod.v1.OrderAdmin.created_method:type_name -> api.pod.v1.Order.CreatedMethod
 	19, // 2: api.pod.v1.OrderAdmin.order_platform:type_name -> common.platform.v1.MarketplacePlatform
-	20, // 3: api.pod.v1.OrderAdmin.fulfillment_vendor:type_name -> api.pod.v1.Order.FulfillmentVendor
+	20, // 3: api.pod.v1.OrderAdmin.fulfillment_vendor:type_name -> common.fulfillment_vendor.v1.FulfillmentVendorType
 	21, // 4: api.pod.v1.OrderAdmin.priority:type_name -> api.pod.v1.Order.FulfillmentPriority
 	22, // 5: api.pod.v1.OrderAdmin.fulfillment_option:type_name -> api.pod.v1.Order.FulfillmentOption
 	23, // 6: api.pod.v1.OrderAdmin.shipping_option:type_name -> api.pod.v1.Order.ShippingOption
