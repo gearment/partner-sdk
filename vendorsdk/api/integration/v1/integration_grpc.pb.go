@@ -19,11 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	APIIntegrationAPI_UserRequestCredentials_FullMethodName    = "/api.integration.v1.APIIntegrationAPI/UserRequestCredentials"
-	APIIntegrationAPI_UserDeleteListCredentials_FullMethodName = "/api.integration.v1.APIIntegrationAPI/UserDeleteListCredentials"
-	APIIntegrationAPI_UserListAPIVersion_FullMethodName        = "/api.integration.v1.APIIntegrationAPI/UserListAPIVersion"
-	APIIntegrationAPI_UserGetDefaultCredentials_FullMethodName = "/api.integration.v1.APIIntegrationAPI/UserGetDefaultCredentials"
-	APIIntegrationAPI_UserListCredentials_FullMethodName       = "/api.integration.v1.APIIntegrationAPI/UserListCredentials"
+	APIIntegrationAPI_UserRequestCredentials_FullMethodName       = "/api.integration.v1.APIIntegrationAPI/UserRequestCredentials"
+	APIIntegrationAPI_UserDeleteListCredentials_FullMethodName    = "/api.integration.v1.APIIntegrationAPI/UserDeleteListCredentials"
+	APIIntegrationAPI_UserListAPIVersion_FullMethodName           = "/api.integration.v1.APIIntegrationAPI/UserListAPIVersion"
+	APIIntegrationAPI_UserGetDefaultCredentials_FullMethodName    = "/api.integration.v1.APIIntegrationAPI/UserGetDefaultCredentials"
+	APIIntegrationAPI_UserListCredentials_FullMethodName          = "/api.integration.v1.APIIntegrationAPI/UserListCredentials"
+	APIIntegrationAPI_StaffGetTeamVendorRateLimit_FullMethodName  = "/api.integration.v1.APIIntegrationAPI/StaffGetTeamVendorRateLimit"
+	APIIntegrationAPI_StaffSaveTeamVendorRateLimit_FullMethodName = "/api.integration.v1.APIIntegrationAPI/StaffSaveTeamVendorRateLimit"
 )
 
 // APIIntegrationAPIClient is the client API for APIIntegrationAPI service.
@@ -35,6 +37,8 @@ type APIIntegrationAPIClient interface {
 	UserListAPIVersion(ctx context.Context, in *UserListAPIVersionRequest, opts ...grpc.CallOption) (*UserListAPIVersionResponse, error)
 	UserGetDefaultCredentials(ctx context.Context, in *UserGetDefaultCredentialsRequest, opts ...grpc.CallOption) (*UserGetDefaultCredentialsResponse, error)
 	UserListCredentials(ctx context.Context, in *UserListCredentialsRequest, opts ...grpc.CallOption) (*UserListCredentialsResponse, error)
+	StaffGetTeamVendorRateLimit(ctx context.Context, in *StaffGetTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffGetTeamVendorRateLimitResponse, error)
+	StaffSaveTeamVendorRateLimit(ctx context.Context, in *StaffSaveTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffSaveTeamVendorRateLimitResponse, error)
 }
 
 type aPIIntegrationAPIClient struct {
@@ -95,6 +99,26 @@ func (c *aPIIntegrationAPIClient) UserListCredentials(ctx context.Context, in *U
 	return out, nil
 }
 
+func (c *aPIIntegrationAPIClient) StaffGetTeamVendorRateLimit(ctx context.Context, in *StaffGetTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffGetTeamVendorRateLimitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetTeamVendorRateLimitResponse)
+	err := c.cc.Invoke(ctx, APIIntegrationAPI_StaffGetTeamVendorRateLimit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aPIIntegrationAPIClient) StaffSaveTeamVendorRateLimit(ctx context.Context, in *StaffSaveTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffSaveTeamVendorRateLimitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffSaveTeamVendorRateLimitResponse)
+	err := c.cc.Invoke(ctx, APIIntegrationAPI_StaffSaveTeamVendorRateLimit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // APIIntegrationAPIServer is the server API for APIIntegrationAPI service.
 // All implementations should embed UnimplementedAPIIntegrationAPIServer
 // for forward compatibility.
@@ -104,6 +128,8 @@ type APIIntegrationAPIServer interface {
 	UserListAPIVersion(context.Context, *UserListAPIVersionRequest) (*UserListAPIVersionResponse, error)
 	UserGetDefaultCredentials(context.Context, *UserGetDefaultCredentialsRequest) (*UserGetDefaultCredentialsResponse, error)
 	UserListCredentials(context.Context, *UserListCredentialsRequest) (*UserListCredentialsResponse, error)
+	StaffGetTeamVendorRateLimit(context.Context, *StaffGetTeamVendorRateLimitRequest) (*StaffGetTeamVendorRateLimitResponse, error)
+	StaffSaveTeamVendorRateLimit(context.Context, *StaffSaveTeamVendorRateLimitRequest) (*StaffSaveTeamVendorRateLimitResponse, error)
 }
 
 // UnimplementedAPIIntegrationAPIServer should be embedded to have
@@ -127,6 +153,12 @@ func (UnimplementedAPIIntegrationAPIServer) UserGetDefaultCredentials(context.Co
 }
 func (UnimplementedAPIIntegrationAPIServer) UserListCredentials(context.Context, *UserListCredentialsRequest) (*UserListCredentialsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListCredentials not implemented")
+}
+func (UnimplementedAPIIntegrationAPIServer) StaffGetTeamVendorRateLimit(context.Context, *StaffGetTeamVendorRateLimitRequest) (*StaffGetTeamVendorRateLimitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetTeamVendorRateLimit not implemented")
+}
+func (UnimplementedAPIIntegrationAPIServer) StaffSaveTeamVendorRateLimit(context.Context, *StaffSaveTeamVendorRateLimitRequest) (*StaffSaveTeamVendorRateLimitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffSaveTeamVendorRateLimit not implemented")
 }
 func (UnimplementedAPIIntegrationAPIServer) testEmbeddedByValue() {}
 
@@ -238,6 +270,42 @@ func _APIIntegrationAPI_UserListCredentials_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _APIIntegrationAPI_StaffGetTeamVendorRateLimit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetTeamVendorRateLimitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(APIIntegrationAPIServer).StaffGetTeamVendorRateLimit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: APIIntegrationAPI_StaffGetTeamVendorRateLimit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(APIIntegrationAPIServer).StaffGetTeamVendorRateLimit(ctx, req.(*StaffGetTeamVendorRateLimitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _APIIntegrationAPI_StaffSaveTeamVendorRateLimit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffSaveTeamVendorRateLimitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(APIIntegrationAPIServer).StaffSaveTeamVendorRateLimit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: APIIntegrationAPI_StaffSaveTeamVendorRateLimit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(APIIntegrationAPIServer).StaffSaveTeamVendorRateLimit(ctx, req.(*StaffSaveTeamVendorRateLimitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // APIIntegrationAPI_ServiceDesc is the grpc.ServiceDesc for APIIntegrationAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -264,6 +332,14 @@ var APIIntegrationAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserListCredentials",
 			Handler:    _APIIntegrationAPI_UserListCredentials_Handler,
+		},
+		{
+			MethodName: "StaffGetTeamVendorRateLimit",
+			Handler:    _APIIntegrationAPI_StaffGetTeamVendorRateLimit_Handler,
+		},
+		{
+			MethodName: "StaffSaveTeamVendorRateLimit",
+			Handler:    _APIIntegrationAPI_StaffSaveTeamVendorRateLimit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
