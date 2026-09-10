@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName                   = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
+	ShippingInternalAPI_InternalGetShippingLabelPurchase_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalGetShippingLabelPurchase"
 	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                     = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
 	ShippingInternalAPI_InternalCancelUnusedShippingLabel_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalCancelUnusedShippingLabel"
 	ShippingInternalAPI_InternalVoidGofoLabel_FullMethodName                           = "/api.shipping.v1.ShippingInternalAPI/InternalVoidGofoLabel"
@@ -36,6 +37,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShippingInternalAPIClient interface {
 	InternalPurchaseShippingLabel(ctx context.Context, in *InternalPurchaseShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseShippingLabelResponse, error)
+	InternalGetShippingLabelPurchase(ctx context.Context, in *InternalGetShippingLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalGetShippingLabelPurchaseResponse, error)
 	InternalCancelShippingLabel(ctx context.Context, in *InternalCancelShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelShippingLabelResponse, error)
 	// A separate RPC makes old replicas fail closed during rollout, rather than
 	// silently treating an unknown safety field as an unconditional cancel.
@@ -61,6 +63,16 @@ func (c *shippingInternalAPIClient) InternalPurchaseShippingLabel(ctx context.Co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalPurchaseShippingLabelResponse)
 	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalGetShippingLabelPurchase(ctx context.Context, in *InternalGetShippingLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalGetShippingLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetShippingLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalGetShippingLabelPurchase_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,6 +174,7 @@ func (c *shippingInternalAPIClient) InternalListShippingCostLedgerByTrackingNumb
 // for forward compatibility.
 type ShippingInternalAPIServer interface {
 	InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error)
+	InternalGetShippingLabelPurchase(context.Context, *InternalGetShippingLabelPurchaseRequest) (*InternalGetShippingLabelPurchaseResponse, error)
 	InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error)
 	// A separate RPC makes old replicas fail closed during rollout, rather than
 	// silently treating an unknown safety field as an unconditional cancel.
@@ -184,6 +197,9 @@ type UnimplementedShippingInternalAPIServer struct{}
 
 func (UnimplementedShippingInternalAPIServer) InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalPurchaseShippingLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalGetShippingLabelPurchase(context.Context, *InternalGetShippingLabelPurchaseRequest) (*InternalGetShippingLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetShippingLabelPurchase not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelShippingLabel not implemented")
@@ -246,6 +262,24 @@ func _ShippingInternalAPI_InternalPurchaseShippingLabel_Handler(srv interface{},
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShippingInternalAPIServer).InternalPurchaseShippingLabel(ctx, req.(*InternalPurchaseShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalGetShippingLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetShippingLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalGetShippingLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalGetShippingLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalGetShippingLabelPurchase(ctx, req.(*InternalGetShippingLabelPurchaseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -422,6 +456,10 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalPurchaseShippingLabel",
 			Handler:    _ShippingInternalAPI_InternalPurchaseShippingLabel_Handler,
+		},
+		{
+			MethodName: "InternalGetShippingLabelPurchase",
+			Handler:    _ShippingInternalAPI_InternalGetShippingLabelPurchase_Handler,
 		},
 		{
 			MethodName: "InternalCancelShippingLabel",
