@@ -23,6 +23,7 @@ const (
 	APIIntegrationAPI_UserDeleteListCredentials_FullMethodName    = "/api.integration.v1.APIIntegrationAPI/UserDeleteListCredentials"
 	APIIntegrationAPI_UserListAPIVersion_FullMethodName           = "/api.integration.v1.APIIntegrationAPI/UserListAPIVersion"
 	APIIntegrationAPI_UserGetDefaultCredentials_FullMethodName    = "/api.integration.v1.APIIntegrationAPI/UserGetDefaultCredentials"
+	APIIntegrationAPI_StaffGetCredentials_FullMethodName          = "/api.integration.v1.APIIntegrationAPI/StaffGetCredentials"
 	APIIntegrationAPI_UserListCredentials_FullMethodName          = "/api.integration.v1.APIIntegrationAPI/UserListCredentials"
 	APIIntegrationAPI_StaffGetTeamVendorRateLimit_FullMethodName  = "/api.integration.v1.APIIntegrationAPI/StaffGetTeamVendorRateLimit"
 	APIIntegrationAPI_StaffSaveTeamVendorRateLimit_FullMethodName = "/api.integration.v1.APIIntegrationAPI/StaffSaveTeamVendorRateLimit"
@@ -36,6 +37,7 @@ type APIIntegrationAPIClient interface {
 	UserDeleteListCredentials(ctx context.Context, in *UserDeleteListCredentialsRequest, opts ...grpc.CallOption) (*UserDeleteListCredentialsResponse, error)
 	UserListAPIVersion(ctx context.Context, in *UserListAPIVersionRequest, opts ...grpc.CallOption) (*UserListAPIVersionResponse, error)
 	UserGetDefaultCredentials(ctx context.Context, in *UserGetDefaultCredentialsRequest, opts ...grpc.CallOption) (*UserGetDefaultCredentialsResponse, error)
+	StaffGetCredentials(ctx context.Context, in *StaffGetCredentialsRequest, opts ...grpc.CallOption) (*StaffGetCredentialsResponse, error)
 	UserListCredentials(ctx context.Context, in *UserListCredentialsRequest, opts ...grpc.CallOption) (*UserListCredentialsResponse, error)
 	StaffGetTeamVendorRateLimit(ctx context.Context, in *StaffGetTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffGetTeamVendorRateLimitResponse, error)
 	StaffSaveTeamVendorRateLimit(ctx context.Context, in *StaffSaveTeamVendorRateLimitRequest, opts ...grpc.CallOption) (*StaffSaveTeamVendorRateLimitResponse, error)
@@ -89,6 +91,16 @@ func (c *aPIIntegrationAPIClient) UserGetDefaultCredentials(ctx context.Context,
 	return out, nil
 }
 
+func (c *aPIIntegrationAPIClient) StaffGetCredentials(ctx context.Context, in *StaffGetCredentialsRequest, opts ...grpc.CallOption) (*StaffGetCredentialsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetCredentialsResponse)
+	err := c.cc.Invoke(ctx, APIIntegrationAPI_StaffGetCredentials_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *aPIIntegrationAPIClient) UserListCredentials(ctx context.Context, in *UserListCredentialsRequest, opts ...grpc.CallOption) (*UserListCredentialsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserListCredentialsResponse)
@@ -127,6 +139,7 @@ type APIIntegrationAPIServer interface {
 	UserDeleteListCredentials(context.Context, *UserDeleteListCredentialsRequest) (*UserDeleteListCredentialsResponse, error)
 	UserListAPIVersion(context.Context, *UserListAPIVersionRequest) (*UserListAPIVersionResponse, error)
 	UserGetDefaultCredentials(context.Context, *UserGetDefaultCredentialsRequest) (*UserGetDefaultCredentialsResponse, error)
+	StaffGetCredentials(context.Context, *StaffGetCredentialsRequest) (*StaffGetCredentialsResponse, error)
 	UserListCredentials(context.Context, *UserListCredentialsRequest) (*UserListCredentialsResponse, error)
 	StaffGetTeamVendorRateLimit(context.Context, *StaffGetTeamVendorRateLimitRequest) (*StaffGetTeamVendorRateLimitResponse, error)
 	StaffSaveTeamVendorRateLimit(context.Context, *StaffSaveTeamVendorRateLimitRequest) (*StaffSaveTeamVendorRateLimitResponse, error)
@@ -150,6 +163,9 @@ func (UnimplementedAPIIntegrationAPIServer) UserListAPIVersion(context.Context, 
 }
 func (UnimplementedAPIIntegrationAPIServer) UserGetDefaultCredentials(context.Context, *UserGetDefaultCredentialsRequest) (*UserGetDefaultCredentialsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserGetDefaultCredentials not implemented")
+}
+func (UnimplementedAPIIntegrationAPIServer) StaffGetCredentials(context.Context, *StaffGetCredentialsRequest) (*StaffGetCredentialsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetCredentials not implemented")
 }
 func (UnimplementedAPIIntegrationAPIServer) UserListCredentials(context.Context, *UserListCredentialsRequest) (*UserListCredentialsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListCredentials not implemented")
@@ -252,6 +268,24 @@ func _APIIntegrationAPI_UserGetDefaultCredentials_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _APIIntegrationAPI_StaffGetCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetCredentialsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(APIIntegrationAPIServer).StaffGetCredentials(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: APIIntegrationAPI_StaffGetCredentials_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(APIIntegrationAPIServer).StaffGetCredentials(ctx, req.(*StaffGetCredentialsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _APIIntegrationAPI_UserListCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserListCredentialsRequest)
 	if err := dec(in); err != nil {
@@ -328,6 +362,10 @@ var APIIntegrationAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserGetDefaultCredentials",
 			Handler:    _APIIntegrationAPI_UserGetDefaultCredentials_Handler,
+		},
+		{
+			MethodName: "StaffGetCredentials",
+			Handler:    _APIIntegrationAPI_StaffGetCredentials_Handler,
 		},
 		{
 			MethodName: "UserListCredentials",

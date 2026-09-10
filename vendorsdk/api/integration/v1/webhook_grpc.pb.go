@@ -22,6 +22,7 @@ const (
 	WebhookIntegrationAPI_UserListAvailableWebhookTopic_FullMethodName = "/api.integration.v1.WebhookIntegrationAPI/UserListAvailableWebhookTopic"
 	WebhookIntegrationAPI_UserCreateWebhook_FullMethodName             = "/api.integration.v1.WebhookIntegrationAPI/UserCreateWebhook"
 	WebhookIntegrationAPI_UserListWebhook_FullMethodName               = "/api.integration.v1.WebhookIntegrationAPI/UserListWebhook"
+	WebhookIntegrationAPI_StaffListWebhook_FullMethodName              = "/api.integration.v1.WebhookIntegrationAPI/StaffListWebhook"
 	WebhookIntegrationAPI_UserEditWebhook_FullMethodName               = "/api.integration.v1.WebhookIntegrationAPI/UserEditWebhook"
 	WebhookIntegrationAPI_UserDeactivateListWebhook_FullMethodName     = "/api.integration.v1.WebhookIntegrationAPI/UserDeactivateListWebhook"
 	WebhookIntegrationAPI_UserActivateListWebhook_FullMethodName       = "/api.integration.v1.WebhookIntegrationAPI/UserActivateListWebhook"
@@ -37,6 +38,7 @@ type WebhookIntegrationAPIClient interface {
 	UserListAvailableWebhookTopic(ctx context.Context, in *UserListAvailableWebhookTopicRequest, opts ...grpc.CallOption) (*UserListAvailableWebhookTopicResponse, error)
 	UserCreateWebhook(ctx context.Context, in *UserCreateWebhookRequest, opts ...grpc.CallOption) (*Webhook, error)
 	UserListWebhook(ctx context.Context, in *UserListWebhookRequest, opts ...grpc.CallOption) (*UserListWebhookResponse, error)
+	StaffListWebhook(ctx context.Context, in *StaffListWebhookRequest, opts ...grpc.CallOption) (*StaffListWebhookResponse, error)
 	UserEditWebhook(ctx context.Context, in *UserEditWebhookRequest, opts ...grpc.CallOption) (*Webhook, error)
 	UserDeactivateListWebhook(ctx context.Context, in *UserDeactivateListWebhookRequest, opts ...grpc.CallOption) (*UserDeactivateListWebhookResponse, error)
 	UserActivateListWebhook(ctx context.Context, in *UserActivateListWebhookRequest, opts ...grpc.CallOption) (*UserActivateListWebhookResponse, error)
@@ -77,6 +79,16 @@ func (c *webhookIntegrationAPIClient) UserListWebhook(ctx context.Context, in *U
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserListWebhookResponse)
 	err := c.cc.Invoke(ctx, WebhookIntegrationAPI_UserListWebhook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookIntegrationAPIClient) StaffListWebhook(ctx context.Context, in *StaffListWebhookRequest, opts ...grpc.CallOption) (*StaffListWebhookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListWebhookResponse)
+	err := c.cc.Invoke(ctx, WebhookIntegrationAPI_StaffListWebhook_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -150,6 +162,7 @@ type WebhookIntegrationAPIServer interface {
 	UserListAvailableWebhookTopic(context.Context, *UserListAvailableWebhookTopicRequest) (*UserListAvailableWebhookTopicResponse, error)
 	UserCreateWebhook(context.Context, *UserCreateWebhookRequest) (*Webhook, error)
 	UserListWebhook(context.Context, *UserListWebhookRequest) (*UserListWebhookResponse, error)
+	StaffListWebhook(context.Context, *StaffListWebhookRequest) (*StaffListWebhookResponse, error)
 	UserEditWebhook(context.Context, *UserEditWebhookRequest) (*Webhook, error)
 	UserDeactivateListWebhook(context.Context, *UserDeactivateListWebhookRequest) (*UserDeactivateListWebhookResponse, error)
 	UserActivateListWebhook(context.Context, *UserActivateListWebhookRequest) (*UserActivateListWebhookResponse, error)
@@ -173,6 +186,9 @@ func (UnimplementedWebhookIntegrationAPIServer) UserCreateWebhook(context.Contex
 }
 func (UnimplementedWebhookIntegrationAPIServer) UserListWebhook(context.Context, *UserListWebhookRequest) (*UserListWebhookResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserListWebhook not implemented")
+}
+func (UnimplementedWebhookIntegrationAPIServer) StaffListWebhook(context.Context, *StaffListWebhookRequest) (*StaffListWebhookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListWebhook not implemented")
 }
 func (UnimplementedWebhookIntegrationAPIServer) UserEditWebhook(context.Context, *UserEditWebhookRequest) (*Webhook, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserEditWebhook not implemented")
@@ -262,6 +278,24 @@ func _WebhookIntegrationAPI_UserListWebhook_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WebhookIntegrationAPIServer).UserListWebhook(ctx, req.(*UserListWebhookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WebhookIntegrationAPI_StaffListWebhook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListWebhookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookIntegrationAPIServer).StaffListWebhook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookIntegrationAPI_StaffListWebhook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookIntegrationAPIServer).StaffListWebhook(ctx, req.(*StaffListWebhookRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -392,6 +426,10 @@ var WebhookIntegrationAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserListWebhook",
 			Handler:    _WebhookIntegrationAPI_UserListWebhook_Handler,
+		},
+		{
+			MethodName: "StaffListWebhook",
+			Handler:    _WebhookIntegrationAPI_StaffListWebhook_Handler,
 		},
 		{
 			MethodName: "UserEditWebhook",
