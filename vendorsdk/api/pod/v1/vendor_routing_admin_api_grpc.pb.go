@@ -42,6 +42,7 @@ const (
 	VendorRoutingAdminAPI_StaffOverrideRoutingDecision_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffOverrideRoutingDecision"
 	VendorRoutingAdminAPI_StaffReRouteDecision_FullMethodName                 = "/api.pod.v1.VendorRoutingAdminAPI/StaffReRouteDecision"
 	VendorRoutingAdminAPI_StaffManualRouteOrders_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffManualRouteOrders"
+	VendorRoutingAdminAPI_StaffReturnPackageToDefaultVendor_FullMethodName    = "/api.pod.v1.VendorRoutingAdminAPI/StaffReturnPackageToDefaultVendor"
 	VendorRoutingAdminAPI_StaffGetDestinationLoad_FullMethodName              = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetDestinationLoad"
 	VendorRoutingAdminAPI_StaffListCapacityLines_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffListCapacityLines"
 	VendorRoutingAdminAPI_StaffGetCapacityMatrix_FullMethodName               = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetCapacityMatrix"
@@ -99,6 +100,7 @@ type VendorRoutingAdminAPIClient interface {
 	StaffOverrideRoutingDecision(ctx context.Context, in *StaffOverrideRoutingDecisionRequest, opts ...grpc.CallOption) (*StaffOverrideRoutingDecisionResponse, error)
 	StaffReRouteDecision(ctx context.Context, in *StaffReRouteDecisionRequest, opts ...grpc.CallOption) (*StaffReRouteDecisionResponse, error)
 	StaffManualRouteOrders(ctx context.Context, in *StaffManualRouteOrdersRequest, opts ...grpc.CallOption) (*StaffManualRouteOrdersResponse, error)
+	StaffReturnPackageToDefaultVendor(ctx context.Context, in *StaffReturnPackageToDefaultVendorRequest, opts ...grpc.CallOption) (*StaffReturnPackageToDefaultVendorResponse, error)
 	// --- Capacity / day-load (slice R4) ---
 	StaffGetDestinationLoad(ctx context.Context, in *StaffGetDestinationLoadRequest, opts ...grpc.CallOption) (*StaffGetDestinationLoadResponse, error)
 	// --- Capacity matrix (slice R10a) ---
@@ -348,6 +350,16 @@ func (c *vendorRoutingAdminAPIClient) StaffManualRouteOrders(ctx context.Context
 	return out, nil
 }
 
+func (c *vendorRoutingAdminAPIClient) StaffReturnPackageToDefaultVendor(ctx context.Context, in *StaffReturnPackageToDefaultVendorRequest, opts ...grpc.CallOption) (*StaffReturnPackageToDefaultVendorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffReturnPackageToDefaultVendorResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffReturnPackageToDefaultVendor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vendorRoutingAdminAPIClient) StaffGetDestinationLoad(ctx context.Context, in *StaffGetDestinationLoadRequest, opts ...grpc.CallOption) (*StaffGetDestinationLoadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGetDestinationLoadResponse)
@@ -466,6 +478,7 @@ type VendorRoutingAdminAPIServer interface {
 	StaffOverrideRoutingDecision(context.Context, *StaffOverrideRoutingDecisionRequest) (*StaffOverrideRoutingDecisionResponse, error)
 	StaffReRouteDecision(context.Context, *StaffReRouteDecisionRequest) (*StaffReRouteDecisionResponse, error)
 	StaffManualRouteOrders(context.Context, *StaffManualRouteOrdersRequest) (*StaffManualRouteOrdersResponse, error)
+	StaffReturnPackageToDefaultVendor(context.Context, *StaffReturnPackageToDefaultVendorRequest) (*StaffReturnPackageToDefaultVendorResponse, error)
 	// --- Capacity / day-load (slice R4) ---
 	StaffGetDestinationLoad(context.Context, *StaffGetDestinationLoadRequest) (*StaffGetDestinationLoadResponse, error)
 	// --- Capacity matrix (slice R10a) ---
@@ -552,6 +565,9 @@ func (UnimplementedVendorRoutingAdminAPIServer) StaffReRouteDecision(context.Con
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffManualRouteOrders(context.Context, *StaffManualRouteOrdersRequest) (*StaffManualRouteOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffManualRouteOrders not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffReturnPackageToDefaultVendor(context.Context, *StaffReturnPackageToDefaultVendorRequest) (*StaffReturnPackageToDefaultVendorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffReturnPackageToDefaultVendor not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffGetDestinationLoad(context.Context, *StaffGetDestinationLoadRequest) (*StaffGetDestinationLoadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetDestinationLoad not implemented")
@@ -1008,6 +1024,24 @@ func _VendorRoutingAdminAPI_StaffManualRouteOrders_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorRoutingAdminAPI_StaffReturnPackageToDefaultVendor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffReturnPackageToDefaultVendorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffReturnPackageToDefaultVendor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffReturnPackageToDefaultVendor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffReturnPackageToDefaultVendor(ctx, req.(*StaffReturnPackageToDefaultVendorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VendorRoutingAdminAPI_StaffGetDestinationLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffGetDestinationLoadRequest)
 	if err := dec(in); err != nil {
@@ -1232,6 +1266,10 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffManualRouteOrders",
 			Handler:    _VendorRoutingAdminAPI_StaffManualRouteOrders_Handler,
+		},
+		{
+			MethodName: "StaffReturnPackageToDefaultVendor",
+			Handler:    _VendorRoutingAdminAPI_StaffReturnPackageToDefaultVendor_Handler,
 		},
 		{
 			MethodName: "StaffGetDestinationLoad",
