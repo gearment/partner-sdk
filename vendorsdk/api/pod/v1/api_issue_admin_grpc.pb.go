@@ -19,18 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderIssueAdminAPI_StaffSearchOrder_FullMethodName      = "/api.pod.v1.OrderIssueAdminAPI/StaffSearchOrder"
-	OrderIssueAdminAPI_StaffGetIssue_FullMethodName         = "/api.pod.v1.OrderIssueAdminAPI/StaffGetIssue"
-	OrderIssueAdminAPI_StaffListIssue_FullMethodName        = "/api.pod.v1.OrderIssueAdminAPI/StaffListIssue"
-	OrderIssueAdminAPI_StaffCountIssueStatus_FullMethodName = "/api.pod.v1.OrderIssueAdminAPI/StaffCountIssueStatus"
-	OrderIssueAdminAPI_StaffCreateIssue_FullMethodName      = "/api.pod.v1.OrderIssueAdminAPI/StaffCreateIssue"
-	OrderIssueAdminAPI_StaffPickupIssue_FullMethodName      = "/api.pod.v1.OrderIssueAdminAPI/StaffPickupIssue"
-	OrderIssueAdminAPI_StaffRespondIssue_FullMethodName     = "/api.pod.v1.OrderIssueAdminAPI/StaffRespondIssue"
-	OrderIssueAdminAPI_StaffCloseIssue_FullMethodName       = "/api.pod.v1.OrderIssueAdminAPI/StaffCloseIssue"
-	OrderIssueAdminAPI_StaffReopenIssue_FullMethodName      = "/api.pod.v1.OrderIssueAdminAPI/StaffReopenIssue"
-	OrderIssueAdminAPI_StaffCancelIssue_FullMethodName      = "/api.pod.v1.OrderIssueAdminAPI/StaffCancelIssue"
-	OrderIssueAdminAPI_StaffAddIssueComment_FullMethodName  = "/api.pod.v1.OrderIssueAdminAPI/StaffAddIssueComment"
-	OrderIssueAdminAPI_StaffReassignIssue_FullMethodName    = "/api.pod.v1.OrderIssueAdminAPI/StaffReassignIssue"
+	OrderIssueAdminAPI_StaffSearchOrder_FullMethodName                = "/api.pod.v1.OrderIssueAdminAPI/StaffSearchOrder"
+	OrderIssueAdminAPI_StaffGetIssue_FullMethodName                   = "/api.pod.v1.OrderIssueAdminAPI/StaffGetIssue"
+	OrderIssueAdminAPI_StaffListIssue_FullMethodName                  = "/api.pod.v1.OrderIssueAdminAPI/StaffListIssue"
+	OrderIssueAdminAPI_StaffCountIssueStatus_FullMethodName           = "/api.pod.v1.OrderIssueAdminAPI/StaffCountIssueStatus"
+	OrderIssueAdminAPI_StaffListIssueAutoAssignConfig_FullMethodName  = "/api.pod.v1.OrderIssueAdminAPI/StaffListIssueAutoAssignConfig"
+	OrderIssueAdminAPI_StaffCreateIssue_FullMethodName                = "/api.pod.v1.OrderIssueAdminAPI/StaffCreateIssue"
+	OrderIssueAdminAPI_StaffPickupIssue_FullMethodName                = "/api.pod.v1.OrderIssueAdminAPI/StaffPickupIssue"
+	OrderIssueAdminAPI_StaffRespondIssue_FullMethodName               = "/api.pod.v1.OrderIssueAdminAPI/StaffRespondIssue"
+	OrderIssueAdminAPI_StaffCloseIssue_FullMethodName                 = "/api.pod.v1.OrderIssueAdminAPI/StaffCloseIssue"
+	OrderIssueAdminAPI_StaffReopenIssue_FullMethodName                = "/api.pod.v1.OrderIssueAdminAPI/StaffReopenIssue"
+	OrderIssueAdminAPI_StaffCancelIssue_FullMethodName                = "/api.pod.v1.OrderIssueAdminAPI/StaffCancelIssue"
+	OrderIssueAdminAPI_StaffAddIssueComment_FullMethodName            = "/api.pod.v1.OrderIssueAdminAPI/StaffAddIssueComment"
+	OrderIssueAdminAPI_StaffReassignIssue_FullMethodName              = "/api.pod.v1.OrderIssueAdminAPI/StaffReassignIssue"
+	OrderIssueAdminAPI_StaffAddIssueAutoAssignStaff_FullMethodName    = "/api.pod.v1.OrderIssueAdminAPI/StaffAddIssueAutoAssignStaff"
+	OrderIssueAdminAPI_StaffDeleteIssueAutoAssignStaff_FullMethodName = "/api.pod.v1.OrderIssueAdminAPI/StaffDeleteIssueAutoAssignStaff"
 )
 
 // OrderIssueAdminAPIClient is the client API for OrderIssueAdminAPI service.
@@ -44,6 +47,7 @@ type OrderIssueAdminAPIClient interface {
 	StaffGetIssue(ctx context.Context, in *StaffGetIssueRequest, opts ...grpc.CallOption) (*StaffGetIssueResponse, error)
 	StaffListIssue(ctx context.Context, in *StaffListIssueRequest, opts ...grpc.CallOption) (*StaffListIssueResponse, error)
 	StaffCountIssueStatus(ctx context.Context, in *StaffCountIssueStatusRequest, opts ...grpc.CallOption) (*StaffCountIssueStatusResponse, error)
+	StaffListIssueAutoAssignConfig(ctx context.Context, in *StaffListIssueAutoAssignConfigRequest, opts ...grpc.CallOption) (*StaffListIssueAutoAssignConfigResponse, error)
 	// Commands
 	StaffCreateIssue(ctx context.Context, in *StaffCreateIssueRequest, opts ...grpc.CallOption) (*StaffCreateIssueResponse, error)
 	StaffPickupIssue(ctx context.Context, in *StaffPickupIssueRequest, opts ...grpc.CallOption) (*StaffPickupIssueResponse, error)
@@ -53,6 +57,8 @@ type OrderIssueAdminAPIClient interface {
 	StaffCancelIssue(ctx context.Context, in *StaffCancelIssueRequest, opts ...grpc.CallOption) (*StaffCancelIssueResponse, error)
 	StaffAddIssueComment(ctx context.Context, in *StaffAddIssueCommentRequest, opts ...grpc.CallOption) (*StaffAddIssueCommentResponse, error)
 	StaffReassignIssue(ctx context.Context, in *StaffReassignIssueRequest, opts ...grpc.CallOption) (*StaffReassignIssueResponse, error)
+	StaffAddIssueAutoAssignStaff(ctx context.Context, in *StaffAddIssueAutoAssignStaffRequest, opts ...grpc.CallOption) (*StaffAddIssueAutoAssignStaffResponse, error)
+	StaffDeleteIssueAutoAssignStaff(ctx context.Context, in *StaffDeleteIssueAutoAssignStaffRequest, opts ...grpc.CallOption) (*StaffDeleteIssueAutoAssignStaffResponse, error)
 }
 
 type orderIssueAdminAPIClient struct {
@@ -97,6 +103,16 @@ func (c *orderIssueAdminAPIClient) StaffCountIssueStatus(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffCountIssueStatusResponse)
 	err := c.cc.Invoke(ctx, OrderIssueAdminAPI_StaffCountIssueStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderIssueAdminAPIClient) StaffListIssueAutoAssignConfig(ctx context.Context, in *StaffListIssueAutoAssignConfigRequest, opts ...grpc.CallOption) (*StaffListIssueAutoAssignConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListIssueAutoAssignConfigResponse)
+	err := c.cc.Invoke(ctx, OrderIssueAdminAPI_StaffListIssueAutoAssignConfig_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -183,6 +199,26 @@ func (c *orderIssueAdminAPIClient) StaffReassignIssue(ctx context.Context, in *S
 	return out, nil
 }
 
+func (c *orderIssueAdminAPIClient) StaffAddIssueAutoAssignStaff(ctx context.Context, in *StaffAddIssueAutoAssignStaffRequest, opts ...grpc.CallOption) (*StaffAddIssueAutoAssignStaffResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffAddIssueAutoAssignStaffResponse)
+	err := c.cc.Invoke(ctx, OrderIssueAdminAPI_StaffAddIssueAutoAssignStaff_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderIssueAdminAPIClient) StaffDeleteIssueAutoAssignStaff(ctx context.Context, in *StaffDeleteIssueAutoAssignStaffRequest, opts ...grpc.CallOption) (*StaffDeleteIssueAutoAssignStaffResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteIssueAutoAssignStaffResponse)
+	err := c.cc.Invoke(ctx, OrderIssueAdminAPI_StaffDeleteIssueAutoAssignStaff_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderIssueAdminAPIServer is the server API for OrderIssueAdminAPI service.
 // All implementations should embed UnimplementedOrderIssueAdminAPIServer
 // for forward compatibility.
@@ -194,6 +230,7 @@ type OrderIssueAdminAPIServer interface {
 	StaffGetIssue(context.Context, *StaffGetIssueRequest) (*StaffGetIssueResponse, error)
 	StaffListIssue(context.Context, *StaffListIssueRequest) (*StaffListIssueResponse, error)
 	StaffCountIssueStatus(context.Context, *StaffCountIssueStatusRequest) (*StaffCountIssueStatusResponse, error)
+	StaffListIssueAutoAssignConfig(context.Context, *StaffListIssueAutoAssignConfigRequest) (*StaffListIssueAutoAssignConfigResponse, error)
 	// Commands
 	StaffCreateIssue(context.Context, *StaffCreateIssueRequest) (*StaffCreateIssueResponse, error)
 	StaffPickupIssue(context.Context, *StaffPickupIssueRequest) (*StaffPickupIssueResponse, error)
@@ -203,6 +240,8 @@ type OrderIssueAdminAPIServer interface {
 	StaffCancelIssue(context.Context, *StaffCancelIssueRequest) (*StaffCancelIssueResponse, error)
 	StaffAddIssueComment(context.Context, *StaffAddIssueCommentRequest) (*StaffAddIssueCommentResponse, error)
 	StaffReassignIssue(context.Context, *StaffReassignIssueRequest) (*StaffReassignIssueResponse, error)
+	StaffAddIssueAutoAssignStaff(context.Context, *StaffAddIssueAutoAssignStaffRequest) (*StaffAddIssueAutoAssignStaffResponse, error)
+	StaffDeleteIssueAutoAssignStaff(context.Context, *StaffDeleteIssueAutoAssignStaffRequest) (*StaffDeleteIssueAutoAssignStaffResponse, error)
 }
 
 // UnimplementedOrderIssueAdminAPIServer should be embedded to have
@@ -223,6 +262,9 @@ func (UnimplementedOrderIssueAdminAPIServer) StaffListIssue(context.Context, *St
 }
 func (UnimplementedOrderIssueAdminAPIServer) StaffCountIssueStatus(context.Context, *StaffCountIssueStatusRequest) (*StaffCountIssueStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCountIssueStatus not implemented")
+}
+func (UnimplementedOrderIssueAdminAPIServer) StaffListIssueAutoAssignConfig(context.Context, *StaffListIssueAutoAssignConfigRequest) (*StaffListIssueAutoAssignConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListIssueAutoAssignConfig not implemented")
 }
 func (UnimplementedOrderIssueAdminAPIServer) StaffCreateIssue(context.Context, *StaffCreateIssueRequest) (*StaffCreateIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateIssue not implemented")
@@ -247,6 +289,12 @@ func (UnimplementedOrderIssueAdminAPIServer) StaffAddIssueComment(context.Contex
 }
 func (UnimplementedOrderIssueAdminAPIServer) StaffReassignIssue(context.Context, *StaffReassignIssueRequest) (*StaffReassignIssueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffReassignIssue not implemented")
+}
+func (UnimplementedOrderIssueAdminAPIServer) StaffAddIssueAutoAssignStaff(context.Context, *StaffAddIssueAutoAssignStaffRequest) (*StaffAddIssueAutoAssignStaffResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffAddIssueAutoAssignStaff not implemented")
+}
+func (UnimplementedOrderIssueAdminAPIServer) StaffDeleteIssueAutoAssignStaff(context.Context, *StaffDeleteIssueAutoAssignStaffRequest) (*StaffDeleteIssueAutoAssignStaffResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteIssueAutoAssignStaff not implemented")
 }
 func (UnimplementedOrderIssueAdminAPIServer) testEmbeddedByValue() {}
 
@@ -336,6 +384,24 @@ func _OrderIssueAdminAPI_StaffCountIssueStatus_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderIssueAdminAPIServer).StaffCountIssueStatus(ctx, req.(*StaffCountIssueStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderIssueAdminAPI_StaffListIssueAutoAssignConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListIssueAutoAssignConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderIssueAdminAPIServer).StaffListIssueAutoAssignConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderIssueAdminAPI_StaffListIssueAutoAssignConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderIssueAdminAPIServer).StaffListIssueAutoAssignConfig(ctx, req.(*StaffListIssueAutoAssignConfigRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -484,6 +550,42 @@ func _OrderIssueAdminAPI_StaffReassignIssue_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderIssueAdminAPI_StaffAddIssueAutoAssignStaff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffAddIssueAutoAssignStaffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderIssueAdminAPIServer).StaffAddIssueAutoAssignStaff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderIssueAdminAPI_StaffAddIssueAutoAssignStaff_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderIssueAdminAPIServer).StaffAddIssueAutoAssignStaff(ctx, req.(*StaffAddIssueAutoAssignStaffRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderIssueAdminAPI_StaffDeleteIssueAutoAssignStaff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteIssueAutoAssignStaffRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderIssueAdminAPIServer).StaffDeleteIssueAutoAssignStaff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderIssueAdminAPI_StaffDeleteIssueAutoAssignStaff_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderIssueAdminAPIServer).StaffDeleteIssueAutoAssignStaff(ctx, req.(*StaffDeleteIssueAutoAssignStaffRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderIssueAdminAPI_ServiceDesc is the grpc.ServiceDesc for OrderIssueAdminAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -506,6 +608,10 @@ var OrderIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffCountIssueStatus",
 			Handler:    _OrderIssueAdminAPI_StaffCountIssueStatus_Handler,
+		},
+		{
+			MethodName: "StaffListIssueAutoAssignConfig",
+			Handler:    _OrderIssueAdminAPI_StaffListIssueAutoAssignConfig_Handler,
 		},
 		{
 			MethodName: "StaffCreateIssue",
@@ -538,6 +644,14 @@ var OrderIssueAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffReassignIssue",
 			Handler:    _OrderIssueAdminAPI_StaffReassignIssue_Handler,
+		},
+		{
+			MethodName: "StaffAddIssueAutoAssignStaff",
+			Handler:    _OrderIssueAdminAPI_StaffAddIssueAutoAssignStaff_Handler,
+		},
+		{
+			MethodName: "StaffDeleteIssueAutoAssignStaff",
+			Handler:    _OrderIssueAdminAPI_StaffDeleteIssueAutoAssignStaff_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
