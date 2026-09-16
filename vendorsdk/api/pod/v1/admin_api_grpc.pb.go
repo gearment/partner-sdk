@@ -51,6 +51,7 @@ const (
 	OrderAdminAPI_StaffGetDetailOrderTrademark_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffGetDetailOrderTrademark"
 	OrderAdminAPI_StaffEstimateOrderShipping_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffEstimateOrderShipping"
 	OrderAdminAPI_StaffCreateTestOrder_FullMethodName                 = "/api.pod.v1.OrderAdminAPI/StaffCreateTestOrder"
+	OrderAdminAPI_StaffDuplicateOrder_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffDuplicateOrder"
 	OrderAdminAPI_StaffBuyShippingLabel_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffBuyShippingLabel"
 	OrderAdminAPI_StaffGofoDhlSwitch_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffGofoDhlSwitch"
 	OrderAdminAPI_StaffGetShippingServiceSuggestion_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffGetShippingServiceSuggestion"
@@ -92,6 +93,7 @@ type OrderAdminAPIClient interface {
 	StaffGetDetailOrderTrademark(ctx context.Context, in *StaffGetDetailOrderTrademarkRequest, opts ...grpc.CallOption) (*StaffGetDetailOrderTrademarkResponse, error)
 	StaffEstimateOrderShipping(ctx context.Context, in *StaffEstimateOrderShippingRequest, opts ...grpc.CallOption) (*StaffEstimateOrderShippingResponse, error)
 	StaffCreateTestOrder(ctx context.Context, in *StaffCreateTestOrderRequest, opts ...grpc.CallOption) (*StaffCreateTestOrderResponse, error)
+	StaffDuplicateOrder(ctx context.Context, in *StaffDuplicateOrderRequest, opts ...grpc.CallOption) (*StaffDuplicateOrderResponse, error)
 	StaffBuyShippingLabel(ctx context.Context, in *StaffBuyShippingLabelRequest, opts ...grpc.CallOption) (*StaffBuyShippingLabelResponse, error)
 	StaffGofoDhlSwitch(ctx context.Context, in *StaffGofoDhlSwitchRequest, opts ...grpc.CallOption) (*StaffGofoDhlSwitchResponse, error)
 	StaffGetShippingServiceSuggestion(ctx context.Context, in *StaffGetShippingServiceSuggestionRequest, opts ...grpc.CallOption) (*StaffGetShippingServiceSuggestionResponse, error)
@@ -416,6 +418,16 @@ func (c *orderAdminAPIClient) StaffCreateTestOrder(ctx context.Context, in *Staf
 	return out, nil
 }
 
+func (c *orderAdminAPIClient) StaffDuplicateOrder(ctx context.Context, in *StaffDuplicateOrderRequest, opts ...grpc.CallOption) (*StaffDuplicateOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDuplicateOrderResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffDuplicateOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderAdminAPIClient) StaffBuyShippingLabel(ctx context.Context, in *StaffBuyShippingLabelRequest, opts ...grpc.CallOption) (*StaffBuyShippingLabelResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffBuyShippingLabelResponse)
@@ -491,6 +503,7 @@ type OrderAdminAPIServer interface {
 	StaffGetDetailOrderTrademark(context.Context, *StaffGetDetailOrderTrademarkRequest) (*StaffGetDetailOrderTrademarkResponse, error)
 	StaffEstimateOrderShipping(context.Context, *StaffEstimateOrderShippingRequest) (*StaffEstimateOrderShippingResponse, error)
 	StaffCreateTestOrder(context.Context, *StaffCreateTestOrderRequest) (*StaffCreateTestOrderResponse, error)
+	StaffDuplicateOrder(context.Context, *StaffDuplicateOrderRequest) (*StaffDuplicateOrderResponse, error)
 	StaffBuyShippingLabel(context.Context, *StaffBuyShippingLabelRequest) (*StaffBuyShippingLabelResponse, error)
 	StaffGofoDhlSwitch(context.Context, *StaffGofoDhlSwitchRequest) (*StaffGofoDhlSwitchResponse, error)
 	StaffGetShippingServiceSuggestion(context.Context, *StaffGetShippingServiceSuggestionRequest) (*StaffGetShippingServiceSuggestionResponse, error)
@@ -596,6 +609,9 @@ func (UnimplementedOrderAdminAPIServer) StaffEstimateOrderShipping(context.Conte
 }
 func (UnimplementedOrderAdminAPIServer) StaffCreateTestOrder(context.Context, *StaffCreateTestOrderRequest) (*StaffCreateTestOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateTestOrder not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffDuplicateOrder(context.Context, *StaffDuplicateOrderRequest) (*StaffDuplicateOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDuplicateOrder not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffBuyShippingLabel(context.Context, *StaffBuyShippingLabelRequest) (*StaffBuyShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffBuyShippingLabel not implemented")
@@ -1187,6 +1203,24 @@ func _OrderAdminAPI_StaffCreateTestOrder_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderAdminAPI_StaffDuplicateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDuplicateOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffDuplicateOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffDuplicateOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffDuplicateOrder(ctx, req.(*StaffDuplicateOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderAdminAPI_StaffBuyShippingLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffBuyShippingLabelRequest)
 	if err := dec(in); err != nil {
@@ -1389,6 +1423,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffCreateTestOrder",
 			Handler:    _OrderAdminAPI_StaffCreateTestOrder_Handler,
+		},
+		{
+			MethodName: "StaffDuplicateOrder",
+			Handler:    _OrderAdminAPI_StaffDuplicateOrder_Handler,
 		},
 		{
 			MethodName: "StaffBuyShippingLabel",
