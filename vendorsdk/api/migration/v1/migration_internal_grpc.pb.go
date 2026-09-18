@@ -19,11 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MigrationInternalAPI_InternalUpdateMigrationJobProgress_FullMethodName        = "/api.migration.v1.MigrationInternalAPI/InternalUpdateMigrationJobProgress"
-	MigrationInternalAPI_InternalNotifyOrderDataMigration_FullMethodName          = "/api.migration.v1.MigrationInternalAPI/InternalNotifyOrderDataMigration"
-	MigrationInternalAPI_InternalSendWebhookProgressMigration_FullMethodName      = "/api.migration.v1.MigrationInternalAPI/InternalSendWebhookProgressMigration"
-	MigrationInternalAPI_InternalUpdateMigrationProfileStatus_FullMethodName      = "/api.migration.v1.MigrationInternalAPI/InternalUpdateMigrationProfileStatus"
-	MigrationInternalAPI_InternalMigrateCreateOmsOrderSyncTracking_FullMethodName = "/api.migration.v1.MigrationInternalAPI/InternalMigrateCreateOmsOrderSyncTracking"
+	MigrationInternalAPI_InternalUpdateMigrationJobProgress_FullMethodName              = "/api.migration.v1.MigrationInternalAPI/InternalUpdateMigrationJobProgress"
+	MigrationInternalAPI_InternalNotifyOrderDataMigration_FullMethodName                = "/api.migration.v1.MigrationInternalAPI/InternalNotifyOrderDataMigration"
+	MigrationInternalAPI_InternalSendWebhookProgressMigration_FullMethodName            = "/api.migration.v1.MigrationInternalAPI/InternalSendWebhookProgressMigration"
+	MigrationInternalAPI_InternalUpdateMigrationProfileStatus_FullMethodName            = "/api.migration.v1.MigrationInternalAPI/InternalUpdateMigrationProfileStatus"
+	MigrationInternalAPI_InternalMigrateCreateOmsOrderSyncTracking_FullMethodName       = "/api.migration.v1.MigrationInternalAPI/InternalMigrateCreateOmsOrderSyncTracking"
+	MigrationInternalAPI_InternalGetCheckoutRequestResyncSellerNotes_FullMethodName     = "/api.migration.v1.MigrationInternalAPI/InternalGetCheckoutRequestResyncSellerNotes"
+	MigrationInternalAPI_InternalListCheckoutRequestResyncSourceGroups_FullMethodName   = "/api.migration.v1.MigrationInternalAPI/InternalListCheckoutRequestResyncSourceGroups"
+	MigrationInternalAPI_InternalCheckCheckoutRequestResyncMigrationJobs_FullMethodName = "/api.migration.v1.MigrationInternalAPI/InternalCheckCheckoutRequestResyncMigrationJobs"
 )
 
 // MigrationInternalAPIClient is the client API for MigrationInternalAPI service.
@@ -35,6 +38,9 @@ type MigrationInternalAPIClient interface {
 	InternalSendWebhookProgressMigration(ctx context.Context, in *InternalSendWebhookProgressMigrationRequest, opts ...grpc.CallOption) (*InternalSendWebhookProgressMigrationResponse, error)
 	InternalUpdateMigrationProfileStatus(ctx context.Context, in *InternalUpdateMigrationProfileStatusRequest, opts ...grpc.CallOption) (*InternalUpdateMigrationProfileStatusResponse, error)
 	InternalMigrateCreateOmsOrderSyncTracking(ctx context.Context, in *InternalMigrateCreateOmsOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalMigrateCreateOmsOrderSyncTrackingResponse, error)
+	InternalGetCheckoutRequestResyncSellerNotes(ctx context.Context, in *InternalGetCheckoutRequestResyncSellerNotesRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncSellerNotesResponse, error)
+	InternalListCheckoutRequestResyncSourceGroups(ctx context.Context, in *InternalListCheckoutRequestResyncSourceGroupsRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncSourceGroupsResponse, error)
+	InternalCheckCheckoutRequestResyncMigrationJobs(ctx context.Context, in *InternalCheckCheckoutRequestResyncMigrationJobsRequest, opts ...grpc.CallOption) (*InternalCheckCheckoutRequestResyncMigrationJobsResponse, error)
 }
 
 type migrationInternalAPIClient struct {
@@ -95,6 +101,36 @@ func (c *migrationInternalAPIClient) InternalMigrateCreateOmsOrderSyncTracking(c
 	return out, nil
 }
 
+func (c *migrationInternalAPIClient) InternalGetCheckoutRequestResyncSellerNotes(ctx context.Context, in *InternalGetCheckoutRequestResyncSellerNotesRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncSellerNotesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetCheckoutRequestResyncSellerNotesResponse)
+	err := c.cc.Invoke(ctx, MigrationInternalAPI_InternalGetCheckoutRequestResyncSellerNotes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *migrationInternalAPIClient) InternalListCheckoutRequestResyncSourceGroups(ctx context.Context, in *InternalListCheckoutRequestResyncSourceGroupsRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncSourceGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListCheckoutRequestResyncSourceGroupsResponse)
+	err := c.cc.Invoke(ctx, MigrationInternalAPI_InternalListCheckoutRequestResyncSourceGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *migrationInternalAPIClient) InternalCheckCheckoutRequestResyncMigrationJobs(ctx context.Context, in *InternalCheckCheckoutRequestResyncMigrationJobsRequest, opts ...grpc.CallOption) (*InternalCheckCheckoutRequestResyncMigrationJobsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalCheckCheckoutRequestResyncMigrationJobsResponse)
+	err := c.cc.Invoke(ctx, MigrationInternalAPI_InternalCheckCheckoutRequestResyncMigrationJobs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MigrationInternalAPIServer is the server API for MigrationInternalAPI service.
 // All implementations should embed UnimplementedMigrationInternalAPIServer
 // for forward compatibility.
@@ -104,6 +140,9 @@ type MigrationInternalAPIServer interface {
 	InternalSendWebhookProgressMigration(context.Context, *InternalSendWebhookProgressMigrationRequest) (*InternalSendWebhookProgressMigrationResponse, error)
 	InternalUpdateMigrationProfileStatus(context.Context, *InternalUpdateMigrationProfileStatusRequest) (*InternalUpdateMigrationProfileStatusResponse, error)
 	InternalMigrateCreateOmsOrderSyncTracking(context.Context, *InternalMigrateCreateOmsOrderSyncTrackingRequest) (*InternalMigrateCreateOmsOrderSyncTrackingResponse, error)
+	InternalGetCheckoutRequestResyncSellerNotes(context.Context, *InternalGetCheckoutRequestResyncSellerNotesRequest) (*InternalGetCheckoutRequestResyncSellerNotesResponse, error)
+	InternalListCheckoutRequestResyncSourceGroups(context.Context, *InternalListCheckoutRequestResyncSourceGroupsRequest) (*InternalListCheckoutRequestResyncSourceGroupsResponse, error)
+	InternalCheckCheckoutRequestResyncMigrationJobs(context.Context, *InternalCheckCheckoutRequestResyncMigrationJobsRequest) (*InternalCheckCheckoutRequestResyncMigrationJobsResponse, error)
 }
 
 // UnimplementedMigrationInternalAPIServer should be embedded to have
@@ -127,6 +166,15 @@ func (UnimplementedMigrationInternalAPIServer) InternalUpdateMigrationProfileSta
 }
 func (UnimplementedMigrationInternalAPIServer) InternalMigrateCreateOmsOrderSyncTracking(context.Context, *InternalMigrateCreateOmsOrderSyncTrackingRequest) (*InternalMigrateCreateOmsOrderSyncTrackingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalMigrateCreateOmsOrderSyncTracking not implemented")
+}
+func (UnimplementedMigrationInternalAPIServer) InternalGetCheckoutRequestResyncSellerNotes(context.Context, *InternalGetCheckoutRequestResyncSellerNotesRequest) (*InternalGetCheckoutRequestResyncSellerNotesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestResyncSellerNotes not implemented")
+}
+func (UnimplementedMigrationInternalAPIServer) InternalListCheckoutRequestResyncSourceGroups(context.Context, *InternalListCheckoutRequestResyncSourceGroupsRequest) (*InternalListCheckoutRequestResyncSourceGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListCheckoutRequestResyncSourceGroups not implemented")
+}
+func (UnimplementedMigrationInternalAPIServer) InternalCheckCheckoutRequestResyncMigrationJobs(context.Context, *InternalCheckCheckoutRequestResyncMigrationJobsRequest) (*InternalCheckCheckoutRequestResyncMigrationJobsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalCheckCheckoutRequestResyncMigrationJobs not implemented")
 }
 func (UnimplementedMigrationInternalAPIServer) testEmbeddedByValue() {}
 
@@ -238,6 +286,60 @@ func _MigrationInternalAPI_InternalMigrateCreateOmsOrderSyncTracking_Handler(srv
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MigrationInternalAPI_InternalGetCheckoutRequestResyncSellerNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetCheckoutRequestResyncSellerNotesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MigrationInternalAPIServer).InternalGetCheckoutRequestResyncSellerNotes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MigrationInternalAPI_InternalGetCheckoutRequestResyncSellerNotes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MigrationInternalAPIServer).InternalGetCheckoutRequestResyncSellerNotes(ctx, req.(*InternalGetCheckoutRequestResyncSellerNotesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MigrationInternalAPI_InternalListCheckoutRequestResyncSourceGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListCheckoutRequestResyncSourceGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MigrationInternalAPIServer).InternalListCheckoutRequestResyncSourceGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MigrationInternalAPI_InternalListCheckoutRequestResyncSourceGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MigrationInternalAPIServer).InternalListCheckoutRequestResyncSourceGroups(ctx, req.(*InternalListCheckoutRequestResyncSourceGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MigrationInternalAPI_InternalCheckCheckoutRequestResyncMigrationJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalCheckCheckoutRequestResyncMigrationJobsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MigrationInternalAPIServer).InternalCheckCheckoutRequestResyncMigrationJobs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MigrationInternalAPI_InternalCheckCheckoutRequestResyncMigrationJobs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MigrationInternalAPIServer).InternalCheckCheckoutRequestResyncMigrationJobs(ctx, req.(*InternalCheckCheckoutRequestResyncMigrationJobsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MigrationInternalAPI_ServiceDesc is the grpc.ServiceDesc for MigrationInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -264,6 +366,18 @@ var MigrationInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalMigrateCreateOmsOrderSyncTracking",
 			Handler:    _MigrationInternalAPI_InternalMigrateCreateOmsOrderSyncTracking_Handler,
+		},
+		{
+			MethodName: "InternalGetCheckoutRequestResyncSellerNotes",
+			Handler:    _MigrationInternalAPI_InternalGetCheckoutRequestResyncSellerNotes_Handler,
+		},
+		{
+			MethodName: "InternalListCheckoutRequestResyncSourceGroups",
+			Handler:    _MigrationInternalAPI_InternalListCheckoutRequestResyncSourceGroups_Handler,
+		},
+		{
+			MethodName: "InternalCheckCheckoutRequestResyncMigrationJobs",
+			Handler:    _MigrationInternalAPI_InternalCheckCheckoutRequestResyncMigrationJobs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

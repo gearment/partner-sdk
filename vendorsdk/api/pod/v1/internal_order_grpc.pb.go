@@ -57,6 +57,9 @@ const (
 	OrderInternalAPI_InternalMarkOrderAsNeedVendorCancelCleanup_FullMethodName                         = "/api.pod.v1.OrderInternalAPI/InternalMarkOrderAsNeedVendorCancelCleanup"
 	OrderInternalAPI_InternalMarkOrderAsThirdPartyCancelOnly_FullMethodName                            = "/api.pod.v1.OrderInternalAPI/InternalMarkOrderAsThirdPartyCancelOnly"
 	OrderInternalAPI_InternalGofoDhlSwitch_FullMethodName                                              = "/api.pod.v1.OrderInternalAPI/InternalGofoDhlSwitch"
+	OrderInternalAPI_InternalGetCheckoutRequestResyncHighWater_FullMethodName                          = "/api.pod.v1.OrderInternalAPI/InternalGetCheckoutRequestResyncHighWater"
+	OrderInternalAPI_InternalListCheckoutRequestResyncCandidates_FullMethodName                        = "/api.pod.v1.OrderInternalAPI/InternalListCheckoutRequestResyncCandidates"
+	OrderInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName                                 = "/api.pod.v1.OrderInternalAPI/InternalApplyCheckoutRequestResync"
 )
 
 // OrderInternalAPIClient is the client API for OrderInternalAPI service.
@@ -108,6 +111,11 @@ type OrderInternalAPIClient interface {
 	InternalMarkOrderAsNeedVendorCancelCleanup(ctx context.Context, in *InternalMarkOrderAsNeedVendorCancelCleanupRequest, opts ...grpc.CallOption) (*InternalMarkOrderAsNeedVendorCancelCleanupResponse, error)
 	InternalMarkOrderAsThirdPartyCancelOnly(ctx context.Context, in *InternalMarkOrderAsThirdPartyCancelOnlyRequest, opts ...grpc.CallOption) (*InternalMarkOrderAsThirdPartyCancelOnlyResponse, error)
 	InternalGofoDhlSwitch(ctx context.Context, in *InternalGofoDhlSwitchRequest, opts ...grpc.CallOption) (*InternalGofoDhlSwitchResponse, error)
+	// Read-only, team-scoped APIs for the checkout resync tool. They expose
+	// only immutable order/payment identity and never decide Finance missingness.
+	InternalGetCheckoutRequestResyncHighWater(ctx context.Context, in *InternalGetCheckoutRequestResyncHighWaterRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncHighWaterResponse, error)
+	InternalListCheckoutRequestResyncCandidates(ctx context.Context, in *InternalListCheckoutRequestResyncCandidatesRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncCandidatesResponse, error)
+	InternalApplyCheckoutRequestResync(ctx context.Context, in *InternalApplyCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalApplyCheckoutRequestResyncResponse, error)
 }
 
 type orderInternalAPIClient struct {
@@ -498,6 +506,36 @@ func (c *orderInternalAPIClient) InternalGofoDhlSwitch(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *orderInternalAPIClient) InternalGetCheckoutRequestResyncHighWater(ctx context.Context, in *InternalGetCheckoutRequestResyncHighWaterRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncHighWaterResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetCheckoutRequestResyncHighWaterResponse)
+	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalGetCheckoutRequestResyncHighWater_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderInternalAPIClient) InternalListCheckoutRequestResyncCandidates(ctx context.Context, in *InternalListCheckoutRequestResyncCandidatesRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncCandidatesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListCheckoutRequestResyncCandidatesResponse)
+	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalListCheckoutRequestResyncCandidates_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderInternalAPIClient) InternalApplyCheckoutRequestResync(ctx context.Context, in *InternalApplyCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalApplyCheckoutRequestResyncResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalApplyCheckoutRequestResyncResponse)
+	err := c.cc.Invoke(ctx, OrderInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderInternalAPIServer is the server API for OrderInternalAPI service.
 // All implementations should embed UnimplementedOrderInternalAPIServer
 // for forward compatibility.
@@ -547,6 +585,11 @@ type OrderInternalAPIServer interface {
 	InternalMarkOrderAsNeedVendorCancelCleanup(context.Context, *InternalMarkOrderAsNeedVendorCancelCleanupRequest) (*InternalMarkOrderAsNeedVendorCancelCleanupResponse, error)
 	InternalMarkOrderAsThirdPartyCancelOnly(context.Context, *InternalMarkOrderAsThirdPartyCancelOnlyRequest) (*InternalMarkOrderAsThirdPartyCancelOnlyResponse, error)
 	InternalGofoDhlSwitch(context.Context, *InternalGofoDhlSwitchRequest) (*InternalGofoDhlSwitchResponse, error)
+	// Read-only, team-scoped APIs for the checkout resync tool. They expose
+	// only immutable order/payment identity and never decide Finance missingness.
+	InternalGetCheckoutRequestResyncHighWater(context.Context, *InternalGetCheckoutRequestResyncHighWaterRequest) (*InternalGetCheckoutRequestResyncHighWaterResponse, error)
+	InternalListCheckoutRequestResyncCandidates(context.Context, *InternalListCheckoutRequestResyncCandidatesRequest) (*InternalListCheckoutRequestResyncCandidatesResponse, error)
+	InternalApplyCheckoutRequestResync(context.Context, *InternalApplyCheckoutRequestResyncRequest) (*InternalApplyCheckoutRequestResyncResponse, error)
 }
 
 // UnimplementedOrderInternalAPIServer should be embedded to have
@@ -669,6 +712,15 @@ func (UnimplementedOrderInternalAPIServer) InternalMarkOrderAsThirdPartyCancelOn
 }
 func (UnimplementedOrderInternalAPIServer) InternalGofoDhlSwitch(context.Context, *InternalGofoDhlSwitchRequest) (*InternalGofoDhlSwitchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGofoDhlSwitch not implemented")
+}
+func (UnimplementedOrderInternalAPIServer) InternalGetCheckoutRequestResyncHighWater(context.Context, *InternalGetCheckoutRequestResyncHighWaterRequest) (*InternalGetCheckoutRequestResyncHighWaterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestResyncHighWater not implemented")
+}
+func (UnimplementedOrderInternalAPIServer) InternalListCheckoutRequestResyncCandidates(context.Context, *InternalListCheckoutRequestResyncCandidatesRequest) (*InternalListCheckoutRequestResyncCandidatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListCheckoutRequestResyncCandidates not implemented")
+}
+func (UnimplementedOrderInternalAPIServer) InternalApplyCheckoutRequestResync(context.Context, *InternalApplyCheckoutRequestResyncRequest) (*InternalApplyCheckoutRequestResyncResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalApplyCheckoutRequestResync not implemented")
 }
 func (UnimplementedOrderInternalAPIServer) testEmbeddedByValue() {}
 
@@ -1374,6 +1426,60 @@ func _OrderInternalAPI_InternalGofoDhlSwitch_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderInternalAPI_InternalGetCheckoutRequestResyncHighWater_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetCheckoutRequestResyncHighWaterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderInternalAPIServer).InternalGetCheckoutRequestResyncHighWater(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderInternalAPI_InternalGetCheckoutRequestResyncHighWater_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderInternalAPIServer).InternalGetCheckoutRequestResyncHighWater(ctx, req.(*InternalGetCheckoutRequestResyncHighWaterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderInternalAPI_InternalListCheckoutRequestResyncCandidates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListCheckoutRequestResyncCandidatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderInternalAPIServer).InternalListCheckoutRequestResyncCandidates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderInternalAPI_InternalListCheckoutRequestResyncCandidates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderInternalAPIServer).InternalListCheckoutRequestResyncCandidates(ctx, req.(*InternalListCheckoutRequestResyncCandidatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderInternalAPI_InternalApplyCheckoutRequestResync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalApplyCheckoutRequestResyncRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderInternalAPIServer).InternalApplyCheckoutRequestResync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderInternalAPIServer).InternalApplyCheckoutRequestResync(ctx, req.(*InternalApplyCheckoutRequestResyncRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderInternalAPI_ServiceDesc is the grpc.ServiceDesc for OrderInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1532,6 +1638,18 @@ var OrderInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalGofoDhlSwitch",
 			Handler:    _OrderInternalAPI_InternalGofoDhlSwitch_Handler,
+		},
+		{
+			MethodName: "InternalGetCheckoutRequestResyncHighWater",
+			Handler:    _OrderInternalAPI_InternalGetCheckoutRequestResyncHighWater_Handler,
+		},
+		{
+			MethodName: "InternalListCheckoutRequestResyncCandidates",
+			Handler:    _OrderInternalAPI_InternalListCheckoutRequestResyncCandidates_Handler,
+		},
+		{
+			MethodName: "InternalApplyCheckoutRequestResync",
+			Handler:    _OrderInternalAPI_InternalApplyCheckoutRequestResync_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
