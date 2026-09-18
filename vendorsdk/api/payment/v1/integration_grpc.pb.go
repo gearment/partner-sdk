@@ -37,6 +37,16 @@ const (
 	PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByOrderID"
 	PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByTxnRef"
 	PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestDetailByOrderID"
+	PaymentInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalApplyCheckoutRequestResync"
+	PaymentInternalAPI_InternalGetCheckoutRequestResync_FullMethodName              = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestResync"
+	PaymentInternalAPI_InternalPollCheckoutRequestResync_FullMethodName             = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResync"
+	PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_FullMethodName         = "/api.payment.v1.PaymentInternalAPI/InternalStartCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalResumeCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalListCheckoutRequestResyncCarryForward"
+	PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_FullMethodName       = "/api.payment.v1.PaymentInternalAPI/InternalAdvanceCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalPrepareCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalAcknowledgeCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResyncBatch"
 )
 
 // PaymentInternalAPIClient is the client API for PaymentInternalAPI service.
@@ -64,6 +74,17 @@ type PaymentInternalAPIClient interface {
 	InternalGetCheckoutRequestByOrderID(ctx context.Context, in *InternalGetCheckoutRequestByOrderIDRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestByOrderIDResponse, error)
 	InternalGetCheckoutRequestByTxnRef(ctx context.Context, in *InternalGetCheckoutRequestByTxnRefRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestByTxnRefResponse, error)
 	InternalGetCheckoutRequestDetailByOrderID(ctx context.Context, in *InternalGetCheckoutRequestDetailByOrderIDRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error)
+	// Dedicated idempotent repair surface. This is separate from legacy migration RPCs.
+	InternalApplyCheckoutRequestResync(ctx context.Context, in *InternalApplyCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalApplyCheckoutRequestResyncResponse, error)
+	InternalGetCheckoutRequestResync(ctx context.Context, in *InternalGetCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncResponse, error)
+	InternalPollCheckoutRequestResync(ctx context.Context, in *InternalPollCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalPollCheckoutRequestResyncResponse, error)
+	InternalStartCheckoutRequestResyncRun(ctx context.Context, in *InternalStartCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalStartCheckoutRequestResyncRunResponse, error)
+	InternalResumeCheckoutRequestResyncRun(ctx context.Context, in *InternalResumeCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalResumeCheckoutRequestResyncRunResponse, error)
+	InternalListCheckoutRequestResyncCarryForward(ctx context.Context, in *InternalListCheckoutRequestResyncCarryForwardRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncCarryForwardResponse, error)
+	InternalAdvanceCheckoutRequestResyncRun(ctx context.Context, in *InternalAdvanceCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalAdvanceCheckoutRequestResyncRunResponse, error)
+	InternalPrepareCheckoutRequestResyncBatch(ctx context.Context, in *InternalPrepareCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPrepareCheckoutRequestResyncBatchResponse, error)
+	InternalAcknowledgeCheckoutRequestResyncBatch(ctx context.Context, in *InternalAcknowledgeCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error)
+	InternalPollCheckoutRequestResyncBatch(ctx context.Context, in *InternalPollCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPollCheckoutRequestResyncBatchResponse, error)
 }
 
 type paymentInternalAPIClient struct {
@@ -254,6 +275,106 @@ func (c *paymentInternalAPIClient) InternalGetCheckoutRequestDetailByOrderID(ctx
 	return out, nil
 }
 
+func (c *paymentInternalAPIClient) InternalApplyCheckoutRequestResync(ctx context.Context, in *InternalApplyCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalApplyCheckoutRequestResyncResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalApplyCheckoutRequestResyncResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalGetCheckoutRequestResync(ctx context.Context, in *InternalGetCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalGetCheckoutRequestResyncResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetCheckoutRequestResyncResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalGetCheckoutRequestResync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalPollCheckoutRequestResync(ctx context.Context, in *InternalPollCheckoutRequestResyncRequest, opts ...grpc.CallOption) (*InternalPollCheckoutRequestResyncResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalPollCheckoutRequestResyncResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalPollCheckoutRequestResync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalStartCheckoutRequestResyncRun(ctx context.Context, in *InternalStartCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalStartCheckoutRequestResyncRunResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalStartCheckoutRequestResyncRunResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalResumeCheckoutRequestResyncRun(ctx context.Context, in *InternalResumeCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalResumeCheckoutRequestResyncRunResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalResumeCheckoutRequestResyncRunResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalListCheckoutRequestResyncCarryForward(ctx context.Context, in *InternalListCheckoutRequestResyncCarryForwardRequest, opts ...grpc.CallOption) (*InternalListCheckoutRequestResyncCarryForwardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListCheckoutRequestResyncCarryForwardResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalAdvanceCheckoutRequestResyncRun(ctx context.Context, in *InternalAdvanceCheckoutRequestResyncRunRequest, opts ...grpc.CallOption) (*InternalAdvanceCheckoutRequestResyncRunResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalAdvanceCheckoutRequestResyncRunResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalPrepareCheckoutRequestResyncBatch(ctx context.Context, in *InternalPrepareCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPrepareCheckoutRequestResyncBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalPrepareCheckoutRequestResyncBatchResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalAcknowledgeCheckoutRequestResyncBatch(ctx context.Context, in *InternalAcknowledgeCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalAcknowledgeCheckoutRequestResyncBatchResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentInternalAPIClient) InternalPollCheckoutRequestResyncBatch(ctx context.Context, in *InternalPollCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPollCheckoutRequestResyncBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalPollCheckoutRequestResyncBatchResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentInternalAPIServer is the server API for PaymentInternalAPI service.
 // All implementations should embed UnimplementedPaymentInternalAPIServer
 // for forward compatibility.
@@ -279,6 +400,17 @@ type PaymentInternalAPIServer interface {
 	InternalGetCheckoutRequestByOrderID(context.Context, *InternalGetCheckoutRequestByOrderIDRequest) (*InternalGetCheckoutRequestByOrderIDResponse, error)
 	InternalGetCheckoutRequestByTxnRef(context.Context, *InternalGetCheckoutRequestByTxnRefRequest) (*InternalGetCheckoutRequestByTxnRefResponse, error)
 	InternalGetCheckoutRequestDetailByOrderID(context.Context, *InternalGetCheckoutRequestDetailByOrderIDRequest) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error)
+	// Dedicated idempotent repair surface. This is separate from legacy migration RPCs.
+	InternalApplyCheckoutRequestResync(context.Context, *InternalApplyCheckoutRequestResyncRequest) (*InternalApplyCheckoutRequestResyncResponse, error)
+	InternalGetCheckoutRequestResync(context.Context, *InternalGetCheckoutRequestResyncRequest) (*InternalGetCheckoutRequestResyncResponse, error)
+	InternalPollCheckoutRequestResync(context.Context, *InternalPollCheckoutRequestResyncRequest) (*InternalPollCheckoutRequestResyncResponse, error)
+	InternalStartCheckoutRequestResyncRun(context.Context, *InternalStartCheckoutRequestResyncRunRequest) (*InternalStartCheckoutRequestResyncRunResponse, error)
+	InternalResumeCheckoutRequestResyncRun(context.Context, *InternalResumeCheckoutRequestResyncRunRequest) (*InternalResumeCheckoutRequestResyncRunResponse, error)
+	InternalListCheckoutRequestResyncCarryForward(context.Context, *InternalListCheckoutRequestResyncCarryForwardRequest) (*InternalListCheckoutRequestResyncCarryForwardResponse, error)
+	InternalAdvanceCheckoutRequestResyncRun(context.Context, *InternalAdvanceCheckoutRequestResyncRunRequest) (*InternalAdvanceCheckoutRequestResyncRunResponse, error)
+	InternalPrepareCheckoutRequestResyncBatch(context.Context, *InternalPrepareCheckoutRequestResyncBatchRequest) (*InternalPrepareCheckoutRequestResyncBatchResponse, error)
+	InternalAcknowledgeCheckoutRequestResyncBatch(context.Context, *InternalAcknowledgeCheckoutRequestResyncBatchRequest) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error)
+	InternalPollCheckoutRequestResyncBatch(context.Context, *InternalPollCheckoutRequestResyncBatchRequest) (*InternalPollCheckoutRequestResyncBatchResponse, error)
 }
 
 // UnimplementedPaymentInternalAPIServer should be embedded to have
@@ -341,6 +473,36 @@ func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestByTxnRef(
 }
 func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestDetailByOrderID(context.Context, *InternalGetCheckoutRequestDetailByOrderIDRequest) (*InternalGetCheckoutRequestDetailByOrderIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestDetailByOrderID not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalApplyCheckoutRequestResync(context.Context, *InternalApplyCheckoutRequestResyncRequest) (*InternalApplyCheckoutRequestResyncResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalApplyCheckoutRequestResync not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalGetCheckoutRequestResync(context.Context, *InternalGetCheckoutRequestResyncRequest) (*InternalGetCheckoutRequestResyncResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetCheckoutRequestResync not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalPollCheckoutRequestResync(context.Context, *InternalPollCheckoutRequestResyncRequest) (*InternalPollCheckoutRequestResyncResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalPollCheckoutRequestResync not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalStartCheckoutRequestResyncRun(context.Context, *InternalStartCheckoutRequestResyncRunRequest) (*InternalStartCheckoutRequestResyncRunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalStartCheckoutRequestResyncRun not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalResumeCheckoutRequestResyncRun(context.Context, *InternalResumeCheckoutRequestResyncRunRequest) (*InternalResumeCheckoutRequestResyncRunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalResumeCheckoutRequestResyncRun not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalListCheckoutRequestResyncCarryForward(context.Context, *InternalListCheckoutRequestResyncCarryForwardRequest) (*InternalListCheckoutRequestResyncCarryForwardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListCheckoutRequestResyncCarryForward not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalAdvanceCheckoutRequestResyncRun(context.Context, *InternalAdvanceCheckoutRequestResyncRunRequest) (*InternalAdvanceCheckoutRequestResyncRunResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAdvanceCheckoutRequestResyncRun not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalPrepareCheckoutRequestResyncBatch(context.Context, *InternalPrepareCheckoutRequestResyncBatchRequest) (*InternalPrepareCheckoutRequestResyncBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalPrepareCheckoutRequestResyncBatch not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalAcknowledgeCheckoutRequestResyncBatch(context.Context, *InternalAcknowledgeCheckoutRequestResyncBatchRequest) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalAcknowledgeCheckoutRequestResyncBatch not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalPollCheckoutRequestResyncBatch(context.Context, *InternalPollCheckoutRequestResyncBatchRequest) (*InternalPollCheckoutRequestResyncBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalPollCheckoutRequestResyncBatch not implemented")
 }
 func (UnimplementedPaymentInternalAPIServer) testEmbeddedByValue() {}
 
@@ -686,6 +848,186 @@ func _PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_Handler(srv i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentInternalAPI_InternalApplyCheckoutRequestResync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalApplyCheckoutRequestResyncRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalApplyCheckoutRequestResync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalApplyCheckoutRequestResync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalApplyCheckoutRequestResync(ctx, req.(*InternalApplyCheckoutRequestResyncRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalGetCheckoutRequestResync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetCheckoutRequestResyncRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalGetCheckoutRequestResync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalGetCheckoutRequestResync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalGetCheckoutRequestResync(ctx, req.(*InternalGetCheckoutRequestResyncRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalPollCheckoutRequestResync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalPollCheckoutRequestResyncRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalPollCheckoutRequestResync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalPollCheckoutRequestResync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalPollCheckoutRequestResync(ctx, req.(*InternalPollCheckoutRequestResyncRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalStartCheckoutRequestResyncRunRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalStartCheckoutRequestResyncRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalStartCheckoutRequestResyncRun(ctx, req.(*InternalStartCheckoutRequestResyncRunRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalResumeCheckoutRequestResyncRunRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalResumeCheckoutRequestResyncRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalResumeCheckoutRequestResyncRun(ctx, req.(*InternalResumeCheckoutRequestResyncRunRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListCheckoutRequestResyncCarryForwardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalListCheckoutRequestResyncCarryForward(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalListCheckoutRequestResyncCarryForward(ctx, req.(*InternalListCheckoutRequestResyncCarryForwardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAdvanceCheckoutRequestResyncRunRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalAdvanceCheckoutRequestResyncRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalAdvanceCheckoutRequestResyncRun(ctx, req.(*InternalAdvanceCheckoutRequestResyncRunRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalPrepareCheckoutRequestResyncBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalPrepareCheckoutRequestResyncBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalPrepareCheckoutRequestResyncBatch(ctx, req.(*InternalPrepareCheckoutRequestResyncBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalAcknowledgeCheckoutRequestResyncBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalAcknowledgeCheckoutRequestResyncBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalAcknowledgeCheckoutRequestResyncBatch(ctx, req.(*InternalAcknowledgeCheckoutRequestResyncBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalPollCheckoutRequestResyncBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalPollCheckoutRequestResyncBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalPollCheckoutRequestResyncBatch(ctx, req.(*InternalPollCheckoutRequestResyncBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PaymentInternalAPI_ServiceDesc is the grpc.ServiceDesc for PaymentInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -764,6 +1106,46 @@ var PaymentInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalGetCheckoutRequestDetailByOrderID",
 			Handler:    _PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_Handler,
+		},
+		{
+			MethodName: "InternalApplyCheckoutRequestResync",
+			Handler:    _PaymentInternalAPI_InternalApplyCheckoutRequestResync_Handler,
+		},
+		{
+			MethodName: "InternalGetCheckoutRequestResync",
+			Handler:    _PaymentInternalAPI_InternalGetCheckoutRequestResync_Handler,
+		},
+		{
+			MethodName: "InternalPollCheckoutRequestResync",
+			Handler:    _PaymentInternalAPI_InternalPollCheckoutRequestResync_Handler,
+		},
+		{
+			MethodName: "InternalStartCheckoutRequestResyncRun",
+			Handler:    _PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_Handler,
+		},
+		{
+			MethodName: "InternalResumeCheckoutRequestResyncRun",
+			Handler:    _PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_Handler,
+		},
+		{
+			MethodName: "InternalListCheckoutRequestResyncCarryForward",
+			Handler:    _PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_Handler,
+		},
+		{
+			MethodName: "InternalAdvanceCheckoutRequestResyncRun",
+			Handler:    _PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_Handler,
+		},
+		{
+			MethodName: "InternalPrepareCheckoutRequestResyncBatch",
+			Handler:    _PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_Handler,
+		},
+		{
+			MethodName: "InternalAcknowledgeCheckoutRequestResyncBatch",
+			Handler:    _PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_Handler,
+		},
+		{
+			MethodName: "InternalPollCheckoutRequestResyncBatch",
+			Handler:    _PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
