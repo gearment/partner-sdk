@@ -23,6 +23,7 @@ const (
 	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
 	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
 	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
+	OrderAdminAPI_StaffUpdateShippingService_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
 	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
 	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
 	OrderAdminAPI_StaffListOrder_FullMethodName                       = "/api.pod.v1.OrderAdminAPI/StaffListOrder"
@@ -68,6 +69,7 @@ type OrderAdminAPIClient interface {
 	StaffUpdateOrderDesign(ctx context.Context, in *StaffUpdateOrderDesignRequest, opts ...grpc.CallOption) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(ctx context.Context, in *StaffUpdateOrderAddressRequest, opts ...grpc.CallOption) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(ctx context.Context, in *StaffUpdateOrderShippingLabelRequest, opts ...grpc.CallOption) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffUpdateShippingService(ctx context.Context, in *StaffUpdateShippingServiceRequest, opts ...grpc.CallOption) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(ctx context.Context, in *StaffMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(ctx context.Context, in *StaffPreCheckMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffPreCheckMarkFulfilledResponse, error)
 	StaffListOrder(ctx context.Context, in *StaffListOrderRequest, opts ...grpc.CallOption) (*StaffListOrderResponse, error)
@@ -138,6 +140,16 @@ func (c *orderAdminAPIClient) StaffUpdateOrderShippingLabel(ctx context.Context,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateOrderShippingLabelResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffUpdateShippingService(ctx context.Context, in *StaffUpdateShippingServiceRequest, opts ...grpc.CallOption) (*StaffUpdateShippingServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateShippingServiceResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateShippingService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -511,6 +523,7 @@ type OrderAdminAPIServer interface {
 	StaffUpdateOrderDesign(context.Context, *StaffUpdateOrderDesignRequest) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(context.Context, *StaffUpdateOrderAddressRequest) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(context.Context, *StaffMarkFulfilledRequest) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(context.Context, *StaffPreCheckMarkFulfilledRequest) (*StaffPreCheckMarkFulfilledResponse, error)
 	StaffListOrder(context.Context, *StaffListOrderRequest) (*StaffListOrderResponse, error)
@@ -564,6 +577,9 @@ func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderAddress(context.Context,
 }
 func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOrderShippingLabel not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateShippingService not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffMarkFulfilled(context.Context, *StaffMarkFulfilledRequest) (*StaffMarkFulfilledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffMarkFulfilled not implemented")
@@ -743,6 +759,24 @@ func _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffUpdateOrderShippingLabel(ctx, req.(*StaffUpdateOrderShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffUpdateShippingService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateShippingServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffUpdateShippingService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffUpdateShippingService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffUpdateShippingService(ctx, req.(*StaffUpdateShippingServiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1413,6 +1447,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateOrderShippingLabel",
 			Handler:    _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler,
+		},
+		{
+			MethodName: "StaffUpdateShippingService",
+			Handler:    _OrderAdminAPI_StaffUpdateShippingService_Handler,
 		},
 		{
 			MethodName: "StaffMarkFulfilled",
