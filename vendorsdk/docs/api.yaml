@@ -21,6 +21,14 @@ tags:
        Base URL: https://api.gearment.com/
        Authentication: API Key (header: X-API-Key, X-API-Secret)
     x-displayName: Catalog
+  - name: api.webhook.v1.VendorWebhookAPI
+    description: |-
+      VendorWebhookAPI provides webhook management for real-time event notifications.
+       Register webhooks to receive automated notifications when orders are completed, cancelled, or tracking is updated.
+
+       Base URL: https://api.gearment.com/
+       Authentication: API Key (header: X-API-Key, X-API-Secret)
+    x-displayName: Webhook
   - name: api.order.v1.VendorOrderAPI
     description: |-
       VendorOrderAPI provides comprehensive order management capabilities for vendors.
@@ -29,6 +37,12 @@ tags:
        Base URL: https://api.gearment.com/
        Authentication: API Key (header: X-API-Key, X-API-Secret)
     x-displayName: Order
+  - name: api.order.v1.VendorShippingLabelAPI
+    description: |-
+      VendorShippingLabelAPI exposes seller-owned label operations to v3
+       integrations. Team ownership is derived from the authenticated credential,
+       never from these payloads.
+    x-displayName: ShippingLabel
   - name: api.order.v1.VendorShippingCoverageAPI
     description: |-
       VendorShippingCoverageAPI answers a shipping question that arises before an
@@ -41,14 +55,6 @@ tags:
   - name: api.support.v1.VendorSupportAPI
     description: VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
     x-displayName: Support
-  - name: api.webhook.v1.VendorWebhookAPI
-    description: |-
-      VendorWebhookAPI provides webhook management for real-time event notifications.
-       Register webhooks to receive automated notifications when orders are completed, cancelled, or tracking is updated.
-
-       Base URL: https://api.gearment.com/
-       Authentication: API Key (header: X-API-Key, X-API-Secret)
-    x-displayName: Webhook
 externalDocs:
   description: Find out more about Gearment API v3
   url: https://gearment.com/integration/api-docs.html
@@ -645,6 +651,215 @@ paths:
         "500":
           $ref: '#/components/responses/InternalError'
       security: []
+  /api/v3/webhooks:
+    get:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: List Webhook
+      description: |-
+        List all registered webhooks
+
+         GET /api/v3/webhooks
+
+         Returns:
+           - All registered webhooks for your account
+           - Webhook status (active/inactive)
+           - Event topics subscribed
+           - Delivery URLs
+
+         Use cases:
+           - Audit webhook configurations
+           - Verify webhook setup
+           - List active event subscriptions
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorListWebhook
+      parameters:
+        - name: filter.statuses
+          in: query
+          description: Filter by webhook status (e.g., to see only active webhooks)
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+            title: statuses
+            description: Filter by webhook status (e.g., to see only active webhooks)
+        - name: filter.store_ids
+          in: query
+          description: Filter by store IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - store_abc123
+              minLength: 1
+            title: store_ids
+            description: Filter by store IDs
+        - name: filter.team_ids
+          in: query
+          description: Filter by team IDs (internal use)
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - team_abc123
+              minLength: 1
+            title: team_ids
+            description: Filter by team IDs (internal use)
+        - name: filter.topics
+          in: query
+          description: Filter by event topics
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+            title: topics
+            description: Filter by event topics
+        - name: filter.versions
+          in: query
+          description: Filter by webhook version
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+            title: versions
+            description: Filter by webhook version
+        - name: filter.webhook_ids
+          in: query
+          description: Filter by specific webhook IDs
+          schema:
+            type: array
+            items:
+              type: string
+              examples:
+                - wh_abc123
+              minLength: 1
+            title: webhook_ids
+            description: Filter by specific webhook IDs
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorListWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+    post:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: Create Webhook
+      description: |-
+        Register a new webhook for event notifications
+
+         POST /api/v3/webhooks
+         Content-Type: application/json
+
+         Available topics:
+           - VENDOR_WEBHOOK_TOPIC_ORDER_COMPLETED: Order fulfillment completed
+           - VENDOR_WEBHOOK_TOPIC_ORDER_CANCELED: Order was cancelled
+           - VENDOR_WEBHOOK_TOPIC_TRACKING_UPDATED: Shipping tracking updated
+           - VENDOR_WEBHOOK_TOPIC_ADDRESS_UNVERIFIED: Shipping address validation failed
+
+         Security:
+           - Webhooks are sent via HTTPS POST
+           - Include signature header for verification
+           - Must respond with 200 OK within 30 seconds
+
+         Use cases:
+           - Automate order status updates
+           - Sync tracking information
+           - Alert customers of shipment
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorCreateWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/webhooks/{webhook_id}:
+    delete:
+      tags:
+        - api.webhook.v1.VendorWebhookAPI
+      summary: Delete Webhook
+      description: |-
+        Delete a webhook subscription
+
+         DELETE /api/v3/webhooks/{webhook_id}
+
+         Use cases:
+           - Remove unused webhooks
+           - Update webhook configuration (delete + recreate)
+      operationId: api.webhook.v1.VendorWebhookAPI.VendorDeleteWebhook
+      parameters:
+        - name: webhook_id
+          in: path
+          description: Webhook ID is provided in URL path parameter
+          required: true
+          schema:
+            type: string
+            title: webhook_id
+            maxLength: 255
+            minLength: 1
+            description: Webhook ID is provided in URL path parameter
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.webhook.v1.VendorDeleteWebhookResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
   /api/v3/orders:
     get:
       tags:
@@ -1160,6 +1375,170 @@ paths:
         "500":
           $ref: '#/components/responses/InternalError'
       security: []
+  /api/v3/shipping/carriers-services:
+    get:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: List Shipping Carrier Services
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorListShippingCarrierServices
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListShippingCarrierServicesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/shipping/labels:
+    post:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: Purchase Shipping Label
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorPurchaseShippingLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorPurchaseShippingLabelRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorPurchaseShippingLabelResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/shipping/labels/{label_id}:
+    get:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: Get Shipping Label
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorGetShippingLabel
+      parameters:
+        - name: label_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: label_id
+            minLength: 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetShippingLabelResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/shipping/labels/{label_id}/void:
+    post:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: Void Shipping Label
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorVoidShippingLabel
+      parameters:
+        - name: label_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: label_id
+            minLength: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label_id:
+                  type: string
+                  title: label_id
+                  minLength: 1
+              title: VendorVoidShippingLabelRequest
+              additionalProperties: false
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorVoidShippingLabelResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+  /api/v3/shipping/rates:
+    post:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: Estimate Shipping Rates
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorEstimateShippingRates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.order.v1.VendorEstimateShippingRatesRequest'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorEstimateShippingRatesResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
   /api/v3/shipping/economy/coverage/check:
     post:
       tags:
@@ -1284,215 +1663,6 @@ paths:
           $ref: '#/components/responses/InternalError'
       security: []
       parameters: []
-  /api/v3/webhooks:
-    get:
-      tags:
-        - api.webhook.v1.VendorWebhookAPI
-      summary: List Webhook
-      description: |-
-        List all registered webhooks
-
-         GET /api/v3/webhooks
-
-         Returns:
-           - All registered webhooks for your account
-           - Webhook status (active/inactive)
-           - Event topics subscribed
-           - Delivery URLs
-
-         Use cases:
-           - Audit webhook configurations
-           - Verify webhook setup
-           - List active event subscriptions
-      operationId: api.webhook.v1.VendorWebhookAPI.VendorListWebhook
-      parameters:
-        - name: filter.statuses
-          in: query
-          description: Filter by webhook status (e.g., to see only active webhooks)
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
-            title: statuses
-            description: Filter by webhook status (e.g., to see only active webhooks)
-        - name: filter.store_ids
-          in: query
-          description: Filter by store IDs
-          schema:
-            type: array
-            items:
-              type: string
-              examples:
-                - store_abc123
-              minLength: 1
-            title: store_ids
-            description: Filter by store IDs
-        - name: filter.team_ids
-          in: query
-          description: Filter by team IDs (internal use)
-          schema:
-            type: array
-            items:
-              type: string
-              examples:
-                - team_abc123
-              minLength: 1
-            title: team_ids
-            description: Filter by team IDs (internal use)
-        - name: filter.topics
-          in: query
-          description: Filter by event topics
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
-            title: topics
-            description: Filter by event topics
-        - name: filter.versions
-          in: query
-          description: Filter by webhook version
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
-            title: versions
-            description: Filter by webhook version
-        - name: filter.webhook_ids
-          in: query
-          description: Filter by specific webhook IDs
-          schema:
-            type: array
-            items:
-              type: string
-              examples:
-                - wh_abc123
-              minLength: 1
-            title: webhook_ids
-            description: Filter by specific webhook IDs
-        - name: paging.limit
-          in: query
-          schema:
-            type: integer
-            title: limit
-            format: int32
-        - name: paging.page
-          in: query
-          schema:
-            type: integer
-            title: page
-            format: int32
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.webhook.v1.VendorListWebhookResponse'
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "500":
-          $ref: '#/components/responses/InternalError'
-      security: []
-    post:
-      tags:
-        - api.webhook.v1.VendorWebhookAPI
-      summary: Create Webhook
-      description: |-
-        Register a new webhook for event notifications
-
-         POST /api/v3/webhooks
-         Content-Type: application/json
-
-         Available topics:
-           - VENDOR_WEBHOOK_TOPIC_ORDER_COMPLETED: Order fulfillment completed
-           - VENDOR_WEBHOOK_TOPIC_ORDER_CANCELED: Order was cancelled
-           - VENDOR_WEBHOOK_TOPIC_TRACKING_UPDATED: Shipping tracking updated
-           - VENDOR_WEBHOOK_TOPIC_ADDRESS_UNVERIFIED: Shipping address validation failed
-
-         Security:
-           - Webhooks are sent via HTTPS POST
-           - Include signature header for verification
-           - Must respond with 200 OK within 30 seconds
-
-         Use cases:
-           - Automate order status updates
-           - Sync tracking information
-           - Alert customers of shipment
-      operationId: api.webhook.v1.VendorWebhookAPI.VendorCreateWebhook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookRequest'
-        required: true
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.webhook.v1.VendorCreateWebhookResponse'
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "500":
-          $ref: '#/components/responses/InternalError'
-      security: []
-      parameters: []
-  /api/v3/webhooks/{webhook_id}:
-    delete:
-      tags:
-        - api.webhook.v1.VendorWebhookAPI
-      summary: Delete Webhook
-      description: |-
-        Delete a webhook subscription
-
-         DELETE /api/v3/webhooks/{webhook_id}
-
-         Use cases:
-           - Remove unused webhooks
-           - Update webhook configuration (delete + recreate)
-      operationId: api.webhook.v1.VendorWebhookAPI.VendorDeleteWebhook
-      parameters:
-        - name: webhook_id
-          in: path
-          description: Webhook ID is provided in URL path parameter
-          required: true
-          schema:
-            type: string
-            title: webhook_id
-            maxLength: 255
-            minLength: 1
-            description: Webhook ID is provided in URL path parameter
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api.webhook.v1.VendorDeleteWebhookResponse'
-        "400":
-          $ref: '#/components/responses/BadRequest'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "500":
-          $ref: '#/components/responses/InternalError'
-      security: []
 components:
   schemas:
     ErrorResponse:
@@ -1521,6 +1691,168 @@ components:
               issue:
                 type: string
                 description: Description of the issue
+    common.platform.v1.MarketplacePlatform:
+      type:
+        - string
+        - number
+      title: MarketplacePlatform
+      enum:
+        - MARKETPLACE_PLATFORM_EBAY
+        - 2
+        - MARKETPLACE_PLATFORM_AMAZON
+        - 3
+        - MARKETPLACE_PLATFORM_SHOPIFY
+        - 4
+        - MARKETPLACE_PLATFORM_WOOCOMMERCE
+        - 5
+        - MARKETPLACE_PLATFORM_ETSY
+        - 6
+        - MARKETPLACE_PLATFORM_SHOPBASE
+        - 7
+        - MARKETPLACE_PLATFORM_GEARMENT
+        - 8
+        - MARKETPLACE_PLATFORM_ORDERDESK
+        - 9
+        - MARKETPLACE_PLATFORM_TIKTOKSHOP
+        - 10
+        - MARKETPLACE_PLATFORM_POSHMARK
+        - 11
+        - MARKETPLACE_PLATFORM_PRESTASHOP
+        - 12
+        - MARKETPLACE_PLATFORM_INKGO
+        - 13
+        - MARKETPLACE_PLATFORM_WISH
+        - 14
+        - MARKETPLACE_PLATFORM_BIGCOMMERCE
+        - 15
+        - MARKETPLACE_PLATFORM_CUSTOMILY
+        - 16
+    common.type.v1.Money:
+      type: object
+      properties:
+        currency_code:
+          type: string
+          title: currency_code
+          description: The three-letter currency code defined in ISO 4217.
+        units:
+          type:
+            - integer
+            - string
+          title: units
+          format: int64
+          description: |-
+            The whole units of the amount.
+             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+        nanos:
+          type: integer
+          title: nanos
+          format: int32
+          description: |-
+            Number of nano (10^-9) units of the amount.
+             The value must be between -999,999,999 and +999,999,999 inclusive.
+             If `units` is positive, `nanos` must be positive or zero.
+             If `units` is zero, `nanos` can be positive, zero, or negative.
+             If `units` is negative, `nanos` must be negative or zero.
+             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+      title: Money
+      additionalProperties: false
+      description: Represents an amount of money with its currency type.
+    google.protobuf.Timestamp:
+      type: string
+      examples:
+        - "2023-01-15T01:30:15.01Z"
+        - "2024-12-25T12:00:00Z"
+      format: date-time
+      description: |-
+        A Timestamp represents a point in time independent of any time zone or local
+         calendar, encoded as a count of seconds and fractions of seconds at
+         nanosecond resolution. The count is relative to an epoch at UTC midnight on
+         January 1, 1970, in the proleptic Gregorian calendar which extends the
+         Gregorian calendar backwards to year one.
+
+         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+         second table is needed for interpretation, using a [24-hour linear
+         smear](https://developers.google.com/time/smear).
+
+         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+         restricting to that range, we ensure that we can convert to and from [RFC
+         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+
+         # Examples
+
+         Example 1: Compute Timestamp from POSIX `time()`.
+
+             Timestamp timestamp;
+             timestamp.set_seconds(time(NULL));
+             timestamp.set_nanos(0);
+
+         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+
+             struct timeval tv;
+             gettimeofday(&tv, NULL);
+
+             Timestamp timestamp;
+             timestamp.set_seconds(tv.tv_sec);
+             timestamp.set_nanos(tv.tv_usec * 1000);
+
+         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+
+             FILETIME ft;
+             GetSystemTimeAsFileTime(&ft);
+             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+             Timestamp timestamp;
+             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+
+             long millis = System.currentTimeMillis();
+
+             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                 .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+         Example 5: Compute Timestamp from Java `Instant.now()`.
+
+             Instant now = Instant.now();
+
+             Timestamp timestamp =
+                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+                     .setNanos(now.getNano()).build();
+
+         Example 6: Compute Timestamp from current time in Python.
+
+             timestamp = Timestamp()
+             timestamp.GetCurrentTime()
+
+         # JSON Mapping
+
+         In JSON format, the Timestamp type is encoded as a string in the
+         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+         where {year} is always expressed using four digits while {month}, {day},
+         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+         is required. A ProtoJSON serializer should always use UTC (as indicated by
+         "Z") when printing the Timestamp type and a ProtoJSON parser should be
+         able to accept both UTC and other timezones (as indicated by an offset).
+
+         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+         01:30 UTC on January 15, 2017.
+
+         In JavaScript, one can convert a Date object to this format using the
+         standard
+         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+         method. In Python, a standard `datetime.datetime` object can be converted
+         to this format using
+         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+         the Joda Time's [`ISODateTimeFormat.dateTime()`](
+         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+         ) to obtain a formatter capable of generating timestamps in this format.
     api.catalog.v1.VendorCatalog:
       type: object
       properties:
@@ -1795,36 +2127,6 @@ components:
              Each variant includes: size, color, SKU, price, stock status, print specifications
       title: VendorListCatalogVariantResponse
       additionalProperties: false
-    common.type.v1.Money:
-      type: object
-      properties:
-        currency_code:
-          type: string
-          title: currency_code
-          description: The three-letter currency code defined in ISO 4217.
-        units:
-          type:
-            - integer
-            - string
-          title: units
-          format: int64
-          description: |-
-            The whole units of the amount.
-             For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-        nanos:
-          type: integer
-          title: nanos
-          format: int32
-          description: |-
-            Number of nano (10^-9) units of the amount.
-             The value must be between -999,999,999 and +999,999,999 inclusive.
-             If `units` is positive, `nanos` must be positive or zero.
-             If `units` is zero, `nanos` can be positive, zero, or negative.
-             If `units` is negative, `nanos` must be negative or zero.
-             For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-      title: Money
-      additionalProperties: false
-      description: Represents an amount of money with its currency type.
     common.type.v1.PagingResponse:
       type: object
       properties:
@@ -1848,102 +2150,200 @@ components:
           format: int32
       title: PagingResponse
       additionalProperties: false
-    google.protobuf.Timestamp:
-      type: string
-      examples:
-        - "2023-01-15T01:30:15.01Z"
-        - "2024-12-25T12:00:00Z"
-      format: date-time
-      description: |-
-        A Timestamp represents a point in time independent of any time zone or local
-         calendar, encoded as a count of seconds and fractions of seconds at
-         nanosecond resolution. The count is relative to an epoch at UTC midnight on
-         January 1, 1970, in the proleptic Gregorian calendar which extends the
-         Gregorian calendar backwards to year one.
-
-         All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
-         second table is needed for interpretation, using a [24-hour linear
-         smear](https://developers.google.com/time/smear).
-
-         The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
-         restricting to that range, we ensure that we can convert to and from [RFC
-         3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
-
-         # Examples
-
-         Example 1: Compute Timestamp from POSIX `time()`.
-
-             Timestamp timestamp;
-             timestamp.set_seconds(time(NULL));
-             timestamp.set_nanos(0);
-
-         Example 2: Compute Timestamp from POSIX `gettimeofday()`.
-
-             struct timeval tv;
-             gettimeofday(&tv, NULL);
-
-             Timestamp timestamp;
-             timestamp.set_seconds(tv.tv_sec);
-             timestamp.set_nanos(tv.tv_usec * 1000);
-
-         Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
-
-             FILETIME ft;
-             GetSystemTimeAsFileTime(&ft);
-             UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
-
-             // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
-             // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
-             Timestamp timestamp;
-             timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
-             timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
-
-         Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
-
-             long millis = System.currentTimeMillis();
-
-             Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
-                 .setNanos((int) ((millis % 1000) * 1000000)).build();
-
-         Example 5: Compute Timestamp from Java `Instant.now()`.
-
-             Instant now = Instant.now();
-
-             Timestamp timestamp =
-                 Timestamp.newBuilder().setSeconds(now.getEpochSecond())
-                     .setNanos(now.getNano()).build();
-
-         Example 6: Compute Timestamp from current time in Python.
-
-             timestamp = Timestamp()
-             timestamp.GetCurrentTime()
-
-         # JSON Mapping
-
-         In JSON format, the Timestamp type is encoded as a string in the
-         [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
-         format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
-         where {year} is always expressed using four digits while {month}, {day},
-         {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
-         seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
-         are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-         is required. A ProtoJSON serializer should always use UTC (as indicated by
-         "Z") when printing the Timestamp type and a ProtoJSON parser should be
-         able to accept both UTC and other timezones (as indicated by an offset).
-
-         For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
-         01:30 UTC on January 15, 2017.
-
-         In JavaScript, one can convert a Date object to this format using the
-         standard
-         [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
-         method. In Python, a standard `datetime.datetime` object can be converted
-         to this format using
-         [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
-         the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
-         the Joda Time's [`ISODateTimeFormat.dateTime()`](
-         http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
-         ) to obtain a formatter capable of generating timestamps in this format.
+    api.webhook.v1.VendorCreateWebhookRequest:
+      type: object
+      properties:
+        status:
+          title: status
+          description: 'Webhook status: ACTIVE or INACTIVE (default: ACTIVE)'
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+        topic:
+          title: topic
+          description: |-
+            Event topic to subscribe to (required)
+             Choose from: ORDER_COMPLETED, ORDER_CANCELED, TRACKING_UPDATED, ADDRESS_UNVERIFIED
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+        name:
+          type: string
+          examples:
+            - Production Order Completed Notifications
+          title: name
+          maxLength: 255
+          description: 'Human-readable webhook name (optional, helps identify webhook purpose, max length: 255 characters)'
+        version:
+          title: version
+          description: 'Webhook payload version (recommended: use latest version for new webhooks)'
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+        delivery_url:
+          type: string
+          examples:
+            - https://yourapp.com/webhooks/gearment/orders
+          title: delivery_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+          description: HTTPS URL to receive webhook POST requests (required, must be publicly accessible and respond within 30 seconds, must use HTTPS)
+        store_id:
+          type: string
+          examples:
+            - store_abc123
+          title: store_id
+          description: Optional store ID to filter events (if provided, only events for this store will trigger the webhook)
+      title: VendorCreateWebhookRequest
+      additionalProperties: false
+    api.webhook.v1.VendorCreateWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: |-
+            Human-readable message
+             Success: "Webhook created successfully"
+             Error: "Invalid delivery URL" or "Duplicate webhook"
+        data:
+          title: data
+          description: |-
+            Created webhook details
+             Includes: webhook_id, topic, delivery_url, created_at
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+      title: VendorCreateWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorDeleteWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: |-
+            Human-readable message
+             Success: "Webhook deleted successfully"
+             Error: "Webhook not found"
+        data:
+          title: data
+          description: Deleted webhook information
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+      title: VendorDeleteWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorListWebhookResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: 'Response status: "success" or "error"'
+        message:
+          type: string
+          title: message
+          description: Human-readable message
+        paging:
+          title: paging
+          description: Pagination metadata
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
+          title: data
+          description: |-
+            List of registered webhooks
+             Each webhook includes: ID, topic, delivery URL, status, created_at
+      title: VendorListWebhookResponse
+      additionalProperties: false
+    api.webhook.v1.VendorWebhook:
+      type: object
+      properties:
+        webhook_id:
+          type: string
+          title: webhook_id
+          maxLength: 255
+          minLength: 1
+          description: Unique webhook ID
+        topic:
+          title: topic
+          description: Event topic this webhook subscribes to
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
+        status:
+          title: status
+          description: Webhook status (active/inactive)
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
+        delivery_url:
+          type: string
+          title: delivery_url
+          maxLength: 2048
+          minLength: 1
+          format: uri
+          description: URL where webhook events will be delivered (HTTPS required)
+        version:
+          title: version
+          description: Webhook payload version
+          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
+        created_at:
+          title: created_at
+          description: When this webhook was created
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updated_at:
+          title: updated_at
+          description: When this webhook was last updated
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        team_id:
+          type: string
+          title: team_id
+          description: Team ID this webhook belongs to
+        store_id:
+          type: string
+          title: store_id
+          description: Store ID this webhook is scoped to (optional)
+      title: VendorWebhook
+      additionalProperties: false
+    api.webhook.v1.VendorWebhook.Status:
+      type:
+        - string
+        - number
+      title: Status
+      enum:
+        - STATUS_ACTIVE
+        - 2
+        - STATUS_INACTIVE
+        - 3
+    api.webhook.v1.VendorWebhook.Topic:
+      type:
+        - string
+        - number
+      title: Topic
+      enum:
+        - TOPIC_ORDER_COMPLETED
+        - 2
+        - TOPIC_ORDER_CANCELLED
+        - 3
+        - TOPIC_TRACKING_ORDER_UPDATED
+        - 4
+        - TOPIC_ORDER_ON_HOLD
+        - 5
+        - TOPIC_SHIPPING_ADDRESS_VERIFIED
+        - 6
+        - TOPIC_SHIPPING_ADDRESS_UNVERIFIED
+        - 7
+        - TOPIC_PRODUCT_OUT_OF_STOCK
+        - 8
+    api.webhook.v1.VendorWebhook.Version:
+      type:
+        - string
+        - number
+      title: Version
+      enum:
+        - VERSION_V1
+        - 2
+        - VERSION_V3
+        - 3
     api.order.v1.OriginSalesChannel:
       type:
         - string
@@ -4888,42 +5288,6 @@ components:
           description: Order draft ID that was updated
       title: Data
       additionalProperties: false
-    common.platform.v1.MarketplacePlatform:
-      type:
-        - string
-        - number
-      title: MarketplacePlatform
-      enum:
-        - MARKETPLACE_PLATFORM_EBAY
-        - 2
-        - MARKETPLACE_PLATFORM_AMAZON
-        - 3
-        - MARKETPLACE_PLATFORM_SHOPIFY
-        - 4
-        - MARKETPLACE_PLATFORM_WOOCOMMERCE
-        - 5
-        - MARKETPLACE_PLATFORM_ETSY
-        - 6
-        - MARKETPLACE_PLATFORM_SHOPBASE
-        - 7
-        - MARKETPLACE_PLATFORM_GEARMENT
-        - 8
-        - MARKETPLACE_PLATFORM_ORDERDESK
-        - 9
-        - MARKETPLACE_PLATFORM_TIKTOKSHOP
-        - 10
-        - MARKETPLACE_PLATFORM_POSHMARK
-        - 11
-        - MARKETPLACE_PLATFORM_PRESTASHOP
-        - 12
-        - MARKETPLACE_PLATFORM_INKGO
-        - 13
-        - MARKETPLACE_PLATFORM_WISH
-        - 14
-        - MARKETPLACE_PLATFORM_BIGCOMMERCE
-        - 15
-        - MARKETPLACE_PLATFORM_CUSTOMILY
-        - 16
     common.type.v1.File:
       type: object
       properties:
@@ -4988,6 +5352,402 @@ components:
 
          Not recommended for use in new APIs, but still useful for legacy APIs and
          has no plan to be removed.
+    api.order.v1.VendorEstimateShippingRatesRequest:
+      type: object
+      properties:
+        ship_from:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        ship_to:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.order.v1.VendorShippingPackage'
+        providers:
+          type: array
+          items:
+            type: string
+          title: providers
+      title: VendorEstimateShippingRatesRequest
+      required:
+        - ship_from
+        - ship_to
+        - package
+      additionalProperties: false
+    api.order.v1.VendorEstimateShippingRatesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          title: data
+          $ref: '#/components/schemas/api.order.v1.VendorShippingRateQuote'
+      title: VendorEstimateShippingRatesResponse
+      additionalProperties: false
+    api.order.v1.VendorGetShippingLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          title: data
+          $ref: '#/components/schemas/api.order.v1.VendorShippingLabel'
+      title: VendorGetShippingLabelResponse
+      additionalProperties: false
+    api.order.v1.VendorListShippingCarrierServicesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorShippingCarrierService'
+          title: data
+      title: VendorListShippingCarrierServicesResponse
+      additionalProperties: false
+    api.order.v1.VendorPurchaseShippingLabelRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          title: request_id
+          minLength: 1
+        rate_id:
+          type: string
+          title: rate_id
+          minLength: 1
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        ship_from:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        ship_to:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.order.v1.VendorShippingPackage'
+        label_format:
+          type: string
+          title: label_format
+          enum:
+            - ""
+            - pdf
+            - zpl
+      title: VendorPurchaseShippingLabelRequest
+      required:
+        - ship_from
+        - ship_to
+        - package
+      additionalProperties: false
+    api.order.v1.VendorPurchaseShippingLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          title: data
+          $ref: '#/components/schemas/api.order.v1.VendorShippingLabel'
+      title: VendorPurchaseShippingLabelResponse
+      additionalProperties: false
+    api.order.v1.VendorShippingCarrierService:
+      type: object
+      properties:
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        services:
+          type: array
+          items:
+            type: string
+          title: services
+        enabled:
+          type: boolean
+          title: enabled
+        billing_mode:
+          type: string
+          title: billing_mode
+      title: VendorShippingCarrierService
+      additionalProperties: false
+    api.order.v1.VendorShippingDimensions:
+      type: object
+      properties:
+        width:
+          title: width
+          $ref: '#/components/schemas/api.order.v1.VendorShippingMeasurement'
+        height:
+          title: height
+          $ref: '#/components/schemas/api.order.v1.VendorShippingMeasurement'
+        length:
+          title: length
+          $ref: '#/components/schemas/api.order.v1.VendorShippingMeasurement'
+      title: VendorShippingDimensions
+      additionalProperties: false
+    api.order.v1.VendorShippingLabel:
+      type: object
+      properties:
+        label_id:
+          type: string
+          title: label_id
+        status:
+          type: string
+          title: status
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        ship_from:
+          title: ship_from
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        ship_to:
+          title: ship_to
+          $ref: '#/components/schemas/common.type.v1.USAddress'
+        package:
+          title: package
+          $ref: '#/components/schemas/api.order.v1.VendorShippingPackage'
+        seller_price:
+          title: seller_price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        billing_mode:
+          type: string
+          title: billing_mode
+        billing_state:
+          type: string
+          title: billing_state
+        tracking_no:
+          type: string
+          title: tracking_no
+        tracking_url:
+          type: string
+          title: tracking_url
+        label_url:
+          type: string
+          title: label_url
+        label_format:
+          type: string
+          title: label_format
+        rate_quote_id:
+          type: string
+          title: rate_quote_id
+        rate_id:
+          type: string
+          title: rate_id
+        request_id:
+          type: string
+          title: request_id
+        created_at:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updated_at:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        cancelled_at:
+          title: cancelled_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        failure_reason:
+          type: string
+          title: failure_reason
+      title: VendorShippingLabel
+      additionalProperties: false
+    api.order.v1.VendorShippingMeasurement:
+      type: object
+      properties:
+        value:
+          type: string
+          title: value
+        unit:
+          type: string
+          title: unit
+      title: VendorShippingMeasurement
+      additionalProperties: false
+    api.order.v1.VendorShippingPackage:
+      type: object
+      properties:
+        dimensions:
+          title: dimensions
+          $ref: '#/components/schemas/api.order.v1.VendorShippingDimensions'
+        weight:
+          title: weight
+          $ref: '#/components/schemas/api.order.v1.VendorShippingMeasurement'
+        value:
+          title: value
+          $ref: '#/components/schemas/common.type.v1.Money'
+        product_description:
+          type: string
+          title: product_description
+        hs_code:
+          type: array
+          items:
+            type: string
+          title: hs_code
+        quantity:
+          type:
+            - integer
+            - string
+          title: quantity
+          format: int64
+        expectation_pickup_date:
+          title: expectation_pickup_date
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: VendorShippingPackage
+      additionalProperties: false
+    api.order.v1.VendorShippingRate:
+      type: object
+      properties:
+        rate_id:
+          type: string
+          title: rate_id
+        provider:
+          type: string
+          title: provider
+        carrier:
+          type: string
+          title: carrier
+        service:
+          type: string
+          title: service
+        seller_price:
+          title: seller_price
+          $ref: '#/components/schemas/common.type.v1.Money'
+        delivery_days:
+          type: integer
+          title: delivery_days
+          format: int32
+        billing_mode:
+          type: string
+          title: billing_mode
+      title: VendorShippingRate
+      additionalProperties: false
+    api.order.v1.VendorShippingRateQuote:
+      type: object
+      properties:
+        rate_quote_id:
+          type: string
+          title: rate_quote_id
+        rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorShippingRate'
+          title: rates
+        expires_at:
+          title: expires_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: VendorShippingRateQuote
+      additionalProperties: false
+    api.order.v1.VendorVoidShippingLabelResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          title: data
+          $ref: '#/components/schemas/api.order.v1.VendorShippingLabel'
+      title: VendorVoidShippingLabelResponse
+      additionalProperties: false
+    common.type.v1.USAddress:
+      type: object
+      properties:
+        street1:
+          type: string
+          title: street1
+          maxLength: 255
+          minLength: 1
+        street2:
+          type: string
+          title: street2
+          maxLength: 255
+        country_code:
+          type: string
+          title: country_code
+          maxLength: 3
+          minLength: 2
+        country:
+          type: string
+          title: country
+          maxLength: 100
+        state_code:
+          type: string
+          title: state_code
+          maxLength: 10
+          minLength: 1
+        state:
+          type: string
+          title: state
+          maxLength: 100
+        city:
+          type: string
+          title: city
+          maxLength: 100
+        zip_code:
+          type: string
+          title: zip_code
+          maxLength: 10
+          minLength: 4
+        first_name:
+          type: string
+          title: first_name
+          maxLength: 100
+        last_name:
+          type: string
+          title: last_name
+          maxLength: 100
+        phone_no:
+          type: string
+          title: phone_no
+          maxLength: 50
+        email:
+          type: string
+          title: email
+          maxLength: 50
+          description: |
+            email.valid_format // Email must be in valid format (e.g., user@example.com)
+        note:
+          type: string
+          title: note
+          maxLength: 500
+        company:
+          type: string
+          title: company
+          maxLength: 255
+      title: USAddress
+      additionalProperties: false
     api.order.v1.VendorCheckEconomyCoverageRequest:
       type: object
       properties:
@@ -5195,200 +5955,6 @@ components:
         - 3
         - STATUS_REJECTED
         - 4
-    api.webhook.v1.VendorCreateWebhookRequest:
-      type: object
-      properties:
-        status:
-          title: status
-          description: 'Webhook status: ACTIVE or INACTIVE (default: ACTIVE)'
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
-        topic:
-          title: topic
-          description: |-
-            Event topic to subscribe to (required)
-             Choose from: ORDER_COMPLETED, ORDER_CANCELED, TRACKING_UPDATED, ADDRESS_UNVERIFIED
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
-        name:
-          type: string
-          examples:
-            - Production Order Completed Notifications
-          title: name
-          maxLength: 255
-          description: 'Human-readable webhook name (optional, helps identify webhook purpose, max length: 255 characters)'
-        version:
-          title: version
-          description: 'Webhook payload version (recommended: use latest version for new webhooks)'
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
-        delivery_url:
-          type: string
-          examples:
-            - https://yourapp.com/webhooks/gearment/orders
-          title: delivery_url
-          maxLength: 2048
-          minLength: 1
-          format: uri
-          description: HTTPS URL to receive webhook POST requests (required, must be publicly accessible and respond within 30 seconds, must use HTTPS)
-        store_id:
-          type: string
-          examples:
-            - store_abc123
-          title: store_id
-          description: Optional store ID to filter events (if provided, only events for this store will trigger the webhook)
-      title: VendorCreateWebhookRequest
-      additionalProperties: false
-    api.webhook.v1.VendorCreateWebhookResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          title: status
-          description: 'Response status: "success" or "error"'
-        message:
-          type: string
-          title: message
-          description: |-
-            Human-readable message
-             Success: "Webhook created successfully"
-             Error: "Invalid delivery URL" or "Duplicate webhook"
-        data:
-          title: data
-          description: |-
-            Created webhook details
-             Includes: webhook_id, topic, delivery_url, created_at
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
-      title: VendorCreateWebhookResponse
-      additionalProperties: false
-    api.webhook.v1.VendorDeleteWebhookResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          title: status
-          description: 'Response status: "success" or "error"'
-        message:
-          type: string
-          title: message
-          description: |-
-            Human-readable message
-             Success: "Webhook deleted successfully"
-             Error: "Webhook not found"
-        data:
-          title: data
-          description: Deleted webhook information
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
-      title: VendorDeleteWebhookResponse
-      additionalProperties: false
-    api.webhook.v1.VendorListWebhookResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          title: status
-          description: 'Response status: "success" or "error"'
-        message:
-          type: string
-          title: message
-          description: Human-readable message
-        paging:
-          title: paging
-          description: Pagination metadata
-          $ref: '#/components/schemas/common.type.v1.PagingResponse'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/api.webhook.v1.VendorWebhook'
-          title: data
-          description: |-
-            List of registered webhooks
-             Each webhook includes: ID, topic, delivery URL, status, created_at
-      title: VendorListWebhookResponse
-      additionalProperties: false
-    api.webhook.v1.VendorWebhook:
-      type: object
-      properties:
-        webhook_id:
-          type: string
-          title: webhook_id
-          maxLength: 255
-          minLength: 1
-          description: Unique webhook ID
-        topic:
-          title: topic
-          description: Event topic this webhook subscribes to
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Topic'
-        status:
-          title: status
-          description: Webhook status (active/inactive)
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Status'
-        delivery_url:
-          type: string
-          title: delivery_url
-          maxLength: 2048
-          minLength: 1
-          format: uri
-          description: URL where webhook events will be delivered (HTTPS required)
-        version:
-          title: version
-          description: Webhook payload version
-          $ref: '#/components/schemas/api.webhook.v1.VendorWebhook.Version'
-        created_at:
-          title: created_at
-          description: When this webhook was created
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-        updated_at:
-          title: updated_at
-          description: When this webhook was last updated
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-        team_id:
-          type: string
-          title: team_id
-          description: Team ID this webhook belongs to
-        store_id:
-          type: string
-          title: store_id
-          description: Store ID this webhook is scoped to (optional)
-      title: VendorWebhook
-      additionalProperties: false
-    api.webhook.v1.VendorWebhook.Status:
-      type:
-        - string
-        - number
-      title: Status
-      enum:
-        - STATUS_ACTIVE
-        - 2
-        - STATUS_INACTIVE
-        - 3
-    api.webhook.v1.VendorWebhook.Topic:
-      type:
-        - string
-        - number
-      title: Topic
-      enum:
-        - TOPIC_ORDER_COMPLETED
-        - 2
-        - TOPIC_ORDER_CANCELLED
-        - 3
-        - TOPIC_TRACKING_ORDER_UPDATED
-        - 4
-        - TOPIC_ORDER_ON_HOLD
-        - 5
-        - TOPIC_SHIPPING_ADDRESS_VERIFIED
-        - 6
-        - TOPIC_SHIPPING_ADDRESS_UNVERIFIED
-        - 7
-        - TOPIC_PRODUCT_OUT_OF_STOCK
-        - 8
-    api.webhook.v1.VendorWebhook.Version:
-      type:
-        - string
-        - number
-      title: Version
-      enum:
-        - VERSION_V1
-        - 2
-        - VERSION_V3
-        - 3
   responses:
     BadRequest:
       description: Bad Request - The request was malformed or contained invalid parameters

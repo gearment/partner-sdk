@@ -19,8 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WalletAdminInternalAPI_StaffGetGWalletBalance_FullMethodName          = "/api.wallet.v1.WalletAdminInternalAPI/StaffGetGWalletBalance"
-	WalletAdminInternalAPI_StaffBatchGetTeamWalletBalances_FullMethodName = "/api.wallet.v1.WalletAdminInternalAPI/StaffBatchGetTeamWalletBalances"
+	WalletAdminInternalAPI_StaffGetGWalletBalance_FullMethodName             = "/api.wallet.v1.WalletAdminInternalAPI/StaffGetGWalletBalance"
+	WalletAdminInternalAPI_StaffBatchGetTeamWalletBalances_FullMethodName    = "/api.wallet.v1.WalletAdminInternalAPI/StaffBatchGetTeamWalletBalances"
+	WalletAdminInternalAPI_InternalReserveLabelPurchase_FullMethodName       = "/api.wallet.v1.WalletAdminInternalAPI/InternalReserveLabelPurchase"
+	WalletAdminInternalAPI_InternalCaptureLabelPurchase_FullMethodName       = "/api.wallet.v1.WalletAdminInternalAPI/InternalCaptureLabelPurchase"
+	WalletAdminInternalAPI_InternalReleaseLabelPurchase_FullMethodName       = "/api.wallet.v1.WalletAdminInternalAPI/InternalReleaseLabelPurchase"
+	WalletAdminInternalAPI_InternalRequestLabelPurchaseRefund_FullMethodName = "/api.wallet.v1.WalletAdminInternalAPI/InternalRequestLabelPurchaseRefund"
+	WalletAdminInternalAPI_InternalRejectLabelPurchaseRefund_FullMethodName  = "/api.wallet.v1.WalletAdminInternalAPI/InternalRejectLabelPurchaseRefund"
+	WalletAdminInternalAPI_InternalRefundLabelPurchase_FullMethodName        = "/api.wallet.v1.WalletAdminInternalAPI/InternalRefundLabelPurchase"
+	WalletAdminInternalAPI_InternalGetLabelPurchase_FullMethodName           = "/api.wallet.v1.WalletAdminInternalAPI/InternalGetLabelPurchase"
 )
 
 // WalletAdminInternalAPIClient is the client API for WalletAdminInternalAPI service.
@@ -31,6 +38,13 @@ const (
 type WalletAdminInternalAPIClient interface {
 	StaffGetGWalletBalance(ctx context.Context, in *StaffGetGWalletBalanceRequest, opts ...grpc.CallOption) (*StaffGetGWalletBalanceResponse, error)
 	StaffBatchGetTeamWalletBalances(ctx context.Context, in *StaffBatchGetTeamWalletBalancesRequest, opts ...grpc.CallOption) (*StaffBatchGetTeamWalletBalancesResponse, error)
+	InternalReserveLabelPurchase(ctx context.Context, in *InternalReserveLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalReserveLabelPurchaseResponse, error)
+	InternalCaptureLabelPurchase(ctx context.Context, in *InternalCaptureLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalCaptureLabelPurchaseResponse, error)
+	InternalReleaseLabelPurchase(ctx context.Context, in *InternalReleaseLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalReleaseLabelPurchaseResponse, error)
+	InternalRequestLabelPurchaseRefund(ctx context.Context, in *InternalRequestLabelPurchaseRefundRequest, opts ...grpc.CallOption) (*InternalRequestLabelPurchaseRefundResponse, error)
+	InternalRejectLabelPurchaseRefund(ctx context.Context, in *InternalRejectLabelPurchaseRefundRequest, opts ...grpc.CallOption) (*InternalRejectLabelPurchaseRefundResponse, error)
+	InternalRefundLabelPurchase(ctx context.Context, in *InternalRefundLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalRefundLabelPurchaseResponse, error)
+	InternalGetLabelPurchase(ctx context.Context, in *InternalGetLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalGetLabelPurchaseResponse, error)
 }
 
 type walletAdminInternalAPIClient struct {
@@ -61,6 +75,76 @@ func (c *walletAdminInternalAPIClient) StaffBatchGetTeamWalletBalances(ctx conte
 	return out, nil
 }
 
+func (c *walletAdminInternalAPIClient) InternalReserveLabelPurchase(ctx context.Context, in *InternalReserveLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalReserveLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReserveLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalReserveLabelPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalCaptureLabelPurchase(ctx context.Context, in *InternalCaptureLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalCaptureLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalCaptureLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalCaptureLabelPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalReleaseLabelPurchase(ctx context.Context, in *InternalReleaseLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalReleaseLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReleaseLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalReleaseLabelPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalRequestLabelPurchaseRefund(ctx context.Context, in *InternalRequestLabelPurchaseRefundRequest, opts ...grpc.CallOption) (*InternalRequestLabelPurchaseRefundResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalRequestLabelPurchaseRefundResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalRequestLabelPurchaseRefund_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalRejectLabelPurchaseRefund(ctx context.Context, in *InternalRejectLabelPurchaseRefundRequest, opts ...grpc.CallOption) (*InternalRejectLabelPurchaseRefundResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalRejectLabelPurchaseRefundResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalRejectLabelPurchaseRefund_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalRefundLabelPurchase(ctx context.Context, in *InternalRefundLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalRefundLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalRefundLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalRefundLabelPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *walletAdminInternalAPIClient) InternalGetLabelPurchase(ctx context.Context, in *InternalGetLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalGetLabelPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetLabelPurchaseResponse)
+	err := c.cc.Invoke(ctx, WalletAdminInternalAPI_InternalGetLabelPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WalletAdminInternalAPIServer is the server API for WalletAdminInternalAPI service.
 // All implementations should embed UnimplementedWalletAdminInternalAPIServer
 // for forward compatibility.
@@ -69,6 +153,13 @@ func (c *walletAdminInternalAPIClient) StaffBatchGetTeamWalletBalances(ctx conte
 type WalletAdminInternalAPIServer interface {
 	StaffGetGWalletBalance(context.Context, *StaffGetGWalletBalanceRequest) (*StaffGetGWalletBalanceResponse, error)
 	StaffBatchGetTeamWalletBalances(context.Context, *StaffBatchGetTeamWalletBalancesRequest) (*StaffBatchGetTeamWalletBalancesResponse, error)
+	InternalReserveLabelPurchase(context.Context, *InternalReserveLabelPurchaseRequest) (*InternalReserveLabelPurchaseResponse, error)
+	InternalCaptureLabelPurchase(context.Context, *InternalCaptureLabelPurchaseRequest) (*InternalCaptureLabelPurchaseResponse, error)
+	InternalReleaseLabelPurchase(context.Context, *InternalReleaseLabelPurchaseRequest) (*InternalReleaseLabelPurchaseResponse, error)
+	InternalRequestLabelPurchaseRefund(context.Context, *InternalRequestLabelPurchaseRefundRequest) (*InternalRequestLabelPurchaseRefundResponse, error)
+	InternalRejectLabelPurchaseRefund(context.Context, *InternalRejectLabelPurchaseRefundRequest) (*InternalRejectLabelPurchaseRefundResponse, error)
+	InternalRefundLabelPurchase(context.Context, *InternalRefundLabelPurchaseRequest) (*InternalRefundLabelPurchaseResponse, error)
+	InternalGetLabelPurchase(context.Context, *InternalGetLabelPurchaseRequest) (*InternalGetLabelPurchaseResponse, error)
 }
 
 // UnimplementedWalletAdminInternalAPIServer should be embedded to have
@@ -83,6 +174,27 @@ func (UnimplementedWalletAdminInternalAPIServer) StaffGetGWalletBalance(context.
 }
 func (UnimplementedWalletAdminInternalAPIServer) StaffBatchGetTeamWalletBalances(context.Context, *StaffBatchGetTeamWalletBalancesRequest) (*StaffBatchGetTeamWalletBalancesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffBatchGetTeamWalletBalances not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalReserveLabelPurchase(context.Context, *InternalReserveLabelPurchaseRequest) (*InternalReserveLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReserveLabelPurchase not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalCaptureLabelPurchase(context.Context, *InternalCaptureLabelPurchaseRequest) (*InternalCaptureLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalCaptureLabelPurchase not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalReleaseLabelPurchase(context.Context, *InternalReleaseLabelPurchaseRequest) (*InternalReleaseLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReleaseLabelPurchase not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalRequestLabelPurchaseRefund(context.Context, *InternalRequestLabelPurchaseRefundRequest) (*InternalRequestLabelPurchaseRefundResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalRequestLabelPurchaseRefund not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalRejectLabelPurchaseRefund(context.Context, *InternalRejectLabelPurchaseRefundRequest) (*InternalRejectLabelPurchaseRefundResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalRejectLabelPurchaseRefund not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalRefundLabelPurchase(context.Context, *InternalRefundLabelPurchaseRequest) (*InternalRefundLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalRefundLabelPurchase not implemented")
+}
+func (UnimplementedWalletAdminInternalAPIServer) InternalGetLabelPurchase(context.Context, *InternalGetLabelPurchaseRequest) (*InternalGetLabelPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetLabelPurchase not implemented")
 }
 func (UnimplementedWalletAdminInternalAPIServer) testEmbeddedByValue() {}
 
@@ -140,6 +252,132 @@ func _WalletAdminInternalAPI_StaffBatchGetTeamWalletBalances_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WalletAdminInternalAPI_InternalReserveLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReserveLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalReserveLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalReserveLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalReserveLabelPurchase(ctx, req.(*InternalReserveLabelPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalCaptureLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalCaptureLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalCaptureLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalCaptureLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalCaptureLabelPurchase(ctx, req.(*InternalCaptureLabelPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalReleaseLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReleaseLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalReleaseLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalReleaseLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalReleaseLabelPurchase(ctx, req.(*InternalReleaseLabelPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalRequestLabelPurchaseRefund_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalRequestLabelPurchaseRefundRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalRequestLabelPurchaseRefund(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalRequestLabelPurchaseRefund_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalRequestLabelPurchaseRefund(ctx, req.(*InternalRequestLabelPurchaseRefundRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalRejectLabelPurchaseRefund_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalRejectLabelPurchaseRefundRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalRejectLabelPurchaseRefund(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalRejectLabelPurchaseRefund_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalRejectLabelPurchaseRefund(ctx, req.(*InternalRejectLabelPurchaseRefundRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalRefundLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalRefundLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalRefundLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalRefundLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalRefundLabelPurchase(ctx, req.(*InternalRefundLabelPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WalletAdminInternalAPI_InternalGetLabelPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetLabelPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WalletAdminInternalAPIServer).InternalGetLabelPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WalletAdminInternalAPI_InternalGetLabelPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WalletAdminInternalAPIServer).InternalGetLabelPurchase(ctx, req.(*InternalGetLabelPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WalletAdminInternalAPI_ServiceDesc is the grpc.ServiceDesc for WalletAdminInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -154,6 +392,34 @@ var WalletAdminInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffBatchGetTeamWalletBalances",
 			Handler:    _WalletAdminInternalAPI_StaffBatchGetTeamWalletBalances_Handler,
+		},
+		{
+			MethodName: "InternalReserveLabelPurchase",
+			Handler:    _WalletAdminInternalAPI_InternalReserveLabelPurchase_Handler,
+		},
+		{
+			MethodName: "InternalCaptureLabelPurchase",
+			Handler:    _WalletAdminInternalAPI_InternalCaptureLabelPurchase_Handler,
+		},
+		{
+			MethodName: "InternalReleaseLabelPurchase",
+			Handler:    _WalletAdminInternalAPI_InternalReleaseLabelPurchase_Handler,
+		},
+		{
+			MethodName: "InternalRequestLabelPurchaseRefund",
+			Handler:    _WalletAdminInternalAPI_InternalRequestLabelPurchaseRefund_Handler,
+		},
+		{
+			MethodName: "InternalRejectLabelPurchaseRefund",
+			Handler:    _WalletAdminInternalAPI_InternalRejectLabelPurchaseRefund_Handler,
+		},
+		{
+			MethodName: "InternalRefundLabelPurchase",
+			Handler:    _WalletAdminInternalAPI_InternalRefundLabelPurchase_Handler,
+		},
+		{
+			MethodName: "InternalGetLabelPurchase",
+			Handler:    _WalletAdminInternalAPI_InternalGetLabelPurchase_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
