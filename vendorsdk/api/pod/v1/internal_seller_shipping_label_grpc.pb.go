@@ -24,6 +24,7 @@ const (
 	InternalSellerShippingLabelAPI_InternalPurchaseLabel_FullMethodName              = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalPurchaseLabel"
 	InternalSellerShippingLabelAPI_InternalGetLabel_FullMethodName                   = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalGetLabel"
 	InternalSellerShippingLabelAPI_InternalCancelLabel_FullMethodName                = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalCancelLabel"
+	InternalSellerShippingLabelAPI_InternalGetEnrollment_FullMethodName              = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalGetEnrollment"
 )
 
 // InternalSellerShippingLabelAPIClient is the client API for InternalSellerShippingLabelAPI service.
@@ -38,6 +39,7 @@ type InternalSellerShippingLabelAPIClient interface {
 	InternalPurchaseLabel(ctx context.Context, in *InternalPurchaseLabelRequest, opts ...grpc.CallOption) (*PurchaseLabelResponse, error)
 	InternalGetLabel(ctx context.Context, in *InternalGetLabelRequest, opts ...grpc.CallOption) (*GetLabelResponse, error)
 	InternalCancelLabel(ctx context.Context, in *InternalCancelLabelRequest, opts ...grpc.CallOption) (*CancelLabelResponse, error)
+	InternalGetEnrollment(ctx context.Context, in *InternalGetSellerLabelEnrollmentRequest, opts ...grpc.CallOption) (*InternalGetSellerLabelEnrollmentResponse, error)
 }
 
 type internalSellerShippingLabelAPIClient struct {
@@ -98,6 +100,16 @@ func (c *internalSellerShippingLabelAPIClient) InternalCancelLabel(ctx context.C
 	return out, nil
 }
 
+func (c *internalSellerShippingLabelAPIClient) InternalGetEnrollment(ctx context.Context, in *InternalGetSellerLabelEnrollmentRequest, opts ...grpc.CallOption) (*InternalGetSellerLabelEnrollmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetSellerLabelEnrollmentResponse)
+	err := c.cc.Invoke(ctx, InternalSellerShippingLabelAPI_InternalGetEnrollment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InternalSellerShippingLabelAPIServer is the server API for InternalSellerShippingLabelAPI service.
 // All implementations should embed UnimplementedInternalSellerShippingLabelAPIServer
 // for forward compatibility.
@@ -110,6 +122,7 @@ type InternalSellerShippingLabelAPIServer interface {
 	InternalPurchaseLabel(context.Context, *InternalPurchaseLabelRequest) (*PurchaseLabelResponse, error)
 	InternalGetLabel(context.Context, *InternalGetLabelRequest) (*GetLabelResponse, error)
 	InternalCancelLabel(context.Context, *InternalCancelLabelRequest) (*CancelLabelResponse, error)
+	InternalGetEnrollment(context.Context, *InternalGetSellerLabelEnrollmentRequest) (*InternalGetSellerLabelEnrollmentResponse, error)
 }
 
 // UnimplementedInternalSellerShippingLabelAPIServer should be embedded to have
@@ -133,6 +146,9 @@ func (UnimplementedInternalSellerShippingLabelAPIServer) InternalGetLabel(contex
 }
 func (UnimplementedInternalSellerShippingLabelAPIServer) InternalCancelLabel(context.Context, *InternalCancelLabelRequest) (*CancelLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelLabel not implemented")
+}
+func (UnimplementedInternalSellerShippingLabelAPIServer) InternalGetEnrollment(context.Context, *InternalGetSellerLabelEnrollmentRequest) (*InternalGetSellerLabelEnrollmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetEnrollment not implemented")
 }
 func (UnimplementedInternalSellerShippingLabelAPIServer) testEmbeddedByValue() {}
 
@@ -244,6 +260,24 @@ func _InternalSellerShippingLabelAPI_InternalCancelLabel_Handler(srv interface{}
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternalSellerShippingLabelAPI_InternalGetEnrollment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetSellerLabelEnrollmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalSellerShippingLabelAPIServer).InternalGetEnrollment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalSellerShippingLabelAPI_InternalGetEnrollment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalSellerShippingLabelAPIServer).InternalGetEnrollment(ctx, req.(*InternalGetSellerLabelEnrollmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InternalSellerShippingLabelAPI_ServiceDesc is the grpc.ServiceDesc for InternalSellerShippingLabelAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -270,6 +304,10 @@ var InternalSellerShippingLabelAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalCancelLabel",
 			Handler:    _InternalSellerShippingLabelAPI_InternalCancelLabel_Handler,
+		},
+		{
+			MethodName: "InternalGetEnrollment",
+			Handler:    _InternalSellerShippingLabelAPI_InternalGetEnrollment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

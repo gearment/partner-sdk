@@ -20,6 +20,10 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName                   = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseShippingLabel"
+	ShippingInternalAPI_InternalPurchaseFundedShippingLabel_FullMethodName             = "/api.shipping.v1.ShippingInternalAPI/InternalPurchaseFundedShippingLabel"
+	ShippingInternalAPI_InternalGetFundedShippingPurchase_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalGetFundedShippingPurchase"
+	ShippingInternalAPI_InternalCancelFundedShippingLabel_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalCancelFundedShippingLabel"
+	ShippingInternalAPI_InternalReconcileFundedShippingPurchase_FullMethodName         = "/api.shipping.v1.ShippingInternalAPI/InternalReconcileFundedShippingPurchase"
 	ShippingInternalAPI_InternalGetShippingLabelPurchase_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalGetShippingLabelPurchase"
 	ShippingInternalAPI_InternalCancelShippingLabel_FullMethodName                     = "/api.shipping.v1.ShippingInternalAPI/InternalCancelShippingLabel"
 	ShippingInternalAPI_InternalCancelUnusedShippingLabel_FullMethodName               = "/api.shipping.v1.ShippingInternalAPI/InternalCancelUnusedShippingLabel"
@@ -37,6 +41,14 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShippingInternalAPIClient interface {
 	InternalPurchaseShippingLabel(ctx context.Context, in *InternalPurchaseShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseShippingLabelResponse, error)
+	// Printposs-funded purchases are intentionally a separate internal surface:
+	// legacy callers cannot fall back to an unfunded path by omitting fields.
+	InternalPurchaseFundedShippingLabel(ctx context.Context, in *InternalPurchaseFundedShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseFundedShippingLabelResponse, error)
+	InternalGetFundedShippingPurchase(ctx context.Context, in *InternalGetFundedShippingPurchaseRequest, opts ...grpc.CallOption) (*InternalGetFundedShippingPurchaseResponse, error)
+	InternalCancelFundedShippingLabel(ctx context.Context, in *InternalCancelFundedShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelFundedShippingLabelResponse, error)
+	// Reconciliation is repeat-safe but may persist an observed outcome, so it
+	// must not be treated as a cacheable no-side-effect request.
+	InternalReconcileFundedShippingPurchase(ctx context.Context, in *InternalReconcileFundedShippingPurchaseRequest, opts ...grpc.CallOption) (*InternalReconcileFundedShippingPurchaseResponse, error)
 	InternalGetShippingLabelPurchase(ctx context.Context, in *InternalGetShippingLabelPurchaseRequest, opts ...grpc.CallOption) (*InternalGetShippingLabelPurchaseResponse, error)
 	InternalCancelShippingLabel(ctx context.Context, in *InternalCancelShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelShippingLabelResponse, error)
 	// A separate RPC makes old replicas fail closed during rollout, rather than
@@ -63,6 +75,46 @@ func (c *shippingInternalAPIClient) InternalPurchaseShippingLabel(ctx context.Co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalPurchaseShippingLabelResponse)
 	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalPurchaseShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalPurchaseFundedShippingLabel(ctx context.Context, in *InternalPurchaseFundedShippingLabelRequest, opts ...grpc.CallOption) (*InternalPurchaseFundedShippingLabelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalPurchaseFundedShippingLabelResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalPurchaseFundedShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalGetFundedShippingPurchase(ctx context.Context, in *InternalGetFundedShippingPurchaseRequest, opts ...grpc.CallOption) (*InternalGetFundedShippingPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetFundedShippingPurchaseResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalGetFundedShippingPurchase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalCancelFundedShippingLabel(ctx context.Context, in *InternalCancelFundedShippingLabelRequest, opts ...grpc.CallOption) (*InternalCancelFundedShippingLabelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalCancelFundedShippingLabelResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalCancelFundedShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalReconcileFundedShippingPurchase(ctx context.Context, in *InternalReconcileFundedShippingPurchaseRequest, opts ...grpc.CallOption) (*InternalReconcileFundedShippingPurchaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReconcileFundedShippingPurchaseResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalReconcileFundedShippingPurchase_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -174,6 +226,14 @@ func (c *shippingInternalAPIClient) InternalListShippingCostLedgerByTrackingNumb
 // for forward compatibility.
 type ShippingInternalAPIServer interface {
 	InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error)
+	// Printposs-funded purchases are intentionally a separate internal surface:
+	// legacy callers cannot fall back to an unfunded path by omitting fields.
+	InternalPurchaseFundedShippingLabel(context.Context, *InternalPurchaseFundedShippingLabelRequest) (*InternalPurchaseFundedShippingLabelResponse, error)
+	InternalGetFundedShippingPurchase(context.Context, *InternalGetFundedShippingPurchaseRequest) (*InternalGetFundedShippingPurchaseResponse, error)
+	InternalCancelFundedShippingLabel(context.Context, *InternalCancelFundedShippingLabelRequest) (*InternalCancelFundedShippingLabelResponse, error)
+	// Reconciliation is repeat-safe but may persist an observed outcome, so it
+	// must not be treated as a cacheable no-side-effect request.
+	InternalReconcileFundedShippingPurchase(context.Context, *InternalReconcileFundedShippingPurchaseRequest) (*InternalReconcileFundedShippingPurchaseResponse, error)
 	InternalGetShippingLabelPurchase(context.Context, *InternalGetShippingLabelPurchaseRequest) (*InternalGetShippingLabelPurchaseResponse, error)
 	InternalCancelShippingLabel(context.Context, *InternalCancelShippingLabelRequest) (*InternalCancelShippingLabelResponse, error)
 	// A separate RPC makes old replicas fail closed during rollout, rather than
@@ -197,6 +257,18 @@ type UnimplementedShippingInternalAPIServer struct{}
 
 func (UnimplementedShippingInternalAPIServer) InternalPurchaseShippingLabel(context.Context, *InternalPurchaseShippingLabelRequest) (*InternalPurchaseShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalPurchaseShippingLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalPurchaseFundedShippingLabel(context.Context, *InternalPurchaseFundedShippingLabelRequest) (*InternalPurchaseFundedShippingLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalPurchaseFundedShippingLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalGetFundedShippingPurchase(context.Context, *InternalGetFundedShippingPurchaseRequest) (*InternalGetFundedShippingPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetFundedShippingPurchase not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalCancelFundedShippingLabel(context.Context, *InternalCancelFundedShippingLabelRequest) (*InternalCancelFundedShippingLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelFundedShippingLabel not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalReconcileFundedShippingPurchase(context.Context, *InternalReconcileFundedShippingPurchaseRequest) (*InternalReconcileFundedShippingPurchaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReconcileFundedShippingPurchase not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) InternalGetShippingLabelPurchase(context.Context, *InternalGetShippingLabelPurchaseRequest) (*InternalGetShippingLabelPurchaseResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetShippingLabelPurchase not implemented")
@@ -262,6 +334,78 @@ func _ShippingInternalAPI_InternalPurchaseShippingLabel_Handler(srv interface{},
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShippingInternalAPIServer).InternalPurchaseShippingLabel(ctx, req.(*InternalPurchaseShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalPurchaseFundedShippingLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalPurchaseFundedShippingLabelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalPurchaseFundedShippingLabel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalPurchaseFundedShippingLabel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalPurchaseFundedShippingLabel(ctx, req.(*InternalPurchaseFundedShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalGetFundedShippingPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetFundedShippingPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalGetFundedShippingPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalGetFundedShippingPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalGetFundedShippingPurchase(ctx, req.(*InternalGetFundedShippingPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalCancelFundedShippingLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalCancelFundedShippingLabelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalCancelFundedShippingLabel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalCancelFundedShippingLabel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalCancelFundedShippingLabel(ctx, req.(*InternalCancelFundedShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalReconcileFundedShippingPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReconcileFundedShippingPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalReconcileFundedShippingPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalReconcileFundedShippingPurchase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalReconcileFundedShippingPurchase(ctx, req.(*InternalReconcileFundedShippingPurchaseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -456,6 +600,22 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalPurchaseShippingLabel",
 			Handler:    _ShippingInternalAPI_InternalPurchaseShippingLabel_Handler,
+		},
+		{
+			MethodName: "InternalPurchaseFundedShippingLabel",
+			Handler:    _ShippingInternalAPI_InternalPurchaseFundedShippingLabel_Handler,
+		},
+		{
+			MethodName: "InternalGetFundedShippingPurchase",
+			Handler:    _ShippingInternalAPI_InternalGetFundedShippingPurchase_Handler,
+		},
+		{
+			MethodName: "InternalCancelFundedShippingLabel",
+			Handler:    _ShippingInternalAPI_InternalCancelFundedShippingLabel_Handler,
+		},
+		{
+			MethodName: "InternalReconcileFundedShippingPurchase",
+			Handler:    _ShippingInternalAPI_InternalReconcileFundedShippingPurchase_Handler,
 		},
 		{
 			MethodName: "InternalGetShippingLabelPurchase",
