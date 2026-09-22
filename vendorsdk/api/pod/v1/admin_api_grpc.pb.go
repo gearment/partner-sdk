@@ -27,6 +27,7 @@ const (
 	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
 	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
 	OrderAdminAPI_StaffListOrder_FullMethodName                       = "/api.pod.v1.OrderAdminAPI/StaffListOrder"
+	OrderAdminAPI_StaffListOrderActionRequest_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffListOrderActionRequest"
 	OrderAdminAPI_StaffSearchMultiTypeOrder_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffSearchMultiTypeOrder"
 	OrderAdminAPI_StaffGetOrder_FullMethodName                        = "/api.pod.v1.OrderAdminAPI/StaffGetOrder"
 	OrderAdminAPI_StaffCountOrderStatus_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffCountOrderStatus"
@@ -73,6 +74,7 @@ type OrderAdminAPIClient interface {
 	StaffMarkFulfilled(ctx context.Context, in *StaffMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(ctx context.Context, in *StaffPreCheckMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffPreCheckMarkFulfilledResponse, error)
 	StaffListOrder(ctx context.Context, in *StaffListOrderRequest, opts ...grpc.CallOption) (*StaffListOrderResponse, error)
+	StaffListOrderActionRequest(ctx context.Context, in *StaffListOrderActionRequestRequest, opts ...grpc.CallOption) (*StaffListOrderActionRequestResponse, error)
 	StaffSearchMultiTypeOrder(ctx context.Context, in *StaffSearchMultiTypeOrderRequest, opts ...grpc.CallOption) (*StaffSearchMultiTypeOrderResponse, error)
 	StaffGetOrder(ctx context.Context, in *StaffGetOrderRequest, opts ...grpc.CallOption) (*StaffGetOrderResponse, error)
 	StaffCountOrderStatus(ctx context.Context, in *StaffCountOrderStatusRequest, opts ...grpc.CallOption) (*StaffCountOrderStatusResponse, error)
@@ -180,6 +182,16 @@ func (c *orderAdminAPIClient) StaffListOrder(ctx context.Context, in *StaffListO
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListOrderResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffListOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffListOrderActionRequest(ctx context.Context, in *StaffListOrderActionRequestRequest, opts ...grpc.CallOption) (*StaffListOrderActionRequestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListOrderActionRequestResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffListOrderActionRequest_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -527,6 +539,7 @@ type OrderAdminAPIServer interface {
 	StaffMarkFulfilled(context.Context, *StaffMarkFulfilledRequest) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(context.Context, *StaffPreCheckMarkFulfilledRequest) (*StaffPreCheckMarkFulfilledResponse, error)
 	StaffListOrder(context.Context, *StaffListOrderRequest) (*StaffListOrderResponse, error)
+	StaffListOrderActionRequest(context.Context, *StaffListOrderActionRequestRequest) (*StaffListOrderActionRequestResponse, error)
 	StaffSearchMultiTypeOrder(context.Context, *StaffSearchMultiTypeOrderRequest) (*StaffSearchMultiTypeOrderResponse, error)
 	StaffGetOrder(context.Context, *StaffGetOrderRequest) (*StaffGetOrderResponse, error)
 	StaffCountOrderStatus(context.Context, *StaffCountOrderStatusRequest) (*StaffCountOrderStatusResponse, error)
@@ -589,6 +602,9 @@ func (UnimplementedOrderAdminAPIServer) StaffPreCheckMarkFulfilled(context.Conte
 }
 func (UnimplementedOrderAdminAPIServer) StaffListOrder(context.Context, *StaffListOrderRequest) (*StaffListOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListOrder not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffListOrderActionRequest(context.Context, *StaffListOrderActionRequestRequest) (*StaffListOrderActionRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListOrderActionRequest not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffSearchMultiTypeOrder(context.Context, *StaffSearchMultiTypeOrderRequest) (*StaffSearchMultiTypeOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffSearchMultiTypeOrder not implemented")
@@ -831,6 +847,24 @@ func _OrderAdminAPI_StaffListOrder_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffListOrder(ctx, req.(*StaffListOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffListOrderActionRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListOrderActionRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffListOrderActionRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffListOrderActionRequest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffListOrderActionRequest(ctx, req.(*StaffListOrderActionRequestRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1463,6 +1497,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListOrder",
 			Handler:    _OrderAdminAPI_StaffListOrder_Handler,
+		},
+		{
+			MethodName: "StaffListOrderActionRequest",
+			Handler:    _OrderAdminAPI_StaffListOrderActionRequest_Handler,
 		},
 		{
 			MethodName: "StaffSearchMultiTypeOrder",
