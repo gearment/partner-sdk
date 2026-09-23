@@ -22,6 +22,94 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type InternalIsStaffAdminRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StaffId       string                 `protobuf:"bytes,1,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalIsStaffAdminRequest) Reset() {
+	*x = InternalIsStaffAdminRequest{}
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalIsStaffAdminRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalIsStaffAdminRequest) ProtoMessage() {}
+
+func (x *InternalIsStaffAdminRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalIsStaffAdminRequest.ProtoReflect.Descriptor instead.
+func (*InternalIsStaffAdminRequest) Descriptor() ([]byte, []int) {
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *InternalIsStaffAdminRequest) GetStaffId() string {
+	if x != nil {
+		return x.StaffId
+	}
+	return ""
+}
+
+type InternalIsStaffAdminResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsAdmin       bool                   `protobuf:"varint,1,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalIsStaffAdminResponse) Reset() {
+	*x = InternalIsStaffAdminResponse{}
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalIsStaffAdminResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalIsStaffAdminResponse) ProtoMessage() {}
+
+func (x *InternalIsStaffAdminResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalIsStaffAdminResponse.ProtoReflect.Descriptor instead.
+func (*InternalIsStaffAdminResponse) Descriptor() ([]byte, []int) {
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *InternalIsStaffAdminResponse) GetIsAdmin() bool {
+	if x != nil {
+		return x.IsAdmin
+	}
+	return false
+}
+
 type InternalCheckStaffAccessRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	StaffId       string                 `protobuf:"bytes,1,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
@@ -33,7 +121,7 @@ type InternalCheckStaffAccessRequest struct {
 
 func (x *InternalCheckStaffAccessRequest) Reset() {
 	*x = InternalCheckStaffAccessRequest{}
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[0]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +133,7 @@ func (x *InternalCheckStaffAccessRequest) String() string {
 func (*InternalCheckStaffAccessRequest) ProtoMessage() {}
 
 func (x *InternalCheckStaffAccessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[0]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +146,7 @@ func (x *InternalCheckStaffAccessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalCheckStaffAccessRequest.ProtoReflect.Descriptor instead.
 func (*InternalCheckStaffAccessRequest) Descriptor() ([]byte, []int) {
-	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{0}
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *InternalCheckStaffAccessRequest) GetStaffId() string {
@@ -91,7 +179,7 @@ type InternalCheckStaffAccessResponse struct {
 
 func (x *InternalCheckStaffAccessResponse) Reset() {
 	*x = InternalCheckStaffAccessResponse{}
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[1]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -103,7 +191,7 @@ func (x *InternalCheckStaffAccessResponse) String() string {
 func (*InternalCheckStaffAccessResponse) ProtoMessage() {}
 
 func (x *InternalCheckStaffAccessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[1]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -116,7 +204,7 @@ func (x *InternalCheckStaffAccessResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalCheckStaffAccessResponse.ProtoReflect.Descriptor instead.
 func (*InternalCheckStaffAccessResponse) Descriptor() ([]byte, []int) {
-	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{1}
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *InternalCheckStaffAccessResponse) GetHasAccess() bool {
@@ -135,7 +223,7 @@ type InternalVerifyStaffAccessTokenRequest struct {
 
 func (x *InternalVerifyStaffAccessTokenRequest) Reset() {
 	*x = InternalVerifyStaffAccessTokenRequest{}
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[2]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -147,7 +235,7 @@ func (x *InternalVerifyStaffAccessTokenRequest) String() string {
 func (*InternalVerifyStaffAccessTokenRequest) ProtoMessage() {}
 
 func (x *InternalVerifyStaffAccessTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[2]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -160,7 +248,7 @@ func (x *InternalVerifyStaffAccessTokenRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use InternalVerifyStaffAccessTokenRequest.ProtoReflect.Descriptor instead.
 func (*InternalVerifyStaffAccessTokenRequest) Descriptor() ([]byte, []int) {
-	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{2}
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *InternalVerifyStaffAccessTokenRequest) GetAccessToken() string {
@@ -184,7 +272,7 @@ type InternalVerifyStaffAccessTokenResponse struct {
 
 func (x *InternalVerifyStaffAccessTokenResponse) Reset() {
 	*x = InternalVerifyStaffAccessTokenResponse{}
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[3]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -196,7 +284,7 @@ func (x *InternalVerifyStaffAccessTokenResponse) String() string {
 func (*InternalVerifyStaffAccessTokenResponse) ProtoMessage() {}
 
 func (x *InternalVerifyStaffAccessTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[3]
+	mi := &file_api_iam_v1_staff_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -209,7 +297,7 @@ func (x *InternalVerifyStaffAccessTokenResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use InternalVerifyStaffAccessTokenResponse.ProtoReflect.Descriptor instead.
 func (*InternalVerifyStaffAccessTokenResponse) Descriptor() ([]byte, []int) {
-	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{3}
+	return file_api_iam_v1_staff_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *InternalVerifyStaffAccessTokenResponse) GetStaffId() string {
@@ -261,7 +349,15 @@ var file_api_iam_v1_staff_auth_proto_rawDesc = string([]byte{
 	0x66, 0x66, 0x5f, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0a, 0x61,
 	0x70, 0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x1a, 0x1b, 0x62, 0x75, 0x66, 0x2f, 0x76,
 	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x91, 0x01, 0x0a, 0x1f, 0x49, 0x6e, 0x74, 0x65, 0x72,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x43, 0x0a, 0x1b, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
+	0x61, 0x6c, 0x49, 0x73, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x08, 0x73, 0x74, 0x61, 0x66, 0x66, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x09, 0xba, 0x48, 0x06, 0x72, 0x04, 0x10, 0x01,
+	0x18, 0x64, 0x52, 0x07, 0x73, 0x74, 0x61, 0x66, 0x66, 0x49, 0x64, 0x22, 0x39, 0x0a, 0x1c, 0x49,
+	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x49, 0x73, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64,
+	0x6d, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x69,
+	0x73, 0x5f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x69,
+	0x73, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x22, 0x91, 0x01, 0x0a, 0x1f, 0x49, 0x6e, 0x74, 0x65, 0x72,
 	0x6e, 0x61, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x63, 0x63,
 	0x65, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x08, 0x73, 0x74,
 	0x61, 0x66, 0x66, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x09, 0xba, 0x48,
@@ -293,8 +389,8 @@ var file_api_iam_v1_staff_auth_proto_rawDesc = string([]byte{
 	0x6d, 0x61, 0x69, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d,
 	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d,
 	0x65, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x75, 0x6c, 0x6c, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x75, 0x6c, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x32, 0x99,
-	0x02, 0x0a, 0x0c, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x75, 0x74, 0x68, 0x41, 0x50, 0x49, 0x12,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x75, 0x6c, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x32, 0x89,
+	0x03, 0x0a, 0x0c, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x75, 0x74, 0x68, 0x41, 0x50, 0x49, 0x12,
 	0x7a, 0x0a, 0x18, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b,
 	0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x2b, 0x2e, 0x61, 0x70,
 	0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61,
@@ -311,6 +407,13 @@ var file_api_iam_v1_staff_auth_proto_rawDesc = string([]byte{
 	0x74, 0x1a, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x2e, 0x49,
 	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x53, 0x74, 0x61,
 	0x66, 0x66, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0x6e, 0x0a, 0x14, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x49, 0x73, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x6d,
+	0x69, 0x6e, 0x12, 0x27, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x2e,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x49, 0x73, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41,
+	0x64, 0x6d, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61,
+	0x6c, 0x49, 0x73, 0x53, 0x74, 0x61, 0x66, 0x66, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x42, 0xa3, 0x01, 0x0a, 0x0e, 0x63,
 	0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x31, 0x42, 0x0e, 0x53,
 	0x74, 0x61, 0x66, 0x66, 0x41, 0x75, 0x74, 0x68, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
@@ -337,20 +440,24 @@ func file_api_iam_v1_staff_auth_proto_rawDescGZIP() []byte {
 	return file_api_iam_v1_staff_auth_proto_rawDescData
 }
 
-var file_api_iam_v1_staff_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_api_iam_v1_staff_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_iam_v1_staff_auth_proto_goTypes = []any{
-	(*InternalCheckStaffAccessRequest)(nil),        // 0: api.iam.v1.InternalCheckStaffAccessRequest
-	(*InternalCheckStaffAccessResponse)(nil),       // 1: api.iam.v1.InternalCheckStaffAccessResponse
-	(*InternalVerifyStaffAccessTokenRequest)(nil),  // 2: api.iam.v1.InternalVerifyStaffAccessTokenRequest
-	(*InternalVerifyStaffAccessTokenResponse)(nil), // 3: api.iam.v1.InternalVerifyStaffAccessTokenResponse
+	(*InternalIsStaffAdminRequest)(nil),            // 0: api.iam.v1.InternalIsStaffAdminRequest
+	(*InternalIsStaffAdminResponse)(nil),           // 1: api.iam.v1.InternalIsStaffAdminResponse
+	(*InternalCheckStaffAccessRequest)(nil),        // 2: api.iam.v1.InternalCheckStaffAccessRequest
+	(*InternalCheckStaffAccessResponse)(nil),       // 3: api.iam.v1.InternalCheckStaffAccessResponse
+	(*InternalVerifyStaffAccessTokenRequest)(nil),  // 4: api.iam.v1.InternalVerifyStaffAccessTokenRequest
+	(*InternalVerifyStaffAccessTokenResponse)(nil), // 5: api.iam.v1.InternalVerifyStaffAccessTokenResponse
 }
 var file_api_iam_v1_staff_auth_proto_depIdxs = []int32{
-	0, // 0: api.iam.v1.StaffAuthAPI.InternalCheckStaffAccess:input_type -> api.iam.v1.InternalCheckStaffAccessRequest
-	2, // 1: api.iam.v1.StaffAuthAPI.InternalVerifyStaffAccessToken:input_type -> api.iam.v1.InternalVerifyStaffAccessTokenRequest
-	1, // 2: api.iam.v1.StaffAuthAPI.InternalCheckStaffAccess:output_type -> api.iam.v1.InternalCheckStaffAccessResponse
-	3, // 3: api.iam.v1.StaffAuthAPI.InternalVerifyStaffAccessToken:output_type -> api.iam.v1.InternalVerifyStaffAccessTokenResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	2, // 0: api.iam.v1.StaffAuthAPI.InternalCheckStaffAccess:input_type -> api.iam.v1.InternalCheckStaffAccessRequest
+	4, // 1: api.iam.v1.StaffAuthAPI.InternalVerifyStaffAccessToken:input_type -> api.iam.v1.InternalVerifyStaffAccessTokenRequest
+	0, // 2: api.iam.v1.StaffAuthAPI.InternalIsStaffAdmin:input_type -> api.iam.v1.InternalIsStaffAdminRequest
+	3, // 3: api.iam.v1.StaffAuthAPI.InternalCheckStaffAccess:output_type -> api.iam.v1.InternalCheckStaffAccessResponse
+	5, // 4: api.iam.v1.StaffAuthAPI.InternalVerifyStaffAccessToken:output_type -> api.iam.v1.InternalVerifyStaffAccessTokenResponse
+	1, // 5: api.iam.v1.StaffAuthAPI.InternalIsStaffAdmin:output_type -> api.iam.v1.InternalIsStaffAdminResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -367,7 +474,7 @@ func file_api_iam_v1_staff_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_iam_v1_staff_auth_proto_rawDesc), len(file_api_iam_v1_staff_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
