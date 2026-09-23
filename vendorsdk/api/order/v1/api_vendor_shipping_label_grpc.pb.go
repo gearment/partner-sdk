@@ -23,6 +23,7 @@ const (
 	VendorShippingLabelAPI_VendorEstimateShippingRates_FullMethodName       = "/api.order.v1.VendorShippingLabelAPI/VendorEstimateShippingRates"
 	VendorShippingLabelAPI_VendorPurchaseShippingLabel_FullMethodName       = "/api.order.v1.VendorShippingLabelAPI/VendorPurchaseShippingLabel"
 	VendorShippingLabelAPI_VendorGetShippingLabel_FullMethodName            = "/api.order.v1.VendorShippingLabelAPI/VendorGetShippingLabel"
+	VendorShippingLabelAPI_VendorListShippingLabels_FullMethodName          = "/api.order.v1.VendorShippingLabelAPI/VendorListShippingLabels"
 	VendorShippingLabelAPI_VendorVoidShippingLabel_FullMethodName           = "/api.order.v1.VendorShippingLabelAPI/VendorVoidShippingLabel"
 )
 
@@ -38,6 +39,7 @@ type VendorShippingLabelAPIClient interface {
 	VendorEstimateShippingRates(ctx context.Context, in *VendorEstimateShippingRatesRequest, opts ...grpc.CallOption) (*VendorEstimateShippingRatesResponse, error)
 	VendorPurchaseShippingLabel(ctx context.Context, in *VendorPurchaseShippingLabelRequest, opts ...grpc.CallOption) (*VendorPurchaseShippingLabelResponse, error)
 	VendorGetShippingLabel(ctx context.Context, in *VendorGetShippingLabelRequest, opts ...grpc.CallOption) (*VendorGetShippingLabelResponse, error)
+	VendorListShippingLabels(ctx context.Context, in *VendorListShippingLabelsRequest, opts ...grpc.CallOption) (*VendorListShippingLabelsResponse, error)
 	VendorVoidShippingLabel(ctx context.Context, in *VendorVoidShippingLabelRequest, opts ...grpc.CallOption) (*VendorVoidShippingLabelResponse, error)
 }
 
@@ -89,6 +91,16 @@ func (c *vendorShippingLabelAPIClient) VendorGetShippingLabel(ctx context.Contex
 	return out, nil
 }
 
+func (c *vendorShippingLabelAPIClient) VendorListShippingLabels(ctx context.Context, in *VendorListShippingLabelsRequest, opts ...grpc.CallOption) (*VendorListShippingLabelsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorListShippingLabelsResponse)
+	err := c.cc.Invoke(ctx, VendorShippingLabelAPI_VendorListShippingLabels_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vendorShippingLabelAPIClient) VendorVoidShippingLabel(ctx context.Context, in *VendorVoidShippingLabelRequest, opts ...grpc.CallOption) (*VendorVoidShippingLabelResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VendorVoidShippingLabelResponse)
@@ -111,6 +123,7 @@ type VendorShippingLabelAPIServer interface {
 	VendorEstimateShippingRates(context.Context, *VendorEstimateShippingRatesRequest) (*VendorEstimateShippingRatesResponse, error)
 	VendorPurchaseShippingLabel(context.Context, *VendorPurchaseShippingLabelRequest) (*VendorPurchaseShippingLabelResponse, error)
 	VendorGetShippingLabel(context.Context, *VendorGetShippingLabelRequest) (*VendorGetShippingLabelResponse, error)
+	VendorListShippingLabels(context.Context, *VendorListShippingLabelsRequest) (*VendorListShippingLabelsResponse, error)
 	VendorVoidShippingLabel(context.Context, *VendorVoidShippingLabelRequest) (*VendorVoidShippingLabelResponse, error)
 }
 
@@ -132,6 +145,9 @@ func (UnimplementedVendorShippingLabelAPIServer) VendorPurchaseShippingLabel(con
 }
 func (UnimplementedVendorShippingLabelAPIServer) VendorGetShippingLabel(context.Context, *VendorGetShippingLabelRequest) (*VendorGetShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorGetShippingLabel not implemented")
+}
+func (UnimplementedVendorShippingLabelAPIServer) VendorListShippingLabels(context.Context, *VendorListShippingLabelsRequest) (*VendorListShippingLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorListShippingLabels not implemented")
 }
 func (UnimplementedVendorShippingLabelAPIServer) VendorVoidShippingLabel(context.Context, *VendorVoidShippingLabelRequest) (*VendorVoidShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorVoidShippingLabel not implemented")
@@ -228,6 +244,24 @@ func _VendorShippingLabelAPI_VendorGetShippingLabel_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorShippingLabelAPI_VendorListShippingLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorListShippingLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorShippingLabelAPIServer).VendorListShippingLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorShippingLabelAPI_VendorListShippingLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorShippingLabelAPIServer).VendorListShippingLabels(ctx, req.(*VendorListShippingLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VendorShippingLabelAPI_VendorVoidShippingLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VendorVoidShippingLabelRequest)
 	if err := dec(in); err != nil {
@@ -268,6 +302,10 @@ var VendorShippingLabelAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VendorGetShippingLabel",
 			Handler:    _VendorShippingLabelAPI_VendorGetShippingLabel_Handler,
+		},
+		{
+			MethodName: "VendorListShippingLabels",
+			Handler:    _VendorShippingLabelAPI_VendorListShippingLabels_Handler,
 		},
 		{
 			MethodName: "VendorVoidShippingLabel",
