@@ -20,6 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	OrderAdminAPI_StaffCreateSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffCreateSaleOrderSavedView"
+	OrderAdminAPI_StaffListSaleOrderSavedViews_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffListSaleOrderSavedViews"
+	OrderAdminAPI_StaffGetSaleOrderSavedView_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffGetSaleOrderSavedView"
+	OrderAdminAPI_StaffUpdateSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateSaleOrderSavedView"
+	OrderAdminAPI_StaffDeleteSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffDeleteSaleOrderSavedView"
+	OrderAdminAPI_StaffCountSaleOrderSavedViews_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffCountSaleOrderSavedViews"
 	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
 	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
 	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
@@ -67,6 +73,12 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderAdminAPIClient interface {
+	StaffCreateSaleOrderSavedView(ctx context.Context, in *StaffCreateSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffCreateSaleOrderSavedViewResponse, error)
+	StaffListSaleOrderSavedViews(ctx context.Context, in *StaffListSaleOrderSavedViewsRequest, opts ...grpc.CallOption) (*StaffListSaleOrderSavedViewsResponse, error)
+	StaffGetSaleOrderSavedView(ctx context.Context, in *StaffGetSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffGetSaleOrderSavedViewResponse, error)
+	StaffUpdateSaleOrderSavedView(ctx context.Context, in *StaffUpdateSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffUpdateSaleOrderSavedViewResponse, error)
+	StaffDeleteSaleOrderSavedView(ctx context.Context, in *StaffDeleteSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffDeleteSaleOrderSavedViewResponse, error)
+	StaffCountSaleOrderSavedViews(ctx context.Context, in *StaffCountSaleOrderSavedViewsRequest, opts ...grpc.CallOption) (*StaffCountSaleOrderSavedViewsResponse, error)
 	StaffUpdateOrderDesign(ctx context.Context, in *StaffUpdateOrderDesignRequest, opts ...grpc.CallOption) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(ctx context.Context, in *StaffUpdateOrderAddressRequest, opts ...grpc.CallOption) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(ctx context.Context, in *StaffUpdateOrderShippingLabelRequest, opts ...grpc.CallOption) (*StaffUpdateOrderShippingLabelResponse, error)
@@ -116,6 +128,66 @@ type orderAdminAPIClient struct {
 
 func NewOrderAdminAPIClient(cc grpc.ClientConnInterface) OrderAdminAPIClient {
 	return &orderAdminAPIClient{cc}
+}
+
+func (c *orderAdminAPIClient) StaffCreateSaleOrderSavedView(ctx context.Context, in *StaffCreateSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffCreateSaleOrderSavedViewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCreateSaleOrderSavedViewResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffCreateSaleOrderSavedView_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffListSaleOrderSavedViews(ctx context.Context, in *StaffListSaleOrderSavedViewsRequest, opts ...grpc.CallOption) (*StaffListSaleOrderSavedViewsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListSaleOrderSavedViewsResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffListSaleOrderSavedViews_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffGetSaleOrderSavedView(ctx context.Context, in *StaffGetSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffGetSaleOrderSavedViewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetSaleOrderSavedViewResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffGetSaleOrderSavedView_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffUpdateSaleOrderSavedView(ctx context.Context, in *StaffUpdateSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffUpdateSaleOrderSavedViewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateSaleOrderSavedViewResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateSaleOrderSavedView_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffDeleteSaleOrderSavedView(ctx context.Context, in *StaffDeleteSaleOrderSavedViewRequest, opts ...grpc.CallOption) (*StaffDeleteSaleOrderSavedViewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteSaleOrderSavedViewResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffDeleteSaleOrderSavedView_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffCountSaleOrderSavedViews(ctx context.Context, in *StaffCountSaleOrderSavedViewsRequest, opts ...grpc.CallOption) (*StaffCountSaleOrderSavedViewsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCountSaleOrderSavedViewsResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffCountSaleOrderSavedViews_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *orderAdminAPIClient) StaffUpdateOrderDesign(ctx context.Context, in *StaffUpdateOrderDesignRequest, opts ...grpc.CallOption) (*StaffUpdateOrderDesignResponse, error) {
@@ -532,6 +604,12 @@ func (c *orderAdminAPIClient) StaffGetTeamOrderMetrics(ctx context.Context, in *
 // All implementations should embed UnimplementedOrderAdminAPIServer
 // for forward compatibility.
 type OrderAdminAPIServer interface {
+	StaffCreateSaleOrderSavedView(context.Context, *StaffCreateSaleOrderSavedViewRequest) (*StaffCreateSaleOrderSavedViewResponse, error)
+	StaffListSaleOrderSavedViews(context.Context, *StaffListSaleOrderSavedViewsRequest) (*StaffListSaleOrderSavedViewsResponse, error)
+	StaffGetSaleOrderSavedView(context.Context, *StaffGetSaleOrderSavedViewRequest) (*StaffGetSaleOrderSavedViewResponse, error)
+	StaffUpdateSaleOrderSavedView(context.Context, *StaffUpdateSaleOrderSavedViewRequest) (*StaffUpdateSaleOrderSavedViewResponse, error)
+	StaffDeleteSaleOrderSavedView(context.Context, *StaffDeleteSaleOrderSavedViewRequest) (*StaffDeleteSaleOrderSavedViewResponse, error)
+	StaffCountSaleOrderSavedViews(context.Context, *StaffCountSaleOrderSavedViewsRequest) (*StaffCountSaleOrderSavedViewsResponse, error)
 	StaffUpdateOrderDesign(context.Context, *StaffUpdateOrderDesignRequest) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(context.Context, *StaffUpdateOrderAddressRequest) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error)
@@ -582,6 +660,24 @@ type OrderAdminAPIServer interface {
 // pointer dereference when methods are called.
 type UnimplementedOrderAdminAPIServer struct{}
 
+func (UnimplementedOrderAdminAPIServer) StaffCreateSaleOrderSavedView(context.Context, *StaffCreateSaleOrderSavedViewRequest) (*StaffCreateSaleOrderSavedViewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateSaleOrderSavedView not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffListSaleOrderSavedViews(context.Context, *StaffListSaleOrderSavedViewsRequest) (*StaffListSaleOrderSavedViewsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListSaleOrderSavedViews not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffGetSaleOrderSavedView(context.Context, *StaffGetSaleOrderSavedViewRequest) (*StaffGetSaleOrderSavedViewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetSaleOrderSavedView not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffUpdateSaleOrderSavedView(context.Context, *StaffUpdateSaleOrderSavedViewRequest) (*StaffUpdateSaleOrderSavedViewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateSaleOrderSavedView not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffDeleteSaleOrderSavedView(context.Context, *StaffDeleteSaleOrderSavedViewRequest) (*StaffDeleteSaleOrderSavedViewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteSaleOrderSavedView not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffCountSaleOrderSavedViews(context.Context, *StaffCountSaleOrderSavedViewsRequest) (*StaffCountSaleOrderSavedViewsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCountSaleOrderSavedViews not implemented")
+}
 func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderDesign(context.Context, *StaffUpdateOrderDesignRequest) (*StaffUpdateOrderDesignResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOrderDesign not implemented")
 }
@@ -723,6 +819,114 @@ func RegisterOrderAdminAPIServer(s grpc.ServiceRegistrar, srv OrderAdminAPIServe
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&OrderAdminAPI_ServiceDesc, srv)
+}
+
+func _OrderAdminAPI_StaffCreateSaleOrderSavedView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCreateSaleOrderSavedViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffCreateSaleOrderSavedView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffCreateSaleOrderSavedView_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffCreateSaleOrderSavedView(ctx, req.(*StaffCreateSaleOrderSavedViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffListSaleOrderSavedViews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListSaleOrderSavedViewsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffListSaleOrderSavedViews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffListSaleOrderSavedViews_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffListSaleOrderSavedViews(ctx, req.(*StaffListSaleOrderSavedViewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffGetSaleOrderSavedView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetSaleOrderSavedViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffGetSaleOrderSavedView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffGetSaleOrderSavedView_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffGetSaleOrderSavedView(ctx, req.(*StaffGetSaleOrderSavedViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffUpdateSaleOrderSavedView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateSaleOrderSavedViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffUpdateSaleOrderSavedView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffUpdateSaleOrderSavedView_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffUpdateSaleOrderSavedView(ctx, req.(*StaffUpdateSaleOrderSavedViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffDeleteSaleOrderSavedView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteSaleOrderSavedViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffDeleteSaleOrderSavedView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffDeleteSaleOrderSavedView_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffDeleteSaleOrderSavedView(ctx, req.(*StaffDeleteSaleOrderSavedViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffCountSaleOrderSavedViews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCountSaleOrderSavedViewsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffCountSaleOrderSavedViews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffCountSaleOrderSavedViews_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffCountSaleOrderSavedViews(ctx, req.(*StaffCountSaleOrderSavedViewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _OrderAdminAPI_StaffUpdateOrderDesign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1470,6 +1674,30 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.pod.v1.OrderAdminAPI",
 	HandlerType: (*OrderAdminAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "StaffCreateSaleOrderSavedView",
+			Handler:    _OrderAdminAPI_StaffCreateSaleOrderSavedView_Handler,
+		},
+		{
+			MethodName: "StaffListSaleOrderSavedViews",
+			Handler:    _OrderAdminAPI_StaffListSaleOrderSavedViews_Handler,
+		},
+		{
+			MethodName: "StaffGetSaleOrderSavedView",
+			Handler:    _OrderAdminAPI_StaffGetSaleOrderSavedView_Handler,
+		},
+		{
+			MethodName: "StaffUpdateSaleOrderSavedView",
+			Handler:    _OrderAdminAPI_StaffUpdateSaleOrderSavedView_Handler,
+		},
+		{
+			MethodName: "StaffDeleteSaleOrderSavedView",
+			Handler:    _OrderAdminAPI_StaffDeleteSaleOrderSavedView_Handler,
+		},
+		{
+			MethodName: "StaffCountSaleOrderSavedViews",
+			Handler:    _OrderAdminAPI_StaffCountSaleOrderSavedViews_Handler,
+		},
 		{
 			MethodName: "StaffUpdateOrderDesign",
 			Handler:    _OrderAdminAPI_StaffUpdateOrderDesign_Handler,

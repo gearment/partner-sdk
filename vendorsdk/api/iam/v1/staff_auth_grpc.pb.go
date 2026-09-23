@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	StaffAuthAPI_InternalCheckStaffAccess_FullMethodName       = "/api.iam.v1.StaffAuthAPI/InternalCheckStaffAccess"
 	StaffAuthAPI_InternalVerifyStaffAccessToken_FullMethodName = "/api.iam.v1.StaffAuthAPI/InternalVerifyStaffAccessToken"
+	StaffAuthAPI_InternalIsStaffAdmin_FullMethodName           = "/api.iam.v1.StaffAuthAPI/InternalIsStaffAdmin"
 )
 
 // StaffAuthAPIClient is the client API for StaffAuthAPI service.
@@ -29,6 +30,7 @@ const (
 type StaffAuthAPIClient interface {
 	InternalCheckStaffAccess(ctx context.Context, in *InternalCheckStaffAccessRequest, opts ...grpc.CallOption) (*InternalCheckStaffAccessResponse, error)
 	InternalVerifyStaffAccessToken(ctx context.Context, in *InternalVerifyStaffAccessTokenRequest, opts ...grpc.CallOption) (*InternalVerifyStaffAccessTokenResponse, error)
+	InternalIsStaffAdmin(ctx context.Context, in *InternalIsStaffAdminRequest, opts ...grpc.CallOption) (*InternalIsStaffAdminResponse, error)
 }
 
 type staffAuthAPIClient struct {
@@ -59,12 +61,23 @@ func (c *staffAuthAPIClient) InternalVerifyStaffAccessToken(ctx context.Context,
 	return out, nil
 }
 
+func (c *staffAuthAPIClient) InternalIsStaffAdmin(ctx context.Context, in *InternalIsStaffAdminRequest, opts ...grpc.CallOption) (*InternalIsStaffAdminResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalIsStaffAdminResponse)
+	err := c.cc.Invoke(ctx, StaffAuthAPI_InternalIsStaffAdmin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StaffAuthAPIServer is the server API for StaffAuthAPI service.
 // All implementations should embed UnimplementedStaffAuthAPIServer
 // for forward compatibility.
 type StaffAuthAPIServer interface {
 	InternalCheckStaffAccess(context.Context, *InternalCheckStaffAccessRequest) (*InternalCheckStaffAccessResponse, error)
 	InternalVerifyStaffAccessToken(context.Context, *InternalVerifyStaffAccessTokenRequest) (*InternalVerifyStaffAccessTokenResponse, error)
+	InternalIsStaffAdmin(context.Context, *InternalIsStaffAdminRequest) (*InternalIsStaffAdminResponse, error)
 }
 
 // UnimplementedStaffAuthAPIServer should be embedded to have
@@ -79,6 +92,9 @@ func (UnimplementedStaffAuthAPIServer) InternalCheckStaffAccess(context.Context,
 }
 func (UnimplementedStaffAuthAPIServer) InternalVerifyStaffAccessToken(context.Context, *InternalVerifyStaffAccessTokenRequest) (*InternalVerifyStaffAccessTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVerifyStaffAccessToken not implemented")
+}
+func (UnimplementedStaffAuthAPIServer) InternalIsStaffAdmin(context.Context, *InternalIsStaffAdminRequest) (*InternalIsStaffAdminResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalIsStaffAdmin not implemented")
 }
 func (UnimplementedStaffAuthAPIServer) testEmbeddedByValue() {}
 
@@ -136,6 +152,24 @@ func _StaffAuthAPI_InternalVerifyStaffAccessToken_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StaffAuthAPI_InternalIsStaffAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalIsStaffAdminRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaffAuthAPIServer).InternalIsStaffAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StaffAuthAPI_InternalIsStaffAdmin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaffAuthAPIServer).InternalIsStaffAdmin(ctx, req.(*InternalIsStaffAdminRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StaffAuthAPI_ServiceDesc is the grpc.ServiceDesc for StaffAuthAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -150,6 +184,10 @@ var StaffAuthAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalVerifyStaffAccessToken",
 			Handler:    _StaffAuthAPI_InternalVerifyStaffAccessToken_Handler,
+		},
+		{
+			MethodName: "InternalIsStaffAdmin",
+			Handler:    _StaffAuthAPI_InternalIsStaffAdmin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
