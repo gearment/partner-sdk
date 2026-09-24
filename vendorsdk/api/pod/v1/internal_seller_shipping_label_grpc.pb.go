@@ -23,6 +23,7 @@ const (
 	InternalSellerShippingLabelAPI_InternalEstimateLabelRates_FullMethodName         = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalEstimateLabelRates"
 	InternalSellerShippingLabelAPI_InternalPurchaseLabel_FullMethodName              = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalPurchaseLabel"
 	InternalSellerShippingLabelAPI_InternalGetLabel_FullMethodName                   = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalGetLabel"
+	InternalSellerShippingLabelAPI_InternalListLabels_FullMethodName                 = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalListLabels"
 	InternalSellerShippingLabelAPI_InternalCancelLabel_FullMethodName                = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalCancelLabel"
 	InternalSellerShippingLabelAPI_InternalGetEnrollment_FullMethodName              = "/api.pod.v1.InternalSellerShippingLabelAPI/InternalGetEnrollment"
 )
@@ -38,6 +39,7 @@ type InternalSellerShippingLabelAPIClient interface {
 	InternalEstimateLabelRates(ctx context.Context, in *InternalEstimateLabelRatesRequest, opts ...grpc.CallOption) (*EstimateLabelRatesResponse, error)
 	InternalPurchaseLabel(ctx context.Context, in *InternalPurchaseLabelRequest, opts ...grpc.CallOption) (*PurchaseLabelResponse, error)
 	InternalGetLabel(ctx context.Context, in *InternalGetLabelRequest, opts ...grpc.CallOption) (*GetLabelResponse, error)
+	InternalListLabels(ctx context.Context, in *InternalListLabelsRequest, opts ...grpc.CallOption) (*InternalListLabelsResponse, error)
 	InternalCancelLabel(ctx context.Context, in *InternalCancelLabelRequest, opts ...grpc.CallOption) (*CancelLabelResponse, error)
 	InternalGetEnrollment(ctx context.Context, in *InternalGetSellerLabelEnrollmentRequest, opts ...grpc.CallOption) (*InternalGetSellerLabelEnrollmentResponse, error)
 }
@@ -90,6 +92,16 @@ func (c *internalSellerShippingLabelAPIClient) InternalGetLabel(ctx context.Cont
 	return out, nil
 }
 
+func (c *internalSellerShippingLabelAPIClient) InternalListLabels(ctx context.Context, in *InternalListLabelsRequest, opts ...grpc.CallOption) (*InternalListLabelsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListLabelsResponse)
+	err := c.cc.Invoke(ctx, InternalSellerShippingLabelAPI_InternalListLabels_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *internalSellerShippingLabelAPIClient) InternalCancelLabel(ctx context.Context, in *InternalCancelLabelRequest, opts ...grpc.CallOption) (*CancelLabelResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CancelLabelResponse)
@@ -121,6 +133,7 @@ type InternalSellerShippingLabelAPIServer interface {
 	InternalEstimateLabelRates(context.Context, *InternalEstimateLabelRatesRequest) (*EstimateLabelRatesResponse, error)
 	InternalPurchaseLabel(context.Context, *InternalPurchaseLabelRequest) (*PurchaseLabelResponse, error)
 	InternalGetLabel(context.Context, *InternalGetLabelRequest) (*GetLabelResponse, error)
+	InternalListLabels(context.Context, *InternalListLabelsRequest) (*InternalListLabelsResponse, error)
 	InternalCancelLabel(context.Context, *InternalCancelLabelRequest) (*CancelLabelResponse, error)
 	InternalGetEnrollment(context.Context, *InternalGetSellerLabelEnrollmentRequest) (*InternalGetSellerLabelEnrollmentResponse, error)
 }
@@ -143,6 +156,9 @@ func (UnimplementedInternalSellerShippingLabelAPIServer) InternalPurchaseLabel(c
 }
 func (UnimplementedInternalSellerShippingLabelAPIServer) InternalGetLabel(context.Context, *InternalGetLabelRequest) (*GetLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetLabel not implemented")
+}
+func (UnimplementedInternalSellerShippingLabelAPIServer) InternalListLabels(context.Context, *InternalListLabelsRequest) (*InternalListLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListLabels not implemented")
 }
 func (UnimplementedInternalSellerShippingLabelAPIServer) InternalCancelLabel(context.Context, *InternalCancelLabelRequest) (*CancelLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalCancelLabel not implemented")
@@ -242,6 +258,24 @@ func _InternalSellerShippingLabelAPI_InternalGetLabel_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternalSellerShippingLabelAPI_InternalListLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalSellerShippingLabelAPIServer).InternalListLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalSellerShippingLabelAPI_InternalListLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalSellerShippingLabelAPIServer).InternalListLabels(ctx, req.(*InternalListLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _InternalSellerShippingLabelAPI_InternalCancelLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalCancelLabelRequest)
 	if err := dec(in); err != nil {
@@ -300,6 +334,10 @@ var InternalSellerShippingLabelAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalGetLabel",
 			Handler:    _InternalSellerShippingLabelAPI_InternalGetLabel_Handler,
+		},
+		{
+			MethodName: "InternalListLabels",
+			Handler:    _InternalSellerShippingLabelAPI_InternalListLabels_Handler,
 		},
 		{
 			MethodName: "InternalCancelLabel",
