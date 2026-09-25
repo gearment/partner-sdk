@@ -40,6 +40,7 @@ const (
 	OrderAdminAPI_StaffCountOrderStatus_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffCountOrderStatus"
 	OrderAdminAPI_StaffCountOrderForExport_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffCountOrderForExport"
 	OrderAdminAPI_StaffCountOrderLineItemForExport_FullMethodName     = "/api.pod.v1.OrderAdminAPI/StaffCountOrderLineItemForExport"
+	OrderAdminAPI_StaffCountOrderUnitForExport_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffCountOrderUnitForExport"
 	OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesOrder"
 	OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesUnit"
 	OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffGetStatisticSalesUnits"
@@ -49,6 +50,7 @@ const (
 	OrderAdminAPI_StaffListSalesOrderFilterCriteria_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffListSalesOrderFilterCriteria"
 	OrderAdminAPI_StaffExportOrder_FullMethodName                     = "/api.pod.v1.OrderAdminAPI/StaffExportOrder"
 	OrderAdminAPI_StaffExportOrderItems_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffExportOrderItems"
+	OrderAdminAPI_StaffExportOrderUnits_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffExportOrderUnits"
 	OrderAdminAPI_StaffListColorForOrderDraftFilter_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffListColorForOrderDraftFilter"
 	OrderAdminAPI_StaffListSizeForOrderDraftFilter_FullMethodName     = "/api.pod.v1.OrderAdminAPI/StaffListSizeForOrderDraftFilter"
 	OrderAdminAPI_StaffCancelMultiOrder_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffCancelMultiOrder"
@@ -94,6 +96,7 @@ type OrderAdminAPIClient interface {
 	StaffCountOrderStatus(ctx context.Context, in *StaffCountOrderStatusRequest, opts ...grpc.CallOption) (*StaffCountOrderStatusResponse, error)
 	StaffCountOrderForExport(ctx context.Context, in *StaffCountOrderForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(ctx context.Context, in *StaffCountOrderLineItemForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderLineItemForExportResponse, error)
+	StaffCountOrderUnitForExport(ctx context.Context, in *StaffCountOrderUnitForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderUnitForExportResponse, error)
 	StaffStatisticSalesOrder(ctx context.Context, in *StaffStatisticSalesOrderRequest, opts ...grpc.CallOption) (*StaffStatisticSalesOrderResponse, error)
 	StaffStatisticSalesUnit(ctx context.Context, in *StaffStatisticSalesUnitRequest, opts ...grpc.CallOption) (*StaffStatisticSalesUnitResponse, error)
 	StaffGetStatisticSalesUnits(ctx context.Context, in *StaffGetStatisticSalesUnitsRequest, opts ...grpc.CallOption) (*StaffGetStatisticSalesUnitsResponse, error)
@@ -103,6 +106,7 @@ type OrderAdminAPIClient interface {
 	StaffListSalesOrderFilterCriteria(ctx context.Context, in *StaffListSalesOrderFilterCriteriaRequest, opts ...grpc.CallOption) (*StaffListSalesOrderFilterCriteriaResponse, error)
 	StaffExportOrder(ctx context.Context, in *StaffExportOrderRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffExportOrderItems(ctx context.Context, in *StaffExportOrderItemsRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
+	StaffExportOrderUnits(ctx context.Context, in *StaffExportOrderUnitsRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffListColorForOrderDraftFilter(ctx context.Context, in *StaffListColorForOrderDraftFilterRequest, opts ...grpc.CallOption) (*StaffListColorForOrderDraftFilterResponse, error)
 	StaffListSizeForOrderDraftFilter(ctx context.Context, in *StaffListSizeForOrderDraftFilterRequest, opts ...grpc.CallOption) (*StaffListSizeForOrderDraftFilterResponse, error)
 	StaffCancelMultiOrder(ctx context.Context, in *StaffCancelMultiOrderRequest, opts ...grpc.CallOption) (*StaffCancelMultiOrderResponse, error)
@@ -332,6 +336,16 @@ func (c *orderAdminAPIClient) StaffCountOrderLineItemForExport(ctx context.Conte
 	return out, nil
 }
 
+func (c *orderAdminAPIClient) StaffCountOrderUnitForExport(ctx context.Context, in *StaffCountOrderUnitForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderUnitForExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCountOrderUnitForExportResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffCountOrderUnitForExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderAdminAPIClient) StaffStatisticSalesOrder(ctx context.Context, in *StaffStatisticSalesOrderRequest, opts ...grpc.CallOption) (*StaffStatisticSalesOrderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffStatisticSalesOrderResponse)
@@ -416,6 +430,16 @@ func (c *orderAdminAPIClient) StaffExportOrderItems(ctx context.Context, in *Sta
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(v1.FileAttachmentOrMessageResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffExportOrderItems_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffExportOrderUnits(ctx context.Context, in *StaffExportOrderUnitsRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(v1.FileAttachmentOrMessageResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffExportOrderUnits_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -636,6 +660,7 @@ type OrderAdminAPIServer interface {
 	StaffCountOrderStatus(context.Context, *StaffCountOrderStatusRequest) (*StaffCountOrderStatusResponse, error)
 	StaffCountOrderForExport(context.Context, *StaffCountOrderForExportRequest) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(context.Context, *StaffCountOrderLineItemForExportRequest) (*StaffCountOrderLineItemForExportResponse, error)
+	StaffCountOrderUnitForExport(context.Context, *StaffCountOrderUnitForExportRequest) (*StaffCountOrderUnitForExportResponse, error)
 	StaffStatisticSalesOrder(context.Context, *StaffStatisticSalesOrderRequest) (*StaffStatisticSalesOrderResponse, error)
 	StaffStatisticSalesUnit(context.Context, *StaffStatisticSalesUnitRequest) (*StaffStatisticSalesUnitResponse, error)
 	StaffGetStatisticSalesUnits(context.Context, *StaffGetStatisticSalesUnitsRequest) (*StaffGetStatisticSalesUnitsResponse, error)
@@ -645,6 +670,7 @@ type OrderAdminAPIServer interface {
 	StaffListSalesOrderFilterCriteria(context.Context, *StaffListSalesOrderFilterCriteriaRequest) (*StaffListSalesOrderFilterCriteriaResponse, error)
 	StaffExportOrder(context.Context, *StaffExportOrderRequest) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffExportOrderItems(context.Context, *StaffExportOrderItemsRequest) (*v1.FileAttachmentOrMessageResponse, error)
+	StaffExportOrderUnits(context.Context, *StaffExportOrderUnitsRequest) (*v1.FileAttachmentOrMessageResponse, error)
 	StaffListColorForOrderDraftFilter(context.Context, *StaffListColorForOrderDraftFilterRequest) (*StaffListColorForOrderDraftFilterResponse, error)
 	StaffListSizeForOrderDraftFilter(context.Context, *StaffListSizeForOrderDraftFilterRequest) (*StaffListSizeForOrderDraftFilterResponse, error)
 	StaffCancelMultiOrder(context.Context, *StaffCancelMultiOrderRequest) (*StaffCancelMultiOrderResponse, error)
@@ -733,6 +759,9 @@ func (UnimplementedOrderAdminAPIServer) StaffCountOrderForExport(context.Context
 func (UnimplementedOrderAdminAPIServer) StaffCountOrderLineItemForExport(context.Context, *StaffCountOrderLineItemForExportRequest) (*StaffCountOrderLineItemForExportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCountOrderLineItemForExport not implemented")
 }
+func (UnimplementedOrderAdminAPIServer) StaffCountOrderUnitForExport(context.Context, *StaffCountOrderUnitForExportRequest) (*StaffCountOrderUnitForExportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCountOrderUnitForExport not implemented")
+}
 func (UnimplementedOrderAdminAPIServer) StaffStatisticSalesOrder(context.Context, *StaffStatisticSalesOrderRequest) (*StaffStatisticSalesOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffStatisticSalesOrder not implemented")
 }
@@ -759,6 +788,9 @@ func (UnimplementedOrderAdminAPIServer) StaffExportOrder(context.Context, *Staff
 }
 func (UnimplementedOrderAdminAPIServer) StaffExportOrderItems(context.Context, *StaffExportOrderItemsRequest) (*v1.FileAttachmentOrMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffExportOrderItems not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffExportOrderUnits(context.Context, *StaffExportOrderUnitsRequest) (*v1.FileAttachmentOrMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffExportOrderUnits not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffListColorForOrderDraftFilter(context.Context, *StaffListColorForOrderDraftFilterRequest) (*StaffListColorForOrderDraftFilterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListColorForOrderDraftFilter not implemented")
@@ -1197,6 +1229,24 @@ func _OrderAdminAPI_StaffCountOrderLineItemForExport_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderAdminAPI_StaffCountOrderUnitForExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCountOrderUnitForExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffCountOrderUnitForExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffCountOrderUnitForExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffCountOrderUnitForExport(ctx, req.(*StaffCountOrderUnitForExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderAdminAPI_StaffStatisticSalesOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffStatisticSalesOrderRequest)
 	if err := dec(in); err != nil {
@@ -1355,6 +1405,24 @@ func _OrderAdminAPI_StaffExportOrderItems_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffExportOrderItems(ctx, req.(*StaffExportOrderItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffExportOrderUnits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffExportOrderUnitsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffExportOrderUnits(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffExportOrderUnits_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffExportOrderUnits(ctx, req.(*StaffExportOrderUnitsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1789,6 +1857,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderAdminAPI_StaffCountOrderLineItemForExport_Handler,
 		},
 		{
+			MethodName: "StaffCountOrderUnitForExport",
+			Handler:    _OrderAdminAPI_StaffCountOrderUnitForExport_Handler,
+		},
+		{
 			MethodName: "StaffStatisticSalesOrder",
 			Handler:    _OrderAdminAPI_StaffStatisticSalesOrder_Handler,
 		},
@@ -1823,6 +1895,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffExportOrderItems",
 			Handler:    _OrderAdminAPI_StaffExportOrderItems_Handler,
+		},
+		{
+			MethodName: "StaffExportOrderUnits",
+			Handler:    _OrderAdminAPI_StaffExportOrderUnits_Handler,
 		},
 		{
 			MethodName: "StaffListColorForOrderDraftFilter",
