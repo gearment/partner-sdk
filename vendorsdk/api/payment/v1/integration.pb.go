@@ -790,6 +790,11 @@ type InternalResumeCheckoutRequestResyncRunResponse struct {
 	OrderIds         []string               `protobuf:"bytes,7,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
 	From             *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=from,proto3" json:"from,omitempty"`
 	To               *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=to,proto3" json:"to,omitempty"`
+	Scanned          int64                  `protobuf:"varint,10,opt,name=scanned,proto3" json:"scanned,omitempty"`
+	Selected         int64                  `protobuf:"varint,11,opt,name=selected,proto3" json:"selected,omitempty"`
+	Published        int64                  `protobuf:"varint,12,opt,name=published,proto3" json:"published,omitempty"`
+	Completed        int64                  `protobuf:"varint,13,opt,name=completed,proto3" json:"completed,omitempty"`
+	Failed           int64                  `protobuf:"varint,14,opt,name=failed,proto3" json:"failed,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -885,6 +890,41 @@ func (x *InternalResumeCheckoutRequestResyncRunResponse) GetTo() *timestamppb.Ti
 		return x.To
 	}
 	return nil
+}
+
+func (x *InternalResumeCheckoutRequestResyncRunResponse) GetScanned() int64 {
+	if x != nil {
+		return x.Scanned
+	}
+	return 0
+}
+
+func (x *InternalResumeCheckoutRequestResyncRunResponse) GetSelected() int64 {
+	if x != nil {
+		return x.Selected
+	}
+	return 0
+}
+
+func (x *InternalResumeCheckoutRequestResyncRunResponse) GetPublished() int64 {
+	if x != nil {
+		return x.Published
+	}
+	return 0
+}
+
+func (x *InternalResumeCheckoutRequestResyncRunResponse) GetCompleted() int64 {
+	if x != nil {
+		return x.Completed
+	}
+	return 0
+}
+
+func (x *InternalResumeCheckoutRequestResyncRunResponse) GetFailed() int64 {
+	if x != nil {
+		return x.Failed
+	}
+	return 0
 }
 
 type InternalListCheckoutRequestResyncCarryForwardRequest struct {
@@ -1007,6 +1047,188 @@ func (x *InternalListCheckoutRequestResyncCarryForwardResponse) GetItems() []*Ch
 	return nil
 }
 
+// Returns the durable batch states for a run so a resumed producer can wait
+// for work already accepted by Kafka before scanning for new work.
+type InternalListCheckoutRequestResyncBatchesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TeamId        string                 `protobuf:"bytes,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	RunId         string                 `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesRequest) Reset() {
+	*x = InternalListCheckoutRequestResyncBatchesRequest{}
+	mi := &file_api_payment_v1_integration_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalListCheckoutRequestResyncBatchesRequest) ProtoMessage() {}
+
+func (x *InternalListCheckoutRequestResyncBatchesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payment_v1_integration_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalListCheckoutRequestResyncBatchesRequest.ProtoReflect.Descriptor instead.
+func (*InternalListCheckoutRequestResyncBatchesRequest) Descriptor() ([]byte, []int) {
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesRequest) GetTeamId() string {
+	if x != nil {
+		return x.TeamId
+	}
+	return ""
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesRequest) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
+type CheckoutRequestResyncBatchStatus struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BatchId       string                 `protobuf:"bytes,1,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
+	State         string                 `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	Total         int32                  `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Pending       int32                  `protobuf:"varint,4,opt,name=pending,proto3" json:"pending,omitempty"`
+	Completed     int32                  `protobuf:"varint,5,opt,name=completed,proto3" json:"completed,omitempty"`
+	Failed        int32                  `protobuf:"varint,6,opt,name=failed,proto3" json:"failed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckoutRequestResyncBatchStatus) Reset() {
+	*x = CheckoutRequestResyncBatchStatus{}
+	mi := &file_api_payment_v1_integration_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckoutRequestResyncBatchStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckoutRequestResyncBatchStatus) ProtoMessage() {}
+
+func (x *CheckoutRequestResyncBatchStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payment_v1_integration_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckoutRequestResyncBatchStatus.ProtoReflect.Descriptor instead.
+func (*CheckoutRequestResyncBatchStatus) Descriptor() ([]byte, []int) {
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetBatchId() string {
+	if x != nil {
+		return x.BatchId
+	}
+	return ""
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetPending() int32 {
+	if x != nil {
+		return x.Pending
+	}
+	return 0
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetCompleted() int32 {
+	if x != nil {
+		return x.Completed
+	}
+	return 0
+}
+
+func (x *CheckoutRequestResyncBatchStatus) GetFailed() int32 {
+	if x != nil {
+		return x.Failed
+	}
+	return 0
+}
+
+type InternalListCheckoutRequestResyncBatchesResponse struct {
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Batches       []*CheckoutRequestResyncBatchStatus `protobuf:"bytes,1,rep,name=batches,proto3" json:"batches,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesResponse) Reset() {
+	*x = InternalListCheckoutRequestResyncBatchesResponse{}
+	mi := &file_api_payment_v1_integration_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InternalListCheckoutRequestResyncBatchesResponse) ProtoMessage() {}
+
+func (x *InternalListCheckoutRequestResyncBatchesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payment_v1_integration_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InternalListCheckoutRequestResyncBatchesResponse.ProtoReflect.Descriptor instead.
+func (*InternalListCheckoutRequestResyncBatchesResponse) Descriptor() ([]byte, []int) {
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *InternalListCheckoutRequestResyncBatchesResponse) GetBatches() []*CheckoutRequestResyncBatchStatus {
+	if x != nil {
+		return x.Batches
+	}
+	return nil
+}
+
 type InternalAdvanceCheckoutRequestResyncRunRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TeamId        string                 `protobuf:"bytes,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
@@ -1025,7 +1247,7 @@ type InternalAdvanceCheckoutRequestResyncRunRequest struct {
 
 func (x *InternalAdvanceCheckoutRequestResyncRunRequest) Reset() {
 	*x = InternalAdvanceCheckoutRequestResyncRunRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[10]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1037,7 +1259,7 @@ func (x *InternalAdvanceCheckoutRequestResyncRunRequest) String() string {
 func (*InternalAdvanceCheckoutRequestResyncRunRequest) ProtoMessage() {}
 
 func (x *InternalAdvanceCheckoutRequestResyncRunRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[10]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1050,7 +1272,7 @@ func (x *InternalAdvanceCheckoutRequestResyncRunRequest) ProtoReflect() protoref
 
 // Deprecated: Use InternalAdvanceCheckoutRequestResyncRunRequest.ProtoReflect.Descriptor instead.
 func (*InternalAdvanceCheckoutRequestResyncRunRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{10}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *InternalAdvanceCheckoutRequestResyncRunRequest) GetTeamId() string {
@@ -1132,7 +1354,7 @@ type InternalAdvanceCheckoutRequestResyncRunResponse struct {
 
 func (x *InternalAdvanceCheckoutRequestResyncRunResponse) Reset() {
 	*x = InternalAdvanceCheckoutRequestResyncRunResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[11]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1144,7 +1366,7 @@ func (x *InternalAdvanceCheckoutRequestResyncRunResponse) String() string {
 func (*InternalAdvanceCheckoutRequestResyncRunResponse) ProtoMessage() {}
 
 func (x *InternalAdvanceCheckoutRequestResyncRunResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[11]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1157,7 +1379,7 @@ func (x *InternalAdvanceCheckoutRequestResyncRunResponse) ProtoReflect() protore
 
 // Deprecated: Use InternalAdvanceCheckoutRequestResyncRunResponse.ProtoReflect.Descriptor instead.
 func (*InternalAdvanceCheckoutRequestResyncRunResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{11}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *InternalAdvanceCheckoutRequestResyncRunResponse) GetState() string {
@@ -1178,7 +1400,7 @@ type InternalFailCheckoutRequestResyncRunRequest struct {
 
 func (x *InternalFailCheckoutRequestResyncRunRequest) Reset() {
 	*x = InternalFailCheckoutRequestResyncRunRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[12]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1190,7 +1412,7 @@ func (x *InternalFailCheckoutRequestResyncRunRequest) String() string {
 func (*InternalFailCheckoutRequestResyncRunRequest) ProtoMessage() {}
 
 func (x *InternalFailCheckoutRequestResyncRunRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[12]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1203,7 +1425,7 @@ func (x *InternalFailCheckoutRequestResyncRunRequest) ProtoReflect() protoreflec
 
 // Deprecated: Use InternalFailCheckoutRequestResyncRunRequest.ProtoReflect.Descriptor instead.
 func (*InternalFailCheckoutRequestResyncRunRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{12}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *InternalFailCheckoutRequestResyncRunRequest) GetTeamId() string {
@@ -1236,7 +1458,7 @@ type InternalFailCheckoutRequestResyncRunResponse struct {
 
 func (x *InternalFailCheckoutRequestResyncRunResponse) Reset() {
 	*x = InternalFailCheckoutRequestResyncRunResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[13]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1248,7 +1470,7 @@ func (x *InternalFailCheckoutRequestResyncRunResponse) String() string {
 func (*InternalFailCheckoutRequestResyncRunResponse) ProtoMessage() {}
 
 func (x *InternalFailCheckoutRequestResyncRunResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[13]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1261,7 +1483,7 @@ func (x *InternalFailCheckoutRequestResyncRunResponse) ProtoReflect() protorefle
 
 // Deprecated: Use InternalFailCheckoutRequestResyncRunResponse.ProtoReflect.Descriptor instead.
 func (*InternalFailCheckoutRequestResyncRunResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{13}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *InternalFailCheckoutRequestResyncRunResponse) GetState() string {
@@ -1283,7 +1505,7 @@ type InternalPrepareCheckoutRequestResyncBatchRequest struct {
 
 func (x *InternalPrepareCheckoutRequestResyncBatchRequest) Reset() {
 	*x = InternalPrepareCheckoutRequestResyncBatchRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[14]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1295,7 +1517,7 @@ func (x *InternalPrepareCheckoutRequestResyncBatchRequest) String() string {
 func (*InternalPrepareCheckoutRequestResyncBatchRequest) ProtoMessage() {}
 
 func (x *InternalPrepareCheckoutRequestResyncBatchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[14]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1308,7 +1530,7 @@ func (x *InternalPrepareCheckoutRequestResyncBatchRequest) ProtoReflect() protor
 
 // Deprecated: Use InternalPrepareCheckoutRequestResyncBatchRequest.ProtoReflect.Descriptor instead.
 func (*InternalPrepareCheckoutRequestResyncBatchRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{14}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *InternalPrepareCheckoutRequestResyncBatchRequest) GetTeamId() string {
@@ -1363,7 +1585,7 @@ type CheckoutRequestResyncBatchItem struct {
 
 func (x *CheckoutRequestResyncBatchItem) Reset() {
 	*x = CheckoutRequestResyncBatchItem{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[15]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1375,7 +1597,7 @@ func (x *CheckoutRequestResyncBatchItem) String() string {
 func (*CheckoutRequestResyncBatchItem) ProtoMessage() {}
 
 func (x *CheckoutRequestResyncBatchItem) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[15]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1388,7 +1610,7 @@ func (x *CheckoutRequestResyncBatchItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckoutRequestResyncBatchItem.ProtoReflect.Descriptor instead.
 func (*CheckoutRequestResyncBatchItem) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{15}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *CheckoutRequestResyncBatchItem) GetItemId() string {
@@ -1514,7 +1736,7 @@ type InternalPrepareCheckoutRequestResyncBatchResponse struct {
 
 func (x *InternalPrepareCheckoutRequestResyncBatchResponse) Reset() {
 	*x = InternalPrepareCheckoutRequestResyncBatchResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[16]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1526,7 +1748,7 @@ func (x *InternalPrepareCheckoutRequestResyncBatchResponse) String() string {
 func (*InternalPrepareCheckoutRequestResyncBatchResponse) ProtoMessage() {}
 
 func (x *InternalPrepareCheckoutRequestResyncBatchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[16]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1539,7 +1761,7 @@ func (x *InternalPrepareCheckoutRequestResyncBatchResponse) ProtoReflect() proto
 
 // Deprecated: Use InternalPrepareCheckoutRequestResyncBatchResponse.ProtoReflect.Descriptor instead.
 func (*InternalPrepareCheckoutRequestResyncBatchResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{16}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *InternalPrepareCheckoutRequestResyncBatchResponse) GetBatchId() string {
@@ -1576,7 +1798,7 @@ type InternalAcknowledgeCheckoutRequestResyncBatchRequest struct {
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchRequest) Reset() {
 	*x = InternalAcknowledgeCheckoutRequestResyncBatchRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[17]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1588,7 +1810,7 @@ func (x *InternalAcknowledgeCheckoutRequestResyncBatchRequest) String() string {
 func (*InternalAcknowledgeCheckoutRequestResyncBatchRequest) ProtoMessage() {}
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[17]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1601,7 +1823,7 @@ func (x *InternalAcknowledgeCheckoutRequestResyncBatchRequest) ProtoReflect() pr
 
 // Deprecated: Use InternalAcknowledgeCheckoutRequestResyncBatchRequest.ProtoReflect.Descriptor instead.
 func (*InternalAcknowledgeCheckoutRequestResyncBatchRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{17}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchRequest) GetTeamId() string {
@@ -1648,7 +1870,7 @@ type InternalAcknowledgeCheckoutRequestResyncBatchResponse struct {
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchResponse) Reset() {
 	*x = InternalAcknowledgeCheckoutRequestResyncBatchResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[18]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1660,7 +1882,7 @@ func (x *InternalAcknowledgeCheckoutRequestResyncBatchResponse) String() string 
 func (*InternalAcknowledgeCheckoutRequestResyncBatchResponse) ProtoMessage() {}
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[18]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1673,7 +1895,7 @@ func (x *InternalAcknowledgeCheckoutRequestResyncBatchResponse) ProtoReflect() p
 
 // Deprecated: Use InternalAcknowledgeCheckoutRequestResyncBatchResponse.ProtoReflect.Descriptor instead.
 func (*InternalAcknowledgeCheckoutRequestResyncBatchResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{18}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *InternalAcknowledgeCheckoutRequestResyncBatchResponse) GetState() string {
@@ -1694,7 +1916,7 @@ type InternalPollCheckoutRequestResyncBatchRequest struct {
 
 func (x *InternalPollCheckoutRequestResyncBatchRequest) Reset() {
 	*x = InternalPollCheckoutRequestResyncBatchRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[19]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1706,7 +1928,7 @@ func (x *InternalPollCheckoutRequestResyncBatchRequest) String() string {
 func (*InternalPollCheckoutRequestResyncBatchRequest) ProtoMessage() {}
 
 func (x *InternalPollCheckoutRequestResyncBatchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[19]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1719,7 +1941,7 @@ func (x *InternalPollCheckoutRequestResyncBatchRequest) ProtoReflect() protorefl
 
 // Deprecated: Use InternalPollCheckoutRequestResyncBatchRequest.ProtoReflect.Descriptor instead.
 func (*InternalPollCheckoutRequestResyncBatchRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{19}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *InternalPollCheckoutRequestResyncBatchRequest) GetTeamId() string {
@@ -1756,7 +1978,7 @@ type InternalPollCheckoutRequestResyncBatchResponse struct {
 
 func (x *InternalPollCheckoutRequestResyncBatchResponse) Reset() {
 	*x = InternalPollCheckoutRequestResyncBatchResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[20]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1768,7 +1990,7 @@ func (x *InternalPollCheckoutRequestResyncBatchResponse) String() string {
 func (*InternalPollCheckoutRequestResyncBatchResponse) ProtoMessage() {}
 
 func (x *InternalPollCheckoutRequestResyncBatchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[20]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1781,7 +2003,7 @@ func (x *InternalPollCheckoutRequestResyncBatchResponse) ProtoReflect() protoref
 
 // Deprecated: Use InternalPollCheckoutRequestResyncBatchResponse.ProtoReflect.Descriptor instead.
 func (*InternalPollCheckoutRequestResyncBatchResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{20}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *InternalPollCheckoutRequestResyncBatchResponse) GetBatchState() string {
@@ -1828,7 +2050,7 @@ type InternalCheckExpirationCheckoutRequest struct {
 
 func (x *InternalCheckExpirationCheckoutRequest) Reset() {
 	*x = InternalCheckExpirationCheckoutRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[21]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1840,7 +2062,7 @@ func (x *InternalCheckExpirationCheckoutRequest) String() string {
 func (*InternalCheckExpirationCheckoutRequest) ProtoMessage() {}
 
 func (x *InternalCheckExpirationCheckoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[21]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1853,7 +2075,7 @@ func (x *InternalCheckExpirationCheckoutRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use InternalCheckExpirationCheckoutRequest.ProtoReflect.Descriptor instead.
 func (*InternalCheckExpirationCheckoutRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{21}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *InternalCheckExpirationCheckoutRequest) GetTxnRefs() []string {
@@ -1872,7 +2094,7 @@ type InternalCheckExpirationCheckoutResponse struct {
 
 func (x *InternalCheckExpirationCheckoutResponse) Reset() {
 	*x = InternalCheckExpirationCheckoutResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[22]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1884,7 +2106,7 @@ func (x *InternalCheckExpirationCheckoutResponse) String() string {
 func (*InternalCheckExpirationCheckoutResponse) ProtoMessage() {}
 
 func (x *InternalCheckExpirationCheckoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[22]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1897,7 +2119,7 @@ func (x *InternalCheckExpirationCheckoutResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use InternalCheckExpirationCheckoutResponse.ProtoReflect.Descriptor instead.
 func (*InternalCheckExpirationCheckoutResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{22}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *InternalCheckExpirationCheckoutResponse) GetStatusTransactions() []*StatusTransaction {
@@ -1917,7 +2139,7 @@ type StatusTransaction struct {
 
 func (x *StatusTransaction) Reset() {
 	*x = StatusTransaction{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[23]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1929,7 +2151,7 @@ func (x *StatusTransaction) String() string {
 func (*StatusTransaction) ProtoMessage() {}
 
 func (x *StatusTransaction) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[23]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1942,7 +2164,7 @@ func (x *StatusTransaction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusTransaction.ProtoReflect.Descriptor instead.
 func (*StatusTransaction) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{23}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *StatusTransaction) GetTxnRef() string {
@@ -1969,7 +2191,7 @@ type InternalValidateAutoCheckoutRequestRequest struct {
 
 func (x *InternalValidateAutoCheckoutRequestRequest) Reset() {
 	*x = InternalValidateAutoCheckoutRequestRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[24]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1981,7 +2203,7 @@ func (x *InternalValidateAutoCheckoutRequestRequest) String() string {
 func (*InternalValidateAutoCheckoutRequestRequest) ProtoMessage() {}
 
 func (x *InternalValidateAutoCheckoutRequestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[24]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1994,7 +2216,7 @@ func (x *InternalValidateAutoCheckoutRequestRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use InternalValidateAutoCheckoutRequestRequest.ProtoReflect.Descriptor instead.
 func (*InternalValidateAutoCheckoutRequestRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{24}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *InternalValidateAutoCheckoutRequestRequest) GetDetails() []*CheckoutRequest_OrderPaymentValidate {
@@ -2020,7 +2242,7 @@ type InternalGetPrimaryPaymentMethodRequest struct {
 
 func (x *InternalGetPrimaryPaymentMethodRequest) Reset() {
 	*x = InternalGetPrimaryPaymentMethodRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[25]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2032,7 +2254,7 @@ func (x *InternalGetPrimaryPaymentMethodRequest) String() string {
 func (*InternalGetPrimaryPaymentMethodRequest) ProtoMessage() {}
 
 func (x *InternalGetPrimaryPaymentMethodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[25]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2045,7 +2267,7 @@ func (x *InternalGetPrimaryPaymentMethodRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use InternalGetPrimaryPaymentMethodRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetPrimaryPaymentMethodRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{25}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *InternalGetPrimaryPaymentMethodRequest) GetTeamId() string {
@@ -2064,7 +2286,7 @@ type InternalGetPrimaryPaymentMethodResponse struct {
 
 func (x *InternalGetPrimaryPaymentMethodResponse) Reset() {
 	*x = InternalGetPrimaryPaymentMethodResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[26]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2076,7 +2298,7 @@ func (x *InternalGetPrimaryPaymentMethodResponse) String() string {
 func (*InternalGetPrimaryPaymentMethodResponse) ProtoMessage() {}
 
 func (x *InternalGetPrimaryPaymentMethodResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[26]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2089,7 +2311,7 @@ func (x *InternalGetPrimaryPaymentMethodResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use InternalGetPrimaryPaymentMethodResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetPrimaryPaymentMethodResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{26}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *InternalGetPrimaryPaymentMethodResponse) GetLinkedPaymentMethod() *LinkedPaymentMethod {
@@ -2110,7 +2332,7 @@ type InternalValidateCheckoutRequestRequest struct {
 
 func (x *InternalValidateCheckoutRequestRequest) Reset() {
 	*x = InternalValidateCheckoutRequestRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[27]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2122,7 +2344,7 @@ func (x *InternalValidateCheckoutRequestRequest) String() string {
 func (*InternalValidateCheckoutRequestRequest) ProtoMessage() {}
 
 func (x *InternalValidateCheckoutRequestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[27]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2135,7 +2357,7 @@ func (x *InternalValidateCheckoutRequestRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use InternalValidateCheckoutRequestRequest.ProtoReflect.Descriptor instead.
 func (*InternalValidateCheckoutRequestRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{27}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *InternalValidateCheckoutRequestRequest) GetLinkedPaymentMethodId() string {
@@ -2170,7 +2392,7 @@ type InternalValidateCheckoutRequestResponse struct {
 
 func (x *InternalValidateCheckoutRequestResponse) Reset() {
 	*x = InternalValidateCheckoutRequestResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[28]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2182,7 +2404,7 @@ func (x *InternalValidateCheckoutRequestResponse) String() string {
 func (*InternalValidateCheckoutRequestResponse) ProtoMessage() {}
 
 func (x *InternalValidateCheckoutRequestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[28]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2195,7 +2417,7 @@ func (x *InternalValidateCheckoutRequestResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use InternalValidateCheckoutRequestResponse.ProtoReflect.Descriptor instead.
 func (*InternalValidateCheckoutRequestResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{28}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *InternalValidateCheckoutRequestResponse) GetIsValid() bool {
@@ -2232,7 +2454,7 @@ type InternalCreateCheckoutRequestRequest struct {
 
 func (x *InternalCreateCheckoutRequestRequest) Reset() {
 	*x = InternalCreateCheckoutRequestRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[29]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2244,7 +2466,7 @@ func (x *InternalCreateCheckoutRequestRequest) String() string {
 func (*InternalCreateCheckoutRequestRequest) ProtoMessage() {}
 
 func (x *InternalCreateCheckoutRequestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[29]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2257,7 +2479,7 @@ func (x *InternalCreateCheckoutRequestRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use InternalCreateCheckoutRequestRequest.ProtoReflect.Descriptor instead.
 func (*InternalCreateCheckoutRequestRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{29}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *InternalCreateCheckoutRequestRequest) GetLinkedPaymentMethodId() string {
@@ -2307,7 +2529,7 @@ type InternalCreateCheckoutRequestResponse struct {
 
 func (x *InternalCreateCheckoutRequestResponse) Reset() {
 	*x = InternalCreateCheckoutRequestResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[30]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2319,7 +2541,7 @@ func (x *InternalCreateCheckoutRequestResponse) String() string {
 func (*InternalCreateCheckoutRequestResponse) ProtoMessage() {}
 
 func (x *InternalCreateCheckoutRequestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[30]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2332,7 +2554,7 @@ func (x *InternalCreateCheckoutRequestResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use InternalCreateCheckoutRequestResponse.ProtoReflect.Descriptor instead.
 func (*InternalCreateCheckoutRequestResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{30}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *InternalCreateCheckoutRequestResponse) GetRequestId() int64 {
@@ -2371,7 +2593,7 @@ type CheckoutRequest struct {
 
 func (x *CheckoutRequest) Reset() {
 	*x = CheckoutRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[31]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2383,7 +2605,7 @@ func (x *CheckoutRequest) String() string {
 func (*CheckoutRequest) ProtoMessage() {}
 
 func (x *CheckoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[31]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2396,7 +2618,7 @@ func (x *CheckoutRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckoutRequest.ProtoReflect.Descriptor instead.
 func (*CheckoutRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{31}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{34}
 }
 
 type InternalGetLegalInfoRequest struct {
@@ -2408,7 +2630,7 @@ type InternalGetLegalInfoRequest struct {
 
 func (x *InternalGetLegalInfoRequest) Reset() {
 	*x = InternalGetLegalInfoRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[32]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2420,7 +2642,7 @@ func (x *InternalGetLegalInfoRequest) String() string {
 func (*InternalGetLegalInfoRequest) ProtoMessage() {}
 
 func (x *InternalGetLegalInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[32]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2433,7 +2655,7 @@ func (x *InternalGetLegalInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalGetLegalInfoRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetLegalInfoRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{32}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *InternalGetLegalInfoRequest) GetTeamId() string {
@@ -2452,7 +2674,7 @@ type InternalGetLegalInfoResponse struct {
 
 func (x *InternalGetLegalInfoResponse) Reset() {
 	*x = InternalGetLegalInfoResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[33]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2464,7 +2686,7 @@ func (x *InternalGetLegalInfoResponse) String() string {
 func (*InternalGetLegalInfoResponse) ProtoMessage() {}
 
 func (x *InternalGetLegalInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[33]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2477,7 +2699,7 @@ func (x *InternalGetLegalInfoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalGetLegalInfoResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetLegalInfoResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{33}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *InternalGetLegalInfoResponse) GetData() *LegalInformation {
@@ -2496,7 +2718,7 @@ type InternalGetLegalInfoForCheckDashboardRequest struct {
 
 func (x *InternalGetLegalInfoForCheckDashboardRequest) Reset() {
 	*x = InternalGetLegalInfoForCheckDashboardRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[34]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2508,7 +2730,7 @@ func (x *InternalGetLegalInfoForCheckDashboardRequest) String() string {
 func (*InternalGetLegalInfoForCheckDashboardRequest) ProtoMessage() {}
 
 func (x *InternalGetLegalInfoForCheckDashboardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[34]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2521,7 +2743,7 @@ func (x *InternalGetLegalInfoForCheckDashboardRequest) ProtoReflect() protorefle
 
 // Deprecated: Use InternalGetLegalInfoForCheckDashboardRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetLegalInfoForCheckDashboardRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{34}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *InternalGetLegalInfoForCheckDashboardRequest) GetTeamId() string {
@@ -2540,7 +2762,7 @@ type InternalGetLegalInfoForCheckDashboardResponse struct {
 
 func (x *InternalGetLegalInfoForCheckDashboardResponse) Reset() {
 	*x = InternalGetLegalInfoForCheckDashboardResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[35]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2552,7 +2774,7 @@ func (x *InternalGetLegalInfoForCheckDashboardResponse) String() string {
 func (*InternalGetLegalInfoForCheckDashboardResponse) ProtoMessage() {}
 
 func (x *InternalGetLegalInfoForCheckDashboardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[35]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2565,7 +2787,7 @@ func (x *InternalGetLegalInfoForCheckDashboardResponse) ProtoReflect() protorefl
 
 // Deprecated: Use InternalGetLegalInfoForCheckDashboardResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetLegalInfoForCheckDashboardResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{35}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *InternalGetLegalInfoForCheckDashboardResponse) GetIsLegalInfoReady() bool {
@@ -2584,7 +2806,7 @@ type InternalGetInfoPaymentMethodForCheckDashboardRequest struct {
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardRequest) Reset() {
 	*x = InternalGetInfoPaymentMethodForCheckDashboardRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[36]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2596,7 +2818,7 @@ func (x *InternalGetInfoPaymentMethodForCheckDashboardRequest) String() string {
 func (*InternalGetInfoPaymentMethodForCheckDashboardRequest) ProtoMessage() {}
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[36]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2609,7 +2831,7 @@ func (x *InternalGetInfoPaymentMethodForCheckDashboardRequest) ProtoReflect() pr
 
 // Deprecated: Use InternalGetInfoPaymentMethodForCheckDashboardRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetInfoPaymentMethodForCheckDashboardRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{36}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardRequest) GetTeamId() string {
@@ -2628,7 +2850,7 @@ type InternalGetInfoPaymentMethodForCheckDashboardResponse struct {
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardResponse) Reset() {
 	*x = InternalGetInfoPaymentMethodForCheckDashboardResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[37]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2640,7 +2862,7 @@ func (x *InternalGetInfoPaymentMethodForCheckDashboardResponse) String() string 
 func (*InternalGetInfoPaymentMethodForCheckDashboardResponse) ProtoMessage() {}
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[37]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2653,7 +2875,7 @@ func (x *InternalGetInfoPaymentMethodForCheckDashboardResponse) ProtoReflect() p
 
 // Deprecated: Use InternalGetInfoPaymentMethodForCheckDashboardResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetInfoPaymentMethodForCheckDashboardResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{37}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *InternalGetInfoPaymentMethodForCheckDashboardResponse) GetIsPaymentMethodReady() bool {
@@ -2672,7 +2894,7 @@ type InternalGetDepositRequestForCheckDashboardRequest struct {
 
 func (x *InternalGetDepositRequestForCheckDashboardRequest) Reset() {
 	*x = InternalGetDepositRequestForCheckDashboardRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[38]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2684,7 +2906,7 @@ func (x *InternalGetDepositRequestForCheckDashboardRequest) String() string {
 func (*InternalGetDepositRequestForCheckDashboardRequest) ProtoMessage() {}
 
 func (x *InternalGetDepositRequestForCheckDashboardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[38]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2697,7 +2919,7 @@ func (x *InternalGetDepositRequestForCheckDashboardRequest) ProtoReflect() proto
 
 // Deprecated: Use InternalGetDepositRequestForCheckDashboardRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetDepositRequestForCheckDashboardRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{38}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *InternalGetDepositRequestForCheckDashboardRequest) GetTeamId() string {
@@ -2716,7 +2938,7 @@ type InternalGetDepositRequestForCheckDashboardResponse struct {
 
 func (x *InternalGetDepositRequestForCheckDashboardResponse) Reset() {
 	*x = InternalGetDepositRequestForCheckDashboardResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[39]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2728,7 +2950,7 @@ func (x *InternalGetDepositRequestForCheckDashboardResponse) String() string {
 func (*InternalGetDepositRequestForCheckDashboardResponse) ProtoMessage() {}
 
 func (x *InternalGetDepositRequestForCheckDashboardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[39]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2741,7 +2963,7 @@ func (x *InternalGetDepositRequestForCheckDashboardResponse) ProtoReflect() prot
 
 // Deprecated: Use InternalGetDepositRequestForCheckDashboardResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetDepositRequestForCheckDashboardResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{39}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *InternalGetDepositRequestForCheckDashboardResponse) GetIsCreateTopUpReady() bool {
@@ -2760,7 +2982,7 @@ type InternalCreateRefundRequestFullyRequest struct {
 
 func (x *InternalCreateRefundRequestFullyRequest) Reset() {
 	*x = InternalCreateRefundRequestFullyRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[40]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2772,7 +2994,7 @@ func (x *InternalCreateRefundRequestFullyRequest) String() string {
 func (*InternalCreateRefundRequestFullyRequest) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequestFullyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[40]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2785,7 +3007,7 @@ func (x *InternalCreateRefundRequestFullyRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use InternalCreateRefundRequestFullyRequest.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequestFullyRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{40}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *InternalCreateRefundRequestFullyRequest) GetOrderIds() []string {
@@ -2805,7 +3027,7 @@ type InternalCreateRefundRequestFullyResponse struct {
 
 func (x *InternalCreateRefundRequestFullyResponse) Reset() {
 	*x = InternalCreateRefundRequestFullyResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[41]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2817,7 +3039,7 @@ func (x *InternalCreateRefundRequestFullyResponse) String() string {
 func (*InternalCreateRefundRequestFullyResponse) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequestFullyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[41]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2830,7 +3052,7 @@ func (x *InternalCreateRefundRequestFullyResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use InternalCreateRefundRequestFullyResponse.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequestFullyResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{41}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *InternalCreateRefundRequestFullyResponse) GetSuccessOrderIds() []string {
@@ -2858,7 +3080,7 @@ type InternalCreateRefundRequest struct {
 
 func (x *InternalCreateRefundRequest) Reset() {
 	*x = InternalCreateRefundRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[42]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2870,7 +3092,7 @@ func (x *InternalCreateRefundRequest) String() string {
 func (*InternalCreateRefundRequest) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[42]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2883,7 +3105,7 @@ func (x *InternalCreateRefundRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalCreateRefundRequest.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{42}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *InternalCreateRefundRequest) GetOrderRefunds() []*InternalCreateRefundRequest_OrderRefund {
@@ -2916,7 +3138,7 @@ type InternalCreateRefundResponse struct {
 
 func (x *InternalCreateRefundResponse) Reset() {
 	*x = InternalCreateRefundResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[43]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2928,7 +3150,7 @@ func (x *InternalCreateRefundResponse) String() string {
 func (*InternalCreateRefundResponse) ProtoMessage() {}
 
 func (x *InternalCreateRefundResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[43]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2941,7 +3163,7 @@ func (x *InternalCreateRefundResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalCreateRefundResponse.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{43}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *InternalCreateRefundResponse) GetRefundOrderTxn() []*InternalCreateRefundResponse_RefundOrderTxn {
@@ -2960,7 +3182,7 @@ type InternalListRefundRequestsRequest struct {
 
 func (x *InternalListRefundRequestsRequest) Reset() {
 	*x = InternalListRefundRequestsRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[44]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2972,7 +3194,7 @@ func (x *InternalListRefundRequestsRequest) String() string {
 func (*InternalListRefundRequestsRequest) ProtoMessage() {}
 
 func (x *InternalListRefundRequestsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[44]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2985,7 +3207,7 @@ func (x *InternalListRefundRequestsRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use InternalListRefundRequestsRequest.ProtoReflect.Descriptor instead.
 func (*InternalListRefundRequestsRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{44}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *InternalListRefundRequestsRequest) GetFilter() *InternalListRefundRequestsRequest_Filter {
@@ -3006,7 +3228,7 @@ type InternalListRefundRequestsResponse struct {
 
 func (x *InternalListRefundRequestsResponse) Reset() {
 	*x = InternalListRefundRequestsResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[45]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3018,7 +3240,7 @@ func (x *InternalListRefundRequestsResponse) String() string {
 func (*InternalListRefundRequestsResponse) ProtoMessage() {}
 
 func (x *InternalListRefundRequestsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[45]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3031,7 +3253,7 @@ func (x *InternalListRefundRequestsResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use InternalListRefundRequestsResponse.ProtoReflect.Descriptor instead.
 func (*InternalListRefundRequestsResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{45}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *InternalListRefundRequestsResponse) GetData() []*InternalListRefundRequestsResponse_RefundRequest {
@@ -3057,7 +3279,7 @@ type InternalGetTeamInvoiceRequest struct {
 
 func (x *InternalGetTeamInvoiceRequest) Reset() {
 	*x = InternalGetTeamInvoiceRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[46]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3069,7 +3291,7 @@ func (x *InternalGetTeamInvoiceRequest) String() string {
 func (*InternalGetTeamInvoiceRequest) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[46]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3082,7 +3304,7 @@ func (x *InternalGetTeamInvoiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalGetTeamInvoiceRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{46}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *InternalGetTeamInvoiceRequest) GetOrderId() string {
@@ -3101,7 +3323,7 @@ type InternalGetTeamInvoiceResponse struct {
 
 func (x *InternalGetTeamInvoiceResponse) Reset() {
 	*x = InternalGetTeamInvoiceResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[47]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3113,7 +3335,7 @@ func (x *InternalGetTeamInvoiceResponse) String() string {
 func (*InternalGetTeamInvoiceResponse) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[47]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3126,7 +3348,7 @@ func (x *InternalGetTeamInvoiceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalGetTeamInvoiceResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{47}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *InternalGetTeamInvoiceResponse) GetData() *InternalGetTeamInvoiceResponse_TransactionInfo {
@@ -3145,7 +3367,7 @@ type InternalGetTeamInvoiceIdsRequest struct {
 
 func (x *InternalGetTeamInvoiceIdsRequest) Reset() {
 	*x = InternalGetTeamInvoiceIdsRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[48]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3157,7 +3379,7 @@ func (x *InternalGetTeamInvoiceIdsRequest) String() string {
 func (*InternalGetTeamInvoiceIdsRequest) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceIdsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[48]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3170,7 +3392,7 @@ func (x *InternalGetTeamInvoiceIdsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalGetTeamInvoiceIdsRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceIdsRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{48}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *InternalGetTeamInvoiceIdsRequest) GetOrderId() string {
@@ -3189,7 +3411,7 @@ type InternalGetTeamInvoiceIdsResponse struct {
 
 func (x *InternalGetTeamInvoiceIdsResponse) Reset() {
 	*x = InternalGetTeamInvoiceIdsResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[49]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3201,7 +3423,7 @@ func (x *InternalGetTeamInvoiceIdsResponse) String() string {
 func (*InternalGetTeamInvoiceIdsResponse) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceIdsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[49]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3214,7 +3436,7 @@ func (x *InternalGetTeamInvoiceIdsResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use InternalGetTeamInvoiceIdsResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceIdsResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{49}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *InternalGetTeamInvoiceIdsResponse) GetInvoiceIds() []string {
@@ -3244,7 +3466,7 @@ type RefundRequestDetailForMigration struct {
 
 func (x *RefundRequestDetailForMigration) Reset() {
 	*x = RefundRequestDetailForMigration{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[50]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3256,7 +3478,7 @@ func (x *RefundRequestDetailForMigration) String() string {
 func (*RefundRequestDetailForMigration) ProtoMessage() {}
 
 func (x *RefundRequestDetailForMigration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[50]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3269,7 +3491,7 @@ func (x *RefundRequestDetailForMigration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundRequestDetailForMigration.ProtoReflect.Descriptor instead.
 func (*RefundRequestDetailForMigration) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{50}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *RefundRequestDetailForMigration) GetAmount() int64 {
@@ -3371,7 +3593,7 @@ type RefundRequestForMigration struct {
 
 func (x *RefundRequestForMigration) Reset() {
 	*x = RefundRequestForMigration{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[51]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3383,7 +3605,7 @@ func (x *RefundRequestForMigration) String() string {
 func (*RefundRequestForMigration) ProtoMessage() {}
 
 func (x *RefundRequestForMigration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[51]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3396,7 +3618,7 @@ func (x *RefundRequestForMigration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefundRequestForMigration.ProtoReflect.Descriptor instead.
 func (*RefundRequestForMigration) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{51}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *RefundRequestForMigration) GetOrderRefundRef() string {
@@ -3457,7 +3679,7 @@ type InternalCreateRefundRequestForMigrationRequest struct {
 
 func (x *InternalCreateRefundRequestForMigrationRequest) Reset() {
 	*x = InternalCreateRefundRequestForMigrationRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[52]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3469,7 +3691,7 @@ func (x *InternalCreateRefundRequestForMigrationRequest) String() string {
 func (*InternalCreateRefundRequestForMigrationRequest) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequestForMigrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[52]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3482,7 +3704,7 @@ func (x *InternalCreateRefundRequestForMigrationRequest) ProtoReflect() protoref
 
 // Deprecated: Use InternalCreateRefundRequestForMigrationRequest.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequestForMigrationRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{52}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *InternalCreateRefundRequestForMigrationRequest) GetRefundRequests() []*RefundRequestForMigration {
@@ -3501,7 +3723,7 @@ type InternalCreateRefundRequestForMigrationResponse struct {
 
 func (x *InternalCreateRefundRequestForMigrationResponse) Reset() {
 	*x = InternalCreateRefundRequestForMigrationResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[53]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3513,7 +3735,7 @@ func (x *InternalCreateRefundRequestForMigrationResponse) String() string {
 func (*InternalCreateRefundRequestForMigrationResponse) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequestForMigrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[53]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3526,7 +3748,7 @@ func (x *InternalCreateRefundRequestForMigrationResponse) ProtoReflect() protore
 
 // Deprecated: Use InternalCreateRefundRequestForMigrationResponse.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequestForMigrationResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{53}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *InternalCreateRefundRequestForMigrationResponse) GetMessage() string {
@@ -3553,7 +3775,7 @@ type CheckoutRequestForMigration struct {
 
 func (x *CheckoutRequestForMigration) Reset() {
 	*x = CheckoutRequestForMigration{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[54]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3565,7 +3787,7 @@ func (x *CheckoutRequestForMigration) String() string {
 func (*CheckoutRequestForMigration) ProtoMessage() {}
 
 func (x *CheckoutRequestForMigration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[54]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3578,7 +3800,7 @@ func (x *CheckoutRequestForMigration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckoutRequestForMigration.ProtoReflect.Descriptor instead.
 func (*CheckoutRequestForMigration) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{54}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *CheckoutRequestForMigration) GetTeamId() string {
@@ -3660,7 +3882,7 @@ type CheckoutRequestDetailForMigration struct {
 
 func (x *CheckoutRequestDetailForMigration) Reset() {
 	*x = CheckoutRequestDetailForMigration{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[55]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3672,7 +3894,7 @@ func (x *CheckoutRequestDetailForMigration) String() string {
 func (*CheckoutRequestDetailForMigration) ProtoMessage() {}
 
 func (x *CheckoutRequestDetailForMigration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[55]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3685,7 +3907,7 @@ func (x *CheckoutRequestDetailForMigration) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use CheckoutRequestDetailForMigration.ProtoReflect.Descriptor instead.
 func (*CheckoutRequestDetailForMigration) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{55}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *CheckoutRequestDetailForMigration) GetOrderId() string {
@@ -3753,7 +3975,7 @@ type InternalCreateCheckoutRequestForMigrationRequest struct {
 
 func (x *InternalCreateCheckoutRequestForMigrationRequest) Reset() {
 	*x = InternalCreateCheckoutRequestForMigrationRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[56]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3765,7 +3987,7 @@ func (x *InternalCreateCheckoutRequestForMigrationRequest) String() string {
 func (*InternalCreateCheckoutRequestForMigrationRequest) ProtoMessage() {}
 
 func (x *InternalCreateCheckoutRequestForMigrationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[56]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3778,7 +4000,7 @@ func (x *InternalCreateCheckoutRequestForMigrationRequest) ProtoReflect() protor
 
 // Deprecated: Use InternalCreateCheckoutRequestForMigrationRequest.ProtoReflect.Descriptor instead.
 func (*InternalCreateCheckoutRequestForMigrationRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{56}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *InternalCreateCheckoutRequestForMigrationRequest) GetCheckoutRequests() []*CheckoutRequestForMigration {
@@ -3797,7 +4019,7 @@ type InternalCreateCheckoutRequestForMigrationResponse struct {
 
 func (x *InternalCreateCheckoutRequestForMigrationResponse) Reset() {
 	*x = InternalCreateCheckoutRequestForMigrationResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[57]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3809,7 +4031,7 @@ func (x *InternalCreateCheckoutRequestForMigrationResponse) String() string {
 func (*InternalCreateCheckoutRequestForMigrationResponse) ProtoMessage() {}
 
 func (x *InternalCreateCheckoutRequestForMigrationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[57]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3822,7 +4044,7 @@ func (x *InternalCreateCheckoutRequestForMigrationResponse) ProtoReflect() proto
 
 // Deprecated: Use InternalCreateCheckoutRequestForMigrationResponse.ProtoReflect.Descriptor instead.
 func (*InternalCreateCheckoutRequestForMigrationResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{57}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *InternalCreateCheckoutRequestForMigrationResponse) GetMessage() string {
@@ -3841,7 +4063,7 @@ type InternalGetCheckoutRequestByOrderIDRequest struct {
 
 func (x *InternalGetCheckoutRequestByOrderIDRequest) Reset() {
 	*x = InternalGetCheckoutRequestByOrderIDRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[58]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3853,7 +4075,7 @@ func (x *InternalGetCheckoutRequestByOrderIDRequest) String() string {
 func (*InternalGetCheckoutRequestByOrderIDRequest) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestByOrderIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[58]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3866,7 +4088,7 @@ func (x *InternalGetCheckoutRequestByOrderIDRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use InternalGetCheckoutRequestByOrderIDRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestByOrderIDRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{58}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *InternalGetCheckoutRequestByOrderIDRequest) GetOrderId() string {
@@ -3885,7 +4107,7 @@ type InternalGetCheckoutRequestByOrderIDResponse struct {
 
 func (x *InternalGetCheckoutRequestByOrderIDResponse) Reset() {
 	*x = InternalGetCheckoutRequestByOrderIDResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[59]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3897,7 +4119,7 @@ func (x *InternalGetCheckoutRequestByOrderIDResponse) String() string {
 func (*InternalGetCheckoutRequestByOrderIDResponse) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestByOrderIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[59]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3910,7 +4132,7 @@ func (x *InternalGetCheckoutRequestByOrderIDResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use InternalGetCheckoutRequestByOrderIDResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestByOrderIDResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{59}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *InternalGetCheckoutRequestByOrderIDResponse) GetData() *StaffCheckoutRequest_Message {
@@ -3932,7 +4154,7 @@ type InternalGetCheckoutRequestByTxnRefRequest struct {
 
 func (x *InternalGetCheckoutRequestByTxnRefRequest) Reset() {
 	*x = InternalGetCheckoutRequestByTxnRefRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[60]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3944,7 +4166,7 @@ func (x *InternalGetCheckoutRequestByTxnRefRequest) String() string {
 func (*InternalGetCheckoutRequestByTxnRefRequest) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestByTxnRefRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[60]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3957,7 +4179,7 @@ func (x *InternalGetCheckoutRequestByTxnRefRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use InternalGetCheckoutRequestByTxnRefRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestByTxnRefRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{60}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *InternalGetCheckoutRequestByTxnRefRequest) GetTxnRef() string {
@@ -3978,7 +4200,7 @@ type InternalGetCheckoutRequestByTxnRefResponse struct {
 
 func (x *InternalGetCheckoutRequestByTxnRefResponse) Reset() {
 	*x = InternalGetCheckoutRequestByTxnRefResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[61]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3990,7 +4212,7 @@ func (x *InternalGetCheckoutRequestByTxnRefResponse) String() string {
 func (*InternalGetCheckoutRequestByTxnRefResponse) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestByTxnRefResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[61]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4003,7 +4225,7 @@ func (x *InternalGetCheckoutRequestByTxnRefResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use InternalGetCheckoutRequestByTxnRefResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestByTxnRefResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{61}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *InternalGetCheckoutRequestByTxnRefResponse) GetMatchCount() int32 {
@@ -4041,7 +4263,7 @@ type InternalCheckoutRequestByTxnRef struct {
 
 func (x *InternalCheckoutRequestByTxnRef) Reset() {
 	*x = InternalCheckoutRequestByTxnRef{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[62]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4053,7 +4275,7 @@ func (x *InternalCheckoutRequestByTxnRef) String() string {
 func (*InternalCheckoutRequestByTxnRef) ProtoMessage() {}
 
 func (x *InternalCheckoutRequestByTxnRef) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[62]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4066,7 +4288,7 @@ func (x *InternalCheckoutRequestByTxnRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InternalCheckoutRequestByTxnRef.ProtoReflect.Descriptor instead.
 func (*InternalCheckoutRequestByTxnRef) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{62}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *InternalCheckoutRequestByTxnRef) GetId() int64 {
@@ -4124,7 +4346,7 @@ type InternalCheckoutRequestDetailByTxnRef struct {
 
 func (x *InternalCheckoutRequestDetailByTxnRef) Reset() {
 	*x = InternalCheckoutRequestDetailByTxnRef{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[63]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4136,7 +4358,7 @@ func (x *InternalCheckoutRequestDetailByTxnRef) String() string {
 func (*InternalCheckoutRequestDetailByTxnRef) ProtoMessage() {}
 
 func (x *InternalCheckoutRequestDetailByTxnRef) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[63]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4149,7 +4371,7 @@ func (x *InternalCheckoutRequestDetailByTxnRef) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use InternalCheckoutRequestDetailByTxnRef.ProtoReflect.Descriptor instead.
 func (*InternalCheckoutRequestDetailByTxnRef) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{63}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *InternalCheckoutRequestDetailByTxnRef) GetId() int64 {
@@ -4197,7 +4419,7 @@ type InternalGetCheckoutRequestDetailByOrderIDRequest struct {
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest) Reset() {
 	*x = InternalGetCheckoutRequestDetailByOrderIDRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[64]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4209,7 +4431,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDRequest) String() string {
 func (*InternalGetCheckoutRequestDetailByOrderIDRequest) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[64]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4222,7 +4444,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDRequest) ProtoReflect() protor
 
 // Deprecated: Use InternalGetCheckoutRequestDetailByOrderIDRequest.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestDetailByOrderIDRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{64}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest) GetOrderId() string {
@@ -4248,7 +4470,7 @@ type InternalGetCheckoutRequestDetailByOrderIDResponse struct {
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDResponse) Reset() {
 	*x = InternalGetCheckoutRequestDetailByOrderIDResponse{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[65]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4260,7 +4482,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDResponse) String() string {
 func (*InternalGetCheckoutRequestDetailByOrderIDResponse) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[65]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4273,7 +4495,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDResponse) ProtoReflect() proto
 
 // Deprecated: Use InternalGetCheckoutRequestDetailByOrderIDResponse.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestDetailByOrderIDResponse) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{65}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDResponse) GetData() *StaffCheckoutRequest_Detail {
@@ -4296,7 +4518,7 @@ type CheckoutRequest_OrderPayment struct {
 
 func (x *CheckoutRequest_OrderPayment) Reset() {
 	*x = CheckoutRequest_OrderPayment{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[66]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4308,7 +4530,7 @@ func (x *CheckoutRequest_OrderPayment) String() string {
 func (*CheckoutRequest_OrderPayment) ProtoMessage() {}
 
 func (x *CheckoutRequest_OrderPayment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[66]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4321,7 +4543,7 @@ func (x *CheckoutRequest_OrderPayment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckoutRequest_OrderPayment.ProtoReflect.Descriptor instead.
 func (*CheckoutRequest_OrderPayment) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{31, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{34, 0}
 }
 
 func (x *CheckoutRequest_OrderPayment) GetOrderId() string {
@@ -4368,7 +4590,7 @@ type CheckoutRequest_OrderPaymentValidate struct {
 
 func (x *CheckoutRequest_OrderPaymentValidate) Reset() {
 	*x = CheckoutRequest_OrderPaymentValidate{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[67]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4380,7 +4602,7 @@ func (x *CheckoutRequest_OrderPaymentValidate) String() string {
 func (*CheckoutRequest_OrderPaymentValidate) ProtoMessage() {}
 
 func (x *CheckoutRequest_OrderPaymentValidate) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[67]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4393,7 +4615,7 @@ func (x *CheckoutRequest_OrderPaymentValidate) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CheckoutRequest_OrderPaymentValidate.ProtoReflect.Descriptor instead.
 func (*CheckoutRequest_OrderPaymentValidate) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{31, 1}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{34, 1}
 }
 
 func (x *CheckoutRequest_OrderPaymentValidate) GetAmount() *v12.Money {
@@ -4429,7 +4651,7 @@ type InternalCreateRefundRequest_OrderRefund struct {
 
 func (x *InternalCreateRefundRequest_OrderRefund) Reset() {
 	*x = InternalCreateRefundRequest_OrderRefund{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[68]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4441,7 +4663,7 @@ func (x *InternalCreateRefundRequest_OrderRefund) String() string {
 func (*InternalCreateRefundRequest_OrderRefund) ProtoMessage() {}
 
 func (x *InternalCreateRefundRequest_OrderRefund) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[68]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4454,7 +4676,7 @@ func (x *InternalCreateRefundRequest_OrderRefund) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use InternalCreateRefundRequest_OrderRefund.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundRequest_OrderRefund) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{42, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{45, 0}
 }
 
 func (x *InternalCreateRefundRequest_OrderRefund) GetOrderId() string {
@@ -4595,7 +4817,7 @@ type InternalCreateRefundResponse_RefundOrderTxn struct {
 
 func (x *InternalCreateRefundResponse_RefundOrderTxn) Reset() {
 	*x = InternalCreateRefundResponse_RefundOrderTxn{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[69]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4607,7 +4829,7 @@ func (x *InternalCreateRefundResponse_RefundOrderTxn) String() string {
 func (*InternalCreateRefundResponse_RefundOrderTxn) ProtoMessage() {}
 
 func (x *InternalCreateRefundResponse_RefundOrderTxn) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[69]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4620,7 +4842,7 @@ func (x *InternalCreateRefundResponse_RefundOrderTxn) ProtoReflect() protoreflec
 
 // Deprecated: Use InternalCreateRefundResponse_RefundOrderTxn.ProtoReflect.Descriptor instead.
 func (*InternalCreateRefundResponse_RefundOrderTxn) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{43, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{46, 0}
 }
 
 func (x *InternalCreateRefundResponse_RefundOrderTxn) GetRefundRequestId() string {
@@ -4663,7 +4885,7 @@ type InternalListRefundRequestsRequest_Filter struct {
 
 func (x *InternalListRefundRequestsRequest_Filter) Reset() {
 	*x = InternalListRefundRequestsRequest_Filter{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[70]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4675,7 +4897,7 @@ func (x *InternalListRefundRequestsRequest_Filter) String() string {
 func (*InternalListRefundRequestsRequest_Filter) ProtoMessage() {}
 
 func (x *InternalListRefundRequestsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[70]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4688,7 +4910,7 @@ func (x *InternalListRefundRequestsRequest_Filter) ProtoReflect() protoreflect.M
 
 // Deprecated: Use InternalListRefundRequestsRequest_Filter.ProtoReflect.Descriptor instead.
 func (*InternalListRefundRequestsRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{44, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{47, 0}
 }
 
 func (x *InternalListRefundRequestsRequest_Filter) GetOrderId() string {
@@ -4731,7 +4953,7 @@ type InternalListRefundRequestsResponse_RefundRequest struct {
 
 func (x *InternalListRefundRequestsResponse_RefundRequest) Reset() {
 	*x = InternalListRefundRequestsResponse_RefundRequest{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[71]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4743,7 +4965,7 @@ func (x *InternalListRefundRequestsResponse_RefundRequest) String() string {
 func (*InternalListRefundRequestsResponse_RefundRequest) ProtoMessage() {}
 
 func (x *InternalListRefundRequestsResponse_RefundRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[71]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4756,7 +4978,7 @@ func (x *InternalListRefundRequestsResponse_RefundRequest) ProtoReflect() protor
 
 // Deprecated: Use InternalListRefundRequestsResponse_RefundRequest.ProtoReflect.Descriptor instead.
 func (*InternalListRefundRequestsResponse_RefundRequest) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{45, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{48, 0}
 }
 
 func (x *InternalListRefundRequestsResponse_RefundRequest) GetTxnId() string {
@@ -4793,7 +5015,7 @@ type InternalGetTeamInvoiceResponse_TransactionInfo struct {
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo) Reset() {
 	*x = InternalGetTeamInvoiceResponse_TransactionInfo{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[72]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4805,7 +5027,7 @@ func (x *InternalGetTeamInvoiceResponse_TransactionInfo) String() string {
 func (*InternalGetTeamInvoiceResponse_TransactionInfo) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[72]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4818,7 +5040,7 @@ func (x *InternalGetTeamInvoiceResponse_TransactionInfo) ProtoReflect() protoref
 
 // Deprecated: Use InternalGetTeamInvoiceResponse_TransactionInfo.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceResponse_TransactionInfo) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{47, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{50, 0}
 }
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo) GetTxnId() string {
@@ -4872,7 +5094,7 @@ type InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo struct {
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) Reset() {
 	*x = InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[73]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4884,7 +5106,7 @@ func (x *InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) String() st
 func (*InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) ProtoMessage() {}
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[73]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4897,7 +5119,7 @@ func (x *InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) ProtoReflec
 
 // Deprecated: Use InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo.ProtoReflect.Descriptor instead.
 func (*InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{47, 0, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{50, 0, 0}
 }
 
 func (x *InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo) GetInvoiceId() string {
@@ -4965,7 +5187,7 @@ type InternalGetCheckoutRequestDetailByOrderIDRequest_Filter struct {
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) Reset() {
 	*x = InternalGetCheckoutRequestDetailByOrderIDRequest_Filter{}
-	mi := &file_api_payment_v1_integration_proto_msgTypes[74]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4977,7 +5199,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) String() strin
 func (*InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) ProtoMessage() {}
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payment_v1_integration_proto_msgTypes[74]
+	mi := &file_api_payment_v1_integration_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4990,7 +5212,7 @@ func (x *InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) ProtoReflect()
 
 // Deprecated: Use InternalGetCheckoutRequestDetailByOrderIDRequest_Filter.ProtoReflect.Descriptor instead.
 func (*InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{64, 0}
+	return file_api_payment_v1_integration_proto_rawDescGZIP(), []int{67, 0}
 }
 
 func (x *InternalGetCheckoutRequestDetailByOrderIDRequest_Filter) GetStatuses() []StaffCheckoutRequest_Status {
@@ -5112,7 +5334,7 @@ var file_api_payment_v1_integration_proto_rawDesc = string([]byte{
 	0x61, 0x6d, 0x70, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x2a, 0x0a, 0x02, 0x74, 0x6f, 0x18,
 	0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x52, 0x02, 0x74, 0x6f, 0x22, 0xee, 0x02, 0x0a, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
+	0x70, 0x52, 0x02, 0x74, 0x6f, 0x22, 0xf8, 0x03, 0x0a, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
 	0x61, 0x6c, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e,
 	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x72, 0x75, 0x6e, 0x5f,
@@ -5135,31 +5357,67 @@ var file_api_payment_v1_integration_proto_rawDesc = string([]byte{
 	0x74, 0x61, 0x6d, 0x70, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x2a, 0x0a, 0x02, 0x74, 0x6f,
 	0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x52, 0x02, 0x74, 0x6f, 0x22, 0x89, 0x02, 0x0a, 0x34, 0x49, 0x6e, 0x74, 0x65, 0x72,
-	0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x43, 0x61, 0x72, 0x72,
-	0x79, 0x46, 0x6f, 0x72, 0x77, 0x61, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x22, 0x0a, 0x07, 0x74, 0x65, 0x61, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x09, 0xba, 0x48, 0x06, 0x72, 0x04, 0x10, 0x01, 0x18, 0x64, 0x52, 0x06, 0x74, 0x65, 0x61,
-	0x6d, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x05, 0x42, 0x0a, 0xba, 0x48, 0x07, 0x1a, 0x05, 0x18, 0x88, 0x27, 0x20, 0x00, 0x52, 0x05,
-	0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x2f, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69,
-	0x64, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x42, 0x12, 0xba, 0x48, 0x0f, 0x92, 0x01, 0x0c,
-	0x10, 0x88, 0x27, 0x22, 0x07, 0x72, 0x05, 0x10, 0x01, 0x18, 0xe8, 0x07, 0x52, 0x08, 0x6f, 0x72,
-	0x64, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x2e, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x2a, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x02,
-	0x74, 0x6f, 0x22, 0x7d, 0x0a, 0x35, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69,
-	0x73, 0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x43, 0x61, 0x72, 0x72, 0x79, 0x46, 0x6f, 0x72, 0x77,
-	0x61, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x05, 0x69,
-	0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x65, 0x63,
+	0x6d, 0x70, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65,
+	0x64, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65, 0x64,
+	0x12, 0x1a, 0x0a, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64, 0x18, 0x0b, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64, 0x12, 0x1c, 0x0a, 0x09,
+	0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f,
+	0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63,
+	0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x66, 0x61, 0x69, 0x6c,
+	0x65, 0x64, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64,
+	0x22, 0x89, 0x02, 0x0a, 0x34, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73,
+	0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x43, 0x61, 0x72, 0x72, 0x79, 0x46, 0x6f, 0x72, 0x77, 0x61,
+	0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x22, 0x0a, 0x07, 0x74, 0x65, 0x61,
+	0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x09, 0xba, 0x48, 0x06, 0x72,
+	0x04, 0x10, 0x01, 0x18, 0x64, 0x52, 0x06, 0x74, 0x65, 0x61, 0x6d, 0x49, 0x64, 0x12, 0x20, 0x0a,
+	0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x42, 0x0a, 0xba, 0x48,
+	0x07, 0x1a, 0x05, 0x18, 0x88, 0x27, 0x20, 0x00, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12,
+	0x2f, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x04, 0x20, 0x03,
+	0x28, 0x09, 0x42, 0x12, 0xba, 0x48, 0x0f, 0x92, 0x01, 0x0c, 0x10, 0x88, 0x27, 0x22, 0x07, 0x72,
+	0x05, 0x10, 0x01, 0x18, 0xe8, 0x07, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x73,
+	0x12, 0x2e, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d,
+	0x12, 0x2a, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x02, 0x74, 0x6f, 0x22, 0x7d, 0x0a, 0x35,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x68, 0x65, 0x63,
 	0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e,
-	0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d,
+	0x63, 0x43, 0x61, 0x72, 0x72, 0x79, 0x46, 0x6f, 0x72, 0x77, 0x61, 0x72, 0x64, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65,
+	0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68,
+	0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x22, 0x78, 0x0a, 0x2f, 0x49,
+	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x68, 0x65, 0x63, 0x6b,
+	0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63,
+	0x42, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x22,
+	0x0a, 0x07, 0x74, 0x65, 0x61, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
+	0x09, 0xba, 0x48, 0x06, 0x72, 0x04, 0x10, 0x01, 0x18, 0x64, 0x52, 0x06, 0x74, 0x65, 0x61, 0x6d,
+	0x49, 0x64, 0x12, 0x21, 0x0a, 0x06, 0x72, 0x75, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x42, 0x0a, 0xba, 0x48, 0x07, 0x72, 0x05, 0x10, 0x01, 0x18, 0xff, 0x01, 0x52, 0x05,
+	0x72, 0x75, 0x6e, 0x49, 0x64, 0x22, 0xb9, 0x01, 0x0a, 0x20, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f,
+	0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42,
+	0x61, 0x74, 0x63, 0x68, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x07, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x12, 0x1c, 0x0a, 0x09, 0x63,
+	0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09,
+	0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x66, 0x61, 0x69,
+	0x6c, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x66, 0x61, 0x69, 0x6c, 0x65,
+	0x64, 0x22, 0x7e, 0x0a, 0x30, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73,
+	0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4a, 0x0a, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79,
+	0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74,
+	0x63, 0x68, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x65,
 	0x73, 0x22, 0xa1, 0x03, 0x0a, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64,
 	0x76, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x71,
@@ -5932,7 +6190,7 @@ var file_api_payment_v1_integration_proto_rawDesc = string([]byte{
 	0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x54, 0x41, 0x58, 0x5f, 0x46, 0x45, 0x45, 0x10,
 	0x07, 0x12, 0x28, 0x0a, 0x24, 0x52, 0x45, 0x46, 0x55, 0x4e, 0x44, 0x5f, 0x52, 0x45, 0x51, 0x55,
 	0x45, 0x53, 0x54, 0x5f, 0x4d, 0x49, 0x47, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59,
-	0x50, 0x45, 0x5f, 0x43, 0x55, 0x53, 0x54, 0x4f, 0x4d, 0x10, 0x08, 0x32, 0xed, 0x23, 0x0a, 0x12,
+	0x50, 0x45, 0x5f, 0x43, 0x55, 0x53, 0x54, 0x4f, 0x4d, 0x10, 0x08, 0x32, 0xa2, 0x25, 0x0a, 0x12,
 	0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41,
 	0x50, 0x49, 0x12, 0x97, 0x01, 0x0a, 0x1f, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x56,
 	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
@@ -6164,75 +6422,86 @@ var file_api_payment_v1_integration_proto_rawDesc = string([]byte{
 	0x69, 0x73, 0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x43, 0x61, 0x72, 0x72, 0x79, 0x46, 0x6f, 0x72,
 	0x77, 0x61, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02,
-	0x01, 0x12, 0xac, 0x01, 0x0a, 0x27, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64,
-	0x76, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x12, 0x3e, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x68,
-	0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73,
-	0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3f, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x68,
-	0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73,
-	0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0xa3, 0x01, 0x0a, 0x24, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x46, 0x61, 0x69,
-	0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x12, 0x3b, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x01, 0x12, 0xb2, 0x01, 0x0a, 0x28, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69,
+	0x73, 0x74, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x12, 0x3f,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x68, 0x65, 0x63,
+	0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e,
+	0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x40, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31,
+	0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x68, 0x65,
+	0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79,
+	0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x12, 0xac, 0x01, 0x0a, 0x27, 0x49, 0x6e, 0x74, 0x65, 0x72,
+	0x6e, 0x61, 0x6c, 0x41, 0x64, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f,
+	0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52,
+	0x75, 0x6e, 0x12, 0x3e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64, 0x76, 0x61,
+	0x6e, 0x63, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x3f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x64, 0x76, 0x61,
+	0x6e, 0x63, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xa3, 0x01, 0x0a, 0x24, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
+	0x61, 0x6c, 0x46, 0x61, 0x69, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x12, 0x3b,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x46, 0x61, 0x69, 0x6c, 0x43, 0x68, 0x65, 0x63,
+	0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e,
+	0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3c, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x46, 0x61, 0x69, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xb2, 0x01, 0x0a, 0x29,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x43,
+	0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65,
+	0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x12, 0x40, 0x2e, 0x61, 0x70, 0x69, 0x2e,
 	0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72,
-	0x6e, 0x61, 0x6c, 0x46, 0x61, 0x69, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79,
-	0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c,
-	0x46, 0x61, 0x69, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x52, 0x75, 0x6e, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xb2, 0x01, 0x0a, 0x29, 0x49, 0x6e, 0x74, 0x65, 0x72,
 	0x6e, 0x61, 0x6c, 0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f,
 	0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42,
-	0x61, 0x74, 0x63, 0x68, 0x12, 0x40, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65,
-	0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x72,
-	0x65, 0x70, 0x61, 0x72, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x41, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79,
-	0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c,
-	0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63,
-	0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xbe, 0x01, 0x0a, 0x2d,
-	0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x63, 0x6b, 0x6e, 0x6f, 0x77, 0x6c, 0x65,
-	0x64, 0x67, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x12, 0x44, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x63, 0x6b, 0x6e, 0x6f, 0x77, 0x6c, 0x65, 0x64,
-	0x67, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x45, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e,
-	0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x63, 0x6b,
+	0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x41, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x43, 0x68, 0x65, 0x63,
+	0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e,
+	0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x12, 0xbe, 0x01, 0x0a, 0x2d, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x63, 0x6b,
 	0x6e, 0x6f, 0x77, 0x6c, 0x65, 0x64, 0x67, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74,
-	0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xac, 0x01, 0x0a,
-	0x26, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x6f, 0x6c, 0x6c, 0x43, 0x68, 0x65,
+	0x63, 0x68, 0x12, 0x44, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x41, 0x63, 0x6b, 0x6e,
+	0x6f, 0x77, 0x6c, 0x65, 0x64, 0x67, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63,
+	0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x45, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70,
+	0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e,
+	0x61, 0x6c, 0x41, 0x63, 0x6b, 0x6e, 0x6f, 0x77, 0x6c, 0x65, 0x64, 0x67, 0x65, 0x43, 0x68, 0x65,
 	0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79,
-	0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x12, 0x3d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61,
-	0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61,
-	0x6c, 0x50, 0x6f, 0x6c, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79,
-	0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c,
-	0x50, 0x6f, 0x6c, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01, 0x42, 0xc1, 0x01, 0x0a, 0x12,
-	0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e,
-	0x76, 0x31, 0x42, 0x10, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x50,
-	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67, 0x65, 0x61, 0x2d,
-	0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x64, 0x6b, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x76, 0x31, 0x3b, 0x70, 0x61,
-	0x79, 0x6d, 0x65, 0x6e, 0x74, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x41, 0x50, 0x58, 0xaa, 0x02, 0x0e,
-	0x41, 0x70, 0x69, 0x2e, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x56, 0x31, 0xca, 0x02,
-	0x0e, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5c, 0x56, 0x31, 0xe2,
-	0x02, 0x1a, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5c, 0x56, 0x31,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x41,
-	0x70, 0x69, 0x3a, 0x3a, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x3a, 0x3a, 0x56, 0x31, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0xac, 0x01, 0x0a, 0x26, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x6f,
+	0x6c, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61, 0x74, 0x63, 0x68, 0x12, 0x3d, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x6f, 0x6c, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f,
+	0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42,
+	0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3e, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x6e, 0x61, 0x6c, 0x50, 0x6f, 0x6c, 0x6c, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x6f, 0x75,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x65, 0x73, 0x79, 0x6e, 0x63, 0x42, 0x61,
+	0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x03, 0x90, 0x02, 0x01,
+	0x42, 0xc1, 0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x70, 0x61, 0x79,
+	0x6d, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x42, 0x10, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x61, 0x72, 0x6d, 0x65, 0x6e, 0x74,
+	0x2f, 0x67, 0x65, 0x61, 0x2d, 0x6e, 0x65, 0x78, 0x74, 0x2f, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72,
+	0x73, 0x64, 0x6b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2f,
+	0x76, 0x31, 0x3b, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x41,
+	0x50, 0x58, 0xaa, 0x02, 0x0e, 0x41, 0x70, 0x69, 0x2e, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x2e, 0x56, 0x31, 0xca, 0x02, 0x0e, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e,
+	0x74, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1a, 0x41, 0x70, 0x69, 0x5c, 0x50, 0x61, 0x79, 0x6d, 0x65,
+	0x6e, 0x74, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x10, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74,
+	0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -6248,7 +6517,7 @@ func file_api_payment_v1_integration_proto_rawDescGZIP() []byte {
 }
 
 var file_api_payment_v1_integration_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_api_payment_v1_integration_proto_msgTypes = make([]protoimpl.MessageInfo, 75)
+var file_api_payment_v1_integration_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
 var file_api_payment_v1_integration_proto_goTypes = []any{
 	(CheckoutRequestStatus)(0),                                         // 0: api.payment.v1.CheckoutRequestStatus
 	(CheckoutRequestType)(0),                                           // 1: api.payment.v1.CheckoutRequestType
@@ -6264,195 +6533,201 @@ var file_api_payment_v1_integration_proto_goTypes = []any{
 	(*InternalResumeCheckoutRequestResyncRunResponse)(nil),             // 11: api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse
 	(*InternalListCheckoutRequestResyncCarryForwardRequest)(nil),       // 12: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest
 	(*InternalListCheckoutRequestResyncCarryForwardResponse)(nil),      // 13: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardResponse
-	(*InternalAdvanceCheckoutRequestResyncRunRequest)(nil),             // 14: api.payment.v1.InternalAdvanceCheckoutRequestResyncRunRequest
-	(*InternalAdvanceCheckoutRequestResyncRunResponse)(nil),            // 15: api.payment.v1.InternalAdvanceCheckoutRequestResyncRunResponse
-	(*InternalFailCheckoutRequestResyncRunRequest)(nil),                // 16: api.payment.v1.InternalFailCheckoutRequestResyncRunRequest
-	(*InternalFailCheckoutRequestResyncRunResponse)(nil),               // 17: api.payment.v1.InternalFailCheckoutRequestResyncRunResponse
-	(*InternalPrepareCheckoutRequestResyncBatchRequest)(nil),           // 18: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest
-	(*CheckoutRequestResyncBatchItem)(nil),                             // 19: api.payment.v1.CheckoutRequestResyncBatchItem
-	(*InternalPrepareCheckoutRequestResyncBatchResponse)(nil),          // 20: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchResponse
-	(*InternalAcknowledgeCheckoutRequestResyncBatchRequest)(nil),       // 21: api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchRequest
-	(*InternalAcknowledgeCheckoutRequestResyncBatchResponse)(nil),      // 22: api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchResponse
-	(*InternalPollCheckoutRequestResyncBatchRequest)(nil),              // 23: api.payment.v1.InternalPollCheckoutRequestResyncBatchRequest
-	(*InternalPollCheckoutRequestResyncBatchResponse)(nil),             // 24: api.payment.v1.InternalPollCheckoutRequestResyncBatchResponse
-	(*InternalCheckExpirationCheckoutRequest)(nil),                     // 25: api.payment.v1.InternalCheckExpirationCheckoutRequest
-	(*InternalCheckExpirationCheckoutResponse)(nil),                    // 26: api.payment.v1.InternalCheckExpirationCheckoutResponse
-	(*StatusTransaction)(nil),                                          // 27: api.payment.v1.StatusTransaction
-	(*InternalValidateAutoCheckoutRequestRequest)(nil),                 // 28: api.payment.v1.InternalValidateAutoCheckoutRequestRequest
-	(*InternalGetPrimaryPaymentMethodRequest)(nil),                     // 29: api.payment.v1.InternalGetPrimaryPaymentMethodRequest
-	(*InternalGetPrimaryPaymentMethodResponse)(nil),                    // 30: api.payment.v1.InternalGetPrimaryPaymentMethodResponse
-	(*InternalValidateCheckoutRequestRequest)(nil),                     // 31: api.payment.v1.InternalValidateCheckoutRequestRequest
-	(*InternalValidateCheckoutRequestResponse)(nil),                    // 32: api.payment.v1.InternalValidateCheckoutRequestResponse
-	(*InternalCreateCheckoutRequestRequest)(nil),                       // 33: api.payment.v1.InternalCreateCheckoutRequestRequest
-	(*InternalCreateCheckoutRequestResponse)(nil),                      // 34: api.payment.v1.InternalCreateCheckoutRequestResponse
-	(*CheckoutRequest)(nil),                                            // 35: api.payment.v1.CheckoutRequest
-	(*InternalGetLegalInfoRequest)(nil),                                // 36: api.payment.v1.InternalGetLegalInfoRequest
-	(*InternalGetLegalInfoResponse)(nil),                               // 37: api.payment.v1.InternalGetLegalInfoResponse
-	(*InternalGetLegalInfoForCheckDashboardRequest)(nil),               // 38: api.payment.v1.InternalGetLegalInfoForCheckDashboardRequest
-	(*InternalGetLegalInfoForCheckDashboardResponse)(nil),              // 39: api.payment.v1.InternalGetLegalInfoForCheckDashboardResponse
-	(*InternalGetInfoPaymentMethodForCheckDashboardRequest)(nil),       // 40: api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardRequest
-	(*InternalGetInfoPaymentMethodForCheckDashboardResponse)(nil),      // 41: api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardResponse
-	(*InternalGetDepositRequestForCheckDashboardRequest)(nil),          // 42: api.payment.v1.InternalGetDepositRequestForCheckDashboardRequest
-	(*InternalGetDepositRequestForCheckDashboardResponse)(nil),         // 43: api.payment.v1.InternalGetDepositRequestForCheckDashboardResponse
-	(*InternalCreateRefundRequestFullyRequest)(nil),                    // 44: api.payment.v1.InternalCreateRefundRequestFullyRequest
-	(*InternalCreateRefundRequestFullyResponse)(nil),                   // 45: api.payment.v1.InternalCreateRefundRequestFullyResponse
-	(*InternalCreateRefundRequest)(nil),                                // 46: api.payment.v1.InternalCreateRefundRequest
-	(*InternalCreateRefundResponse)(nil),                               // 47: api.payment.v1.InternalCreateRefundResponse
-	(*InternalListRefundRequestsRequest)(nil),                          // 48: api.payment.v1.InternalListRefundRequestsRequest
-	(*InternalListRefundRequestsResponse)(nil),                         // 49: api.payment.v1.InternalListRefundRequestsResponse
-	(*InternalGetTeamInvoiceRequest)(nil),                              // 50: api.payment.v1.InternalGetTeamInvoiceRequest
-	(*InternalGetTeamInvoiceResponse)(nil),                             // 51: api.payment.v1.InternalGetTeamInvoiceResponse
-	(*InternalGetTeamInvoiceIdsRequest)(nil),                           // 52: api.payment.v1.InternalGetTeamInvoiceIdsRequest
-	(*InternalGetTeamInvoiceIdsResponse)(nil),                          // 53: api.payment.v1.InternalGetTeamInvoiceIdsResponse
-	(*RefundRequestDetailForMigration)(nil),                            // 54: api.payment.v1.RefundRequestDetailForMigration
-	(*RefundRequestForMigration)(nil),                                  // 55: api.payment.v1.RefundRequestForMigration
-	(*InternalCreateRefundRequestForMigrationRequest)(nil),             // 56: api.payment.v1.InternalCreateRefundRequestForMigrationRequest
-	(*InternalCreateRefundRequestForMigrationResponse)(nil),            // 57: api.payment.v1.InternalCreateRefundRequestForMigrationResponse
-	(*CheckoutRequestForMigration)(nil),                                // 58: api.payment.v1.CheckoutRequestForMigration
-	(*CheckoutRequestDetailForMigration)(nil),                          // 59: api.payment.v1.CheckoutRequestDetailForMigration
-	(*InternalCreateCheckoutRequestForMigrationRequest)(nil),           // 60: api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest
-	(*InternalCreateCheckoutRequestForMigrationResponse)(nil),          // 61: api.payment.v1.InternalCreateCheckoutRequestForMigrationResponse
-	(*InternalGetCheckoutRequestByOrderIDRequest)(nil),                 // 62: api.payment.v1.InternalGetCheckoutRequestByOrderIDRequest
-	(*InternalGetCheckoutRequestByOrderIDResponse)(nil),                // 63: api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse
-	(*InternalGetCheckoutRequestByTxnRefRequest)(nil),                  // 64: api.payment.v1.InternalGetCheckoutRequestByTxnRefRequest
-	(*InternalGetCheckoutRequestByTxnRefResponse)(nil),                 // 65: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse
-	(*InternalCheckoutRequestByTxnRef)(nil),                            // 66: api.payment.v1.InternalCheckoutRequestByTxnRef
-	(*InternalCheckoutRequestDetailByTxnRef)(nil),                      // 67: api.payment.v1.InternalCheckoutRequestDetailByTxnRef
-	(*InternalGetCheckoutRequestDetailByOrderIDRequest)(nil),           // 68: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest
-	(*InternalGetCheckoutRequestDetailByOrderIDResponse)(nil),          // 69: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse
-	(*CheckoutRequest_OrderPayment)(nil),                               // 70: api.payment.v1.CheckoutRequest.OrderPayment
-	(*CheckoutRequest_OrderPaymentValidate)(nil),                       // 71: api.payment.v1.CheckoutRequest.OrderPaymentValidate
-	(*InternalCreateRefundRequest_OrderRefund)(nil),                    // 72: api.payment.v1.InternalCreateRefundRequest.OrderRefund
-	(*InternalCreateRefundResponse_RefundOrderTxn)(nil),                // 73: api.payment.v1.InternalCreateRefundResponse.RefundOrderTxn
-	(*InternalListRefundRequestsRequest_Filter)(nil),                   // 74: api.payment.v1.InternalListRefundRequestsRequest.Filter
-	(*InternalListRefundRequestsResponse_RefundRequest)(nil),           // 75: api.payment.v1.InternalListRefundRequestsResponse.RefundRequest
-	(*InternalGetTeamInvoiceResponse_TransactionInfo)(nil),             // 76: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo
-	(*InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo)(nil), // 77: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.InvoiceInfo
-	(*InternalGetCheckoutRequestDetailByOrderIDRequest_Filter)(nil),    // 78: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter
-	(*timestamppb.Timestamp)(nil),                                      // 79: google.protobuf.Timestamp
-	(v1.CheckoutRequestDetailStatus)(0),                                // 80: backend.payment.v1.CheckoutRequestDetailStatus
-	(*LinkedPaymentMethod)(nil),                                        // 81: api.payment.v1.LinkedPaymentMethod
-	(*LegalInformation)(nil),                                           // 82: api.payment.v1.LegalInformation
-	(*v11.UpdatedBy)(nil),                                              // 83: common.updated_by.v1.UpdatedBy
-	(*StaffCheckoutRequest_Message)(nil),                               // 84: api.payment.v1.StaffCheckoutRequest.Message
-	(*StaffCheckoutRequest_Detail)(nil),                                // 85: api.payment.v1.StaffCheckoutRequest.Detail
-	(*v12.Money)(nil),                                                  // 86: common.type.v1.Money
-	(v13.Order_OrderStatus)(0),                                         // 87: api.pod.v1.Order.OrderStatus
-	(v13.Order_OrderCancelStatus)(0),                                   // 88: api.pod.v1.Order.OrderCancelStatus
-	(RefundRequestStatus)(0),                                           // 89: api.payment.v1.RefundRequestStatus
-	(StaffCheckoutRequest_Status)(0),                                   // 90: api.payment.v1.StaffCheckoutRequest.Status
+	(*InternalListCheckoutRequestResyncBatchesRequest)(nil),            // 14: api.payment.v1.InternalListCheckoutRequestResyncBatchesRequest
+	(*CheckoutRequestResyncBatchStatus)(nil),                           // 15: api.payment.v1.CheckoutRequestResyncBatchStatus
+	(*InternalListCheckoutRequestResyncBatchesResponse)(nil),           // 16: api.payment.v1.InternalListCheckoutRequestResyncBatchesResponse
+	(*InternalAdvanceCheckoutRequestResyncRunRequest)(nil),             // 17: api.payment.v1.InternalAdvanceCheckoutRequestResyncRunRequest
+	(*InternalAdvanceCheckoutRequestResyncRunResponse)(nil),            // 18: api.payment.v1.InternalAdvanceCheckoutRequestResyncRunResponse
+	(*InternalFailCheckoutRequestResyncRunRequest)(nil),                // 19: api.payment.v1.InternalFailCheckoutRequestResyncRunRequest
+	(*InternalFailCheckoutRequestResyncRunResponse)(nil),               // 20: api.payment.v1.InternalFailCheckoutRequestResyncRunResponse
+	(*InternalPrepareCheckoutRequestResyncBatchRequest)(nil),           // 21: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest
+	(*CheckoutRequestResyncBatchItem)(nil),                             // 22: api.payment.v1.CheckoutRequestResyncBatchItem
+	(*InternalPrepareCheckoutRequestResyncBatchResponse)(nil),          // 23: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchResponse
+	(*InternalAcknowledgeCheckoutRequestResyncBatchRequest)(nil),       // 24: api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchRequest
+	(*InternalAcknowledgeCheckoutRequestResyncBatchResponse)(nil),      // 25: api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchResponse
+	(*InternalPollCheckoutRequestResyncBatchRequest)(nil),              // 26: api.payment.v1.InternalPollCheckoutRequestResyncBatchRequest
+	(*InternalPollCheckoutRequestResyncBatchResponse)(nil),             // 27: api.payment.v1.InternalPollCheckoutRequestResyncBatchResponse
+	(*InternalCheckExpirationCheckoutRequest)(nil),                     // 28: api.payment.v1.InternalCheckExpirationCheckoutRequest
+	(*InternalCheckExpirationCheckoutResponse)(nil),                    // 29: api.payment.v1.InternalCheckExpirationCheckoutResponse
+	(*StatusTransaction)(nil),                                          // 30: api.payment.v1.StatusTransaction
+	(*InternalValidateAutoCheckoutRequestRequest)(nil),                 // 31: api.payment.v1.InternalValidateAutoCheckoutRequestRequest
+	(*InternalGetPrimaryPaymentMethodRequest)(nil),                     // 32: api.payment.v1.InternalGetPrimaryPaymentMethodRequest
+	(*InternalGetPrimaryPaymentMethodResponse)(nil),                    // 33: api.payment.v1.InternalGetPrimaryPaymentMethodResponse
+	(*InternalValidateCheckoutRequestRequest)(nil),                     // 34: api.payment.v1.InternalValidateCheckoutRequestRequest
+	(*InternalValidateCheckoutRequestResponse)(nil),                    // 35: api.payment.v1.InternalValidateCheckoutRequestResponse
+	(*InternalCreateCheckoutRequestRequest)(nil),                       // 36: api.payment.v1.InternalCreateCheckoutRequestRequest
+	(*InternalCreateCheckoutRequestResponse)(nil),                      // 37: api.payment.v1.InternalCreateCheckoutRequestResponse
+	(*CheckoutRequest)(nil),                                            // 38: api.payment.v1.CheckoutRequest
+	(*InternalGetLegalInfoRequest)(nil),                                // 39: api.payment.v1.InternalGetLegalInfoRequest
+	(*InternalGetLegalInfoResponse)(nil),                               // 40: api.payment.v1.InternalGetLegalInfoResponse
+	(*InternalGetLegalInfoForCheckDashboardRequest)(nil),               // 41: api.payment.v1.InternalGetLegalInfoForCheckDashboardRequest
+	(*InternalGetLegalInfoForCheckDashboardResponse)(nil),              // 42: api.payment.v1.InternalGetLegalInfoForCheckDashboardResponse
+	(*InternalGetInfoPaymentMethodForCheckDashboardRequest)(nil),       // 43: api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardRequest
+	(*InternalGetInfoPaymentMethodForCheckDashboardResponse)(nil),      // 44: api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardResponse
+	(*InternalGetDepositRequestForCheckDashboardRequest)(nil),          // 45: api.payment.v1.InternalGetDepositRequestForCheckDashboardRequest
+	(*InternalGetDepositRequestForCheckDashboardResponse)(nil),         // 46: api.payment.v1.InternalGetDepositRequestForCheckDashboardResponse
+	(*InternalCreateRefundRequestFullyRequest)(nil),                    // 47: api.payment.v1.InternalCreateRefundRequestFullyRequest
+	(*InternalCreateRefundRequestFullyResponse)(nil),                   // 48: api.payment.v1.InternalCreateRefundRequestFullyResponse
+	(*InternalCreateRefundRequest)(nil),                                // 49: api.payment.v1.InternalCreateRefundRequest
+	(*InternalCreateRefundResponse)(nil),                               // 50: api.payment.v1.InternalCreateRefundResponse
+	(*InternalListRefundRequestsRequest)(nil),                          // 51: api.payment.v1.InternalListRefundRequestsRequest
+	(*InternalListRefundRequestsResponse)(nil),                         // 52: api.payment.v1.InternalListRefundRequestsResponse
+	(*InternalGetTeamInvoiceRequest)(nil),                              // 53: api.payment.v1.InternalGetTeamInvoiceRequest
+	(*InternalGetTeamInvoiceResponse)(nil),                             // 54: api.payment.v1.InternalGetTeamInvoiceResponse
+	(*InternalGetTeamInvoiceIdsRequest)(nil),                           // 55: api.payment.v1.InternalGetTeamInvoiceIdsRequest
+	(*InternalGetTeamInvoiceIdsResponse)(nil),                          // 56: api.payment.v1.InternalGetTeamInvoiceIdsResponse
+	(*RefundRequestDetailForMigration)(nil),                            // 57: api.payment.v1.RefundRequestDetailForMigration
+	(*RefundRequestForMigration)(nil),                                  // 58: api.payment.v1.RefundRequestForMigration
+	(*InternalCreateRefundRequestForMigrationRequest)(nil),             // 59: api.payment.v1.InternalCreateRefundRequestForMigrationRequest
+	(*InternalCreateRefundRequestForMigrationResponse)(nil),            // 60: api.payment.v1.InternalCreateRefundRequestForMigrationResponse
+	(*CheckoutRequestForMigration)(nil),                                // 61: api.payment.v1.CheckoutRequestForMigration
+	(*CheckoutRequestDetailForMigration)(nil),                          // 62: api.payment.v1.CheckoutRequestDetailForMigration
+	(*InternalCreateCheckoutRequestForMigrationRequest)(nil),           // 63: api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest
+	(*InternalCreateCheckoutRequestForMigrationResponse)(nil),          // 64: api.payment.v1.InternalCreateCheckoutRequestForMigrationResponse
+	(*InternalGetCheckoutRequestByOrderIDRequest)(nil),                 // 65: api.payment.v1.InternalGetCheckoutRequestByOrderIDRequest
+	(*InternalGetCheckoutRequestByOrderIDResponse)(nil),                // 66: api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse
+	(*InternalGetCheckoutRequestByTxnRefRequest)(nil),                  // 67: api.payment.v1.InternalGetCheckoutRequestByTxnRefRequest
+	(*InternalGetCheckoutRequestByTxnRefResponse)(nil),                 // 68: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse
+	(*InternalCheckoutRequestByTxnRef)(nil),                            // 69: api.payment.v1.InternalCheckoutRequestByTxnRef
+	(*InternalCheckoutRequestDetailByTxnRef)(nil),                      // 70: api.payment.v1.InternalCheckoutRequestDetailByTxnRef
+	(*InternalGetCheckoutRequestDetailByOrderIDRequest)(nil),           // 71: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest
+	(*InternalGetCheckoutRequestDetailByOrderIDResponse)(nil),          // 72: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse
+	(*CheckoutRequest_OrderPayment)(nil),                               // 73: api.payment.v1.CheckoutRequest.OrderPayment
+	(*CheckoutRequest_OrderPaymentValidate)(nil),                       // 74: api.payment.v1.CheckoutRequest.OrderPaymentValidate
+	(*InternalCreateRefundRequest_OrderRefund)(nil),                    // 75: api.payment.v1.InternalCreateRefundRequest.OrderRefund
+	(*InternalCreateRefundResponse_RefundOrderTxn)(nil),                // 76: api.payment.v1.InternalCreateRefundResponse.RefundOrderTxn
+	(*InternalListRefundRequestsRequest_Filter)(nil),                   // 77: api.payment.v1.InternalListRefundRequestsRequest.Filter
+	(*InternalListRefundRequestsResponse_RefundRequest)(nil),           // 78: api.payment.v1.InternalListRefundRequestsResponse.RefundRequest
+	(*InternalGetTeamInvoiceResponse_TransactionInfo)(nil),             // 79: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo
+	(*InternalGetTeamInvoiceResponse_TransactionInfo_InvoiceInfo)(nil), // 80: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.InvoiceInfo
+	(*InternalGetCheckoutRequestDetailByOrderIDRequest_Filter)(nil),    // 81: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter
+	(*timestamppb.Timestamp)(nil),                                      // 82: google.protobuf.Timestamp
+	(v1.CheckoutRequestDetailStatus)(0),                                // 83: backend.payment.v1.CheckoutRequestDetailStatus
+	(*LinkedPaymentMethod)(nil),                                        // 84: api.payment.v1.LinkedPaymentMethod
+	(*LegalInformation)(nil),                                           // 85: api.payment.v1.LegalInformation
+	(*v11.UpdatedBy)(nil),                                              // 86: common.updated_by.v1.UpdatedBy
+	(*StaffCheckoutRequest_Message)(nil),                               // 87: api.payment.v1.StaffCheckoutRequest.Message
+	(*StaffCheckoutRequest_Detail)(nil),                                // 88: api.payment.v1.StaffCheckoutRequest.Detail
+	(*v12.Money)(nil),                                                  // 89: common.type.v1.Money
+	(v13.Order_OrderStatus)(0),                                         // 90: api.pod.v1.Order.OrderStatus
+	(v13.Order_OrderCancelStatus)(0),                                   // 91: api.pod.v1.Order.OrderCancelStatus
+	(RefundRequestStatus)(0),                                           // 92: api.payment.v1.RefundRequestStatus
+	(StaffCheckoutRequest_Status)(0),                                   // 93: api.payment.v1.StaffCheckoutRequest.Status
 }
 var file_api_payment_v1_integration_proto_depIdxs = []int32{
-	79, // 0: api.payment.v1.InternalStartCheckoutRequestResyncRunRequest.from:type_name -> google.protobuf.Timestamp
-	79, // 1: api.payment.v1.InternalStartCheckoutRequestResyncRunRequest.to:type_name -> google.protobuf.Timestamp
-	79, // 2: api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest.from:type_name -> google.protobuf.Timestamp
-	79, // 3: api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest.to:type_name -> google.protobuf.Timestamp
-	79, // 4: api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse.from:type_name -> google.protobuf.Timestamp
-	79, // 5: api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse.to:type_name -> google.protobuf.Timestamp
-	79, // 6: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest.from:type_name -> google.protobuf.Timestamp
-	79, // 7: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest.to:type_name -> google.protobuf.Timestamp
-	19, // 8: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardResponse.items:type_name -> api.payment.v1.CheckoutRequestResyncBatchItem
-	19, // 9: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest.items:type_name -> api.payment.v1.CheckoutRequestResyncBatchItem
-	79, // 10: api.payment.v1.CheckoutRequestResyncBatchItem.order_date:type_name -> google.protobuf.Timestamp
-	27, // 11: api.payment.v1.InternalCheckExpirationCheckoutResponse.status_transactions:type_name -> api.payment.v1.StatusTransaction
-	80, // 12: api.payment.v1.StatusTransaction.status:type_name -> backend.payment.v1.CheckoutRequestDetailStatus
-	71, // 13: api.payment.v1.InternalValidateAutoCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPaymentValidate
-	81, // 14: api.payment.v1.InternalGetPrimaryPaymentMethodResponse.linked_payment_method:type_name -> api.payment.v1.LinkedPaymentMethod
-	71, // 15: api.payment.v1.InternalValidateCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPaymentValidate
-	70, // 16: api.payment.v1.InternalCreateCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPayment
-	79, // 17: api.payment.v1.InternalCreateCheckoutRequestRequest.expired_at:type_name -> google.protobuf.Timestamp
-	0,  // 18: api.payment.v1.InternalCreateCheckoutRequestResponse.status:type_name -> api.payment.v1.CheckoutRequestStatus
-	79, // 19: api.payment.v1.InternalCreateCheckoutRequestResponse.expired_at:type_name -> google.protobuf.Timestamp
-	82, // 20: api.payment.v1.InternalGetLegalInfoResponse.data:type_name -> api.payment.v1.LegalInformation
-	72, // 21: api.payment.v1.InternalCreateRefundRequest.order_refunds:type_name -> api.payment.v1.InternalCreateRefundRequest.OrderRefund
-	83, // 22: api.payment.v1.InternalCreateRefundRequest.created_by:type_name -> common.updated_by.v1.UpdatedBy
-	73, // 23: api.payment.v1.InternalCreateRefundResponse.refund_order_txn:type_name -> api.payment.v1.InternalCreateRefundResponse.RefundOrderTxn
-	74, // 24: api.payment.v1.InternalListRefundRequestsRequest.filter:type_name -> api.payment.v1.InternalListRefundRequestsRequest.Filter
-	75, // 25: api.payment.v1.InternalListRefundRequestsResponse.data:type_name -> api.payment.v1.InternalListRefundRequestsResponse.RefundRequest
-	76, // 26: api.payment.v1.InternalGetTeamInvoiceResponse.data:type_name -> api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo
-	3,  // 27: api.payment.v1.RefundRequestDetailForMigration.type:type_name -> api.payment.v1.RefundRequestTypeForMigration
-	54, // 28: api.payment.v1.RefundRequestForMigration.details:type_name -> api.payment.v1.RefundRequestDetailForMigration
-	55, // 29: api.payment.v1.InternalCreateRefundRequestForMigrationRequest.refund_requests:type_name -> api.payment.v1.RefundRequestForMigration
-	59, // 30: api.payment.v1.CheckoutRequestForMigration.details:type_name -> api.payment.v1.CheckoutRequestDetailForMigration
-	0,  // 31: api.payment.v1.CheckoutRequestForMigration.status:type_name -> api.payment.v1.CheckoutRequestStatus
-	1,  // 32: api.payment.v1.CheckoutRequestForMigration.type:type_name -> api.payment.v1.CheckoutRequestType
-	80, // 33: api.payment.v1.CheckoutRequestDetailForMigration.status:type_name -> backend.payment.v1.CheckoutRequestDetailStatus
-	58, // 34: api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest.checkout_requests:type_name -> api.payment.v1.CheckoutRequestForMigration
-	84, // 35: api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse.data:type_name -> api.payment.v1.StaffCheckoutRequest.Message
-	66, // 36: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse.request:type_name -> api.payment.v1.InternalCheckoutRequestByTxnRef
-	67, // 37: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse.detail:type_name -> api.payment.v1.InternalCheckoutRequestDetailByTxnRef
-	78, // 38: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.filter:type_name -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter
-	85, // 39: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse.data:type_name -> api.payment.v1.StaffCheckoutRequest.Detail
-	86, // 40: api.payment.v1.CheckoutRequest.OrderPayment.amount:type_name -> common.type.v1.Money
-	79, // 41: api.payment.v1.CheckoutRequest.OrderPayment.order_date:type_name -> google.protobuf.Timestamp
-	86, // 42: api.payment.v1.CheckoutRequest.OrderPaymentValidate.amount:type_name -> common.type.v1.Money
-	87, // 43: api.payment.v1.InternalCreateRefundRequest.OrderRefund.order_status:type_name -> api.pod.v1.Order.OrderStatus
-	88, // 44: api.payment.v1.InternalCreateRefundRequest.OrderRefund.order_cancel_status:type_name -> api.pod.v1.Order.OrderCancelStatus
-	2,  // 45: api.payment.v1.InternalCreateRefundRequest.OrderRefund.refund_request_type:type_name -> api.payment.v1.RefundRequestType
-	89, // 46: api.payment.v1.InternalListRefundRequestsRequest.Filter.status:type_name -> api.payment.v1.RefundRequestStatus
-	77, // 47: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.list_invoice_detail:type_name -> api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.InvoiceInfo
-	90, // 48: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter.statuses:type_name -> api.payment.v1.StaffCheckoutRequest.Status
-	31, // 49: api.payment.v1.PaymentInternalAPI.InternalValidateCheckoutRequest:input_type -> api.payment.v1.InternalValidateCheckoutRequestRequest
-	33, // 50: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequest:input_type -> api.payment.v1.InternalCreateCheckoutRequestRequest
-	29, // 51: api.payment.v1.PaymentInternalAPI.InternalGetPrimaryPaymentMethod:input_type -> api.payment.v1.InternalGetPrimaryPaymentMethodRequest
-	28, // 52: api.payment.v1.PaymentInternalAPI.InternalValidateAutoCheckoutRequest:input_type -> api.payment.v1.InternalValidateAutoCheckoutRequestRequest
-	25, // 53: api.payment.v1.PaymentInternalAPI.InternalCheckExpirationCheckout:input_type -> api.payment.v1.InternalCheckExpirationCheckoutRequest
-	36, // 54: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfo:input_type -> api.payment.v1.InternalGetLegalInfoRequest
-	38, // 55: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfoForCheckDashboard:input_type -> api.payment.v1.InternalGetLegalInfoForCheckDashboardRequest
-	40, // 56: api.payment.v1.PaymentInternalAPI.InternalGetInfoPaymentMethodForCheckDashboard:input_type -> api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardRequest
-	42, // 57: api.payment.v1.PaymentInternalAPI.InternalGetDepositRequestForCheckDashboard:input_type -> api.payment.v1.InternalGetDepositRequestForCheckDashboardRequest
-	46, // 58: api.payment.v1.PaymentInternalAPI.InternalCreateRefund:input_type -> api.payment.v1.InternalCreateRefundRequest
-	50, // 59: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoice:input_type -> api.payment.v1.InternalGetTeamInvoiceRequest
-	48, // 60: api.payment.v1.PaymentInternalAPI.InternalListRefundRequests:input_type -> api.payment.v1.InternalListRefundRequestsRequest
-	52, // 61: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoiceIds:input_type -> api.payment.v1.InternalGetTeamInvoiceIdsRequest
-	56, // 62: api.payment.v1.PaymentInternalAPI.InternalCreateRefundRequestForMigration:input_type -> api.payment.v1.InternalCreateRefundRequestForMigrationRequest
-	60, // 63: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequestForMigration:input_type -> api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest
-	62, // 64: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByOrderID:input_type -> api.payment.v1.InternalGetCheckoutRequestByOrderIDRequest
-	64, // 65: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByTxnRef:input_type -> api.payment.v1.InternalGetCheckoutRequestByTxnRefRequest
-	68, // 66: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestDetailByOrderID:input_type -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest
-	4,  // 67: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestResync:input_type -> api.payment.v1.InternalGetCheckoutRequestResyncRequest
-	6,  // 68: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResync:input_type -> api.payment.v1.InternalPollCheckoutRequestResyncRequest
-	8,  // 69: api.payment.v1.PaymentInternalAPI.InternalStartCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalStartCheckoutRequestResyncRunRequest
-	10, // 70: api.payment.v1.PaymentInternalAPI.InternalResumeCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest
-	12, // 71: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncCarryForward:input_type -> api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest
-	14, // 72: api.payment.v1.PaymentInternalAPI.InternalAdvanceCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalAdvanceCheckoutRequestResyncRunRequest
-	16, // 73: api.payment.v1.PaymentInternalAPI.InternalFailCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalFailCheckoutRequestResyncRunRequest
-	18, // 74: api.payment.v1.PaymentInternalAPI.InternalPrepareCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest
-	21, // 75: api.payment.v1.PaymentInternalAPI.InternalAcknowledgeCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchRequest
-	23, // 76: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalPollCheckoutRequestResyncBatchRequest
-	32, // 77: api.payment.v1.PaymentInternalAPI.InternalValidateCheckoutRequest:output_type -> api.payment.v1.InternalValidateCheckoutRequestResponse
-	34, // 78: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequest:output_type -> api.payment.v1.InternalCreateCheckoutRequestResponse
-	30, // 79: api.payment.v1.PaymentInternalAPI.InternalGetPrimaryPaymentMethod:output_type -> api.payment.v1.InternalGetPrimaryPaymentMethodResponse
-	32, // 80: api.payment.v1.PaymentInternalAPI.InternalValidateAutoCheckoutRequest:output_type -> api.payment.v1.InternalValidateCheckoutRequestResponse
-	26, // 81: api.payment.v1.PaymentInternalAPI.InternalCheckExpirationCheckout:output_type -> api.payment.v1.InternalCheckExpirationCheckoutResponse
-	37, // 82: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfo:output_type -> api.payment.v1.InternalGetLegalInfoResponse
-	39, // 83: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfoForCheckDashboard:output_type -> api.payment.v1.InternalGetLegalInfoForCheckDashboardResponse
-	41, // 84: api.payment.v1.PaymentInternalAPI.InternalGetInfoPaymentMethodForCheckDashboard:output_type -> api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardResponse
-	43, // 85: api.payment.v1.PaymentInternalAPI.InternalGetDepositRequestForCheckDashboard:output_type -> api.payment.v1.InternalGetDepositRequestForCheckDashboardResponse
-	47, // 86: api.payment.v1.PaymentInternalAPI.InternalCreateRefund:output_type -> api.payment.v1.InternalCreateRefundResponse
-	51, // 87: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoice:output_type -> api.payment.v1.InternalGetTeamInvoiceResponse
-	49, // 88: api.payment.v1.PaymentInternalAPI.InternalListRefundRequests:output_type -> api.payment.v1.InternalListRefundRequestsResponse
-	53, // 89: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoiceIds:output_type -> api.payment.v1.InternalGetTeamInvoiceIdsResponse
-	57, // 90: api.payment.v1.PaymentInternalAPI.InternalCreateRefundRequestForMigration:output_type -> api.payment.v1.InternalCreateRefundRequestForMigrationResponse
-	61, // 91: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequestForMigration:output_type -> api.payment.v1.InternalCreateCheckoutRequestForMigrationResponse
-	63, // 92: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByOrderID:output_type -> api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse
-	65, // 93: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByTxnRef:output_type -> api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse
-	69, // 94: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestDetailByOrderID:output_type -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse
-	5,  // 95: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestResync:output_type -> api.payment.v1.InternalGetCheckoutRequestResyncResponse
-	7,  // 96: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResync:output_type -> api.payment.v1.InternalPollCheckoutRequestResyncResponse
-	9,  // 97: api.payment.v1.PaymentInternalAPI.InternalStartCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalStartCheckoutRequestResyncRunResponse
-	11, // 98: api.payment.v1.PaymentInternalAPI.InternalResumeCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse
-	13, // 99: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncCarryForward:output_type -> api.payment.v1.InternalListCheckoutRequestResyncCarryForwardResponse
-	15, // 100: api.payment.v1.PaymentInternalAPI.InternalAdvanceCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalAdvanceCheckoutRequestResyncRunResponse
-	17, // 101: api.payment.v1.PaymentInternalAPI.InternalFailCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalFailCheckoutRequestResyncRunResponse
-	20, // 102: api.payment.v1.PaymentInternalAPI.InternalPrepareCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalPrepareCheckoutRequestResyncBatchResponse
-	22, // 103: api.payment.v1.PaymentInternalAPI.InternalAcknowledgeCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchResponse
-	24, // 104: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalPollCheckoutRequestResyncBatchResponse
-	77, // [77:105] is the sub-list for method output_type
-	49, // [49:77] is the sub-list for method input_type
-	49, // [49:49] is the sub-list for extension type_name
-	49, // [49:49] is the sub-list for extension extendee
-	0,  // [0:49] is the sub-list for field type_name
+	82, // 0: api.payment.v1.InternalStartCheckoutRequestResyncRunRequest.from:type_name -> google.protobuf.Timestamp
+	82, // 1: api.payment.v1.InternalStartCheckoutRequestResyncRunRequest.to:type_name -> google.protobuf.Timestamp
+	82, // 2: api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest.from:type_name -> google.protobuf.Timestamp
+	82, // 3: api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest.to:type_name -> google.protobuf.Timestamp
+	82, // 4: api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse.from:type_name -> google.protobuf.Timestamp
+	82, // 5: api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse.to:type_name -> google.protobuf.Timestamp
+	82, // 6: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest.from:type_name -> google.protobuf.Timestamp
+	82, // 7: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest.to:type_name -> google.protobuf.Timestamp
+	22, // 8: api.payment.v1.InternalListCheckoutRequestResyncCarryForwardResponse.items:type_name -> api.payment.v1.CheckoutRequestResyncBatchItem
+	15, // 9: api.payment.v1.InternalListCheckoutRequestResyncBatchesResponse.batches:type_name -> api.payment.v1.CheckoutRequestResyncBatchStatus
+	22, // 10: api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest.items:type_name -> api.payment.v1.CheckoutRequestResyncBatchItem
+	82, // 11: api.payment.v1.CheckoutRequestResyncBatchItem.order_date:type_name -> google.protobuf.Timestamp
+	30, // 12: api.payment.v1.InternalCheckExpirationCheckoutResponse.status_transactions:type_name -> api.payment.v1.StatusTransaction
+	83, // 13: api.payment.v1.StatusTransaction.status:type_name -> backend.payment.v1.CheckoutRequestDetailStatus
+	74, // 14: api.payment.v1.InternalValidateAutoCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPaymentValidate
+	84, // 15: api.payment.v1.InternalGetPrimaryPaymentMethodResponse.linked_payment_method:type_name -> api.payment.v1.LinkedPaymentMethod
+	74, // 16: api.payment.v1.InternalValidateCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPaymentValidate
+	73, // 17: api.payment.v1.InternalCreateCheckoutRequestRequest.details:type_name -> api.payment.v1.CheckoutRequest.OrderPayment
+	82, // 18: api.payment.v1.InternalCreateCheckoutRequestRequest.expired_at:type_name -> google.protobuf.Timestamp
+	0,  // 19: api.payment.v1.InternalCreateCheckoutRequestResponse.status:type_name -> api.payment.v1.CheckoutRequestStatus
+	82, // 20: api.payment.v1.InternalCreateCheckoutRequestResponse.expired_at:type_name -> google.protobuf.Timestamp
+	85, // 21: api.payment.v1.InternalGetLegalInfoResponse.data:type_name -> api.payment.v1.LegalInformation
+	75, // 22: api.payment.v1.InternalCreateRefundRequest.order_refunds:type_name -> api.payment.v1.InternalCreateRefundRequest.OrderRefund
+	86, // 23: api.payment.v1.InternalCreateRefundRequest.created_by:type_name -> common.updated_by.v1.UpdatedBy
+	76, // 24: api.payment.v1.InternalCreateRefundResponse.refund_order_txn:type_name -> api.payment.v1.InternalCreateRefundResponse.RefundOrderTxn
+	77, // 25: api.payment.v1.InternalListRefundRequestsRequest.filter:type_name -> api.payment.v1.InternalListRefundRequestsRequest.Filter
+	78, // 26: api.payment.v1.InternalListRefundRequestsResponse.data:type_name -> api.payment.v1.InternalListRefundRequestsResponse.RefundRequest
+	79, // 27: api.payment.v1.InternalGetTeamInvoiceResponse.data:type_name -> api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo
+	3,  // 28: api.payment.v1.RefundRequestDetailForMigration.type:type_name -> api.payment.v1.RefundRequestTypeForMigration
+	57, // 29: api.payment.v1.RefundRequestForMigration.details:type_name -> api.payment.v1.RefundRequestDetailForMigration
+	58, // 30: api.payment.v1.InternalCreateRefundRequestForMigrationRequest.refund_requests:type_name -> api.payment.v1.RefundRequestForMigration
+	62, // 31: api.payment.v1.CheckoutRequestForMigration.details:type_name -> api.payment.v1.CheckoutRequestDetailForMigration
+	0,  // 32: api.payment.v1.CheckoutRequestForMigration.status:type_name -> api.payment.v1.CheckoutRequestStatus
+	1,  // 33: api.payment.v1.CheckoutRequestForMigration.type:type_name -> api.payment.v1.CheckoutRequestType
+	83, // 34: api.payment.v1.CheckoutRequestDetailForMigration.status:type_name -> backend.payment.v1.CheckoutRequestDetailStatus
+	61, // 35: api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest.checkout_requests:type_name -> api.payment.v1.CheckoutRequestForMigration
+	87, // 36: api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse.data:type_name -> api.payment.v1.StaffCheckoutRequest.Message
+	69, // 37: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse.request:type_name -> api.payment.v1.InternalCheckoutRequestByTxnRef
+	70, // 38: api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse.detail:type_name -> api.payment.v1.InternalCheckoutRequestDetailByTxnRef
+	81, // 39: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.filter:type_name -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter
+	88, // 40: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse.data:type_name -> api.payment.v1.StaffCheckoutRequest.Detail
+	89, // 41: api.payment.v1.CheckoutRequest.OrderPayment.amount:type_name -> common.type.v1.Money
+	82, // 42: api.payment.v1.CheckoutRequest.OrderPayment.order_date:type_name -> google.protobuf.Timestamp
+	89, // 43: api.payment.v1.CheckoutRequest.OrderPaymentValidate.amount:type_name -> common.type.v1.Money
+	90, // 44: api.payment.v1.InternalCreateRefundRequest.OrderRefund.order_status:type_name -> api.pod.v1.Order.OrderStatus
+	91, // 45: api.payment.v1.InternalCreateRefundRequest.OrderRefund.order_cancel_status:type_name -> api.pod.v1.Order.OrderCancelStatus
+	2,  // 46: api.payment.v1.InternalCreateRefundRequest.OrderRefund.refund_request_type:type_name -> api.payment.v1.RefundRequestType
+	92, // 47: api.payment.v1.InternalListRefundRequestsRequest.Filter.status:type_name -> api.payment.v1.RefundRequestStatus
+	80, // 48: api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.list_invoice_detail:type_name -> api.payment.v1.InternalGetTeamInvoiceResponse.TransactionInfo.InvoiceInfo
+	93, // 49: api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest.Filter.statuses:type_name -> api.payment.v1.StaffCheckoutRequest.Status
+	34, // 50: api.payment.v1.PaymentInternalAPI.InternalValidateCheckoutRequest:input_type -> api.payment.v1.InternalValidateCheckoutRequestRequest
+	36, // 51: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequest:input_type -> api.payment.v1.InternalCreateCheckoutRequestRequest
+	32, // 52: api.payment.v1.PaymentInternalAPI.InternalGetPrimaryPaymentMethod:input_type -> api.payment.v1.InternalGetPrimaryPaymentMethodRequest
+	31, // 53: api.payment.v1.PaymentInternalAPI.InternalValidateAutoCheckoutRequest:input_type -> api.payment.v1.InternalValidateAutoCheckoutRequestRequest
+	28, // 54: api.payment.v1.PaymentInternalAPI.InternalCheckExpirationCheckout:input_type -> api.payment.v1.InternalCheckExpirationCheckoutRequest
+	39, // 55: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfo:input_type -> api.payment.v1.InternalGetLegalInfoRequest
+	41, // 56: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfoForCheckDashboard:input_type -> api.payment.v1.InternalGetLegalInfoForCheckDashboardRequest
+	43, // 57: api.payment.v1.PaymentInternalAPI.InternalGetInfoPaymentMethodForCheckDashboard:input_type -> api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardRequest
+	45, // 58: api.payment.v1.PaymentInternalAPI.InternalGetDepositRequestForCheckDashboard:input_type -> api.payment.v1.InternalGetDepositRequestForCheckDashboardRequest
+	49, // 59: api.payment.v1.PaymentInternalAPI.InternalCreateRefund:input_type -> api.payment.v1.InternalCreateRefundRequest
+	53, // 60: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoice:input_type -> api.payment.v1.InternalGetTeamInvoiceRequest
+	51, // 61: api.payment.v1.PaymentInternalAPI.InternalListRefundRequests:input_type -> api.payment.v1.InternalListRefundRequestsRequest
+	55, // 62: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoiceIds:input_type -> api.payment.v1.InternalGetTeamInvoiceIdsRequest
+	59, // 63: api.payment.v1.PaymentInternalAPI.InternalCreateRefundRequestForMigration:input_type -> api.payment.v1.InternalCreateRefundRequestForMigrationRequest
+	63, // 64: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequestForMigration:input_type -> api.payment.v1.InternalCreateCheckoutRequestForMigrationRequest
+	65, // 65: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByOrderID:input_type -> api.payment.v1.InternalGetCheckoutRequestByOrderIDRequest
+	67, // 66: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByTxnRef:input_type -> api.payment.v1.InternalGetCheckoutRequestByTxnRefRequest
+	71, // 67: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestDetailByOrderID:input_type -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDRequest
+	4,  // 68: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestResync:input_type -> api.payment.v1.InternalGetCheckoutRequestResyncRequest
+	6,  // 69: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResync:input_type -> api.payment.v1.InternalPollCheckoutRequestResyncRequest
+	8,  // 70: api.payment.v1.PaymentInternalAPI.InternalStartCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalStartCheckoutRequestResyncRunRequest
+	10, // 71: api.payment.v1.PaymentInternalAPI.InternalResumeCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalResumeCheckoutRequestResyncRunRequest
+	12, // 72: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncCarryForward:input_type -> api.payment.v1.InternalListCheckoutRequestResyncCarryForwardRequest
+	14, // 73: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncBatches:input_type -> api.payment.v1.InternalListCheckoutRequestResyncBatchesRequest
+	17, // 74: api.payment.v1.PaymentInternalAPI.InternalAdvanceCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalAdvanceCheckoutRequestResyncRunRequest
+	19, // 75: api.payment.v1.PaymentInternalAPI.InternalFailCheckoutRequestResyncRun:input_type -> api.payment.v1.InternalFailCheckoutRequestResyncRunRequest
+	21, // 76: api.payment.v1.PaymentInternalAPI.InternalPrepareCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalPrepareCheckoutRequestResyncBatchRequest
+	24, // 77: api.payment.v1.PaymentInternalAPI.InternalAcknowledgeCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchRequest
+	26, // 78: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResyncBatch:input_type -> api.payment.v1.InternalPollCheckoutRequestResyncBatchRequest
+	35, // 79: api.payment.v1.PaymentInternalAPI.InternalValidateCheckoutRequest:output_type -> api.payment.v1.InternalValidateCheckoutRequestResponse
+	37, // 80: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequest:output_type -> api.payment.v1.InternalCreateCheckoutRequestResponse
+	33, // 81: api.payment.v1.PaymentInternalAPI.InternalGetPrimaryPaymentMethod:output_type -> api.payment.v1.InternalGetPrimaryPaymentMethodResponse
+	35, // 82: api.payment.v1.PaymentInternalAPI.InternalValidateAutoCheckoutRequest:output_type -> api.payment.v1.InternalValidateCheckoutRequestResponse
+	29, // 83: api.payment.v1.PaymentInternalAPI.InternalCheckExpirationCheckout:output_type -> api.payment.v1.InternalCheckExpirationCheckoutResponse
+	40, // 84: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfo:output_type -> api.payment.v1.InternalGetLegalInfoResponse
+	42, // 85: api.payment.v1.PaymentInternalAPI.InternalGetLegalInfoForCheckDashboard:output_type -> api.payment.v1.InternalGetLegalInfoForCheckDashboardResponse
+	44, // 86: api.payment.v1.PaymentInternalAPI.InternalGetInfoPaymentMethodForCheckDashboard:output_type -> api.payment.v1.InternalGetInfoPaymentMethodForCheckDashboardResponse
+	46, // 87: api.payment.v1.PaymentInternalAPI.InternalGetDepositRequestForCheckDashboard:output_type -> api.payment.v1.InternalGetDepositRequestForCheckDashboardResponse
+	50, // 88: api.payment.v1.PaymentInternalAPI.InternalCreateRefund:output_type -> api.payment.v1.InternalCreateRefundResponse
+	54, // 89: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoice:output_type -> api.payment.v1.InternalGetTeamInvoiceResponse
+	52, // 90: api.payment.v1.PaymentInternalAPI.InternalListRefundRequests:output_type -> api.payment.v1.InternalListRefundRequestsResponse
+	56, // 91: api.payment.v1.PaymentInternalAPI.InternalGetTeamInvoiceIds:output_type -> api.payment.v1.InternalGetTeamInvoiceIdsResponse
+	60, // 92: api.payment.v1.PaymentInternalAPI.InternalCreateRefundRequestForMigration:output_type -> api.payment.v1.InternalCreateRefundRequestForMigrationResponse
+	64, // 93: api.payment.v1.PaymentInternalAPI.InternalCreateCheckoutRequestForMigration:output_type -> api.payment.v1.InternalCreateCheckoutRequestForMigrationResponse
+	66, // 94: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByOrderID:output_type -> api.payment.v1.InternalGetCheckoutRequestByOrderIDResponse
+	68, // 95: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestByTxnRef:output_type -> api.payment.v1.InternalGetCheckoutRequestByTxnRefResponse
+	72, // 96: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestDetailByOrderID:output_type -> api.payment.v1.InternalGetCheckoutRequestDetailByOrderIDResponse
+	5,  // 97: api.payment.v1.PaymentInternalAPI.InternalGetCheckoutRequestResync:output_type -> api.payment.v1.InternalGetCheckoutRequestResyncResponse
+	7,  // 98: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResync:output_type -> api.payment.v1.InternalPollCheckoutRequestResyncResponse
+	9,  // 99: api.payment.v1.PaymentInternalAPI.InternalStartCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalStartCheckoutRequestResyncRunResponse
+	11, // 100: api.payment.v1.PaymentInternalAPI.InternalResumeCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalResumeCheckoutRequestResyncRunResponse
+	13, // 101: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncCarryForward:output_type -> api.payment.v1.InternalListCheckoutRequestResyncCarryForwardResponse
+	16, // 102: api.payment.v1.PaymentInternalAPI.InternalListCheckoutRequestResyncBatches:output_type -> api.payment.v1.InternalListCheckoutRequestResyncBatchesResponse
+	18, // 103: api.payment.v1.PaymentInternalAPI.InternalAdvanceCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalAdvanceCheckoutRequestResyncRunResponse
+	20, // 104: api.payment.v1.PaymentInternalAPI.InternalFailCheckoutRequestResyncRun:output_type -> api.payment.v1.InternalFailCheckoutRequestResyncRunResponse
+	23, // 105: api.payment.v1.PaymentInternalAPI.InternalPrepareCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalPrepareCheckoutRequestResyncBatchResponse
+	25, // 106: api.payment.v1.PaymentInternalAPI.InternalAcknowledgeCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalAcknowledgeCheckoutRequestResyncBatchResponse
+	27, // 107: api.payment.v1.PaymentInternalAPI.InternalPollCheckoutRequestResyncBatch:output_type -> api.payment.v1.InternalPollCheckoutRequestResyncBatchResponse
+	79, // [79:108] is the sub-list for method output_type
+	50, // [50:79] is the sub-list for method input_type
+	50, // [50:50] is the sub-list for extension type_name
+	50, // [50:50] is the sub-list for extension extendee
+	0,  // [0:50] is the sub-list for field type_name
 }
 
 func init() { file_api_payment_v1_integration_proto_init() }
@@ -6468,7 +6743,7 @@ func file_api_payment_v1_integration_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_payment_v1_integration_proto_rawDesc), len(file_api_payment_v1_integration_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   75,
+			NumMessages:   78,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
