@@ -19,8 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InternalShippingAPI_InternalListOrderLabelsByOrdIDs_FullMethodName = "/api.oms.v1.InternalShippingAPI/InternalListOrderLabelsByOrdIDs"
-	InternalShippingAPI_InternalPushTrackingInfoUpdates_FullMethodName = "/api.oms.v1.InternalShippingAPI/InternalPushTrackingInfoUpdates"
+	InternalShippingAPI_InternalListOrderLabelsByOrdIDs_FullMethodName       = "/api.oms.v1.InternalShippingAPI/InternalListOrderLabelsByOrdIDs"
+	InternalShippingAPI_InternalPushTrackingInfoUpdates_FullMethodName       = "/api.oms.v1.InternalShippingAPI/InternalPushTrackingInfoUpdates"
+	InternalShippingAPI_InternalReadCRMTrackingSnapshots_FullMethodName      = "/api.oms.v1.InternalShippingAPI/InternalReadCRMTrackingSnapshots"
+	InternalShippingAPI_InternalValidateCRMTrackingCursorPlan_FullMethodName = "/api.oms.v1.InternalShippingAPI/InternalValidateCRMTrackingCursorPlan"
 )
 
 // InternalShippingAPIClient is the client API for InternalShippingAPI service.
@@ -29,6 +31,8 @@ const (
 type InternalShippingAPIClient interface {
 	InternalListOrderLabelsByOrdIDs(ctx context.Context, in *InternalListOrderLabelsByOrdIDsRequest, opts ...grpc.CallOption) (*InternalListOrderLabelsByOrdIDsResponse, error)
 	InternalPushTrackingInfoUpdates(ctx context.Context, in *InternalPushTrackingInfoUpdatesRequest, opts ...grpc.CallOption) (*InternalPushTrackingInfoUpdatesResponse, error)
+	InternalReadCRMTrackingSnapshots(ctx context.Context, in *InternalReadCRMTrackingSnapshotsRequest, opts ...grpc.CallOption) (*InternalReadCRMTrackingSnapshotsResponse, error)
+	InternalValidateCRMTrackingCursorPlan(ctx context.Context, in *InternalValidateCRMTrackingCursorPlanRequest, opts ...grpc.CallOption) (*InternalValidateCRMTrackingCursorPlanResponse, error)
 }
 
 type internalShippingAPIClient struct {
@@ -59,12 +63,34 @@ func (c *internalShippingAPIClient) InternalPushTrackingInfoUpdates(ctx context.
 	return out, nil
 }
 
+func (c *internalShippingAPIClient) InternalReadCRMTrackingSnapshots(ctx context.Context, in *InternalReadCRMTrackingSnapshotsRequest, opts ...grpc.CallOption) (*InternalReadCRMTrackingSnapshotsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReadCRMTrackingSnapshotsResponse)
+	err := c.cc.Invoke(ctx, InternalShippingAPI_InternalReadCRMTrackingSnapshots_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internalShippingAPIClient) InternalValidateCRMTrackingCursorPlan(ctx context.Context, in *InternalValidateCRMTrackingCursorPlanRequest, opts ...grpc.CallOption) (*InternalValidateCRMTrackingCursorPlanResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalValidateCRMTrackingCursorPlanResponse)
+	err := c.cc.Invoke(ctx, InternalShippingAPI_InternalValidateCRMTrackingCursorPlan_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InternalShippingAPIServer is the server API for InternalShippingAPI service.
 // All implementations should embed UnimplementedInternalShippingAPIServer
 // for forward compatibility.
 type InternalShippingAPIServer interface {
 	InternalListOrderLabelsByOrdIDs(context.Context, *InternalListOrderLabelsByOrdIDsRequest) (*InternalListOrderLabelsByOrdIDsResponse, error)
 	InternalPushTrackingInfoUpdates(context.Context, *InternalPushTrackingInfoUpdatesRequest) (*InternalPushTrackingInfoUpdatesResponse, error)
+	InternalReadCRMTrackingSnapshots(context.Context, *InternalReadCRMTrackingSnapshotsRequest) (*InternalReadCRMTrackingSnapshotsResponse, error)
+	InternalValidateCRMTrackingCursorPlan(context.Context, *InternalValidateCRMTrackingCursorPlanRequest) (*InternalValidateCRMTrackingCursorPlanResponse, error)
 }
 
 // UnimplementedInternalShippingAPIServer should be embedded to have
@@ -79,6 +105,12 @@ func (UnimplementedInternalShippingAPIServer) InternalListOrderLabelsByOrdIDs(co
 }
 func (UnimplementedInternalShippingAPIServer) InternalPushTrackingInfoUpdates(context.Context, *InternalPushTrackingInfoUpdatesRequest) (*InternalPushTrackingInfoUpdatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalPushTrackingInfoUpdates not implemented")
+}
+func (UnimplementedInternalShippingAPIServer) InternalReadCRMTrackingSnapshots(context.Context, *InternalReadCRMTrackingSnapshotsRequest) (*InternalReadCRMTrackingSnapshotsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReadCRMTrackingSnapshots not implemented")
+}
+func (UnimplementedInternalShippingAPIServer) InternalValidateCRMTrackingCursorPlan(context.Context, *InternalValidateCRMTrackingCursorPlanRequest) (*InternalValidateCRMTrackingCursorPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalValidateCRMTrackingCursorPlan not implemented")
 }
 func (UnimplementedInternalShippingAPIServer) testEmbeddedByValue() {}
 
@@ -136,6 +168,42 @@ func _InternalShippingAPI_InternalPushTrackingInfoUpdates_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternalShippingAPI_InternalReadCRMTrackingSnapshots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReadCRMTrackingSnapshotsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalShippingAPIServer).InternalReadCRMTrackingSnapshots(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalShippingAPI_InternalReadCRMTrackingSnapshots_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalShippingAPIServer).InternalReadCRMTrackingSnapshots(ctx, req.(*InternalReadCRMTrackingSnapshotsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternalShippingAPI_InternalValidateCRMTrackingCursorPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalValidateCRMTrackingCursorPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalShippingAPIServer).InternalValidateCRMTrackingCursorPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalShippingAPI_InternalValidateCRMTrackingCursorPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalShippingAPIServer).InternalValidateCRMTrackingCursorPlan(ctx, req.(*InternalValidateCRMTrackingCursorPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InternalShippingAPI_ServiceDesc is the grpc.ServiceDesc for InternalShippingAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -150,6 +218,14 @@ var InternalShippingAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalPushTrackingInfoUpdates",
 			Handler:    _InternalShippingAPI_InternalPushTrackingInfoUpdates_Handler,
+		},
+		{
+			MethodName: "InternalReadCRMTrackingSnapshots",
+			Handler:    _InternalShippingAPI_InternalReadCRMTrackingSnapshots_Handler,
+		},
+		{
+			MethodName: "InternalValidateCRMTrackingCursorPlan",
+			Handler:    _InternalShippingAPI_InternalValidateCRMTrackingCursorPlan_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
