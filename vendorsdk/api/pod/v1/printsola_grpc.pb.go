@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	PrintsolaAPI_UserGetPrintsolaProfile_FullMethodName = "/api.pod.v1.PrintsolaAPI/UserGetPrintsolaProfile"
 	PrintsolaAPI_UserReserveReceipts_FullMethodName     = "/api.pod.v1.PrintsolaAPI/UserReserveReceipts"
+	PrintsolaAPI_UserListPrintsolaOrders_FullMethodName = "/api.pod.v1.PrintsolaAPI/UserListPrintsolaOrders"
 )
 
 // PrintsolaAPIClient is the client API for PrintsolaAPI service.
@@ -29,6 +30,11 @@ const (
 type PrintsolaAPIClient interface {
 	UserGetPrintsolaProfile(ctx context.Context, in *UserGetPrintsolaProfileRequest, opts ...grpc.CallOption) (*UserGetPrintsolaProfileResponse, error)
 	UserReserveReceipts(ctx context.Context, in *UserReserveReceiptsRequest, opts ...grpc.CallOption) (*UserReserveReceiptsResponse, error)
+	// After any checkout request whose delivery is uncertain, query this RPC by receipt IDs before retrying.
+	// ordered with SUCCESS is paid; PENDING must be polled; FAILED or EXPIRED allows an explicit retry.
+	// ordered never means paid. drafted without an order ID did not commit and must be re-quoted before retrying.
+	// Missing rows are an error state: never blindly repeat checkout after an ambiguous response.
+	UserListPrintsolaOrders(ctx context.Context, in *UserListPrintsolaOrdersRequest, opts ...grpc.CallOption) (*UserListPrintsolaOrdersResponse, error)
 }
 
 type printsolaAPIClient struct {
@@ -59,12 +65,27 @@ func (c *printsolaAPIClient) UserReserveReceipts(ctx context.Context, in *UserRe
 	return out, nil
 }
 
+func (c *printsolaAPIClient) UserListPrintsolaOrders(ctx context.Context, in *UserListPrintsolaOrdersRequest, opts ...grpc.CallOption) (*UserListPrintsolaOrdersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserListPrintsolaOrdersResponse)
+	err := c.cc.Invoke(ctx, PrintsolaAPI_UserListPrintsolaOrders_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PrintsolaAPIServer is the server API for PrintsolaAPI service.
 // All implementations should embed UnimplementedPrintsolaAPIServer
 // for forward compatibility.
 type PrintsolaAPIServer interface {
 	UserGetPrintsolaProfile(context.Context, *UserGetPrintsolaProfileRequest) (*UserGetPrintsolaProfileResponse, error)
 	UserReserveReceipts(context.Context, *UserReserveReceiptsRequest) (*UserReserveReceiptsResponse, error)
+	// After any checkout request whose delivery is uncertain, query this RPC by receipt IDs before retrying.
+	// ordered with SUCCESS is paid; PENDING must be polled; FAILED or EXPIRED allows an explicit retry.
+	// ordered never means paid. drafted without an order ID did not commit and must be re-quoted before retrying.
+	// Missing rows are an error state: never blindly repeat checkout after an ambiguous response.
+	UserListPrintsolaOrders(context.Context, *UserListPrintsolaOrdersRequest) (*UserListPrintsolaOrdersResponse, error)
 }
 
 // UnimplementedPrintsolaAPIServer should be embedded to have
@@ -79,6 +100,9 @@ func (UnimplementedPrintsolaAPIServer) UserGetPrintsolaProfile(context.Context, 
 }
 func (UnimplementedPrintsolaAPIServer) UserReserveReceipts(context.Context, *UserReserveReceiptsRequest) (*UserReserveReceiptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserReserveReceipts not implemented")
+}
+func (UnimplementedPrintsolaAPIServer) UserListPrintsolaOrders(context.Context, *UserListPrintsolaOrdersRequest) (*UserListPrintsolaOrdersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListPrintsolaOrders not implemented")
 }
 func (UnimplementedPrintsolaAPIServer) testEmbeddedByValue() {}
 
@@ -136,6 +160,24 @@ func _PrintsolaAPI_UserReserveReceipts_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PrintsolaAPI_UserListPrintsolaOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListPrintsolaOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PrintsolaAPIServer).UserListPrintsolaOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PrintsolaAPI_UserListPrintsolaOrders_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PrintsolaAPIServer).UserListPrintsolaOrders(ctx, req.(*UserListPrintsolaOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PrintsolaAPI_ServiceDesc is the grpc.ServiceDesc for PrintsolaAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -150,6 +192,10 @@ var PrintsolaAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserReserveReceipts",
 			Handler:    _PrintsolaAPI_UserReserveReceipts_Handler,
+		},
+		{
+			MethodName: "UserListPrintsolaOrders",
+			Handler:    _PrintsolaAPI_UserListPrintsolaOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
