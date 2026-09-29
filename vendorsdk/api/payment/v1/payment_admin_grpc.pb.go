@@ -32,6 +32,7 @@ const (
 	PaymentAdminAPI_StaffListTransactionFilterCriteria_FullMethodName         = "/api.payment.v1.PaymentAdminAPI/StaffListTransactionFilterCriteria"
 	PaymentAdminAPI_StaffCountTransactionType_FullMethodName                  = "/api.payment.v1.PaymentAdminAPI/StaffCountTransactionType"
 	PaymentAdminAPI_StaffGetInvoice_FullMethodName                            = "/api.payment.v1.PaymentAdminAPI/StaffGetInvoice"
+	PaymentAdminAPI_StaffBuildMissingInvoices_FullMethodName                  = "/api.payment.v1.PaymentAdminAPI/StaffBuildMissingInvoices"
 	PaymentAdminAPI_StaffListApproveReason_FullMethodName                     = "/api.payment.v1.PaymentAdminAPI/StaffListApproveReason"
 	PaymentAdminAPI_StaffListRejectReason_FullMethodName                      = "/api.payment.v1.PaymentAdminAPI/StaffListRejectReason"
 	PaymentAdminAPI_StaffListSystemConfiguration_FullMethodName               = "/api.payment.v1.PaymentAdminAPI/StaffListSystemConfiguration"
@@ -62,6 +63,7 @@ type PaymentAdminAPIClient interface {
 	StaffListTransactionFilterCriteria(ctx context.Context, in *StaffListTransactionFilterCriteriaRequest, opts ...grpc.CallOption) (*StaffListTransactionFilterCriteriaResponse, error)
 	StaffCountTransactionType(ctx context.Context, in *StaffCountTransactionTypeRequest, opts ...grpc.CallOption) (*StaffCountTransactionTypeResponse, error)
 	StaffGetInvoice(ctx context.Context, in *StaffGetInvoiceRequest, opts ...grpc.CallOption) (*StaffGetInvoiceResponse, error)
+	StaffBuildMissingInvoices(ctx context.Context, in *StaffBuildMissingInvoicesRequest, opts ...grpc.CallOption) (*StaffBuildMissingInvoicesResponse, error)
 	StaffListApproveReason(ctx context.Context, in *StaffListApproveReasonRequest, opts ...grpc.CallOption) (*StaffListApproveReasonResponse, error)
 	StaffListRejectReason(ctx context.Context, in *StaffListRejectReasonRequest, opts ...grpc.CallOption) (*StaffListRejectReasonResponse, error)
 	StaffListSystemConfiguration(ctx context.Context, in *StaffListSystemConfigurationRequest, opts ...grpc.CallOption) (*StaffListSystemConfigurationResponse, error)
@@ -210,6 +212,16 @@ func (c *paymentAdminAPIClient) StaffGetInvoice(ctx context.Context, in *StaffGe
 	return out, nil
 }
 
+func (c *paymentAdminAPIClient) StaffBuildMissingInvoices(ctx context.Context, in *StaffBuildMissingInvoicesRequest, opts ...grpc.CallOption) (*StaffBuildMissingInvoicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffBuildMissingInvoicesResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffBuildMissingInvoices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *paymentAdminAPIClient) StaffListApproveReason(ctx context.Context, in *StaffListApproveReasonRequest, opts ...grpc.CallOption) (*StaffListApproveReasonResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListApproveReasonResponse)
@@ -310,6 +322,7 @@ type PaymentAdminAPIServer interface {
 	StaffListTransactionFilterCriteria(context.Context, *StaffListTransactionFilterCriteriaRequest) (*StaffListTransactionFilterCriteriaResponse, error)
 	StaffCountTransactionType(context.Context, *StaffCountTransactionTypeRequest) (*StaffCountTransactionTypeResponse, error)
 	StaffGetInvoice(context.Context, *StaffGetInvoiceRequest) (*StaffGetInvoiceResponse, error)
+	StaffBuildMissingInvoices(context.Context, *StaffBuildMissingInvoicesRequest) (*StaffBuildMissingInvoicesResponse, error)
 	StaffListApproveReason(context.Context, *StaffListApproveReasonRequest) (*StaffListApproveReasonResponse, error)
 	StaffListRejectReason(context.Context, *StaffListRejectReasonRequest) (*StaffListRejectReasonResponse, error)
 	StaffListSystemConfiguration(context.Context, *StaffListSystemConfigurationRequest) (*StaffListSystemConfigurationResponse, error)
@@ -365,6 +378,9 @@ func (UnimplementedPaymentAdminAPIServer) StaffCountTransactionType(context.Cont
 }
 func (UnimplementedPaymentAdminAPIServer) StaffGetInvoice(context.Context, *StaffGetInvoiceRequest) (*StaffGetInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetInvoice not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffBuildMissingInvoices(context.Context, *StaffBuildMissingInvoicesRequest) (*StaffBuildMissingInvoicesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffBuildMissingInvoices not implemented")
 }
 func (UnimplementedPaymentAdminAPIServer) StaffListApproveReason(context.Context, *StaffListApproveReasonRequest) (*StaffListApproveReasonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListApproveReason not implemented")
@@ -644,6 +660,24 @@ func _PaymentAdminAPI_StaffGetInvoice_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentAdminAPI_StaffBuildMissingInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffBuildMissingInvoicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffBuildMissingInvoices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffBuildMissingInvoices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffBuildMissingInvoices(ctx, req.(*StaffBuildMissingInvoicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PaymentAdminAPI_StaffListApproveReason_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffListApproveReasonRequest)
 	if err := dec(in); err != nil {
@@ -846,6 +880,10 @@ var PaymentAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetInvoice",
 			Handler:    _PaymentAdminAPI_StaffGetInvoice_Handler,
+		},
+		{
+			MethodName: "StaffBuildMissingInvoices",
+			Handler:    _PaymentAdminAPI_StaffBuildMissingInvoices_Handler,
 		},
 		{
 			MethodName: "StaffListApproveReason",
