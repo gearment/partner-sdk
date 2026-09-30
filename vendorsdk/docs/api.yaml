@@ -2370,6 +2370,10 @@ components:
         - 9
         - ORIGIN_SALES_CHANNEL_OTHER_MARKETPLACE
         - 10
+        - ORIGIN_SALES_CHANNEL_WALMART
+        - 11
+        - ORIGIN_SALES_CHANNEL_POSHMARK
+        - 12
       description: |-
         OriginSalesChannel identifies the partner-claimed sales channel where an
          order was originally placed. It is separate from order_platform, which
