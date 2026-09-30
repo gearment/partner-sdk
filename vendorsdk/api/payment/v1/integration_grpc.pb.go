@@ -19,35 +19,36 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PaymentInternalAPI_InternalValidateCheckoutRequest_FullMethodName               = "/api.payment.v1.PaymentInternalAPI/InternalValidateCheckoutRequest"
-	PaymentInternalAPI_InternalCreateCheckoutRequest_FullMethodName                 = "/api.payment.v1.PaymentInternalAPI/InternalCreateCheckoutRequest"
-	PaymentInternalAPI_InternalGetPrimaryPaymentMethod_FullMethodName               = "/api.payment.v1.PaymentInternalAPI/InternalGetPrimaryPaymentMethod"
-	PaymentInternalAPI_InternalValidateAutoCheckoutRequest_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalValidateAutoCheckoutRequest"
-	PaymentInternalAPI_InternalCheckExpirationCheckout_FullMethodName               = "/api.payment.v1.PaymentInternalAPI/InternalCheckExpirationCheckout"
-	PaymentInternalAPI_InternalGetLegalInfo_FullMethodName                          = "/api.payment.v1.PaymentInternalAPI/InternalGetLegalInfo"
-	PaymentInternalAPI_InternalGetLegalInfoForCheckDashboard_FullMethodName         = "/api.payment.v1.PaymentInternalAPI/InternalGetLegalInfoForCheckDashboard"
-	PaymentInternalAPI_InternalGetInfoPaymentMethodForCheckDashboard_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalGetInfoPaymentMethodForCheckDashboard"
-	PaymentInternalAPI_InternalGetDepositRequestForCheckDashboard_FullMethodName    = "/api.payment.v1.PaymentInternalAPI/InternalGetDepositRequestForCheckDashboard"
-	PaymentInternalAPI_InternalCreateRefund_FullMethodName                          = "/api.payment.v1.PaymentInternalAPI/InternalCreateRefund"
-	PaymentInternalAPI_InternalGetTeamInvoice_FullMethodName                        = "/api.payment.v1.PaymentInternalAPI/InternalGetTeamInvoice"
-	PaymentInternalAPI_InternalListRefundRequests_FullMethodName                    = "/api.payment.v1.PaymentInternalAPI/InternalListRefundRequests"
-	PaymentInternalAPI_InternalGetTeamInvoiceIds_FullMethodName                     = "/api.payment.v1.PaymentInternalAPI/InternalGetTeamInvoiceIds"
-	PaymentInternalAPI_InternalCreateRefundRequestForMigration_FullMethodName       = "/api.payment.v1.PaymentInternalAPI/InternalCreateRefundRequestForMigration"
-	PaymentInternalAPI_InternalCreateCheckoutRequestForMigration_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalCreateCheckoutRequestForMigration"
-	PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByOrderID"
-	PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByTxnRef"
-	PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestDetailByOrderID"
-	PaymentInternalAPI_InternalGetCheckoutRequestResync_FullMethodName              = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestResync"
-	PaymentInternalAPI_InternalPollCheckoutRequestResync_FullMethodName             = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResync"
-	PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_FullMethodName         = "/api.payment.v1.PaymentInternalAPI/InternalStartCheckoutRequestResyncRun"
-	PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalResumeCheckoutRequestResyncRun"
-	PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalListCheckoutRequestResyncCarryForward"
-	PaymentInternalAPI_InternalListCheckoutRequestResyncBatches_FullMethodName      = "/api.payment.v1.PaymentInternalAPI/InternalListCheckoutRequestResyncBatches"
-	PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_FullMethodName       = "/api.payment.v1.PaymentInternalAPI/InternalAdvanceCheckoutRequestResyncRun"
-	PaymentInternalAPI_InternalFailCheckoutRequestResyncRun_FullMethodName          = "/api.payment.v1.PaymentInternalAPI/InternalFailCheckoutRequestResyncRun"
-	PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_FullMethodName     = "/api.payment.v1.PaymentInternalAPI/InternalPrepareCheckoutRequestResyncBatch"
-	PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalAcknowledgeCheckoutRequestResyncBatch"
-	PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalValidateCheckoutRequest_FullMethodName                  = "/api.payment.v1.PaymentInternalAPI/InternalValidateCheckoutRequest"
+	PaymentInternalAPI_InternalCreateCheckoutRequest_FullMethodName                    = "/api.payment.v1.PaymentInternalAPI/InternalCreateCheckoutRequest"
+	PaymentInternalAPI_InternalGetPrimaryPaymentMethod_FullMethodName                  = "/api.payment.v1.PaymentInternalAPI/InternalGetPrimaryPaymentMethod"
+	PaymentInternalAPI_InternalValidateAutoCheckoutRequest_FullMethodName              = "/api.payment.v1.PaymentInternalAPI/InternalValidateAutoCheckoutRequest"
+	PaymentInternalAPI_InternalCheckExpirationCheckout_FullMethodName                  = "/api.payment.v1.PaymentInternalAPI/InternalCheckExpirationCheckout"
+	PaymentInternalAPI_InternalGetLegalInfo_FullMethodName                             = "/api.payment.v1.PaymentInternalAPI/InternalGetLegalInfo"
+	PaymentInternalAPI_InternalGetLegalInfoForCheckDashboard_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalGetLegalInfoForCheckDashboard"
+	PaymentInternalAPI_InternalGetInfoPaymentMethodForCheckDashboard_FullMethodName    = "/api.payment.v1.PaymentInternalAPI/InternalGetInfoPaymentMethodForCheckDashboard"
+	PaymentInternalAPI_InternalGetDepositRequestForCheckDashboard_FullMethodName       = "/api.payment.v1.PaymentInternalAPI/InternalGetDepositRequestForCheckDashboard"
+	PaymentInternalAPI_InternalCreateRefund_FullMethodName                             = "/api.payment.v1.PaymentInternalAPI/InternalCreateRefund"
+	PaymentInternalAPI_InternalGetTeamInvoice_FullMethodName                           = "/api.payment.v1.PaymentInternalAPI/InternalGetTeamInvoice"
+	PaymentInternalAPI_InternalListRefundRequests_FullMethodName                       = "/api.payment.v1.PaymentInternalAPI/InternalListRefundRequests"
+	PaymentInternalAPI_InternalGetTeamInvoiceIds_FullMethodName                        = "/api.payment.v1.PaymentInternalAPI/InternalGetTeamInvoiceIds"
+	PaymentInternalAPI_InternalCreateRefundRequestForMigration_FullMethodName          = "/api.payment.v1.PaymentInternalAPI/InternalCreateRefundRequestForMigration"
+	PaymentInternalAPI_InternalCreateCheckoutRequestForMigration_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalCreateCheckoutRequestForMigration"
+	PaymentInternalAPI_InternalGetCheckoutRequestByOrderID_FullMethodName              = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByOrderID"
+	PaymentInternalAPI_InternalGetCheckoutRequestByTxnRef_FullMethodName               = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestByTxnRef"
+	PaymentInternalAPI_InternalGetCheckoutRequestDetailByOrderID_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestDetailByOrderID"
+	PaymentInternalAPI_InternalGetCheckoutRequestResync_FullMethodName                 = "/api.payment.v1.PaymentInternalAPI/InternalGetCheckoutRequestResync"
+	PaymentInternalAPI_InternalPollCheckoutRequestResync_FullMethodName                = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResync"
+	PaymentInternalAPI_InternalStartCheckoutRequestResyncRun_FullMethodName            = "/api.payment.v1.PaymentInternalAPI/InternalStartCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalResumeCheckoutRequestResyncRun_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalResumeCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalListCheckoutRequestResyncCarryForward_FullMethodName    = "/api.payment.v1.PaymentInternalAPI/InternalListCheckoutRequestResyncCarryForward"
+	PaymentInternalAPI_InternalListCheckoutRequestResyncBatches_FullMethodName         = "/api.payment.v1.PaymentInternalAPI/InternalListCheckoutRequestResyncBatches"
+	PaymentInternalAPI_InternalAdvanceCheckoutRequestResyncRun_FullMethodName          = "/api.payment.v1.PaymentInternalAPI/InternalAdvanceCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalFailCheckoutRequestResyncRun_FullMethodName             = "/api.payment.v1.PaymentInternalAPI/InternalFailCheckoutRequestResyncRun"
+	PaymentInternalAPI_InternalPrepareCheckoutRequestResyncBatch_FullMethodName        = "/api.payment.v1.PaymentInternalAPI/InternalPrepareCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalAcknowledgeCheckoutRequestResyncBatch_FullMethodName    = "/api.payment.v1.PaymentInternalAPI/InternalAcknowledgeCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_FullMethodName           = "/api.payment.v1.PaymentInternalAPI/InternalPollCheckoutRequestResyncBatch"
+	PaymentInternalAPI_InternalTriggerCheckoutRequestResyncInvoiceBuild_FullMethodName = "/api.payment.v1.PaymentInternalAPI/InternalTriggerCheckoutRequestResyncInvoiceBuild"
 )
 
 // PaymentInternalAPIClient is the client API for PaymentInternalAPI service.
@@ -86,6 +87,10 @@ type PaymentInternalAPIClient interface {
 	InternalPrepareCheckoutRequestResyncBatch(ctx context.Context, in *InternalPrepareCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPrepareCheckoutRequestResyncBatchResponse, error)
 	InternalAcknowledgeCheckoutRequestResyncBatch(ctx context.Context, in *InternalAcknowledgeCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error)
 	InternalPollCheckoutRequestResyncBatch(ctx context.Context, in *InternalPollCheckoutRequestResyncBatchRequest, opts ...grpc.CallOption) (*InternalPollCheckoutRequestResyncBatchResponse, error)
+	// With run_id, OMS calls this after reaching the durable high-water mark and
+	// waiting for every batch in the run to become terminal. Without run_id,
+	// this triggers a team-scoped missing-invoice rebuild without resync updates.
+	InternalTriggerCheckoutRequestResyncInvoiceBuild(ctx context.Context, in *InternalTriggerCheckoutRequestResyncInvoiceBuildRequest, opts ...grpc.CallOption) (*InternalTriggerCheckoutRequestResyncInvoiceBuildResponse, error)
 }
 
 type paymentInternalAPIClient struct {
@@ -386,6 +391,16 @@ func (c *paymentInternalAPIClient) InternalPollCheckoutRequestResyncBatch(ctx co
 	return out, nil
 }
 
+func (c *paymentInternalAPIClient) InternalTriggerCheckoutRequestResyncInvoiceBuild(ctx context.Context, in *InternalTriggerCheckoutRequestResyncInvoiceBuildRequest, opts ...grpc.CallOption) (*InternalTriggerCheckoutRequestResyncInvoiceBuildResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalTriggerCheckoutRequestResyncInvoiceBuildResponse)
+	err := c.cc.Invoke(ctx, PaymentInternalAPI_InternalTriggerCheckoutRequestResyncInvoiceBuild_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentInternalAPIServer is the server API for PaymentInternalAPI service.
 // All implementations should embed UnimplementedPaymentInternalAPIServer
 // for forward compatibility.
@@ -422,6 +437,10 @@ type PaymentInternalAPIServer interface {
 	InternalPrepareCheckoutRequestResyncBatch(context.Context, *InternalPrepareCheckoutRequestResyncBatchRequest) (*InternalPrepareCheckoutRequestResyncBatchResponse, error)
 	InternalAcknowledgeCheckoutRequestResyncBatch(context.Context, *InternalAcknowledgeCheckoutRequestResyncBatchRequest) (*InternalAcknowledgeCheckoutRequestResyncBatchResponse, error)
 	InternalPollCheckoutRequestResyncBatch(context.Context, *InternalPollCheckoutRequestResyncBatchRequest) (*InternalPollCheckoutRequestResyncBatchResponse, error)
+	// With run_id, OMS calls this after reaching the durable high-water mark and
+	// waiting for every batch in the run to become terminal. Without run_id,
+	// this triggers a team-scoped missing-invoice rebuild without resync updates.
+	InternalTriggerCheckoutRequestResyncInvoiceBuild(context.Context, *InternalTriggerCheckoutRequestResyncInvoiceBuildRequest) (*InternalTriggerCheckoutRequestResyncInvoiceBuildResponse, error)
 }
 
 // UnimplementedPaymentInternalAPIServer should be embedded to have
@@ -517,6 +536,9 @@ func (UnimplementedPaymentInternalAPIServer) InternalAcknowledgeCheckoutRequestR
 }
 func (UnimplementedPaymentInternalAPIServer) InternalPollCheckoutRequestResyncBatch(context.Context, *InternalPollCheckoutRequestResyncBatchRequest) (*InternalPollCheckoutRequestResyncBatchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalPollCheckoutRequestResyncBatch not implemented")
+}
+func (UnimplementedPaymentInternalAPIServer) InternalTriggerCheckoutRequestResyncInvoiceBuild(context.Context, *InternalTriggerCheckoutRequestResyncInvoiceBuildRequest) (*InternalTriggerCheckoutRequestResyncInvoiceBuildResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalTriggerCheckoutRequestResyncInvoiceBuild not implemented")
 }
 func (UnimplementedPaymentInternalAPIServer) testEmbeddedByValue() {}
 
@@ -1060,6 +1082,24 @@ func _PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_Handler(srv inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentInternalAPI_InternalTriggerCheckoutRequestResyncInvoiceBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalTriggerCheckoutRequestResyncInvoiceBuildRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentInternalAPIServer).InternalTriggerCheckoutRequestResyncInvoiceBuild(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentInternalAPI_InternalTriggerCheckoutRequestResyncInvoiceBuild_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentInternalAPIServer).InternalTriggerCheckoutRequestResyncInvoiceBuild(ctx, req.(*InternalTriggerCheckoutRequestResyncInvoiceBuildRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PaymentInternalAPI_ServiceDesc is the grpc.ServiceDesc for PaymentInternalAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1182,6 +1222,10 @@ var PaymentInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalPollCheckoutRequestResyncBatch",
 			Handler:    _PaymentInternalAPI_InternalPollCheckoutRequestResyncBatch_Handler,
+		},
+		{
+			MethodName: "InternalTriggerCheckoutRequestResyncInvoiceBuild",
+			Handler:    _PaymentInternalAPI_InternalTriggerCheckoutRequestResyncInvoiceBuild_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
