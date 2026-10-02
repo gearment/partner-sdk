@@ -45,6 +45,7 @@ const (
 	OrderDraftAPI_UserGetOrderDraft_FullMethodName                          = "/api.pod.v1.OrderDraftAPI/UserGetOrderDraft"
 	OrderDraftAPI_UserListOrderDraftForCheckout_FullMethodName              = "/api.pod.v1.OrderDraftAPI/UserListOrderDraftForCheckout"
 	OrderDraftAPI_UserArchiveOrderDraft_FullMethodName                      = "/api.pod.v1.OrderDraftAPI/UserArchiveOrderDraft"
+	OrderDraftAPI_UserDeleteDraftOrder_FullMethodName                       = "/api.pod.v1.OrderDraftAPI/UserDeleteDraftOrder"
 	OrderDraftAPI_UserRestoreOrderDraft_FullMethodName                      = "/api.pod.v1.OrderDraftAPI/UserRestoreOrderDraft"
 	OrderDraftAPI_UserSaveMappingLineItem_FullMethodName                    = "/api.pod.v1.OrderDraftAPI/UserSaveMappingLineItem"
 	OrderDraftAPI_UserUpdateOrderDraftAddressInformation_FullMethodName     = "/api.pod.v1.OrderDraftAPI/UserUpdateOrderDraftAddressInformation"
@@ -93,6 +94,7 @@ type OrderDraftAPIClient interface {
 	UserGetOrderDraft(ctx context.Context, in *UserGetOrderDraftRequest, opts ...grpc.CallOption) (*UserGetOrderDraftResponse, error)
 	UserListOrderDraftForCheckout(ctx context.Context, in *UserListOrderDraftForCheckoutRequest, opts ...grpc.CallOption) (*UserListOrderDraftForCheckoutResponse, error)
 	UserArchiveOrderDraft(ctx context.Context, in *UserArchiveOrderDraftRequest, opts ...grpc.CallOption) (*UserArchiveOrderDraftResponse, error)
+	UserDeleteDraftOrder(ctx context.Context, in *UserDeleteDraftOrderRequest, opts ...grpc.CallOption) (*UserDeleteDraftOrderResponse, error)
 	UserRestoreOrderDraft(ctx context.Context, in *UserRestoreOrderDraftRequest, opts ...grpc.CallOption) (*UserRestoreOrderDraftResponse, error)
 	UserSaveMappingLineItem(ctx context.Context, in *UserSaveMappingLineItemRequest, opts ...grpc.CallOption) (*UserSaveMappingLineItemResponse, error)
 	UserUpdateOrderDraftAddressInformation(ctx context.Context, in *UserUpdateOrderDraftAddressInformationRequest, opts ...grpc.CallOption) (*UserUpdateOrderDraftAddressInformationResponse, error)
@@ -377,6 +379,16 @@ func (c *orderDraftAPIClient) UserArchiveOrderDraft(ctx context.Context, in *Use
 	return out, nil
 }
 
+func (c *orderDraftAPIClient) UserDeleteDraftOrder(ctx context.Context, in *UserDeleteDraftOrderRequest, opts ...grpc.CallOption) (*UserDeleteDraftOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserDeleteDraftOrderResponse)
+	err := c.cc.Invoke(ctx, OrderDraftAPI_UserDeleteDraftOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderDraftAPIClient) UserRestoreOrderDraft(ctx context.Context, in *UserRestoreOrderDraftRequest, opts ...grpc.CallOption) (*UserRestoreOrderDraftResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserRestoreOrderDraftResponse)
@@ -549,6 +561,7 @@ type OrderDraftAPIServer interface {
 	UserGetOrderDraft(context.Context, *UserGetOrderDraftRequest) (*UserGetOrderDraftResponse, error)
 	UserListOrderDraftForCheckout(context.Context, *UserListOrderDraftForCheckoutRequest) (*UserListOrderDraftForCheckoutResponse, error)
 	UserArchiveOrderDraft(context.Context, *UserArchiveOrderDraftRequest) (*UserArchiveOrderDraftResponse, error)
+	UserDeleteDraftOrder(context.Context, *UserDeleteDraftOrderRequest) (*UserDeleteDraftOrderResponse, error)
 	UserRestoreOrderDraft(context.Context, *UserRestoreOrderDraftRequest) (*UserRestoreOrderDraftResponse, error)
 	UserSaveMappingLineItem(context.Context, *UserSaveMappingLineItemRequest) (*UserSaveMappingLineItemResponse, error)
 	UserUpdateOrderDraftAddressInformation(context.Context, *UserUpdateOrderDraftAddressInformationRequest) (*UserUpdateOrderDraftAddressInformationResponse, error)
@@ -649,6 +662,9 @@ func (UnimplementedOrderDraftAPIServer) UserListOrderDraftForCheckout(context.Co
 }
 func (UnimplementedOrderDraftAPIServer) UserArchiveOrderDraft(context.Context, *UserArchiveOrderDraftRequest) (*UserArchiveOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserArchiveOrderDraft not implemented")
+}
+func (UnimplementedOrderDraftAPIServer) UserDeleteDraftOrder(context.Context, *UserDeleteDraftOrderRequest) (*UserDeleteDraftOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserDeleteDraftOrder not implemented")
 }
 func (UnimplementedOrderDraftAPIServer) UserRestoreOrderDraft(context.Context, *UserRestoreOrderDraftRequest) (*UserRestoreOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserRestoreOrderDraft not implemented")
@@ -1180,6 +1196,24 @@ func _OrderDraftAPI_UserArchiveOrderDraft_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderDraftAPI_UserDeleteDraftOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserDeleteDraftOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderDraftAPIServer).UserDeleteDraftOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderDraftAPI_UserDeleteDraftOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderDraftAPIServer).UserDeleteDraftOrder(ctx, req.(*UserDeleteDraftOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderDraftAPI_UserRestoreOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserRestoreOrderDraftRequest)
 	if err := dec(in); err != nil {
@@ -1542,6 +1576,10 @@ var OrderDraftAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserArchiveOrderDraft",
 			Handler:    _OrderDraftAPI_UserArchiveOrderDraft_Handler,
+		},
+		{
+			MethodName: "UserDeleteDraftOrder",
+			Handler:    _OrderDraftAPI_UserDeleteDraftOrder_Handler,
 		},
 		{
 			MethodName: "UserRestoreOrderDraft",
