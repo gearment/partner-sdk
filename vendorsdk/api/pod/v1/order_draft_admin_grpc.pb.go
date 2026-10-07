@@ -23,6 +23,7 @@ const (
 	OrderDraftAdminAPI_StaffCountOrderDraftStatus_FullMethodName             = "/api.pod.v1.OrderDraftAdminAPI/StaffCountOrderDraftStatus"
 	OrderDraftAdminAPI_StaffListSalesOrderDraftFilterCriteria_FullMethodName = "/api.pod.v1.OrderDraftAdminAPI/StaffListSalesOrderDraftFilterCriteria"
 	OrderDraftAdminAPI_StaffGetOrderDraft_FullMethodName                     = "/api.pod.v1.OrderDraftAdminAPI/StaffGetOrderDraft"
+	OrderDraftAdminAPI_StaffTriggerRefreshOrderDraftValue_FullMethodName     = "/api.pod.v1.OrderDraftAdminAPI/StaffTriggerRefreshOrderDraftValue"
 )
 
 // OrderDraftAdminAPIClient is the client API for OrderDraftAdminAPI service.
@@ -35,6 +36,7 @@ type OrderDraftAdminAPIClient interface {
 	StaffCountOrderDraftStatus(ctx context.Context, in *StaffCountOrderDraftStatusRequest, opts ...grpc.CallOption) (*StaffCountOrderDraftStatusResponse, error)
 	StaffListSalesOrderDraftFilterCriteria(ctx context.Context, in *StaffListSalesOrderDraftFilterCriteriaRequest, opts ...grpc.CallOption) (*StaffListSalesOrderDraftFilterCriteriaResponse, error)
 	StaffGetOrderDraft(ctx context.Context, in *StaffGetOrderDraftRequest, opts ...grpc.CallOption) (*StaffGetOrderDraftResponse, error)
+	StaffTriggerRefreshOrderDraftValue(ctx context.Context, in *StaffTriggerRefreshOrderDraftValueRequest, opts ...grpc.CallOption) (*StaffTriggerRefreshOrderDraftValueResponse, error)
 }
 
 type orderDraftAdminAPIClient struct {
@@ -85,6 +87,16 @@ func (c *orderDraftAdminAPIClient) StaffGetOrderDraft(ctx context.Context, in *S
 	return out, nil
 }
 
+func (c *orderDraftAdminAPIClient) StaffTriggerRefreshOrderDraftValue(ctx context.Context, in *StaffTriggerRefreshOrderDraftValueRequest, opts ...grpc.CallOption) (*StaffTriggerRefreshOrderDraftValueResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffTriggerRefreshOrderDraftValueResponse)
+	err := c.cc.Invoke(ctx, OrderDraftAdminAPI_StaffTriggerRefreshOrderDraftValue_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderDraftAdminAPIServer is the server API for OrderDraftAdminAPI service.
 // All implementations should embed UnimplementedOrderDraftAdminAPIServer
 // for forward compatibility.
@@ -95,6 +107,7 @@ type OrderDraftAdminAPIServer interface {
 	StaffCountOrderDraftStatus(context.Context, *StaffCountOrderDraftStatusRequest) (*StaffCountOrderDraftStatusResponse, error)
 	StaffListSalesOrderDraftFilterCriteria(context.Context, *StaffListSalesOrderDraftFilterCriteriaRequest) (*StaffListSalesOrderDraftFilterCriteriaResponse, error)
 	StaffGetOrderDraft(context.Context, *StaffGetOrderDraftRequest) (*StaffGetOrderDraftResponse, error)
+	StaffTriggerRefreshOrderDraftValue(context.Context, *StaffTriggerRefreshOrderDraftValueRequest) (*StaffTriggerRefreshOrderDraftValueResponse, error)
 }
 
 // UnimplementedOrderDraftAdminAPIServer should be embedded to have
@@ -115,6 +128,9 @@ func (UnimplementedOrderDraftAdminAPIServer) StaffListSalesOrderDraftFilterCrite
 }
 func (UnimplementedOrderDraftAdminAPIServer) StaffGetOrderDraft(context.Context, *StaffGetOrderDraftRequest) (*StaffGetOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetOrderDraft not implemented")
+}
+func (UnimplementedOrderDraftAdminAPIServer) StaffTriggerRefreshOrderDraftValue(context.Context, *StaffTriggerRefreshOrderDraftValueRequest) (*StaffTriggerRefreshOrderDraftValueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffTriggerRefreshOrderDraftValue not implemented")
 }
 func (UnimplementedOrderDraftAdminAPIServer) testEmbeddedByValue() {}
 
@@ -208,6 +224,24 @@ func _OrderDraftAdminAPI_StaffGetOrderDraft_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderDraftAdminAPI_StaffTriggerRefreshOrderDraftValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffTriggerRefreshOrderDraftValueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderDraftAdminAPIServer).StaffTriggerRefreshOrderDraftValue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderDraftAdminAPI_StaffTriggerRefreshOrderDraftValue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderDraftAdminAPIServer).StaffTriggerRefreshOrderDraftValue(ctx, req.(*StaffTriggerRefreshOrderDraftValueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderDraftAdminAPI_ServiceDesc is the grpc.ServiceDesc for OrderDraftAdminAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -230,6 +264,10 @@ var OrderDraftAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetOrderDraft",
 			Handler:    _OrderDraftAdminAPI_StaffGetOrderDraft_Handler,
+		},
+		{
+			MethodName: "StaffTriggerRefreshOrderDraftValue",
+			Handler:    _OrderDraftAdminAPI_StaffTriggerRefreshOrderDraftValue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
