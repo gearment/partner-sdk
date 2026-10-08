@@ -19,22 +19,25 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserAccountAdminAPI_StaffBlockUser_FullMethodName              = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
-	UserAccountAdminAPI_StaffUnblockUser_FullMethodName            = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
-	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName      = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
-	UserAccountAdminAPI_StaffListUser_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffListUser"
-	UserAccountAdminAPI_StaffCreateUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffCreateUserTag"
-	UserAccountAdminAPI_StaffListUserTags_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTags"
-	UserAccountAdminAPI_StaffUpdateUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserTag"
-	UserAccountAdminAPI_StaffDeleteUserTag_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffDeleteUserTag"
-	UserAccountAdminAPI_StaffAssignUserTags_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffAssignUserTags"
-	UserAccountAdminAPI_StaffRemoveUserTags_FullMethodName         = "/api.iam.v1.UserAccountAdminAPI/StaffRemoveUserTags"
-	UserAccountAdminAPI_StaffListUserTagAssignments_FullMethodName = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTagAssignments"
-	UserAccountAdminAPI_StaffGetTeam_FullMethodName                = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeam"
-	UserAccountAdminAPI_StaffGetTeamDetail_FullMethodName          = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeamDetail"
-	UserAccountAdminAPI_StaffCreateFlag_FullMethodName             = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFlag"
-	UserAccountAdminAPI_StaffListFlag_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffListFlag"
-	UserAccountAdminAPI_StaffUpdateFlag_FullMethodName             = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateFlag"
+	UserAccountAdminAPI_StaffBlockUser_FullMethodName                   = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
+	UserAccountAdminAPI_StaffUnblockUser_FullMethodName                 = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
+	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
+	UserAccountAdminAPI_StaffListUser_FullMethodName                    = "/api.iam.v1.UserAccountAdminAPI/StaffListUser"
+	UserAccountAdminAPI_StaffListMailchimpMembers_FullMethodName        = "/api.iam.v1.UserAccountAdminAPI/StaffListMailchimpMembers"
+	UserAccountAdminAPI_StaffSubscribeMailchimpMembers_FullMethodName   = "/api.iam.v1.UserAccountAdminAPI/StaffSubscribeMailchimpMembers"
+	UserAccountAdminAPI_StaffUnsubscribeMailchimpMembers_FullMethodName = "/api.iam.v1.UserAccountAdminAPI/StaffUnsubscribeMailchimpMembers"
+	UserAccountAdminAPI_StaffCreateUserTag_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffCreateUserTag"
+	UserAccountAdminAPI_StaffListUserTags_FullMethodName                = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTags"
+	UserAccountAdminAPI_StaffUpdateUserTag_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserTag"
+	UserAccountAdminAPI_StaffDeleteUserTag_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffDeleteUserTag"
+	UserAccountAdminAPI_StaffAssignUserTags_FullMethodName              = "/api.iam.v1.UserAccountAdminAPI/StaffAssignUserTags"
+	UserAccountAdminAPI_StaffRemoveUserTags_FullMethodName              = "/api.iam.v1.UserAccountAdminAPI/StaffRemoveUserTags"
+	UserAccountAdminAPI_StaffListUserTagAssignments_FullMethodName      = "/api.iam.v1.UserAccountAdminAPI/StaffListUserTagAssignments"
+	UserAccountAdminAPI_StaffGetTeam_FullMethodName                     = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeam"
+	UserAccountAdminAPI_StaffGetTeamDetail_FullMethodName               = "/api.iam.v1.UserAccountAdminAPI/StaffGetTeamDetail"
+	UserAccountAdminAPI_StaffCreateFlag_FullMethodName                  = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFlag"
+	UserAccountAdminAPI_StaffListFlag_FullMethodName                    = "/api.iam.v1.UserAccountAdminAPI/StaffListFlag"
+	UserAccountAdminAPI_StaffUpdateFlag_FullMethodName                  = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateFlag"
 )
 
 // UserAccountAdminAPIClient is the client API for UserAccountAdminAPI service.
@@ -45,6 +48,9 @@ type UserAccountAdminAPIClient interface {
 	StaffUnblockUser(ctx context.Context, in *StaffUnblockUserRequest, opts ...grpc.CallOption) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(ctx context.Context, in *StaffUpdateUserProfileRequest, opts ...grpc.CallOption) (*StaffUpdateUserProfileResponse, error)
 	StaffListUser(ctx context.Context, in *StaffListUserRequest, opts ...grpc.CallOption) (*StaffListUserResponse, error)
+	StaffListMailchimpMembers(ctx context.Context, in *StaffListMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffListMailchimpMembersResponse, error)
+	StaffSubscribeMailchimpMembers(ctx context.Context, in *StaffSubscribeMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffSubscribeMailchimpMembersResponse, error)
+	StaffUnsubscribeMailchimpMembers(ctx context.Context, in *StaffUnsubscribeMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffUnsubscribeMailchimpMembersResponse, error)
 	StaffCreateUserTag(ctx context.Context, in *StaffCreateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error)
 	StaffListUserTags(ctx context.Context, in *StaffListUserTagsRequest, opts ...grpc.CallOption) (*StaffListUserTagsResponse, error)
 	StaffUpdateUserTag(ctx context.Context, in *StaffUpdateUserTagRequest, opts ...grpc.CallOption) (*UserTag, error)
@@ -101,6 +107,36 @@ func (c *userAccountAdminAPIClient) StaffListUser(ctx context.Context, in *Staff
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListUserResponse)
 	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffListMailchimpMembers(ctx context.Context, in *StaffListMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffListMailchimpMembersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListMailchimpMembersResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffListMailchimpMembers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffSubscribeMailchimpMembers(ctx context.Context, in *StaffSubscribeMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffSubscribeMailchimpMembersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffSubscribeMailchimpMembersResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffSubscribeMailchimpMembers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffUnsubscribeMailchimpMembers(ctx context.Context, in *StaffUnsubscribeMailchimpMembersRequest, opts ...grpc.CallOption) (*StaffUnsubscribeMailchimpMembersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUnsubscribeMailchimpMembersResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffUnsubscribeMailchimpMembers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -235,6 +271,9 @@ type UserAccountAdminAPIServer interface {
 	StaffUnblockUser(context.Context, *StaffUnblockUserRequest) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(context.Context, *StaffUpdateUserProfileRequest) (*StaffUpdateUserProfileResponse, error)
 	StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error)
+	StaffListMailchimpMembers(context.Context, *StaffListMailchimpMembersRequest) (*StaffListMailchimpMembersResponse, error)
+	StaffSubscribeMailchimpMembers(context.Context, *StaffSubscribeMailchimpMembersRequest) (*StaffSubscribeMailchimpMembersResponse, error)
+	StaffUnsubscribeMailchimpMembers(context.Context, *StaffUnsubscribeMailchimpMembersRequest) (*StaffUnsubscribeMailchimpMembersResponse, error)
 	StaffCreateUserTag(context.Context, *StaffCreateUserTagRequest) (*UserTag, error)
 	StaffListUserTags(context.Context, *StaffListUserTagsRequest) (*StaffListUserTagsResponse, error)
 	StaffUpdateUserTag(context.Context, *StaffUpdateUserTagRequest) (*UserTag, error)
@@ -267,6 +306,15 @@ func (UnimplementedUserAccountAdminAPIServer) StaffUpdateUserProfile(context.Con
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffListUser(context.Context, *StaffListUserRequest) (*StaffListUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListUser not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffListMailchimpMembers(context.Context, *StaffListMailchimpMembersRequest) (*StaffListMailchimpMembersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListMailchimpMembers not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffSubscribeMailchimpMembers(context.Context, *StaffSubscribeMailchimpMembersRequest) (*StaffSubscribeMailchimpMembersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffSubscribeMailchimpMembers not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffUnsubscribeMailchimpMembers(context.Context, *StaffUnsubscribeMailchimpMembersRequest) (*StaffUnsubscribeMailchimpMembersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUnsubscribeMailchimpMembers not implemented")
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffCreateUserTag(context.Context, *StaffCreateUserTagRequest) (*UserTag, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateUserTag not implemented")
@@ -392,6 +440,60 @@ func _UserAccountAdminAPI_StaffListUser_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAccountAdminAPIServer).StaffListUser(ctx, req.(*StaffListUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffListMailchimpMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListMailchimpMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffListMailchimpMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffListMailchimpMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffListMailchimpMembers(ctx, req.(*StaffListMailchimpMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffSubscribeMailchimpMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffSubscribeMailchimpMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffSubscribeMailchimpMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffSubscribeMailchimpMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffSubscribeMailchimpMembers(ctx, req.(*StaffSubscribeMailchimpMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffUnsubscribeMailchimpMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUnsubscribeMailchimpMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffUnsubscribeMailchimpMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffUnsubscribeMailchimpMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffUnsubscribeMailchimpMembers(ctx, req.(*StaffUnsubscribeMailchimpMembersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -634,6 +736,18 @@ var UserAccountAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListUser",
 			Handler:    _UserAccountAdminAPI_StaffListUser_Handler,
+		},
+		{
+			MethodName: "StaffListMailchimpMembers",
+			Handler:    _UserAccountAdminAPI_StaffListMailchimpMembers_Handler,
+		},
+		{
+			MethodName: "StaffSubscribeMailchimpMembers",
+			Handler:    _UserAccountAdminAPI_StaffSubscribeMailchimpMembers_Handler,
+		},
+		{
+			MethodName: "StaffUnsubscribeMailchimpMembers",
+			Handler:    _UserAccountAdminAPI_StaffUnsubscribeMailchimpMembers_Handler,
 		},
 		{
 			MethodName: "StaffCreateUserTag",

@@ -32,6 +32,16 @@ const (
 	ShippingInternalAPI_InternalCreateUSPSScanForm_FullMethodName                      = "/api.shipping.v1.ShippingInternalAPI/InternalCreateUSPSScanForm"
 	ShippingInternalAPI_InternalListShipmentInfoByOrderRefs_FullMethodName             = "/api.shipping.v1.ShippingInternalAPI/InternalListShipmentInfoByOrderRefs"
 	ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_FullMethodName      = "/api.shipping.v1.ShippingInternalAPI/InternalGetLatestTrackingStatusByOrderRefs"
+	ShippingInternalAPI_InternalListTrackingEventsByOrderRefs_FullMethodName           = "/api.shipping.v1.ShippingInternalAPI/InternalListTrackingEventsByOrderRefs"
+	ShippingInternalAPI_InternalListShippingExceptions_FullMethodName                  = "/api.shipping.v1.ShippingInternalAPI/InternalListShippingExceptions"
+	ShippingInternalAPI_InternalGetShippingException_FullMethodName                    = "/api.shipping.v1.ShippingInternalAPI/InternalGetShippingException"
+	ShippingInternalAPI_InternalExportShippingExceptions_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalExportShippingExceptions"
+	ShippingInternalAPI_InternalResolveShippingException_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalResolveShippingException"
+	ShippingInternalAPI_InternalOverrideShippingExceptionIssueKind_FullMethodName      = "/api.shipping.v1.ShippingInternalAPI/InternalOverrideShippingExceptionIssueKind"
+	ShippingInternalAPI_InternalReserveCarrierClaimBatch_FullMethodName                = "/api.shipping.v1.ShippingInternalAPI/InternalReserveCarrierClaimBatch"
+	ShippingInternalAPI_InternalLinkCarrierClaimIssues_FullMethodName                  = "/api.shipping.v1.ShippingInternalAPI/InternalLinkCarrierClaimIssues"
+	ShippingInternalAPI_InternalListExpiredCarrierClaimBatches_FullMethodName          = "/api.shipping.v1.ShippingInternalAPI/InternalListExpiredCarrierClaimBatches"
+	ShippingInternalAPI_InternalReconcileCarrierClaimLease_FullMethodName              = "/api.shipping.v1.ShippingInternalAPI/InternalReconcileCarrierClaimLease"
 	ShippingInternalAPI_InternalEstimateShippingRate_FullMethodName                    = "/api.shipping.v1.ShippingInternalAPI/InternalEstimateShippingRate"
 	ShippingInternalAPI_InternalListShippingCostLedgerByTrackingNumbers_FullMethodName = "/api.shipping.v1.ShippingInternalAPI/InternalListShippingCostLedgerByTrackingNumbers"
 )
@@ -59,6 +69,20 @@ type ShippingInternalAPIClient interface {
 	InternalCreateUSPSScanForm(ctx context.Context, in *InternalCreateUSPSScanFormRequest, opts ...grpc.CallOption) (*InternalCreateUSPSScanFormResponse, error)
 	InternalListShipmentInfoByOrderRefs(ctx context.Context, in *InternalListShipmentInfoByOrderRefsRequest, opts ...grpc.CallOption) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(ctx context.Context, in *InternalGetLatestTrackingStatusByOrderRefsRequest, opts ...grpc.CallOption) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
+	// S6 is intentionally lazy at the POD facade; this internal lookup only
+	// returns events for explicit label tracking codes.
+	InternalListTrackingEventsByOrderRefs(ctx context.Context, in *InternalListTrackingEventsByOrderRefsRequest, opts ...grpc.CallOption) (*InternalListTrackingEventsByOrderRefsResponse, error)
+	InternalListShippingExceptions(ctx context.Context, in *InternalListShippingExceptionsRequest, opts ...grpc.CallOption) (*InternalListShippingExceptionsResponse, error)
+	InternalGetShippingException(ctx context.Context, in *InternalGetShippingExceptionRequest, opts ...grpc.CallOption) (*InternalGetShippingExceptionResponse, error)
+	InternalExportShippingExceptions(ctx context.Context, in *InternalExportShippingExceptionsRequest, opts ...grpc.CallOption) (*InternalExportShippingExceptionsResponse, error)
+	InternalResolveShippingException(ctx context.Context, in *InternalResolveShippingExceptionRequest, opts ...grpc.CallOption) (*InternalResolveShippingExceptionResponse, error)
+	InternalOverrideShippingExceptionIssueKind(ctx context.Context, in *InternalOverrideShippingExceptionIssueKindRequest, opts ...grpc.CallOption) (*InternalOverrideShippingExceptionIssueKindResponse, error)
+	InternalReserveCarrierClaimBatch(ctx context.Context, in *InternalReserveCarrierClaimBatchRequest, opts ...grpc.CallOption) (*InternalReserveCarrierClaimBatchResponse, error)
+	InternalLinkCarrierClaimIssues(ctx context.Context, in *InternalLinkCarrierClaimIssuesRequest, opts ...grpc.CallOption) (*InternalLinkCarrierClaimIssuesResponse, error)
+	// Lease recovery is POD-orchestrated: POD first checks its durable issue
+	// records, then Shipping links known issues and reopens only the remainder.
+	InternalListExpiredCarrierClaimBatches(ctx context.Context, in *InternalListExpiredCarrierClaimBatchesRequest, opts ...grpc.CallOption) (*InternalListExpiredCarrierClaimBatchesResponse, error)
+	InternalReconcileCarrierClaimLease(ctx context.Context, in *InternalReconcileCarrierClaimLeaseRequest, opts ...grpc.CallOption) (*InternalReconcileCarrierClaimLeaseResponse, error)
 	InternalEstimateShippingRate(ctx context.Context, in *InternalEstimateShippingRateRequest, opts ...grpc.CallOption) (*InternalEstimateShippingRateResponse, error)
 	InternalListShippingCostLedgerByTrackingNumbers(ctx context.Context, in *InternalListShippingCostLedgerByTrackingNumbersRequest, opts ...grpc.CallOption) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error)
 }
@@ -201,6 +225,106 @@ func (c *shippingInternalAPIClient) InternalGetLatestTrackingStatusByOrderRefs(c
 	return out, nil
 }
 
+func (c *shippingInternalAPIClient) InternalListTrackingEventsByOrderRefs(ctx context.Context, in *InternalListTrackingEventsByOrderRefsRequest, opts ...grpc.CallOption) (*InternalListTrackingEventsByOrderRefsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListTrackingEventsByOrderRefsResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalListTrackingEventsByOrderRefs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalListShippingExceptions(ctx context.Context, in *InternalListShippingExceptionsRequest, opts ...grpc.CallOption) (*InternalListShippingExceptionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListShippingExceptionsResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalListShippingExceptions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalGetShippingException(ctx context.Context, in *InternalGetShippingExceptionRequest, opts ...grpc.CallOption) (*InternalGetShippingExceptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetShippingExceptionResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalGetShippingException_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalExportShippingExceptions(ctx context.Context, in *InternalExportShippingExceptionsRequest, opts ...grpc.CallOption) (*InternalExportShippingExceptionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalExportShippingExceptionsResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalExportShippingExceptions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalResolveShippingException(ctx context.Context, in *InternalResolveShippingExceptionRequest, opts ...grpc.CallOption) (*InternalResolveShippingExceptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalResolveShippingExceptionResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalResolveShippingException_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalOverrideShippingExceptionIssueKind(ctx context.Context, in *InternalOverrideShippingExceptionIssueKindRequest, opts ...grpc.CallOption) (*InternalOverrideShippingExceptionIssueKindResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalOverrideShippingExceptionIssueKindResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalOverrideShippingExceptionIssueKind_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalReserveCarrierClaimBatch(ctx context.Context, in *InternalReserveCarrierClaimBatchRequest, opts ...grpc.CallOption) (*InternalReserveCarrierClaimBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReserveCarrierClaimBatchResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalReserveCarrierClaimBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalLinkCarrierClaimIssues(ctx context.Context, in *InternalLinkCarrierClaimIssuesRequest, opts ...grpc.CallOption) (*InternalLinkCarrierClaimIssuesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalLinkCarrierClaimIssuesResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalLinkCarrierClaimIssues_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalListExpiredCarrierClaimBatches(ctx context.Context, in *InternalListExpiredCarrierClaimBatchesRequest, opts ...grpc.CallOption) (*InternalListExpiredCarrierClaimBatchesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalListExpiredCarrierClaimBatchesResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalListExpiredCarrierClaimBatches_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shippingInternalAPIClient) InternalReconcileCarrierClaimLease(ctx context.Context, in *InternalReconcileCarrierClaimLeaseRequest, opts ...grpc.CallOption) (*InternalReconcileCarrierClaimLeaseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalReconcileCarrierClaimLeaseResponse)
+	err := c.cc.Invoke(ctx, ShippingInternalAPI_InternalReconcileCarrierClaimLease_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *shippingInternalAPIClient) InternalEstimateShippingRate(ctx context.Context, in *InternalEstimateShippingRateRequest, opts ...grpc.CallOption) (*InternalEstimateShippingRateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalEstimateShippingRateResponse)
@@ -244,6 +368,20 @@ type ShippingInternalAPIServer interface {
 	InternalCreateUSPSScanForm(context.Context, *InternalCreateUSPSScanFormRequest) (*InternalCreateUSPSScanFormResponse, error)
 	InternalListShipmentInfoByOrderRefs(context.Context, *InternalListShipmentInfoByOrderRefsRequest) (*InternalListShipmentInfoByOrderRefsResponse, error)
 	InternalGetLatestTrackingStatusByOrderRefs(context.Context, *InternalGetLatestTrackingStatusByOrderRefsRequest) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error)
+	// S6 is intentionally lazy at the POD facade; this internal lookup only
+	// returns events for explicit label tracking codes.
+	InternalListTrackingEventsByOrderRefs(context.Context, *InternalListTrackingEventsByOrderRefsRequest) (*InternalListTrackingEventsByOrderRefsResponse, error)
+	InternalListShippingExceptions(context.Context, *InternalListShippingExceptionsRequest) (*InternalListShippingExceptionsResponse, error)
+	InternalGetShippingException(context.Context, *InternalGetShippingExceptionRequest) (*InternalGetShippingExceptionResponse, error)
+	InternalExportShippingExceptions(context.Context, *InternalExportShippingExceptionsRequest) (*InternalExportShippingExceptionsResponse, error)
+	InternalResolveShippingException(context.Context, *InternalResolveShippingExceptionRequest) (*InternalResolveShippingExceptionResponse, error)
+	InternalOverrideShippingExceptionIssueKind(context.Context, *InternalOverrideShippingExceptionIssueKindRequest) (*InternalOverrideShippingExceptionIssueKindResponse, error)
+	InternalReserveCarrierClaimBatch(context.Context, *InternalReserveCarrierClaimBatchRequest) (*InternalReserveCarrierClaimBatchResponse, error)
+	InternalLinkCarrierClaimIssues(context.Context, *InternalLinkCarrierClaimIssuesRequest) (*InternalLinkCarrierClaimIssuesResponse, error)
+	// Lease recovery is POD-orchestrated: POD first checks its durable issue
+	// records, then Shipping links known issues and reopens only the remainder.
+	InternalListExpiredCarrierClaimBatches(context.Context, *InternalListExpiredCarrierClaimBatchesRequest) (*InternalListExpiredCarrierClaimBatchesResponse, error)
+	InternalReconcileCarrierClaimLease(context.Context, *InternalReconcileCarrierClaimLeaseRequest) (*InternalReconcileCarrierClaimLeaseResponse, error)
 	InternalEstimateShippingRate(context.Context, *InternalEstimateShippingRateRequest) (*InternalEstimateShippingRateResponse, error)
 	InternalListShippingCostLedgerByTrackingNumbers(context.Context, *InternalListShippingCostLedgerByTrackingNumbersRequest) (*InternalListShippingCostLedgerByTrackingNumbersResponse, error)
 }
@@ -293,6 +431,36 @@ func (UnimplementedShippingInternalAPIServer) InternalListShipmentInfoByOrderRef
 }
 func (UnimplementedShippingInternalAPIServer) InternalGetLatestTrackingStatusByOrderRefs(context.Context, *InternalGetLatestTrackingStatusByOrderRefsRequest) (*InternalGetLatestTrackingStatusByOrderRefsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalGetLatestTrackingStatusByOrderRefs not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalListTrackingEventsByOrderRefs(context.Context, *InternalListTrackingEventsByOrderRefsRequest) (*InternalListTrackingEventsByOrderRefsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListTrackingEventsByOrderRefs not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalListShippingExceptions(context.Context, *InternalListShippingExceptionsRequest) (*InternalListShippingExceptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListShippingExceptions not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalGetShippingException(context.Context, *InternalGetShippingExceptionRequest) (*InternalGetShippingExceptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetShippingException not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalExportShippingExceptions(context.Context, *InternalExportShippingExceptionsRequest) (*InternalExportShippingExceptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalExportShippingExceptions not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalResolveShippingException(context.Context, *InternalResolveShippingExceptionRequest) (*InternalResolveShippingExceptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalResolveShippingException not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalOverrideShippingExceptionIssueKind(context.Context, *InternalOverrideShippingExceptionIssueKindRequest) (*InternalOverrideShippingExceptionIssueKindResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalOverrideShippingExceptionIssueKind not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalReserveCarrierClaimBatch(context.Context, *InternalReserveCarrierClaimBatchRequest) (*InternalReserveCarrierClaimBatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReserveCarrierClaimBatch not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalLinkCarrierClaimIssues(context.Context, *InternalLinkCarrierClaimIssuesRequest) (*InternalLinkCarrierClaimIssuesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalLinkCarrierClaimIssues not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalListExpiredCarrierClaimBatches(context.Context, *InternalListExpiredCarrierClaimBatchesRequest) (*InternalListExpiredCarrierClaimBatchesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalListExpiredCarrierClaimBatches not implemented")
+}
+func (UnimplementedShippingInternalAPIServer) InternalReconcileCarrierClaimLease(context.Context, *InternalReconcileCarrierClaimLeaseRequest) (*InternalReconcileCarrierClaimLeaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalReconcileCarrierClaimLease not implemented")
 }
 func (UnimplementedShippingInternalAPIServer) InternalEstimateShippingRate(context.Context, *InternalEstimateShippingRateRequest) (*InternalEstimateShippingRateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalEstimateShippingRate not implemented")
@@ -554,6 +722,186 @@ func _ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_Handler(srv
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShippingInternalAPI_InternalListTrackingEventsByOrderRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListTrackingEventsByOrderRefsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalListTrackingEventsByOrderRefs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalListTrackingEventsByOrderRefs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalListTrackingEventsByOrderRefs(ctx, req.(*InternalListTrackingEventsByOrderRefsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalListShippingExceptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListShippingExceptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalListShippingExceptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalListShippingExceptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalListShippingExceptions(ctx, req.(*InternalListShippingExceptionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalGetShippingException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetShippingExceptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalGetShippingException(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalGetShippingException_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalGetShippingException(ctx, req.(*InternalGetShippingExceptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalExportShippingExceptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalExportShippingExceptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalExportShippingExceptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalExportShippingExceptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalExportShippingExceptions(ctx, req.(*InternalExportShippingExceptionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalResolveShippingException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalResolveShippingExceptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalResolveShippingException(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalResolveShippingException_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalResolveShippingException(ctx, req.(*InternalResolveShippingExceptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalOverrideShippingExceptionIssueKind_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalOverrideShippingExceptionIssueKindRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalOverrideShippingExceptionIssueKind(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalOverrideShippingExceptionIssueKind_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalOverrideShippingExceptionIssueKind(ctx, req.(*InternalOverrideShippingExceptionIssueKindRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalReserveCarrierClaimBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReserveCarrierClaimBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalReserveCarrierClaimBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalReserveCarrierClaimBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalReserveCarrierClaimBatch(ctx, req.(*InternalReserveCarrierClaimBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalLinkCarrierClaimIssues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalLinkCarrierClaimIssuesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalLinkCarrierClaimIssues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalLinkCarrierClaimIssues_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalLinkCarrierClaimIssues(ctx, req.(*InternalLinkCarrierClaimIssuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalListExpiredCarrierClaimBatches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalListExpiredCarrierClaimBatchesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalListExpiredCarrierClaimBatches(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalListExpiredCarrierClaimBatches_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalListExpiredCarrierClaimBatches(ctx, req.(*InternalListExpiredCarrierClaimBatchesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShippingInternalAPI_InternalReconcileCarrierClaimLease_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalReconcileCarrierClaimLeaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShippingInternalAPIServer).InternalReconcileCarrierClaimLease(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShippingInternalAPI_InternalReconcileCarrierClaimLease_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShippingInternalAPIServer).InternalReconcileCarrierClaimLease(ctx, req.(*InternalReconcileCarrierClaimLeaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ShippingInternalAPI_InternalEstimateShippingRate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalEstimateShippingRateRequest)
 	if err := dec(in); err != nil {
@@ -648,6 +996,46 @@ var ShippingInternalAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalGetLatestTrackingStatusByOrderRefs",
 			Handler:    _ShippingInternalAPI_InternalGetLatestTrackingStatusByOrderRefs_Handler,
+		},
+		{
+			MethodName: "InternalListTrackingEventsByOrderRefs",
+			Handler:    _ShippingInternalAPI_InternalListTrackingEventsByOrderRefs_Handler,
+		},
+		{
+			MethodName: "InternalListShippingExceptions",
+			Handler:    _ShippingInternalAPI_InternalListShippingExceptions_Handler,
+		},
+		{
+			MethodName: "InternalGetShippingException",
+			Handler:    _ShippingInternalAPI_InternalGetShippingException_Handler,
+		},
+		{
+			MethodName: "InternalExportShippingExceptions",
+			Handler:    _ShippingInternalAPI_InternalExportShippingExceptions_Handler,
+		},
+		{
+			MethodName: "InternalResolveShippingException",
+			Handler:    _ShippingInternalAPI_InternalResolveShippingException_Handler,
+		},
+		{
+			MethodName: "InternalOverrideShippingExceptionIssueKind",
+			Handler:    _ShippingInternalAPI_InternalOverrideShippingExceptionIssueKind_Handler,
+		},
+		{
+			MethodName: "InternalReserveCarrierClaimBatch",
+			Handler:    _ShippingInternalAPI_InternalReserveCarrierClaimBatch_Handler,
+		},
+		{
+			MethodName: "InternalLinkCarrierClaimIssues",
+			Handler:    _ShippingInternalAPI_InternalLinkCarrierClaimIssues_Handler,
+		},
+		{
+			MethodName: "InternalListExpiredCarrierClaimBatches",
+			Handler:    _ShippingInternalAPI_InternalListExpiredCarrierClaimBatches_Handler,
+		},
+		{
+			MethodName: "InternalReconcileCarrierClaimLease",
+			Handler:    _ShippingInternalAPI_InternalReconcileCarrierClaimLease_Handler,
 		},
 		{
 			MethodName: "InternalEstimateShippingRate",
