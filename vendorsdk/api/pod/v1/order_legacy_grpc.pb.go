@@ -24,6 +24,7 @@ const (
 	OrderLegacyAPI_LegacyResumeOrderOnHold_FullMethodName          = "/api.pod.v1.OrderLegacyAPI/LegacyResumeOrderOnHold"
 	OrderLegacyAPI_LegacySyncUpdatedOrder_FullMethodName           = "/api.pod.v1.OrderLegacyAPI/LegacySyncUpdatedOrder"
 	OrderLegacyAPI_InternalListOMSOrderSyncTracking_FullMethodName = "/api.pod.v1.OrderLegacyAPI/InternalListOMSOrderSyncTracking"
+	OrderLegacyAPI_InternalGetOMSOrderInformation_FullMethodName   = "/api.pod.v1.OrderLegacyAPI/InternalGetOMSOrderInformation"
 )
 
 // OrderLegacyAPIClient is the client API for OrderLegacyAPI service.
@@ -35,6 +36,7 @@ type OrderLegacyAPIClient interface {
 	LegacyResumeOrderOnHold(ctx context.Context, in *LegacyResumeOrderOnHoldRequest, opts ...grpc.CallOption) (*LegacyResumeOrderOnHoldResponse, error)
 	LegacySyncUpdatedOrder(ctx context.Context, in *LegacySyncUpdatedOrderRequest, opts ...grpc.CallOption) (*LegacySyncUpdatedOrderResponse, error)
 	InternalListOMSOrderSyncTracking(ctx context.Context, in *InternalListOMSOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalListOMSOrderSyncTrackingResponse, error)
+	InternalGetOMSOrderInformation(ctx context.Context, in *InternalGetOMSOrderInformationRequest, opts ...grpc.CallOption) (*InternalGetOMSOrderInformationResponse, error)
 }
 
 type orderLegacyAPIClient struct {
@@ -95,6 +97,16 @@ func (c *orderLegacyAPIClient) InternalListOMSOrderSyncTracking(ctx context.Cont
 	return out, nil
 }
 
+func (c *orderLegacyAPIClient) InternalGetOMSOrderInformation(ctx context.Context, in *InternalGetOMSOrderInformationRequest, opts ...grpc.CallOption) (*InternalGetOMSOrderInformationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalGetOMSOrderInformationResponse)
+	err := c.cc.Invoke(ctx, OrderLegacyAPI_InternalGetOMSOrderInformation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderLegacyAPIServer is the server API for OrderLegacyAPI service.
 // All implementations should embed UnimplementedOrderLegacyAPIServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type OrderLegacyAPIServer interface {
 	LegacyResumeOrderOnHold(context.Context, *LegacyResumeOrderOnHoldRequest) (*LegacyResumeOrderOnHoldResponse, error)
 	LegacySyncUpdatedOrder(context.Context, *LegacySyncUpdatedOrderRequest) (*LegacySyncUpdatedOrderResponse, error)
 	InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error)
+	InternalGetOMSOrderInformation(context.Context, *InternalGetOMSOrderInformationRequest) (*InternalGetOMSOrderInformationResponse, error)
 }
 
 // UnimplementedOrderLegacyAPIServer should be embedded to have
@@ -127,6 +140,9 @@ func (UnimplementedOrderLegacyAPIServer) LegacySyncUpdatedOrder(context.Context,
 }
 func (UnimplementedOrderLegacyAPIServer) InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListOMSOrderSyncTracking not implemented")
+}
+func (UnimplementedOrderLegacyAPIServer) InternalGetOMSOrderInformation(context.Context, *InternalGetOMSOrderInformationRequest) (*InternalGetOMSOrderInformationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalGetOMSOrderInformation not implemented")
 }
 func (UnimplementedOrderLegacyAPIServer) testEmbeddedByValue() {}
 
@@ -238,6 +254,24 @@ func _OrderLegacyAPI_InternalListOMSOrderSyncTracking_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderLegacyAPI_InternalGetOMSOrderInformation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalGetOMSOrderInformationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderLegacyAPIServer).InternalGetOMSOrderInformation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderLegacyAPI_InternalGetOMSOrderInformation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderLegacyAPIServer).InternalGetOMSOrderInformation(ctx, req.(*InternalGetOMSOrderInformationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderLegacyAPI_ServiceDesc is the grpc.ServiceDesc for OrderLegacyAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -264,6 +298,10 @@ var OrderLegacyAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalListOMSOrderSyncTracking",
 			Handler:    _OrderLegacyAPI_InternalListOMSOrderSyncTracking_Handler,
+		},
+		{
+			MethodName: "InternalGetOMSOrderInformation",
+			Handler:    _OrderLegacyAPI_InternalGetOMSOrderInformation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
