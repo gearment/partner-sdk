@@ -65,6 +65,7 @@ const (
 	ProductAdminAPI_StaffListProductType_FullMethodName                      = "/api.pod.v1.ProductAdminAPI/StaffListProductType"
 	ProductAdminAPI_StaffCountProductStatus_FullMethodName                   = "/api.pod.v1.ProductAdminAPI/StaffCountProductStatus"
 	ProductAdminAPI_StaffGetProductDetail_FullMethodName                     = "/api.pod.v1.ProductAdminAPI/StaffGetProductDetail"
+	ProductAdminAPI_StaffUpdateProductContent_FullMethodName                 = "/api.pod.v1.ProductAdminAPI/StaffUpdateProductContent"
 	ProductAdminAPI_StaffGetTeamProductPriceDetail_FullMethodName            = "/api.pod.v1.ProductAdminAPI/StaffGetTeamProductPriceDetail"
 	ProductAdminAPI_StaffListPriceCustomRule_FullMethodName                  = "/api.pod.v1.ProductAdminAPI/StaffListPriceCustomRule"
 	ProductAdminAPI_StaffGetPriceCustomRuleDetail_FullMethodName             = "/api.pod.v1.ProductAdminAPI/StaffGetPriceCustomRuleDetail"
@@ -149,6 +150,7 @@ type ProductAdminAPIClient interface {
 	StaffListProductType(ctx context.Context, in *StaffListProductTypeRequest, opts ...grpc.CallOption) (*StaffListProductTypeResponse, error)
 	StaffCountProductStatus(ctx context.Context, in *StaffCountProductStatusRequest, opts ...grpc.CallOption) (*StaffCountProductStatusResponse, error)
 	StaffGetProductDetail(ctx context.Context, in *StaffGetProductDetailRequest, opts ...grpc.CallOption) (*StaffGetProductDetailResponse, error)
+	StaffUpdateProductContent(ctx context.Context, in *StaffUpdateProductContentRequest, opts ...grpc.CallOption) (*StaffUpdateProductContentResponse, error)
 	// Deprecated: Do not use.
 	// Deprecated: Use StaffGetProductDetail instead.
 	StaffGetTeamProductPriceDetail(ctx context.Context, in *StaffGetTeamProductPriceDetailRequest, opts ...grpc.CallOption) (*StaffGetTeamProductPriceDetailResponse, error)
@@ -653,6 +655,16 @@ func (c *productAdminAPIClient) StaffGetProductDetail(ctx context.Context, in *S
 	return out, nil
 }
 
+func (c *productAdminAPIClient) StaffUpdateProductContent(ctx context.Context, in *StaffUpdateProductContentRequest, opts ...grpc.CallOption) (*StaffUpdateProductContentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateProductContentResponse)
+	err := c.cc.Invoke(ctx, ProductAdminAPI_StaffUpdateProductContent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Deprecated: Do not use.
 func (c *productAdminAPIClient) StaffGetTeamProductPriceDetail(ctx context.Context, in *StaffGetTeamProductPriceDetailRequest, opts ...grpc.CallOption) (*StaffGetTeamProductPriceDetailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1024,6 +1036,7 @@ type ProductAdminAPIServer interface {
 	StaffListProductType(context.Context, *StaffListProductTypeRequest) (*StaffListProductTypeResponse, error)
 	StaffCountProductStatus(context.Context, *StaffCountProductStatusRequest) (*StaffCountProductStatusResponse, error)
 	StaffGetProductDetail(context.Context, *StaffGetProductDetailRequest) (*StaffGetProductDetailResponse, error)
+	StaffUpdateProductContent(context.Context, *StaffUpdateProductContentRequest) (*StaffUpdateProductContentResponse, error)
 	// Deprecated: Do not use.
 	// Deprecated: Use StaffGetProductDetail instead.
 	StaffGetTeamProductPriceDetail(context.Context, *StaffGetTeamProductPriceDetailRequest) (*StaffGetTeamProductPriceDetailResponse, error)
@@ -1204,6 +1217,9 @@ func (UnimplementedProductAdminAPIServer) StaffCountProductStatus(context.Contex
 }
 func (UnimplementedProductAdminAPIServer) StaffGetProductDetail(context.Context, *StaffGetProductDetailRequest) (*StaffGetProductDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetProductDetail not implemented")
+}
+func (UnimplementedProductAdminAPIServer) StaffUpdateProductContent(context.Context, *StaffUpdateProductContentRequest) (*StaffUpdateProductContentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateProductContent not implemented")
 }
 func (UnimplementedProductAdminAPIServer) StaffGetTeamProductPriceDetail(context.Context, *StaffGetTeamProductPriceDetailRequest) (*StaffGetTeamProductPriceDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetTeamProductPriceDetail not implemented")
@@ -2149,6 +2165,24 @@ func _ProductAdminAPI_StaffGetProductDetail_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductAdminAPI_StaffUpdateProductContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateProductContentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductAdminAPIServer).StaffUpdateProductContent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductAdminAPI_StaffUpdateProductContent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductAdminAPIServer).StaffUpdateProductContent(ctx, req.(*StaffUpdateProductContentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductAdminAPI_StaffGetTeamProductPriceDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffGetTeamProductPriceDetailRequest)
 	if err := dec(in); err != nil {
@@ -2915,6 +2949,10 @@ var ProductAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetProductDetail",
 			Handler:    _ProductAdminAPI_StaffGetProductDetail_Handler,
+		},
+		{
+			MethodName: "StaffUpdateProductContent",
+			Handler:    _ProductAdminAPI_StaffUpdateProductContent_Handler,
 		},
 		{
 			MethodName: "StaffGetTeamProductPriceDetail",
