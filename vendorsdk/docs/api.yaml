@@ -3780,6 +3780,19 @@ components:
           type: boolean
           title: auto_approve
           description: Whether the system will attempt auto-approval after verification.
+        error_reason:
+          type: string
+          title: error_reason
+          description: |-
+            Stable custom-shape rejection code: CUSTOM_SHAPE_FRONT_DESIGN_MISSING,
+             CUSTOM_SHAPE_DESIGN_UNREADABLE, CUSTOM_SHAPE_NO_TRANSPARENCY, or
+             CUSTOM_SHAPE_DESIGN_CHECK_PENDING (retry later).
+          nullable: true
+        error_message:
+          type: string
+          title: error_message
+          description: Seller-facing rejection text.
+          nullable: true
       title: VendorOrderDraft
       additionalProperties: false
     api.order.v1.VendorOrderDraft.Short:
@@ -3954,6 +3967,19 @@ components:
           type: boolean
           title: auto_approve
           description: Whether the system will attempt auto-approval after verification.
+        error_reason:
+          type: string
+          title: error_reason
+          description: |-
+            Stable custom-shape rejection code: CUSTOM_SHAPE_FRONT_DESIGN_MISSING,
+             CUSTOM_SHAPE_DESIGN_UNREADABLE, CUSTOM_SHAPE_NO_TRANSPARENCY, or
+             CUSTOM_SHAPE_DESIGN_CHECK_PENDING (retry later).
+          nullable: true
+        error_message:
+          type: string
+          title: error_message
+          description: Seller-facing rejection text.
+          nullable: true
       title: Short
       additionalProperties: false
       description: |-
