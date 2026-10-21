@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	UserAccountAdminAPI_StaffCreateFFMSeller_FullMethodName             = "/api.iam.v1.UserAccountAdminAPI/StaffCreateFFMSeller"
+	UserAccountAdminAPI_StaffSetFFMSellerPassword_FullMethodName        = "/api.iam.v1.UserAccountAdminAPI/StaffSetFFMSellerPassword"
 	UserAccountAdminAPI_StaffBlockUser_FullMethodName                   = "/api.iam.v1.UserAccountAdminAPI/StaffBlockUser"
 	UserAccountAdminAPI_StaffUnblockUser_FullMethodName                 = "/api.iam.v1.UserAccountAdminAPI/StaffUnblockUser"
 	UserAccountAdminAPI_StaffUpdateUserProfile_FullMethodName           = "/api.iam.v1.UserAccountAdminAPI/StaffUpdateUserProfile"
@@ -46,6 +47,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserAccountAdminAPIClient interface {
 	StaffCreateFFMSeller(ctx context.Context, in *StaffCreateFFMSellerRequest, opts ...grpc.CallOption) (*StaffCreateFFMSellerResponse, error)
+	StaffSetFFMSellerPassword(ctx context.Context, in *StaffSetFFMSellerPasswordRequest, opts ...grpc.CallOption) (*StaffSetFFMSellerPasswordResponse, error)
 	StaffBlockUser(ctx context.Context, in *StaffBlockUserRequest, opts ...grpc.CallOption) (*StaffBlockUserResponse, error)
 	StaffUnblockUser(ctx context.Context, in *StaffUnblockUserRequest, opts ...grpc.CallOption) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(ctx context.Context, in *StaffUpdateUserProfileRequest, opts ...grpc.CallOption) (*StaffUpdateUserProfileResponse, error)
@@ -79,6 +81,16 @@ func (c *userAccountAdminAPIClient) StaffCreateFFMSeller(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffCreateFFMSellerResponse)
 	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffCreateFFMSeller_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAccountAdminAPIClient) StaffSetFFMSellerPassword(ctx context.Context, in *StaffSetFFMSellerPasswordRequest, opts ...grpc.CallOption) (*StaffSetFFMSellerPasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffSetFFMSellerPasswordResponse)
+	err := c.cc.Invoke(ctx, UserAccountAdminAPI_StaffSetFFMSellerPassword_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -280,6 +292,7 @@ func (c *userAccountAdminAPIClient) StaffUpdateFlag(ctx context.Context, in *Fla
 // for forward compatibility.
 type UserAccountAdminAPIServer interface {
 	StaffCreateFFMSeller(context.Context, *StaffCreateFFMSellerRequest) (*StaffCreateFFMSellerResponse, error)
+	StaffSetFFMSellerPassword(context.Context, *StaffSetFFMSellerPasswordRequest) (*StaffSetFFMSellerPasswordResponse, error)
 	StaffBlockUser(context.Context, *StaffBlockUserRequest) (*StaffBlockUserResponse, error)
 	StaffUnblockUser(context.Context, *StaffUnblockUserRequest) (*StaffUnblockUserResponse, error)
 	StaffUpdateUserProfile(context.Context, *StaffUpdateUserProfileRequest) (*StaffUpdateUserProfileResponse, error)
@@ -310,6 +323,9 @@ type UnimplementedUserAccountAdminAPIServer struct{}
 
 func (UnimplementedUserAccountAdminAPIServer) StaffCreateFFMSeller(context.Context, *StaffCreateFFMSellerRequest) (*StaffCreateFFMSellerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateFFMSeller not implemented")
+}
+func (UnimplementedUserAccountAdminAPIServer) StaffSetFFMSellerPassword(context.Context, *StaffSetFFMSellerPasswordRequest) (*StaffSetFFMSellerPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffSetFFMSellerPassword not implemented")
 }
 func (UnimplementedUserAccountAdminAPIServer) StaffBlockUser(context.Context, *StaffBlockUserRequest) (*StaffBlockUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffBlockUser not implemented")
@@ -402,6 +418,24 @@ func _UserAccountAdminAPI_StaffCreateFFMSeller_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAccountAdminAPIServer).StaffCreateFFMSeller(ctx, req.(*StaffCreateFFMSellerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAccountAdminAPI_StaffSetFFMSellerPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffSetFFMSellerPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAccountAdminAPIServer).StaffSetFFMSellerPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserAccountAdminAPI_StaffSetFFMSellerPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAccountAdminAPIServer).StaffSetFFMSellerPassword(ctx, req.(*StaffSetFFMSellerPasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -758,6 +792,10 @@ var UserAccountAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffCreateFFMSeller",
 			Handler:    _UserAccountAdminAPI_StaffCreateFFMSeller_Handler,
+		},
+		{
+			MethodName: "StaffSetFFMSellerPassword",
+			Handler:    _UserAccountAdminAPI_StaffSetFFMSellerPassword_Handler,
 		},
 		{
 			MethodName: "StaffBlockUser",
