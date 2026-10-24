@@ -34,7 +34,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // FFMServiceLevelAPI is FFM-007 outbound service levels: the seller picks a delivery speed
-// (standard, expedited, two_day, next_day) and Gearment buys the cheapest label among GOFO,
+// (economy, standard, expedited, two_day, next_day) and Gearment buys the cheapest label among GOFO,
 // Amazon Shipping, DHL eCommerce and USPS that meets it. Levels are lower-case string codes.
 type FFMServiceLevelAPIClient interface {
 	// UserGetServiceLevelSettings returns whether service levels are on, the level catalog,
@@ -146,7 +146,7 @@ func (c *fFMServiceLevelAPIClient) UserListUnmappedShippingOptions(ctx context.C
 // for forward compatibility.
 //
 // FFMServiceLevelAPI is FFM-007 outbound service levels: the seller picks a delivery speed
-// (standard, expedited, two_day, next_day) and Gearment buys the cheapest label among GOFO,
+// (economy, standard, expedited, two_day, next_day) and Gearment buys the cheapest label among GOFO,
 // Amazon Shipping, DHL eCommerce and USPS that meets it. Levels are lower-case string codes.
 type FFMServiceLevelAPIServer interface {
 	// UserGetServiceLevelSettings returns whether service levels are on, the level catalog,

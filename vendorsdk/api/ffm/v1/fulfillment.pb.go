@@ -1512,7 +1512,7 @@ type Order_ListingFilter struct {
 	CustomerEmail string                          `protobuf:"bytes,7,opt,name=customer_email,json=customerEmail,proto3" json:"customer_email,omitempty"`
 	CreatedAtFrom *timestamppb.Timestamp          `protobuf:"bytes,8,opt,name=created_at_from,json=createdAtFrom,proto3" json:"created_at_from,omitempty"`
 	CreatedAtTo   *timestamppb.Timestamp          `protobuf:"bytes,9,opt,name=created_at_to,json=createdAtTo,proto3" json:"created_at_to,omitempty"`
-	// service_level filters by FFM-007 level code (standard, expedited, two_day, next_day); empty = all.
+	// service_level filters by FFM-007 level code (economy, standard, expedited, two_day, next_day); empty = all.
 	ServiceLevel  string `protobuf:"bytes,10,opt,name=service_level,json=serviceLevel,proto3" json:"service_level,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
