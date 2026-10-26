@@ -30,6 +30,7 @@ const (
 	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
 	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
 	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
+	OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffMarkOrderAsLowStock"
 	OrderAdminAPI_StaffUpdateShippingService_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
 	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
 	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
@@ -86,6 +87,7 @@ type OrderAdminAPIClient interface {
 	StaffUpdateOrderDesign(ctx context.Context, in *StaffUpdateOrderDesignRequest, opts ...grpc.CallOption) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(ctx context.Context, in *StaffUpdateOrderAddressRequest, opts ...grpc.CallOption) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(ctx context.Context, in *StaffUpdateOrderShippingLabelRequest, opts ...grpc.CallOption) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffMarkOrderAsLowStock(ctx context.Context, in *StaffMarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffMarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(ctx context.Context, in *StaffUpdateShippingServiceRequest, opts ...grpc.CallOption) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(ctx context.Context, in *StaffMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(ctx context.Context, in *StaffPreCheckMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffPreCheckMarkFulfilledResponse, error)
@@ -230,6 +232,16 @@ func (c *orderAdminAPIClient) StaffUpdateOrderShippingLabel(ctx context.Context,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateOrderShippingLabelResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffMarkOrderAsLowStock(ctx context.Context, in *StaffMarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffMarkOrderAsLowStockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffMarkOrderAsLowStockResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -650,6 +662,7 @@ type OrderAdminAPIServer interface {
 	StaffUpdateOrderDesign(context.Context, *StaffUpdateOrderDesignRequest) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(context.Context, *StaffUpdateOrderAddressRequest) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(context.Context, *StaffMarkFulfilledRequest) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(context.Context, *StaffPreCheckMarkFulfilledRequest) (*StaffPreCheckMarkFulfilledResponse, error)
@@ -728,6 +741,9 @@ func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderAddress(context.Context,
 }
 func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOrderShippingLabel not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffMarkOrderAsLowStock not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateShippingService not implemented")
@@ -1045,6 +1061,24 @@ func _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffUpdateOrderShippingLabel(ctx, req.(*StaffUpdateOrderShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffMarkOrderAsLowStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffMarkOrderAsLowStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffMarkOrderAsLowStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffMarkOrderAsLowStock(ctx, req.(*StaffMarkOrderAsLowStockRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1815,6 +1849,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateOrderShippingLabel",
 			Handler:    _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler,
+		},
+		{
+			MethodName: "StaffMarkOrderAsLowStock",
+			Handler:    _OrderAdminAPI_StaffMarkOrderAsLowStock_Handler,
 		},
 		{
 			MethodName: "StaffUpdateShippingService",
