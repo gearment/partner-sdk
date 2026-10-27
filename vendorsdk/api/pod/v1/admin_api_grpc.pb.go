@@ -31,6 +31,7 @@ const (
 	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
 	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
 	OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffMarkOrderAsLowStock"
+	OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUnmarkOrderAsLowStock"
 	OrderAdminAPI_StaffUpdateShippingService_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
 	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
 	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
@@ -88,6 +89,7 @@ type OrderAdminAPIClient interface {
 	StaffUpdateOrderAddress(ctx context.Context, in *StaffUpdateOrderAddressRequest, opts ...grpc.CallOption) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(ctx context.Context, in *StaffUpdateOrderShippingLabelRequest, opts ...grpc.CallOption) (*StaffUpdateOrderShippingLabelResponse, error)
 	StaffMarkOrderAsLowStock(ctx context.Context, in *StaffMarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffMarkOrderAsLowStockResponse, error)
+	StaffUnmarkOrderAsLowStock(ctx context.Context, in *StaffUnmarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffUnmarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(ctx context.Context, in *StaffUpdateShippingServiceRequest, opts ...grpc.CallOption) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(ctx context.Context, in *StaffMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(ctx context.Context, in *StaffPreCheckMarkFulfilledRequest, opts ...grpc.CallOption) (*StaffPreCheckMarkFulfilledResponse, error)
@@ -242,6 +244,16 @@ func (c *orderAdminAPIClient) StaffMarkOrderAsLowStock(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffMarkOrderAsLowStockResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffUnmarkOrderAsLowStock(ctx context.Context, in *StaffUnmarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffUnmarkOrderAsLowStockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUnmarkOrderAsLowStockResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -663,6 +675,7 @@ type OrderAdminAPIServer interface {
 	StaffUpdateOrderAddress(context.Context, *StaffUpdateOrderAddressRequest) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error)
 	StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error)
+	StaffUnmarkOrderAsLowStock(context.Context, *StaffUnmarkOrderAsLowStockRequest) (*StaffUnmarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error)
 	StaffMarkFulfilled(context.Context, *StaffMarkFulfilledRequest) (*StaffMarkFulfilledResponse, error)
 	StaffPreCheckMarkFulfilled(context.Context, *StaffPreCheckMarkFulfilledRequest) (*StaffPreCheckMarkFulfilledResponse, error)
@@ -744,6 +757,9 @@ func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderShippingLabel(context.Co
 }
 func (UnimplementedOrderAdminAPIServer) StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffMarkOrderAsLowStock not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffUnmarkOrderAsLowStock(context.Context, *StaffUnmarkOrderAsLowStockRequest) (*StaffUnmarkOrderAsLowStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUnmarkOrderAsLowStock not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateShippingService not implemented")
@@ -1079,6 +1095,24 @@ func _OrderAdminAPI_StaffMarkOrderAsLowStock_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffMarkOrderAsLowStock(ctx, req.(*StaffMarkOrderAsLowStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffUnmarkOrderAsLowStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUnmarkOrderAsLowStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffUnmarkOrderAsLowStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffUnmarkOrderAsLowStock(ctx, req.(*StaffUnmarkOrderAsLowStockRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1853,6 +1887,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffMarkOrderAsLowStock",
 			Handler:    _OrderAdminAPI_StaffMarkOrderAsLowStock_Handler,
+		},
+		{
+			MethodName: "StaffUnmarkOrderAsLowStock",
+			Handler:    _OrderAdminAPI_StaffUnmarkOrderAsLowStock_Handler,
 		},
 		{
 			MethodName: "StaffUpdateShippingService",
