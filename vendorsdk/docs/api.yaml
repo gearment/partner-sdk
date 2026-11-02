@@ -52,6 +52,8 @@ tags:
        Base URL: https://apiv2.gearment.com/integration-handler
        Authentication: client key and secret (headers: X-Gearment-Client-Key, X-Gearment-Client-Secret)
     x-displayName: ShippingCoverage
+  - name: api.order.v1.VendorWalletAPI
+    x-displayName: Wallet
   - name: api.support.v1.VendorSupportAPI
     description: VendorSupportAPI is the modern (v3) vendor-facing issue-ticket API.
     x-displayName: Support
@@ -1294,6 +1296,7 @@ paths:
            - order_subtotal: Product costs
            - order_shipping_fee: Shipping cost
            - order_tax: Tax amount
+           - fees: Fee-level breakdown, including applicable holiday surcharges
 
          Use cases:
            - Show pricing to customers before checkout
@@ -1401,6 +1404,58 @@ paths:
       security: []
       parameters: []
   /api/v3/shipping/labels:
+    get:
+      tags:
+        - api.order.v1.VendorShippingLabelAPI
+      summary: List Shipping Labels
+      operationId: api.order.v1.VendorShippingLabelAPI.VendorListShippingLabels
+      parameters:
+        - name: filter.created_from
+          in: query
+          description: ISO 8601 date-time format (e.g., 2024-01-01T00:00:00Z)
+          schema:
+            type: string
+            format: date-time
+        - name: filter.request_id
+          in: query
+          schema:
+            type: string
+            title: request_id
+        - name: filter.status
+          in: query
+          schema:
+            type: string
+            title: status
+        - name: paging.limit
+          in: query
+          schema:
+            type: integer
+            title: limit
+            format: int32
+        - name: paging.page
+          in: query
+          schema:
+            type: integer
+            title: page
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorListShippingLabelsResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
     post:
       tags:
         - api.order.v1.VendorShippingLabelAPI
@@ -1573,6 +1628,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api.order.v1.VendorCheckEconomyCoverageResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      security: []
+      parameters: []
+  /api/v3/wallet:
+    get:
+      tags:
+        - api.order.v1.VendorWalletAPI
+      summary: Get Wallet
+      operationId: api.order.v1.VendorWalletAPI.VendorGetWallet
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.order.v1.VendorGetWalletResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
         "401":
@@ -4823,7 +4903,10 @@ components:
           items:
             $ref: '#/components/schemas/api.order.v1.VendorOrderPriceCalculation.FeePriceQuote'
           title: fees
-          description: Detailed fee breakdown
+          description: |-
+            Detailed fee breakdown. During an active holiday-surcharge window, this
+             includes HOLIDAY_SHIPPING_SURCHARGE and, when applicable,
+             CANVAS_HOLIDAY_SURCHARGE. Their amounts are included in order_total.
         order_gift_message_fee:
           title: order_gift_message_fee
           description: Gift message fee (if applicable)
@@ -5449,6 +5532,25 @@ components:
           title: data
       title: VendorListShippingCarrierServicesResponse
       additionalProperties: false
+    api.order.v1.VendorListShippingLabelsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.order.v1.VendorShippingLabel'
+          title: data
+        paging:
+          title: paging
+          $ref: '#/components/schemas/common.type.v1.PagingResponse'
+      title: VendorListShippingLabelsResponse
+      additionalProperties: false
     api.order.v1.VendorPurchaseShippingLabelRequest:
       type: object
       properties:
@@ -5850,6 +5952,37 @@ components:
             Populated only when covered is false. `uncovered_zip` is the same reason
              code reported on an order that was moved to Standard.
       title: VendorEconomyCoverageZip
+      additionalProperties: false
+    api.order.v1.VendorGetWalletResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+        message:
+          type: string
+          title: message
+        data:
+          title: data
+          $ref: '#/components/schemas/api.order.v1.VendorWallet'
+      title: VendorGetWalletResponse
+      additionalProperties: false
+    api.order.v1.VendorWallet:
+      type: object
+      properties:
+        currency_code:
+          type: string
+          title: currency_code
+        balance:
+          title: balance
+          $ref: '#/components/schemas/common.type.v1.Money'
+        held:
+          title: held
+          $ref: '#/components/schemas/common.type.v1.Money'
+        available:
+          title: available
+          $ref: '#/components/schemas/common.type.v1.Money'
+      title: VendorWallet
       additionalProperties: false
     api.support.v1.CreateSupportRequestRequest:
       type: object
