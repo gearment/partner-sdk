@@ -26,6 +26,7 @@ const (
 	StaffCheckoutRequestService_StaffGetCheckoutRequest_FullMethodName                = "/api.payment.v1.StaffCheckoutRequestService/StaffGetCheckoutRequest"
 	StaffCheckoutRequestService_StaffCountCheckoutRequestForExport_FullMethodName     = "/api.payment.v1.StaffCheckoutRequestService/StaffCountCheckoutRequestForExport"
 	StaffCheckoutRequestService_StaffExportCheckoutRequest_FullMethodName             = "/api.payment.v1.StaffCheckoutRequestService/StaffExportCheckoutRequest"
+	StaffCheckoutRequestService_StaffMarkCheckoutRequestFailed_FullMethodName         = "/api.payment.v1.StaffCheckoutRequestService/StaffMarkCheckoutRequestFailed"
 )
 
 // StaffCheckoutRequestServiceClient is the client API for StaffCheckoutRequestService service.
@@ -38,6 +39,7 @@ type StaffCheckoutRequestServiceClient interface {
 	StaffGetCheckoutRequest(ctx context.Context, in *StaffGetCheckoutRequestRequest, opts ...grpc.CallOption) (*StaffGetCheckoutRequestResponse, error)
 	StaffCountCheckoutRequestForExport(ctx context.Context, in *StaffCountCheckoutRequestForExportRequest, opts ...grpc.CallOption) (*StaffCountCheckoutRequestForExportResponse, error)
 	StaffExportCheckoutRequest(ctx context.Context, in *StaffExportCheckoutRequestRequest, opts ...grpc.CallOption) (*v1.FileAttachmentOrMessageResponse, error)
+	StaffMarkCheckoutRequestFailed(ctx context.Context, in *StaffMarkCheckoutRequestFailedRequest, opts ...grpc.CallOption) (*StaffMarkCheckoutRequestFailedResponse, error)
 }
 
 type staffCheckoutRequestServiceClient struct {
@@ -108,6 +110,16 @@ func (c *staffCheckoutRequestServiceClient) StaffExportCheckoutRequest(ctx conte
 	return out, nil
 }
 
+func (c *staffCheckoutRequestServiceClient) StaffMarkCheckoutRequestFailed(ctx context.Context, in *StaffMarkCheckoutRequestFailedRequest, opts ...grpc.CallOption) (*StaffMarkCheckoutRequestFailedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffMarkCheckoutRequestFailedResponse)
+	err := c.cc.Invoke(ctx, StaffCheckoutRequestService_StaffMarkCheckoutRequestFailed_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StaffCheckoutRequestServiceServer is the server API for StaffCheckoutRequestService service.
 // All implementations should embed UnimplementedStaffCheckoutRequestServiceServer
 // for forward compatibility.
@@ -118,6 +130,7 @@ type StaffCheckoutRequestServiceServer interface {
 	StaffGetCheckoutRequest(context.Context, *StaffGetCheckoutRequestRequest) (*StaffGetCheckoutRequestResponse, error)
 	StaffCountCheckoutRequestForExport(context.Context, *StaffCountCheckoutRequestForExportRequest) (*StaffCountCheckoutRequestForExportResponse, error)
 	StaffExportCheckoutRequest(context.Context, *StaffExportCheckoutRequestRequest) (*v1.FileAttachmentOrMessageResponse, error)
+	StaffMarkCheckoutRequestFailed(context.Context, *StaffMarkCheckoutRequestFailedRequest) (*StaffMarkCheckoutRequestFailedResponse, error)
 }
 
 // UnimplementedStaffCheckoutRequestServiceServer should be embedded to have
@@ -144,6 +157,9 @@ func (UnimplementedStaffCheckoutRequestServiceServer) StaffCountCheckoutRequestF
 }
 func (UnimplementedStaffCheckoutRequestServiceServer) StaffExportCheckoutRequest(context.Context, *StaffExportCheckoutRequestRequest) (*v1.FileAttachmentOrMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffExportCheckoutRequest not implemented")
+}
+func (UnimplementedStaffCheckoutRequestServiceServer) StaffMarkCheckoutRequestFailed(context.Context, *StaffMarkCheckoutRequestFailedRequest) (*StaffMarkCheckoutRequestFailedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffMarkCheckoutRequestFailed not implemented")
 }
 func (UnimplementedStaffCheckoutRequestServiceServer) testEmbeddedByValue() {}
 
@@ -273,6 +289,24 @@ func _StaffCheckoutRequestService_StaffExportCheckoutRequest_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StaffCheckoutRequestService_StaffMarkCheckoutRequestFailed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffMarkCheckoutRequestFailedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaffCheckoutRequestServiceServer).StaffMarkCheckoutRequestFailed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StaffCheckoutRequestService_StaffMarkCheckoutRequestFailed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaffCheckoutRequestServiceServer).StaffMarkCheckoutRequestFailed(ctx, req.(*StaffMarkCheckoutRequestFailedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StaffCheckoutRequestService_ServiceDesc is the grpc.ServiceDesc for StaffCheckoutRequestService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -303,6 +337,10 @@ var StaffCheckoutRequestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffExportCheckoutRequest",
 			Handler:    _StaffCheckoutRequestService_StaffExportCheckoutRequest_Handler,
+		},
+		{
+			MethodName: "StaffMarkCheckoutRequestFailed",
+			Handler:    _StaffCheckoutRequestService_StaffMarkCheckoutRequestFailed_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
