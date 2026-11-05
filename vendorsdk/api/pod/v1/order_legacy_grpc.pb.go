@@ -23,6 +23,7 @@ const (
 	OrderLegacyAPI_LegacyHoldOrder_FullMethodName                  = "/api.pod.v1.OrderLegacyAPI/LegacyHoldOrder"
 	OrderLegacyAPI_LegacyResumeOrderOnHold_FullMethodName          = "/api.pod.v1.OrderLegacyAPI/LegacyResumeOrderOnHold"
 	OrderLegacyAPI_LegacySyncUpdatedOrder_FullMethodName           = "/api.pod.v1.OrderLegacyAPI/LegacySyncUpdatedOrder"
+	OrderLegacyAPI_LegacyRequestBuyTracking_FullMethodName         = "/api.pod.v1.OrderLegacyAPI/LegacyRequestBuyTracking"
 	OrderLegacyAPI_InternalListOMSOrderSyncTracking_FullMethodName = "/api.pod.v1.OrderLegacyAPI/InternalListOMSOrderSyncTracking"
 	OrderLegacyAPI_InternalGetOMSOrderInformation_FullMethodName   = "/api.pod.v1.OrderLegacyAPI/InternalGetOMSOrderInformation"
 )
@@ -35,6 +36,7 @@ type OrderLegacyAPIClient interface {
 	LegacyHoldOrder(ctx context.Context, in *LegacyHoldOrderRequest, opts ...grpc.CallOption) (*LegacyHoldOrderResponse, error)
 	LegacyResumeOrderOnHold(ctx context.Context, in *LegacyResumeOrderOnHoldRequest, opts ...grpc.CallOption) (*LegacyResumeOrderOnHoldResponse, error)
 	LegacySyncUpdatedOrder(ctx context.Context, in *LegacySyncUpdatedOrderRequest, opts ...grpc.CallOption) (*LegacySyncUpdatedOrderResponse, error)
+	LegacyRequestBuyTracking(ctx context.Context, in *LegacyRequestBuyTrackingRequest, opts ...grpc.CallOption) (*LegacyRequestBuyTrackingResponse, error)
 	InternalListOMSOrderSyncTracking(ctx context.Context, in *InternalListOMSOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalListOMSOrderSyncTrackingResponse, error)
 	InternalGetOMSOrderInformation(ctx context.Context, in *InternalGetOMSOrderInformationRequest, opts ...grpc.CallOption) (*InternalGetOMSOrderInformationResponse, error)
 }
@@ -87,6 +89,16 @@ func (c *orderLegacyAPIClient) LegacySyncUpdatedOrder(ctx context.Context, in *L
 	return out, nil
 }
 
+func (c *orderLegacyAPIClient) LegacyRequestBuyTracking(ctx context.Context, in *LegacyRequestBuyTrackingRequest, opts ...grpc.CallOption) (*LegacyRequestBuyTrackingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LegacyRequestBuyTrackingResponse)
+	err := c.cc.Invoke(ctx, OrderLegacyAPI_LegacyRequestBuyTracking_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderLegacyAPIClient) InternalListOMSOrderSyncTracking(ctx context.Context, in *InternalListOMSOrderSyncTrackingRequest, opts ...grpc.CallOption) (*InternalListOMSOrderSyncTrackingResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InternalListOMSOrderSyncTrackingResponse)
@@ -115,6 +127,7 @@ type OrderLegacyAPIServer interface {
 	LegacyHoldOrder(context.Context, *LegacyHoldOrderRequest) (*LegacyHoldOrderResponse, error)
 	LegacyResumeOrderOnHold(context.Context, *LegacyResumeOrderOnHoldRequest) (*LegacyResumeOrderOnHoldResponse, error)
 	LegacySyncUpdatedOrder(context.Context, *LegacySyncUpdatedOrderRequest) (*LegacySyncUpdatedOrderResponse, error)
+	LegacyRequestBuyTracking(context.Context, *LegacyRequestBuyTrackingRequest) (*LegacyRequestBuyTrackingResponse, error)
 	InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error)
 	InternalGetOMSOrderInformation(context.Context, *InternalGetOMSOrderInformationRequest) (*InternalGetOMSOrderInformationResponse, error)
 }
@@ -137,6 +150,9 @@ func (UnimplementedOrderLegacyAPIServer) LegacyResumeOrderOnHold(context.Context
 }
 func (UnimplementedOrderLegacyAPIServer) LegacySyncUpdatedOrder(context.Context, *LegacySyncUpdatedOrderRequest) (*LegacySyncUpdatedOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LegacySyncUpdatedOrder not implemented")
+}
+func (UnimplementedOrderLegacyAPIServer) LegacyRequestBuyTracking(context.Context, *LegacyRequestBuyTrackingRequest) (*LegacyRequestBuyTrackingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LegacyRequestBuyTracking not implemented")
 }
 func (UnimplementedOrderLegacyAPIServer) InternalListOMSOrderSyncTracking(context.Context, *InternalListOMSOrderSyncTrackingRequest) (*InternalListOMSOrderSyncTrackingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalListOMSOrderSyncTracking not implemented")
@@ -236,6 +252,24 @@ func _OrderLegacyAPI_LegacySyncUpdatedOrder_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderLegacyAPI_LegacyRequestBuyTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LegacyRequestBuyTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderLegacyAPIServer).LegacyRequestBuyTracking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderLegacyAPI_LegacyRequestBuyTracking_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderLegacyAPIServer).LegacyRequestBuyTracking(ctx, req.(*LegacyRequestBuyTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderLegacyAPI_InternalListOMSOrderSyncTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalListOMSOrderSyncTrackingRequest)
 	if err := dec(in); err != nil {
@@ -294,6 +328,10 @@ var OrderLegacyAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LegacySyncUpdatedOrder",
 			Handler:    _OrderLegacyAPI_LegacySyncUpdatedOrder_Handler,
+		},
+		{
+			MethodName: "LegacyRequestBuyTracking",
+			Handler:    _OrderLegacyAPI_LegacyRequestBuyTracking_Handler,
 		},
 		{
 			MethodName: "InternalListOMSOrderSyncTracking",
