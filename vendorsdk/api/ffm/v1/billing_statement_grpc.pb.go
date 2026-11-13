@@ -22,6 +22,8 @@ const (
 	BillingStatementAPI_GetBillingStatementCapability_FullMethodName = "/api.ffm.v1.BillingStatementAPI/GetBillingStatementCapability"
 	BillingStatementAPI_UserGetBillingStatement_FullMethodName       = "/api.ffm.v1.BillingStatementAPI/UserGetBillingStatement"
 	BillingStatementAPI_StaffGetBillingStatement_FullMethodName      = "/api.ffm.v1.BillingStatementAPI/StaffGetBillingStatement"
+	BillingStatementAPI_StaffCheckBillingStatement_FullMethodName    = "/api.ffm.v1.BillingStatementAPI/StaffCheckBillingStatement"
+	BillingStatementAPI_UserCheckBillingStatement_FullMethodName     = "/api.ffm.v1.BillingStatementAPI/UserCheckBillingStatement"
 )
 
 // BillingStatementAPIClient is the client API for BillingStatementAPI service.
@@ -34,6 +36,8 @@ type BillingStatementAPIClient interface {
 	GetBillingStatementCapability(ctx context.Context, in *GetBillingStatementCapabilityRequest, opts ...grpc.CallOption) (*GetBillingStatementCapabilityResponse, error)
 	UserGetBillingStatement(ctx context.Context, in *UserGetBillingStatementRequest, opts ...grpc.CallOption) (*UserGetBillingStatementResponse, error)
 	StaffGetBillingStatement(ctx context.Context, in *StaffGetBillingStatementRequest, opts ...grpc.CallOption) (*StaffGetBillingStatementResponse, error)
+	StaffCheckBillingStatement(ctx context.Context, in *StaffCheckBillingStatementRequest, opts ...grpc.CallOption) (*StaffCheckBillingStatementResponse, error)
+	UserCheckBillingStatement(ctx context.Context, in *UserCheckBillingStatementRequest, opts ...grpc.CallOption) (*UserCheckBillingStatementResponse, error)
 }
 
 type billingStatementAPIClient struct {
@@ -74,6 +78,26 @@ func (c *billingStatementAPIClient) StaffGetBillingStatement(ctx context.Context
 	return out, nil
 }
 
+func (c *billingStatementAPIClient) StaffCheckBillingStatement(ctx context.Context, in *StaffCheckBillingStatementRequest, opts ...grpc.CallOption) (*StaffCheckBillingStatementResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCheckBillingStatementResponse)
+	err := c.cc.Invoke(ctx, BillingStatementAPI_StaffCheckBillingStatement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingStatementAPIClient) UserCheckBillingStatement(ctx context.Context, in *UserCheckBillingStatementRequest, opts ...grpc.CallOption) (*UserCheckBillingStatementResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserCheckBillingStatementResponse)
+	err := c.cc.Invoke(ctx, BillingStatementAPI_UserCheckBillingStatement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingStatementAPIServer is the server API for BillingStatementAPI service.
 // All implementations should embed UnimplementedBillingStatementAPIServer
 // for forward compatibility.
@@ -84,6 +108,8 @@ type BillingStatementAPIServer interface {
 	GetBillingStatementCapability(context.Context, *GetBillingStatementCapabilityRequest) (*GetBillingStatementCapabilityResponse, error)
 	UserGetBillingStatement(context.Context, *UserGetBillingStatementRequest) (*UserGetBillingStatementResponse, error)
 	StaffGetBillingStatement(context.Context, *StaffGetBillingStatementRequest) (*StaffGetBillingStatementResponse, error)
+	StaffCheckBillingStatement(context.Context, *StaffCheckBillingStatementRequest) (*StaffCheckBillingStatementResponse, error)
+	UserCheckBillingStatement(context.Context, *UserCheckBillingStatementRequest) (*UserCheckBillingStatementResponse, error)
 }
 
 // UnimplementedBillingStatementAPIServer should be embedded to have
@@ -101,6 +127,12 @@ func (UnimplementedBillingStatementAPIServer) UserGetBillingStatement(context.Co
 }
 func (UnimplementedBillingStatementAPIServer) StaffGetBillingStatement(context.Context, *StaffGetBillingStatementRequest) (*StaffGetBillingStatementResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetBillingStatement not implemented")
+}
+func (UnimplementedBillingStatementAPIServer) StaffCheckBillingStatement(context.Context, *StaffCheckBillingStatementRequest) (*StaffCheckBillingStatementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCheckBillingStatement not implemented")
+}
+func (UnimplementedBillingStatementAPIServer) UserCheckBillingStatement(context.Context, *UserCheckBillingStatementRequest) (*UserCheckBillingStatementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserCheckBillingStatement not implemented")
 }
 func (UnimplementedBillingStatementAPIServer) testEmbeddedByValue() {}
 
@@ -176,6 +208,42 @@ func _BillingStatementAPI_StaffGetBillingStatement_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingStatementAPI_StaffCheckBillingStatement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCheckBillingStatementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingStatementAPIServer).StaffCheckBillingStatement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingStatementAPI_StaffCheckBillingStatement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingStatementAPIServer).StaffCheckBillingStatement(ctx, req.(*StaffCheckBillingStatementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingStatementAPI_UserCheckBillingStatement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserCheckBillingStatementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingStatementAPIServer).UserCheckBillingStatement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingStatementAPI_UserCheckBillingStatement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingStatementAPIServer).UserCheckBillingStatement(ctx, req.(*UserCheckBillingStatementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BillingStatementAPI_ServiceDesc is the grpc.ServiceDesc for BillingStatementAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -194,6 +262,14 @@ var BillingStatementAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffGetBillingStatement",
 			Handler:    _BillingStatementAPI_StaffGetBillingStatement_Handler,
+		},
+		{
+			MethodName: "StaffCheckBillingStatement",
+			Handler:    _BillingStatementAPI_StaffCheckBillingStatement_Handler,
+		},
+		{
+			MethodName: "UserCheckBillingStatement",
+			Handler:    _BillingStatementAPI_UserCheckBillingStatement_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
