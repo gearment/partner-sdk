@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentVendors"
+	VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffListAllFulfillmentVendors"
 	VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateFulfillmentVendor"
 	VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentVendor"
 	VendorRoutingAdminAPI_StaffListFulfillmentDestinations_FullMethodName     = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentDestinations"
@@ -66,6 +67,7 @@ const (
 type VendorRoutingAdminAPIClient interface {
 	// --- Reference data ---
 	StaffListFulfillmentVendors(ctx context.Context, in *StaffListFulfillmentVendorsRequest, opts ...grpc.CallOption) (*StaffListFulfillmentVendorsResponse, error)
+	StaffListAllFulfillmentVendors(ctx context.Context, in *StaffListAllFulfillmentVendorsRequest, opts ...grpc.CallOption) (*StaffListAllFulfillmentVendorsResponse, error)
 	StaffCreateFulfillmentVendor(ctx context.Context, in *StaffCreateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffCreateFulfillmentVendorResponse, error)
 	StaffUpdateFulfillmentVendor(ctx context.Context, in *StaffUpdateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffUpdateFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(ctx context.Context, in *StaffListFulfillmentDestinationsRequest, opts ...grpc.CallOption) (*StaffListFulfillmentDestinationsResponse, error)
@@ -128,6 +130,16 @@ func (c *vendorRoutingAdminAPIClient) StaffListFulfillmentVendors(ctx context.Co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListFulfillmentVendorsResponse)
 	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorRoutingAdminAPIClient) StaffListAllFulfillmentVendors(ctx context.Context, in *StaffListAllFulfillmentVendorsRequest, opts ...grpc.CallOption) (*StaffListAllFulfillmentVendorsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListAllFulfillmentVendorsResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -466,6 +478,7 @@ func (c *vendorRoutingAdminAPIClient) StaffUpdateFulfillmentDestination(ctx cont
 type VendorRoutingAdminAPIServer interface {
 	// --- Reference data ---
 	StaffListFulfillmentVendors(context.Context, *StaffListFulfillmentVendorsRequest) (*StaffListFulfillmentVendorsResponse, error)
+	StaffListAllFulfillmentVendors(context.Context, *StaffListAllFulfillmentVendorsRequest) (*StaffListAllFulfillmentVendorsResponse, error)
 	StaffCreateFulfillmentVendor(context.Context, *StaffCreateFulfillmentVendorRequest) (*StaffCreateFulfillmentVendorResponse, error)
 	StaffUpdateFulfillmentVendor(context.Context, *StaffUpdateFulfillmentVendorRequest) (*StaffUpdateFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(context.Context, *StaffListFulfillmentDestinationsRequest) (*StaffListFulfillmentDestinationsResponse, error)
@@ -525,6 +538,9 @@ type UnimplementedVendorRoutingAdminAPIServer struct{}
 
 func (UnimplementedVendorRoutingAdminAPIServer) StaffListFulfillmentVendors(context.Context, *StaffListFulfillmentVendorsRequest) (*StaffListFulfillmentVendorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFulfillmentVendors not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffListAllFulfillmentVendors(context.Context, *StaffListAllFulfillmentVendorsRequest) (*StaffListAllFulfillmentVendorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListAllFulfillmentVendors not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffCreateFulfillmentVendor(context.Context, *StaffCreateFulfillmentVendorRequest) (*StaffCreateFulfillmentVendorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateFulfillmentVendor not implemented")
@@ -656,6 +672,24 @@ func _VendorRoutingAdminAPI_StaffListFulfillmentVendors_Handler(srv interface{},
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VendorRoutingAdminAPIServer).StaffListFulfillmentVendors(ctx, req.(*StaffListFulfillmentVendorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListAllFulfillmentVendorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffListAllFulfillmentVendors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffListAllFulfillmentVendors(ctx, req.(*StaffListAllFulfillmentVendorsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1246,6 +1280,10 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListFulfillmentVendors",
 			Handler:    _VendorRoutingAdminAPI_StaffListFulfillmentVendors_Handler,
+		},
+		{
+			MethodName: "StaffListAllFulfillmentVendors",
+			Handler:    _VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_Handler,
 		},
 		{
 			MethodName: "StaffCreateFulfillmentVendor",
