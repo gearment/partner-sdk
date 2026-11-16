@@ -23,6 +23,7 @@ const (
 	VendorRoutingAdminAPI_StaffListAllFulfillmentVendors_FullMethodName       = "/api.pod.v1.VendorRoutingAdminAPI/StaffListAllFulfillmentVendors"
 	VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateFulfillmentVendor"
 	VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentVendor"
+	VendorRoutingAdminAPI_StaffDeleteFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffDeleteFulfillmentVendor"
 	VendorRoutingAdminAPI_StaffListFulfillmentDestinations_FullMethodName     = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentDestinations"
 	VendorRoutingAdminAPI_StaffListVendorRoutingRules_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorRoutingRules"
 	VendorRoutingAdminAPI_StaffGetVendorRoutingRule_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetVendorRoutingRule"
@@ -70,6 +71,7 @@ type VendorRoutingAdminAPIClient interface {
 	StaffListAllFulfillmentVendors(ctx context.Context, in *StaffListAllFulfillmentVendorsRequest, opts ...grpc.CallOption) (*StaffListAllFulfillmentVendorsResponse, error)
 	StaffCreateFulfillmentVendor(ctx context.Context, in *StaffCreateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffCreateFulfillmentVendorResponse, error)
 	StaffUpdateFulfillmentVendor(ctx context.Context, in *StaffUpdateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffUpdateFulfillmentVendorResponse, error)
+	StaffDeleteFulfillmentVendor(ctx context.Context, in *StaffDeleteFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffDeleteFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(ctx context.Context, in *StaffListFulfillmentDestinationsRequest, opts ...grpc.CallOption) (*StaffListFulfillmentDestinationsResponse, error)
 	// --- Vendor routing rules ---
 	StaffListVendorRoutingRules(ctx context.Context, in *StaffListVendorRoutingRulesRequest, opts ...grpc.CallOption) (*StaffListVendorRoutingRulesResponse, error)
@@ -160,6 +162,16 @@ func (c *vendorRoutingAdminAPIClient) StaffUpdateFulfillmentVendor(ctx context.C
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateFulfillmentVendorResponse)
 	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorRoutingAdminAPIClient) StaffDeleteFulfillmentVendor(ctx context.Context, in *StaffDeleteFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffDeleteFulfillmentVendorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeleteFulfillmentVendorResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffDeleteFulfillmentVendor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -481,6 +493,7 @@ type VendorRoutingAdminAPIServer interface {
 	StaffListAllFulfillmentVendors(context.Context, *StaffListAllFulfillmentVendorsRequest) (*StaffListAllFulfillmentVendorsResponse, error)
 	StaffCreateFulfillmentVendor(context.Context, *StaffCreateFulfillmentVendorRequest) (*StaffCreateFulfillmentVendorResponse, error)
 	StaffUpdateFulfillmentVendor(context.Context, *StaffUpdateFulfillmentVendorRequest) (*StaffUpdateFulfillmentVendorResponse, error)
+	StaffDeleteFulfillmentVendor(context.Context, *StaffDeleteFulfillmentVendorRequest) (*StaffDeleteFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(context.Context, *StaffListFulfillmentDestinationsRequest) (*StaffListFulfillmentDestinationsResponse, error)
 	// --- Vendor routing rules ---
 	StaffListVendorRoutingRules(context.Context, *StaffListVendorRoutingRulesRequest) (*StaffListVendorRoutingRulesResponse, error)
@@ -547,6 +560,9 @@ func (UnimplementedVendorRoutingAdminAPIServer) StaffCreateFulfillmentVendor(con
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffUpdateFulfillmentVendor(context.Context, *StaffUpdateFulfillmentVendorRequest) (*StaffUpdateFulfillmentVendorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateFulfillmentVendor not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffDeleteFulfillmentVendor(context.Context, *StaffDeleteFulfillmentVendorRequest) (*StaffDeleteFulfillmentVendorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeleteFulfillmentVendor not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffListFulfillmentDestinations(context.Context, *StaffListFulfillmentDestinationsRequest) (*StaffListFulfillmentDestinationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFulfillmentDestinations not implemented")
@@ -726,6 +742,24 @@ func _VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_Handler(srv interface{}
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VendorRoutingAdminAPIServer).StaffUpdateFulfillmentVendor(ctx, req.(*StaffUpdateFulfillmentVendorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorRoutingAdminAPI_StaffDeleteFulfillmentVendor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeleteFulfillmentVendorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffDeleteFulfillmentVendor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffDeleteFulfillmentVendor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffDeleteFulfillmentVendor(ctx, req.(*StaffDeleteFulfillmentVendorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1292,6 +1326,10 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateFulfillmentVendor",
 			Handler:    _VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_Handler,
+		},
+		{
+			MethodName: "StaffDeleteFulfillmentVendor",
+			Handler:    _VendorRoutingAdminAPI_StaffDeleteFulfillmentVendor_Handler,
 		},
 		{
 			MethodName: "StaffListFulfillmentDestinations",
