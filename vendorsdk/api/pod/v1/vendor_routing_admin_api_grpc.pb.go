@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentVendors"
+	VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffCreateFulfillmentVendor"
+	VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName         = "/api.pod.v1.VendorRoutingAdminAPI/StaffUpdateFulfillmentVendor"
 	VendorRoutingAdminAPI_StaffListFulfillmentDestinations_FullMethodName     = "/api.pod.v1.VendorRoutingAdminAPI/StaffListFulfillmentDestinations"
 	VendorRoutingAdminAPI_StaffListVendorRoutingRules_FullMethodName          = "/api.pod.v1.VendorRoutingAdminAPI/StaffListVendorRoutingRules"
 	VendorRoutingAdminAPI_StaffGetVendorRoutingRule_FullMethodName            = "/api.pod.v1.VendorRoutingAdminAPI/StaffGetVendorRoutingRule"
@@ -64,6 +66,8 @@ const (
 type VendorRoutingAdminAPIClient interface {
 	// --- Reference data ---
 	StaffListFulfillmentVendors(ctx context.Context, in *StaffListFulfillmentVendorsRequest, opts ...grpc.CallOption) (*StaffListFulfillmentVendorsResponse, error)
+	StaffCreateFulfillmentVendor(ctx context.Context, in *StaffCreateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffCreateFulfillmentVendorResponse, error)
+	StaffUpdateFulfillmentVendor(ctx context.Context, in *StaffUpdateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffUpdateFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(ctx context.Context, in *StaffListFulfillmentDestinationsRequest, opts ...grpc.CallOption) (*StaffListFulfillmentDestinationsResponse, error)
 	// --- Vendor routing rules ---
 	StaffListVendorRoutingRules(ctx context.Context, in *StaffListVendorRoutingRulesRequest, opts ...grpc.CallOption) (*StaffListVendorRoutingRulesResponse, error)
@@ -124,6 +128,26 @@ func (c *vendorRoutingAdminAPIClient) StaffListFulfillmentVendors(ctx context.Co
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListFulfillmentVendorsResponse)
 	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffListFulfillmentVendors_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorRoutingAdminAPIClient) StaffCreateFulfillmentVendor(ctx context.Context, in *StaffCreateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffCreateFulfillmentVendorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCreateFulfillmentVendorResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorRoutingAdminAPIClient) StaffUpdateFulfillmentVendor(ctx context.Context, in *StaffUpdateFulfillmentVendorRequest, opts ...grpc.CallOption) (*StaffUpdateFulfillmentVendorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateFulfillmentVendorResponse)
+	err := c.cc.Invoke(ctx, VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -442,6 +466,8 @@ func (c *vendorRoutingAdminAPIClient) StaffUpdateFulfillmentDestination(ctx cont
 type VendorRoutingAdminAPIServer interface {
 	// --- Reference data ---
 	StaffListFulfillmentVendors(context.Context, *StaffListFulfillmentVendorsRequest) (*StaffListFulfillmentVendorsResponse, error)
+	StaffCreateFulfillmentVendor(context.Context, *StaffCreateFulfillmentVendorRequest) (*StaffCreateFulfillmentVendorResponse, error)
+	StaffUpdateFulfillmentVendor(context.Context, *StaffUpdateFulfillmentVendorRequest) (*StaffUpdateFulfillmentVendorResponse, error)
 	StaffListFulfillmentDestinations(context.Context, *StaffListFulfillmentDestinationsRequest) (*StaffListFulfillmentDestinationsResponse, error)
 	// --- Vendor routing rules ---
 	StaffListVendorRoutingRules(context.Context, *StaffListVendorRoutingRulesRequest) (*StaffListVendorRoutingRulesResponse, error)
@@ -499,6 +525,12 @@ type UnimplementedVendorRoutingAdminAPIServer struct{}
 
 func (UnimplementedVendorRoutingAdminAPIServer) StaffListFulfillmentVendors(context.Context, *StaffListFulfillmentVendorsRequest) (*StaffListFulfillmentVendorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFulfillmentVendors not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffCreateFulfillmentVendor(context.Context, *StaffCreateFulfillmentVendorRequest) (*StaffCreateFulfillmentVendorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCreateFulfillmentVendor not implemented")
+}
+func (UnimplementedVendorRoutingAdminAPIServer) StaffUpdateFulfillmentVendor(context.Context, *StaffUpdateFulfillmentVendorRequest) (*StaffUpdateFulfillmentVendorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateFulfillmentVendor not implemented")
 }
 func (UnimplementedVendorRoutingAdminAPIServer) StaffListFulfillmentDestinations(context.Context, *StaffListFulfillmentDestinationsRequest) (*StaffListFulfillmentDestinationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFulfillmentDestinations not implemented")
@@ -624,6 +656,42 @@ func _VendorRoutingAdminAPI_StaffListFulfillmentVendors_Handler(srv interface{},
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VendorRoutingAdminAPIServer).StaffListFulfillmentVendors(ctx, req.(*StaffListFulfillmentVendorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCreateFulfillmentVendorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffCreateFulfillmentVendor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffCreateFulfillmentVendor(ctx, req.(*StaffCreateFulfillmentVendorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateFulfillmentVendorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorRoutingAdminAPIServer).StaffUpdateFulfillmentVendor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorRoutingAdminAPIServer).StaffUpdateFulfillmentVendor(ctx, req.(*StaffUpdateFulfillmentVendorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1178,6 +1246,14 @@ var VendorRoutingAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListFulfillmentVendors",
 			Handler:    _VendorRoutingAdminAPI_StaffListFulfillmentVendors_Handler,
+		},
+		{
+			MethodName: "StaffCreateFulfillmentVendor",
+			Handler:    _VendorRoutingAdminAPI_StaffCreateFulfillmentVendor_Handler,
+		},
+		{
+			MethodName: "StaffUpdateFulfillmentVendor",
+			Handler:    _VendorRoutingAdminAPI_StaffUpdateFulfillmentVendor_Handler,
 		},
 		{
 			MethodName: "StaffListFulfillmentDestinations",
