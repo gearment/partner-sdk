@@ -20,58 +20,60 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderAdminAPI_StaffCreatePrintsolaProfile_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffCreatePrintsolaProfile"
-	OrderAdminAPI_StaffCreateSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffCreateSaleOrderSavedView"
-	OrderAdminAPI_StaffListSaleOrderSavedViews_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffListSaleOrderSavedViews"
-	OrderAdminAPI_StaffGetSaleOrderSavedView_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffGetSaleOrderSavedView"
-	OrderAdminAPI_StaffUpdateSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateSaleOrderSavedView"
-	OrderAdminAPI_StaffDeleteSaleOrderSavedView_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffDeleteSaleOrderSavedView"
-	OrderAdminAPI_StaffCountSaleOrderSavedViews_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffCountSaleOrderSavedViews"
-	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
-	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
-	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
-	OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffMarkOrderAsLowStock"
-	OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUnmarkOrderAsLowStock"
-	OrderAdminAPI_StaffUpdateShippingService_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
-	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
-	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
-	OrderAdminAPI_StaffListOrder_FullMethodName                       = "/api.pod.v1.OrderAdminAPI/StaffListOrder"
-	OrderAdminAPI_StaffListOrderActionRequest_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffListOrderActionRequest"
-	OrderAdminAPI_StaffSearchMultiTypeOrder_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffSearchMultiTypeOrder"
-	OrderAdminAPI_StaffGetOrder_FullMethodName                        = "/api.pod.v1.OrderAdminAPI/StaffGetOrder"
-	OrderAdminAPI_StaffCountOrderStatus_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffCountOrderStatus"
-	OrderAdminAPI_StaffCountOrderForExport_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffCountOrderForExport"
-	OrderAdminAPI_StaffCountOrderLineItemForExport_FullMethodName     = "/api.pod.v1.OrderAdminAPI/StaffCountOrderLineItemForExport"
-	OrderAdminAPI_StaffCountOrderUnitForExport_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffCountOrderUnitForExport"
-	OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesOrder"
-	OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesUnit"
-	OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffGetStatisticSalesUnits"
-	OrderAdminAPI_StaffGetChargedProductTypeTrend_FullMethodName      = "/api.pod.v1.OrderAdminAPI/StaffGetChargedProductTypeTrend"
-	OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffListSalesUnitsByUser"
-	OrderAdminAPI_StaffListProductTypeSalesUnitsByUser_FullMethodName = "/api.pod.v1.OrderAdminAPI/StaffListProductTypeSalesUnitsByUser"
-	OrderAdminAPI_StaffListSalesOrderFilterCriteria_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffListSalesOrderFilterCriteria"
-	OrderAdminAPI_StaffExportOrder_FullMethodName                     = "/api.pod.v1.OrderAdminAPI/StaffExportOrder"
-	OrderAdminAPI_StaffExportOrderItems_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffExportOrderItems"
-	OrderAdminAPI_StaffExportOrderUnits_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffExportOrderUnits"
-	OrderAdminAPI_StaffListColorForOrderDraftFilter_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffListColorForOrderDraftFilter"
-	OrderAdminAPI_StaffListSizeForOrderDraftFilter_FullMethodName     = "/api.pod.v1.OrderAdminAPI/StaffListSizeForOrderDraftFilter"
-	OrderAdminAPI_StaffCancelMultiOrder_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffCancelMultiOrder"
-	OrderAdminAPI_StaffRequestShippingRefund_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffRequestShippingRefund"
-	OrderAdminAPI_StaffRequestBasePriceRefund_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffRequestBasePriceRefund"
-	OrderAdminAPI_StaffRequestFullyRefund_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffRequestFullyRefund"
-	OrderAdminAPI_StaffListOrderCancelReason_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffListOrderCancelReason"
-	OrderAdminAPI_StaffRequestCustomRefund_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffRequestCustomRefund"
-	OrderAdminAPI_StaffHoldOrder_FullMethodName                       = "/api.pod.v1.OrderAdminAPI/StaffHoldOrder"
-	OrderAdminAPI_StaffListOrderOnHoldReason_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffListOrderOnHoldReason"
-	OrderAdminAPI_StaffResumeOrderOnHold_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffResumeOrderOnHold"
-	OrderAdminAPI_StaffGetDetailOrderTrademark_FullMethodName         = "/api.pod.v1.OrderAdminAPI/StaffGetDetailOrderTrademark"
-	OrderAdminAPI_StaffEstimateOrderShipping_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffEstimateOrderShipping"
-	OrderAdminAPI_StaffCreateTestOrder_FullMethodName                 = "/api.pod.v1.OrderAdminAPI/StaffCreateTestOrder"
-	OrderAdminAPI_StaffDuplicateOrder_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffDuplicateOrder"
-	OrderAdminAPI_StaffBuyShippingLabel_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffBuyShippingLabel"
-	OrderAdminAPI_StaffGofoDhlSwitch_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffGofoDhlSwitch"
-	OrderAdminAPI_StaffGetShippingServiceSuggestion_FullMethodName    = "/api.pod.v1.OrderAdminAPI/StaffGetShippingServiceSuggestion"
-	OrderAdminAPI_StaffGetTeamOrderMetrics_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffGetTeamOrderMetrics"
+	OrderAdminAPI_StaffCreatePrintsolaProfile_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffCreatePrintsolaProfile"
+	OrderAdminAPI_StaffCreateSaleOrderSavedView_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffCreateSaleOrderSavedView"
+	OrderAdminAPI_StaffListSaleOrderSavedViews_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffListSaleOrderSavedViews"
+	OrderAdminAPI_StaffGetSaleOrderSavedView_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffGetSaleOrderSavedView"
+	OrderAdminAPI_StaffUpdateSaleOrderSavedView_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffUpdateSaleOrderSavedView"
+	OrderAdminAPI_StaffDeleteSaleOrderSavedView_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffDeleteSaleOrderSavedView"
+	OrderAdminAPI_StaffCountSaleOrderSavedViews_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffCountSaleOrderSavedViews"
+	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName                 = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
+	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
+	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
+	OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffMarkOrderAsLowStock"
+	OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffUnmarkOrderAsLowStock"
+	OrderAdminAPI_StaffUpdateShippingService_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
+	OrderAdminAPI_StaffMarkFulfilled_FullMethodName                     = "/api.pod.v1.OrderAdminAPI/StaffMarkFulfilled"
+	OrderAdminAPI_StaffPreCheckMarkFulfilled_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffPreCheckMarkFulfilled"
+	OrderAdminAPI_StaffListOrder_FullMethodName                         = "/api.pod.v1.OrderAdminAPI/StaffListOrder"
+	OrderAdminAPI_StaffListOrderActionRequest_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffListOrderActionRequest"
+	OrderAdminAPI_StaffSearchMultiTypeOrder_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffSearchMultiTypeOrder"
+	OrderAdminAPI_StaffGetOrder_FullMethodName                          = "/api.pod.v1.OrderAdminAPI/StaffGetOrder"
+	OrderAdminAPI_StaffGetOrderProductionPanel_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffGetOrderProductionPanel"
+	OrderAdminAPI_StaffCountOrderStatus_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffCountOrderStatus"
+	OrderAdminAPI_StaffCountOrderForExport_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffCountOrderForExport"
+	OrderAdminAPI_StaffCountOrderLineItemForExport_FullMethodName       = "/api.pod.v1.OrderAdminAPI/StaffCountOrderLineItemForExport"
+	OrderAdminAPI_StaffCountOrderUnitForExport_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffCountOrderUnitForExport"
+	OrderAdminAPI_StaffStatisticSalesOrder_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesOrder"
+	OrderAdminAPI_StaffStatisticSalesUnit_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffStatisticSalesUnit"
+	OrderAdminAPI_StaffGetStatisticSalesUnits_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffGetStatisticSalesUnits"
+	OrderAdminAPI_StaffGetChargedProductTypeTrend_FullMethodName        = "/api.pod.v1.OrderAdminAPI/StaffGetChargedProductTypeTrend"
+	OrderAdminAPI_StaffListSalesUnitsByUser_FullMethodName              = "/api.pod.v1.OrderAdminAPI/StaffListSalesUnitsByUser"
+	OrderAdminAPI_StaffListProductTypeSalesUnitsByUser_FullMethodName   = "/api.pod.v1.OrderAdminAPI/StaffListProductTypeSalesUnitsByUser"
+	OrderAdminAPI_StaffListSalesOrderFilterCriteria_FullMethodName      = "/api.pod.v1.OrderAdminAPI/StaffListSalesOrderFilterCriteria"
+	OrderAdminAPI_StaffExportOrder_FullMethodName                       = "/api.pod.v1.OrderAdminAPI/StaffExportOrder"
+	OrderAdminAPI_StaffExportOrderItems_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffExportOrderItems"
+	OrderAdminAPI_StaffExportOrderUnits_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffExportOrderUnits"
+	OrderAdminAPI_StaffListColorForOrderDraftFilter_FullMethodName      = "/api.pod.v1.OrderAdminAPI/StaffListColorForOrderDraftFilter"
+	OrderAdminAPI_StaffListSizeForOrderDraftFilter_FullMethodName       = "/api.pod.v1.OrderAdminAPI/StaffListSizeForOrderDraftFilter"
+	OrderAdminAPI_StaffCancelMultiOrder_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffCancelMultiOrder"
+	OrderAdminAPI_StaffRequestShippingRefund_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffRequestShippingRefund"
+	OrderAdminAPI_StaffRequestBasePriceRefund_FullMethodName            = "/api.pod.v1.OrderAdminAPI/StaffRequestBasePriceRefund"
+	OrderAdminAPI_StaffRequestFullyRefund_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffRequestFullyRefund"
+	OrderAdminAPI_StaffListOrderCancelReason_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffListOrderCancelReason"
+	OrderAdminAPI_StaffRequestCustomRefund_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffRequestCustomRefund"
+	OrderAdminAPI_StaffHoldOrder_FullMethodName                         = "/api.pod.v1.OrderAdminAPI/StaffHoldOrder"
+	OrderAdminAPI_StaffListOrderOnHoldReason_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffListOrderOnHoldReason"
+	OrderAdminAPI_StaffResumeOrderOnHold_FullMethodName                 = "/api.pod.v1.OrderAdminAPI/StaffResumeOrderOnHold"
+	OrderAdminAPI_StaffGetDetailOrderTrademark_FullMethodName           = "/api.pod.v1.OrderAdminAPI/StaffGetDetailOrderTrademark"
+	OrderAdminAPI_StaffEstimateOrderShipping_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffEstimateOrderShipping"
+	OrderAdminAPI_StaffCreateTestOrder_FullMethodName                   = "/api.pod.v1.OrderAdminAPI/StaffCreateTestOrder"
+	OrderAdminAPI_StaffDuplicateOrder_FullMethodName                    = "/api.pod.v1.OrderAdminAPI/StaffDuplicateOrder"
+	OrderAdminAPI_StaffBuyShippingLabel_FullMethodName                  = "/api.pod.v1.OrderAdminAPI/StaffBuyShippingLabel"
+	OrderAdminAPI_StaffSyncSplitChildrenTrackingToParent_FullMethodName = "/api.pod.v1.OrderAdminAPI/StaffSyncSplitChildrenTrackingToParent"
+	OrderAdminAPI_StaffGofoDhlSwitch_FullMethodName                     = "/api.pod.v1.OrderAdminAPI/StaffGofoDhlSwitch"
+	OrderAdminAPI_StaffGetShippingServiceSuggestion_FullMethodName      = "/api.pod.v1.OrderAdminAPI/StaffGetShippingServiceSuggestion"
+	OrderAdminAPI_StaffGetTeamOrderMetrics_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffGetTeamOrderMetrics"
 )
 
 // OrderAdminAPIClient is the client API for OrderAdminAPI service.
@@ -97,6 +99,8 @@ type OrderAdminAPIClient interface {
 	StaffListOrderActionRequest(ctx context.Context, in *StaffListOrderActionRequestRequest, opts ...grpc.CallOption) (*StaffListOrderActionRequestResponse, error)
 	StaffSearchMultiTypeOrder(ctx context.Context, in *StaffSearchMultiTypeOrderRequest, opts ...grpc.CallOption) (*StaffSearchMultiTypeOrderResponse, error)
 	StaffGetOrder(ctx context.Context, in *StaffGetOrderRequest, opts ...grpc.CallOption) (*StaffGetOrderResponse, error)
+	// Read-only production view of an order, read from the system that produces it (the CRM today).
+	StaffGetOrderProductionPanel(ctx context.Context, in *StaffGetOrderProductionPanelRequest, opts ...grpc.CallOption) (*StaffGetOrderProductionPanelResponse, error)
 	StaffCountOrderStatus(ctx context.Context, in *StaffCountOrderStatusRequest, opts ...grpc.CallOption) (*StaffCountOrderStatusResponse, error)
 	StaffCountOrderForExport(ctx context.Context, in *StaffCountOrderForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(ctx context.Context, in *StaffCountOrderLineItemForExportRequest, opts ...grpc.CallOption) (*StaffCountOrderLineItemForExportResponse, error)
@@ -127,6 +131,7 @@ type OrderAdminAPIClient interface {
 	StaffCreateTestOrder(ctx context.Context, in *StaffCreateTestOrderRequest, opts ...grpc.CallOption) (*StaffCreateTestOrderResponse, error)
 	StaffDuplicateOrder(ctx context.Context, in *StaffDuplicateOrderRequest, opts ...grpc.CallOption) (*StaffDuplicateOrderResponse, error)
 	StaffBuyShippingLabel(ctx context.Context, in *StaffBuyShippingLabelRequest, opts ...grpc.CallOption) (*StaffBuyShippingLabelResponse, error)
+	StaffSyncSplitChildrenTrackingToParent(ctx context.Context, in *StaffSyncSplitChildrenTrackingToParentRequest, opts ...grpc.CallOption) (*StaffSyncSplitChildrenTrackingToParentResponse, error)
 	StaffGofoDhlSwitch(ctx context.Context, in *StaffGofoDhlSwitchRequest, opts ...grpc.CallOption) (*StaffGofoDhlSwitchResponse, error)
 	StaffGetShippingServiceSuggestion(ctx context.Context, in *StaffGetShippingServiceSuggestionRequest, opts ...grpc.CallOption) (*StaffGetShippingServiceSuggestionResponse, error)
 	StaffGetTeamOrderMetrics(ctx context.Context, in *StaffGetTeamOrderMetricsRequest, opts ...grpc.CallOption) (*StaffGetTeamOrderMetricsResponse, error)
@@ -324,6 +329,16 @@ func (c *orderAdminAPIClient) StaffGetOrder(ctx context.Context, in *StaffGetOrd
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGetOrderResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffGetOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffGetOrderProductionPanel(ctx context.Context, in *StaffGetOrderProductionPanelRequest, opts ...grpc.CallOption) (*StaffGetOrderProductionPanelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetOrderProductionPanelResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffGetOrderProductionPanel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -630,6 +645,16 @@ func (c *orderAdminAPIClient) StaffBuyShippingLabel(ctx context.Context, in *Sta
 	return out, nil
 }
 
+func (c *orderAdminAPIClient) StaffSyncSplitChildrenTrackingToParent(ctx context.Context, in *StaffSyncSplitChildrenTrackingToParentRequest, opts ...grpc.CallOption) (*StaffSyncSplitChildrenTrackingToParentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffSyncSplitChildrenTrackingToParentResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffSyncSplitChildrenTrackingToParent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderAdminAPIClient) StaffGofoDhlSwitch(ctx context.Context, in *StaffGofoDhlSwitchRequest, opts ...grpc.CallOption) (*StaffGofoDhlSwitchResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffGofoDhlSwitchResponse)
@@ -683,6 +708,8 @@ type OrderAdminAPIServer interface {
 	StaffListOrderActionRequest(context.Context, *StaffListOrderActionRequestRequest) (*StaffListOrderActionRequestResponse, error)
 	StaffSearchMultiTypeOrder(context.Context, *StaffSearchMultiTypeOrderRequest) (*StaffSearchMultiTypeOrderResponse, error)
 	StaffGetOrder(context.Context, *StaffGetOrderRequest) (*StaffGetOrderResponse, error)
+	// Read-only production view of an order, read from the system that produces it (the CRM today).
+	StaffGetOrderProductionPanel(context.Context, *StaffGetOrderProductionPanelRequest) (*StaffGetOrderProductionPanelResponse, error)
 	StaffCountOrderStatus(context.Context, *StaffCountOrderStatusRequest) (*StaffCountOrderStatusResponse, error)
 	StaffCountOrderForExport(context.Context, *StaffCountOrderForExportRequest) (*StaffCountOrderForExportResponse, error)
 	StaffCountOrderLineItemForExport(context.Context, *StaffCountOrderLineItemForExportRequest) (*StaffCountOrderLineItemForExportResponse, error)
@@ -713,6 +740,7 @@ type OrderAdminAPIServer interface {
 	StaffCreateTestOrder(context.Context, *StaffCreateTestOrderRequest) (*StaffCreateTestOrderResponse, error)
 	StaffDuplicateOrder(context.Context, *StaffDuplicateOrderRequest) (*StaffDuplicateOrderResponse, error)
 	StaffBuyShippingLabel(context.Context, *StaffBuyShippingLabelRequest) (*StaffBuyShippingLabelResponse, error)
+	StaffSyncSplitChildrenTrackingToParent(context.Context, *StaffSyncSplitChildrenTrackingToParentRequest) (*StaffSyncSplitChildrenTrackingToParentResponse, error)
 	StaffGofoDhlSwitch(context.Context, *StaffGofoDhlSwitchRequest) (*StaffGofoDhlSwitchResponse, error)
 	StaffGetShippingServiceSuggestion(context.Context, *StaffGetShippingServiceSuggestionRequest) (*StaffGetShippingServiceSuggestionResponse, error)
 	StaffGetTeamOrderMetrics(context.Context, *StaffGetTeamOrderMetricsRequest) (*StaffGetTeamOrderMetricsResponse, error)
@@ -781,6 +809,9 @@ func (UnimplementedOrderAdminAPIServer) StaffSearchMultiTypeOrder(context.Contex
 }
 func (UnimplementedOrderAdminAPIServer) StaffGetOrder(context.Context, *StaffGetOrderRequest) (*StaffGetOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetOrder not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffGetOrderProductionPanel(context.Context, *StaffGetOrderProductionPanelRequest) (*StaffGetOrderProductionPanelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetOrderProductionPanel not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffCountOrderStatus(context.Context, *StaffCountOrderStatusRequest) (*StaffCountOrderStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffCountOrderStatus not implemented")
@@ -871,6 +902,9 @@ func (UnimplementedOrderAdminAPIServer) StaffDuplicateOrder(context.Context, *St
 }
 func (UnimplementedOrderAdminAPIServer) StaffBuyShippingLabel(context.Context, *StaffBuyShippingLabelRequest) (*StaffBuyShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffBuyShippingLabel not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffSyncSplitChildrenTrackingToParent(context.Context, *StaffSyncSplitChildrenTrackingToParentRequest) (*StaffSyncSplitChildrenTrackingToParentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffSyncSplitChildrenTrackingToParent not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffGofoDhlSwitch(context.Context, *StaffGofoDhlSwitchRequest) (*StaffGofoDhlSwitchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGofoDhlSwitch not implemented")
@@ -1239,6 +1273,24 @@ func _OrderAdminAPI_StaffGetOrder_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffGetOrder(ctx, req.(*StaffGetOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffGetOrderProductionPanel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetOrderProductionPanelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffGetOrderProductionPanel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffGetOrderProductionPanel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffGetOrderProductionPanel(ctx, req.(*StaffGetOrderProductionPanelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1783,6 +1835,24 @@ func _OrderAdminAPI_StaffBuyShippingLabel_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderAdminAPI_StaffSyncSplitChildrenTrackingToParent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffSyncSplitChildrenTrackingToParentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffSyncSplitChildrenTrackingToParent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffSyncSplitChildrenTrackingToParent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffSyncSplitChildrenTrackingToParent(ctx, req.(*StaffSyncSplitChildrenTrackingToParentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderAdminAPI_StaffGofoDhlSwitch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffGofoDhlSwitchRequest)
 	if err := dec(in); err != nil {
@@ -1921,6 +1991,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderAdminAPI_StaffGetOrder_Handler,
 		},
 		{
+			MethodName: "StaffGetOrderProductionPanel",
+			Handler:    _OrderAdminAPI_StaffGetOrderProductionPanel_Handler,
+		},
+		{
 			MethodName: "StaffCountOrderStatus",
 			Handler:    _OrderAdminAPI_StaffCountOrderStatus_Handler,
 		},
@@ -2039,6 +2113,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffBuyShippingLabel",
 			Handler:    _OrderAdminAPI_StaffBuyShippingLabel_Handler,
+		},
+		{
+			MethodName: "StaffSyncSplitChildrenTrackingToParent",
+			Handler:    _OrderAdminAPI_StaffSyncSplitChildrenTrackingToParent_Handler,
 		},
 		{
 			MethodName: "StaffGofoDhlSwitch",
