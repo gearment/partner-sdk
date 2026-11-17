@@ -20,6 +20,11 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	PaymentAdminAPI_StaffListPaymentMethod_FullMethodName                     = "/api.payment.v1.PaymentAdminAPI/StaffListPaymentMethod"
+	PaymentAdminAPI_StaffListAllPaymentMethod_FullMethodName                  = "/api.payment.v1.PaymentAdminAPI/StaffListAllPaymentMethod"
+	PaymentAdminAPI_StaffCreatePaymentMethod_FullMethodName                   = "/api.payment.v1.PaymentAdminAPI/StaffCreatePaymentMethod"
+	PaymentAdminAPI_StaffGetPaymentMethod_FullMethodName                      = "/api.payment.v1.PaymentAdminAPI/StaffGetPaymentMethod"
+	PaymentAdminAPI_StaffUpdatePaymentMethod_FullMethodName                   = "/api.payment.v1.PaymentAdminAPI/StaffUpdatePaymentMethod"
+	PaymentAdminAPI_StaffDeletePaymentMethod_FullMethodName                   = "/api.payment.v1.PaymentAdminAPI/StaffDeletePaymentMethod"
 	PaymentAdminAPI_StaffGetTeamLegalInformation_FullMethodName               = "/api.payment.v1.PaymentAdminAPI/StaffGetTeamLegalInformation"
 	PaymentAdminAPI_StaffListLinkedPaymentMethod_FullMethodName               = "/api.payment.v1.PaymentAdminAPI/StaffListLinkedPaymentMethod"
 	PaymentAdminAPI_StaffListTeamTransaction_FullMethodName                   = "/api.payment.v1.PaymentAdminAPI/StaffListTeamTransaction"
@@ -48,6 +53,12 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PaymentAdminAPIClient interface {
 	StaffListPaymentMethod(ctx context.Context, in *StaffListPaymentMethodRequest, opts ...grpc.CallOption) (*StaffListPaymentMethodResponse, error)
+	StaffListAllPaymentMethod(ctx context.Context, in *StaffListAllPaymentMethodRequest, opts ...grpc.CallOption) (*StaffListAllPaymentMethodResponse, error)
+	StaffCreatePaymentMethod(ctx context.Context, in *StaffCreatePaymentMethodRequest, opts ...grpc.CallOption) (*StaffCreatePaymentMethodResponse, error)
+	StaffGetPaymentMethod(ctx context.Context, in *StaffGetPaymentMethodRequest, opts ...grpc.CallOption) (*StaffGetPaymentMethodResponse, error)
+	StaffUpdatePaymentMethod(ctx context.Context, in *StaffUpdatePaymentMethodRequest, opts ...grpc.CallOption) (*StaffUpdatePaymentMethodResponse, error)
+	// Deactivates the payment method and its capabilities while preserving historical references.
+	StaffDeletePaymentMethod(ctx context.Context, in *StaffDeletePaymentMethodRequest, opts ...grpc.CallOption) (*StaffDeletePaymentMethodResponse, error)
 	StaffGetTeamLegalInformation(ctx context.Context, in *StaffGetTeamLegalInformationRequest, opts ...grpc.CallOption) (*StaffGetTeamLegalInformationResponse, error)
 	StaffListLinkedPaymentMethod(ctx context.Context, in *StaffListLinkedPaymentMethodRequest, opts ...grpc.CallOption) (*StaffListLinkedPaymentMethodResponse, error)
 	StaffListTeamTransaction(ctx context.Context, in *StaffListTeamTransactionRequest, opts ...grpc.CallOption) (*StaffListTeamTransactionResponse, error)
@@ -86,6 +97,56 @@ func (c *paymentAdminAPIClient) StaffListPaymentMethod(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListPaymentMethodResponse)
 	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffListPaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffListAllPaymentMethod(ctx context.Context, in *StaffListAllPaymentMethodRequest, opts ...grpc.CallOption) (*StaffListAllPaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffListAllPaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffListAllPaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffCreatePaymentMethod(ctx context.Context, in *StaffCreatePaymentMethodRequest, opts ...grpc.CallOption) (*StaffCreatePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffCreatePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffCreatePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffGetPaymentMethod(ctx context.Context, in *StaffGetPaymentMethodRequest, opts ...grpc.CallOption) (*StaffGetPaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetPaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffGetPaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffUpdatePaymentMethod(ctx context.Context, in *StaffUpdatePaymentMethodRequest, opts ...grpc.CallOption) (*StaffUpdatePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdatePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffUpdatePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentAdminAPIClient) StaffDeletePaymentMethod(ctx context.Context, in *StaffDeletePaymentMethodRequest, opts ...grpc.CallOption) (*StaffDeletePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffDeletePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentAdminAPI_StaffDeletePaymentMethod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -307,6 +368,12 @@ func (c *paymentAdminAPIClient) StaffCreateCashbackTransaction(ctx context.Conte
 // for forward compatibility.
 type PaymentAdminAPIServer interface {
 	StaffListPaymentMethod(context.Context, *StaffListPaymentMethodRequest) (*StaffListPaymentMethodResponse, error)
+	StaffListAllPaymentMethod(context.Context, *StaffListAllPaymentMethodRequest) (*StaffListAllPaymentMethodResponse, error)
+	StaffCreatePaymentMethod(context.Context, *StaffCreatePaymentMethodRequest) (*StaffCreatePaymentMethodResponse, error)
+	StaffGetPaymentMethod(context.Context, *StaffGetPaymentMethodRequest) (*StaffGetPaymentMethodResponse, error)
+	StaffUpdatePaymentMethod(context.Context, *StaffUpdatePaymentMethodRequest) (*StaffUpdatePaymentMethodResponse, error)
+	// Deactivates the payment method and its capabilities while preserving historical references.
+	StaffDeletePaymentMethod(context.Context, *StaffDeletePaymentMethodRequest) (*StaffDeletePaymentMethodResponse, error)
 	StaffGetTeamLegalInformation(context.Context, *StaffGetTeamLegalInformationRequest) (*StaffGetTeamLegalInformationResponse, error)
 	StaffListLinkedPaymentMethod(context.Context, *StaffListLinkedPaymentMethodRequest) (*StaffListLinkedPaymentMethodResponse, error)
 	StaffListTeamTransaction(context.Context, *StaffListTeamTransactionRequest) (*StaffListTeamTransactionResponse, error)
@@ -342,6 +409,21 @@ type UnimplementedPaymentAdminAPIServer struct{}
 
 func (UnimplementedPaymentAdminAPIServer) StaffListPaymentMethod(context.Context, *StaffListPaymentMethodRequest) (*StaffListPaymentMethodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListPaymentMethod not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffListAllPaymentMethod(context.Context, *StaffListAllPaymentMethodRequest) (*StaffListAllPaymentMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffListAllPaymentMethod not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffCreatePaymentMethod(context.Context, *StaffCreatePaymentMethodRequest) (*StaffCreatePaymentMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffCreatePaymentMethod not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffGetPaymentMethod(context.Context, *StaffGetPaymentMethodRequest) (*StaffGetPaymentMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetPaymentMethod not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffUpdatePaymentMethod(context.Context, *StaffUpdatePaymentMethodRequest) (*StaffUpdatePaymentMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdatePaymentMethod not implemented")
+}
+func (UnimplementedPaymentAdminAPIServer) StaffDeletePaymentMethod(context.Context, *StaffDeletePaymentMethodRequest) (*StaffDeletePaymentMethodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffDeletePaymentMethod not implemented")
 }
 func (UnimplementedPaymentAdminAPIServer) StaffGetTeamLegalInformation(context.Context, *StaffGetTeamLegalInformationRequest) (*StaffGetTeamLegalInformationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffGetTeamLegalInformation not implemented")
@@ -440,6 +522,96 @@ func _PaymentAdminAPI_StaffListPaymentMethod_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PaymentAdminAPIServer).StaffListPaymentMethod(ctx, req.(*StaffListPaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffListAllPaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffListAllPaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffListAllPaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffListAllPaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffListAllPaymentMethod(ctx, req.(*StaffListAllPaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffCreatePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffCreatePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffCreatePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffCreatePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffCreatePaymentMethod(ctx, req.(*StaffCreatePaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffGetPaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetPaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffGetPaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffGetPaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffGetPaymentMethod(ctx, req.(*StaffGetPaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffUpdatePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdatePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffUpdatePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffUpdatePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffUpdatePaymentMethod(ctx, req.(*StaffUpdatePaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentAdminAPI_StaffDeletePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffDeletePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAdminAPIServer).StaffDeletePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAdminAPI_StaffDeletePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAdminAPIServer).StaffDeletePaymentMethod(ctx, req.(*StaffDeletePaymentMethodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -832,6 +1004,26 @@ var PaymentAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListPaymentMethod",
 			Handler:    _PaymentAdminAPI_StaffListPaymentMethod_Handler,
+		},
+		{
+			MethodName: "StaffListAllPaymentMethod",
+			Handler:    _PaymentAdminAPI_StaffListAllPaymentMethod_Handler,
+		},
+		{
+			MethodName: "StaffCreatePaymentMethod",
+			Handler:    _PaymentAdminAPI_StaffCreatePaymentMethod_Handler,
+		},
+		{
+			MethodName: "StaffGetPaymentMethod",
+			Handler:    _PaymentAdminAPI_StaffGetPaymentMethod_Handler,
+		},
+		{
+			MethodName: "StaffUpdatePaymentMethod",
+			Handler:    _PaymentAdminAPI_StaffUpdatePaymentMethod_Handler,
+		},
+		{
+			MethodName: "StaffDeletePaymentMethod",
+			Handler:    _PaymentAdminAPI_StaffDeletePaymentMethod_Handler,
 		},
 		{
 			MethodName: "StaffGetTeamLegalInformation",
