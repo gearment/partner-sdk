@@ -30,6 +30,7 @@ const (
 	OrderAdminAPI_StaffUpdateOrderDesign_FullMethodName                 = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderDesign"
 	OrderAdminAPI_StaffUpdateOrderAddress_FullMethodName                = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderAddress"
 	OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderShippingLabel"
+	OrderAdminAPI_StaffUpdateOrderBillingOption_FullMethodName          = "/api.pod.v1.OrderAdminAPI/StaffUpdateOrderBillingOption"
 	OrderAdminAPI_StaffMarkOrderAsLowStock_FullMethodName               = "/api.pod.v1.OrderAdminAPI/StaffMarkOrderAsLowStock"
 	OrderAdminAPI_StaffUnmarkOrderAsLowStock_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffUnmarkOrderAsLowStock"
 	OrderAdminAPI_StaffUpdateShippingService_FullMethodName             = "/api.pod.v1.OrderAdminAPI/StaffUpdateShippingService"
@@ -90,6 +91,7 @@ type OrderAdminAPIClient interface {
 	StaffUpdateOrderDesign(ctx context.Context, in *StaffUpdateOrderDesignRequest, opts ...grpc.CallOption) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(ctx context.Context, in *StaffUpdateOrderAddressRequest, opts ...grpc.CallOption) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(ctx context.Context, in *StaffUpdateOrderShippingLabelRequest, opts ...grpc.CallOption) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffUpdateOrderBillingOption(ctx context.Context, in *StaffUpdateOrderBillingOptionRequest, opts ...grpc.CallOption) (*StaffUpdateOrderBillingOptionResponse, error)
 	StaffMarkOrderAsLowStock(ctx context.Context, in *StaffMarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffMarkOrderAsLowStockResponse, error)
 	StaffUnmarkOrderAsLowStock(ctx context.Context, in *StaffUnmarkOrderAsLowStockRequest, opts ...grpc.CallOption) (*StaffUnmarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(ctx context.Context, in *StaffUpdateShippingServiceRequest, opts ...grpc.CallOption) (*StaffUpdateShippingServiceResponse, error)
@@ -239,6 +241,16 @@ func (c *orderAdminAPIClient) StaffUpdateOrderShippingLabel(ctx context.Context,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffUpdateOrderShippingLabelResponse)
 	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateOrderShippingLabel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderAdminAPIClient) StaffUpdateOrderBillingOption(ctx context.Context, in *StaffUpdateOrderBillingOptionRequest, opts ...grpc.CallOption) (*StaffUpdateOrderBillingOptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffUpdateOrderBillingOptionResponse)
+	err := c.cc.Invoke(ctx, OrderAdminAPI_StaffUpdateOrderBillingOption_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -699,6 +711,7 @@ type OrderAdminAPIServer interface {
 	StaffUpdateOrderDesign(context.Context, *StaffUpdateOrderDesignRequest) (*StaffUpdateOrderDesignResponse, error)
 	StaffUpdateOrderAddress(context.Context, *StaffUpdateOrderAddressRequest) (*StaffUpdateOrderAddressResponse, error)
 	StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error)
+	StaffUpdateOrderBillingOption(context.Context, *StaffUpdateOrderBillingOptionRequest) (*StaffUpdateOrderBillingOptionResponse, error)
 	StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error)
 	StaffUnmarkOrderAsLowStock(context.Context, *StaffUnmarkOrderAsLowStockRequest) (*StaffUnmarkOrderAsLowStockResponse, error)
 	StaffUpdateShippingService(context.Context, *StaffUpdateShippingServiceRequest) (*StaffUpdateShippingServiceResponse, error)
@@ -782,6 +795,9 @@ func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderAddress(context.Context,
 }
 func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderShippingLabel(context.Context, *StaffUpdateOrderShippingLabelRequest) (*StaffUpdateOrderShippingLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOrderShippingLabel not implemented")
+}
+func (UnimplementedOrderAdminAPIServer) StaffUpdateOrderBillingOption(context.Context, *StaffUpdateOrderBillingOptionRequest) (*StaffUpdateOrderBillingOptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffUpdateOrderBillingOption not implemented")
 }
 func (UnimplementedOrderAdminAPIServer) StaffMarkOrderAsLowStock(context.Context, *StaffMarkOrderAsLowStockRequest) (*StaffMarkOrderAsLowStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffMarkOrderAsLowStock not implemented")
@@ -1111,6 +1127,24 @@ func _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderAdminAPIServer).StaffUpdateOrderShippingLabel(ctx, req.(*StaffUpdateOrderShippingLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderAdminAPI_StaffUpdateOrderBillingOption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffUpdateOrderBillingOptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderAdminAPIServer).StaffUpdateOrderBillingOption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderAdminAPI_StaffUpdateOrderBillingOption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderAdminAPIServer).StaffUpdateOrderBillingOption(ctx, req.(*StaffUpdateOrderBillingOptionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1953,6 +1987,10 @@ var OrderAdminAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffUpdateOrderShippingLabel",
 			Handler:    _OrderAdminAPI_StaffUpdateOrderShippingLabel_Handler,
+		},
+		{
+			MethodName: "StaffUpdateOrderBillingOption",
+			Handler:    _OrderAdminAPI_StaffUpdateOrderBillingOption_Handler,
 		},
 		{
 			MethodName: "StaffMarkOrderAsLowStock",
