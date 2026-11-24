@@ -95,8 +95,11 @@ type VendorCatalog struct {
 	Variants []*VendorCatalogVariant `protobuf:"bytes,5,rep,name=variants,proto3" json:"variants,omitempty"`
 	// Legacy product ID (for backward compatibility)
 	LegacyProductId int32 `protobuf:"varint,6,opt,name=legacy_product_id,json=legacyProductId,proto3" json:"legacy_product_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Supported print types and their allowed print locations.
+	// Empty for non-apparel products.
+	SupportedPrintTypes []*VendorCatalogSupportedPrintType `protobuf:"bytes,7,rep,name=supported_print_types,json=supportedPrintTypes,proto3" json:"supported_print_types,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *VendorCatalog) Reset() {
@@ -171,6 +174,67 @@ func (x *VendorCatalog) GetLegacyProductId() int32 {
 	return 0
 }
 
+func (x *VendorCatalog) GetSupportedPrintTypes() []*VendorCatalogSupportedPrintType {
+	if x != nil {
+		return x.SupportedPrintTypes
+	}
+	return nil
+}
+
+type VendorCatalogSupportedPrintType struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Print type code (e.g., "dtg", "dtf").
+	PrintType string `protobuf:"bytes,1,opt,name=print_type,json=printType,proto3" json:"print_type,omitempty"`
+	// Print locations supported by this print type.
+	PrintLocations []string `protobuf:"bytes,2,rep,name=print_locations,json=printLocations,proto3" json:"print_locations,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *VendorCatalogSupportedPrintType) Reset() {
+	*x = VendorCatalogSupportedPrintType{}
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VendorCatalogSupportedPrintType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VendorCatalogSupportedPrintType) ProtoMessage() {}
+
+func (x *VendorCatalogSupportedPrintType) ProtoReflect() protoreflect.Message {
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VendorCatalogSupportedPrintType.ProtoReflect.Descriptor instead.
+func (*VendorCatalogSupportedPrintType) Descriptor() ([]byte, []int) {
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *VendorCatalogSupportedPrintType) GetPrintType() string {
+	if x != nil {
+		return x.PrintType
+	}
+	return ""
+}
+
+func (x *VendorCatalogSupportedPrintType) GetPrintLocations() []string {
+	if x != nil {
+		return x.PrintLocations
+	}
+	return nil
+}
+
 type VendorCatalogVariant struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Variant ID (unique identifier)
@@ -209,7 +273,7 @@ type VendorCatalogVariant struct {
 
 func (x *VendorCatalogVariant) Reset() {
 	*x = VendorCatalogVariant{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[1]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -221,7 +285,7 @@ func (x *VendorCatalogVariant) String() string {
 func (*VendorCatalogVariant) ProtoMessage() {}
 
 func (x *VendorCatalogVariant) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[1]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -234,7 +298,7 @@ func (x *VendorCatalogVariant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogVariant.ProtoReflect.Descriptor instead.
 func (*VendorCatalogVariant) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{1}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *VendorCatalogVariant) GetVariantId() string {
@@ -369,7 +433,7 @@ type VendorCatalogShippingFee struct {
 
 func (x *VendorCatalogShippingFee) Reset() {
 	*x = VendorCatalogShippingFee{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[2]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -381,7 +445,7 @@ func (x *VendorCatalogShippingFee) String() string {
 func (*VendorCatalogShippingFee) ProtoMessage() {}
 
 func (x *VendorCatalogShippingFee) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[2]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -394,7 +458,7 @@ func (x *VendorCatalogShippingFee) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogShippingFee.ProtoReflect.Descriptor instead.
 func (*VendorCatalogShippingFee) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{2}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *VendorCatalogShippingFee) GetVariantId() string {
@@ -483,7 +547,7 @@ type VendorCatalogShippingFeeService struct {
 
 func (x *VendorCatalogShippingFeeService) Reset() {
 	*x = VendorCatalogShippingFeeService{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[3]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -495,7 +559,7 @@ func (x *VendorCatalogShippingFeeService) String() string {
 func (*VendorCatalogShippingFeeService) ProtoMessage() {}
 
 func (x *VendorCatalogShippingFeeService) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[3]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -508,7 +572,7 @@ func (x *VendorCatalogShippingFeeService) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogShippingFeeService.ProtoReflect.Descriptor instead.
 func (*VendorCatalogShippingFeeService) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{3}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *VendorCatalogShippingFeeService) GetFeeAmount() *v1.Money {
@@ -553,7 +617,7 @@ type VendorCatalogPrintLocation struct {
 
 func (x *VendorCatalogPrintLocation) Reset() {
 	*x = VendorCatalogPrintLocation{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[4]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -565,7 +629,7 @@ func (x *VendorCatalogPrintLocation) String() string {
 func (*VendorCatalogPrintLocation) ProtoMessage() {}
 
 func (x *VendorCatalogPrintLocation) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[4]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -578,7 +642,7 @@ func (x *VendorCatalogPrintLocation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogPrintLocation.ProtoReflect.Descriptor instead.
 func (*VendorCatalogPrintLocation) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{4}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *VendorCatalogPrintLocation) GetCode() string {
@@ -614,7 +678,7 @@ type VendorCatalogFilter struct {
 
 func (x *VendorCatalogFilter) Reset() {
 	*x = VendorCatalogFilter{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[5]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -626,7 +690,7 @@ func (x *VendorCatalogFilter) String() string {
 func (*VendorCatalogFilter) ProtoMessage() {}
 
 func (x *VendorCatalogFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[5]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -639,7 +703,7 @@ func (x *VendorCatalogFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogFilter.ProtoReflect.Descriptor instead.
 func (*VendorCatalogFilter) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{5}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *VendorCatalogFilter) GetProductIds() []string {
@@ -684,7 +748,7 @@ type VendorCatalogVariantFilter struct {
 
 func (x *VendorCatalogVariantFilter) Reset() {
 	*x = VendorCatalogVariantFilter{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[6]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -696,7 +760,7 @@ func (x *VendorCatalogVariantFilter) String() string {
 func (*VendorCatalogVariantFilter) ProtoMessage() {}
 
 func (x *VendorCatalogVariantFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[6]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -709,7 +773,7 @@ func (x *VendorCatalogVariantFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VendorCatalogVariantFilter.ProtoReflect.Descriptor instead.
 func (*VendorCatalogVariantFilter) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{6}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *VendorCatalogVariantFilter) GetProductIds() []string {
@@ -800,7 +864,7 @@ type LegacyVendorCatalog struct {
 
 func (x *LegacyVendorCatalog) Reset() {
 	*x = LegacyVendorCatalog{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[7]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -812,7 +876,7 @@ func (x *LegacyVendorCatalog) String() string {
 func (*LegacyVendorCatalog) ProtoMessage() {}
 
 func (x *LegacyVendorCatalog) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[7]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -825,7 +889,7 @@ func (x *LegacyVendorCatalog) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LegacyVendorCatalog.ProtoReflect.Descriptor instead.
 func (*LegacyVendorCatalog) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{7}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *LegacyVendorCatalog) GetProductName() string {
@@ -897,7 +961,7 @@ type LegacyVendorCatalogVariant struct {
 
 func (x *LegacyVendorCatalogVariant) Reset() {
 	*x = LegacyVendorCatalogVariant{}
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[8]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -909,7 +973,7 @@ func (x *LegacyVendorCatalogVariant) String() string {
 func (*LegacyVendorCatalogVariant) ProtoMessage() {}
 
 func (x *LegacyVendorCatalogVariant) ProtoReflect() protoreflect.Message {
-	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[8]
+	mi := &file_api_catalog_v1_data_vendor_catalog_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,7 +986,7 @@ func (x *LegacyVendorCatalogVariant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LegacyVendorCatalogVariant.ProtoReflect.Descriptor instead.
 func (*LegacyVendorCatalogVariant) Descriptor() ([]byte, []int) {
-	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{8}
+	return file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *LegacyVendorCatalogVariant) GetVariantId() string {
@@ -1026,7 +1090,7 @@ var file_api_catalog_v1_data_vendor_catalog_proto_rawDesc = string([]byte{
 	0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74,
 	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1a, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f,
 	0x74, 0x79, 0x70, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x6d, 0x6f, 0x6e, 0x65, 0x79, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x22, 0xc2, 0x02, 0x0a, 0x0d, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x43, 0x61,
+	0x6f, 0x74, 0x6f, 0x22, 0xa7, 0x03, 0x0a, 0x0d, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x43, 0x61,
 	0x74, 0x61, 0x6c, 0x6f, 0x67, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
 	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75,
 	0x63, 0x74, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f,
@@ -1046,7 +1110,20 @@ var file_api_catalog_v1_data_vendor_catalog_proto_rawDesc = string([]byte{
 	0x6e, 0x74, 0x52, 0x08, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x73, 0x12, 0x2a, 0x0a, 0x11,
 	0x6c, 0x65, 0x67, 0x61, 0x63, 0x79, 0x5f, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x69,
 	0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0f, 0x6c, 0x65, 0x67, 0x61, 0x63, 0x79, 0x50,
-	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x22, 0x93, 0x05, 0x0a, 0x14, 0x56, 0x65, 0x6e,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x63, 0x0a, 0x15, 0x73, 0x75, 0x70, 0x70,
+	0x6f, 0x72, 0x74, 0x65, 0x64, 0x5f, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x5f, 0x74, 0x79, 0x70, 0x65,
+	0x73, 0x18, 0x07, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x61,
+	0x74, 0x61, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x43,
+	0x61, 0x74, 0x61, 0x6c, 0x6f, 0x67, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x50,
+	0x72, 0x69, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x52, 0x13, 0x73, 0x75, 0x70, 0x70, 0x6f, 0x72,
+	0x74, 0x65, 0x64, 0x50, 0x72, 0x69, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x73, 0x22, 0x69, 0x0a,
+	0x1f, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x43, 0x61, 0x74, 0x61, 0x6c, 0x6f, 0x67, 0x53, 0x75,
+	0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x50, 0x72, 0x69, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x27, 0x0a, 0x0f, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x5f, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0e, 0x70, 0x72, 0x69, 0x6e, 0x74, 0x4c,
+	0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x93, 0x05, 0x0a, 0x14, 0x56, 0x65, 0x6e,
 	0x64, 0x6f, 0x72, 0x43, 0x61, 0x74, 0x61, 0x6c, 0x6f, 0x67, 0x56, 0x61, 0x72, 0x69, 0x61, 0x6e,
 	0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x76, 0x61, 0x72, 0x69, 0x61, 0x6e, 0x74, 0x49, 0x64,
@@ -1271,39 +1348,41 @@ func file_api_catalog_v1_data_vendor_catalog_proto_rawDescGZIP() []byte {
 }
 
 var file_api_catalog_v1_data_vendor_catalog_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_catalog_v1_data_vendor_catalog_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_api_catalog_v1_data_vendor_catalog_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_api_catalog_v1_data_vendor_catalog_proto_goTypes = []any{
 	(VendorCatalogVariantStockLabel)(0),     // 0: api.catalog.v1.VendorCatalogVariantStockLabel
 	(*VendorCatalog)(nil),                   // 1: api.catalog.v1.VendorCatalog
-	(*VendorCatalogVariant)(nil),            // 2: api.catalog.v1.VendorCatalogVariant
-	(*VendorCatalogShippingFee)(nil),        // 3: api.catalog.v1.VendorCatalogShippingFee
-	(*VendorCatalogShippingFeeService)(nil), // 4: api.catalog.v1.VendorCatalogShippingFeeService
-	(*VendorCatalogPrintLocation)(nil),      // 5: api.catalog.v1.VendorCatalogPrintLocation
-	(*VendorCatalogFilter)(nil),             // 6: api.catalog.v1.VendorCatalogFilter
-	(*VendorCatalogVariantFilter)(nil),      // 7: api.catalog.v1.VendorCatalogVariantFilter
-	(*LegacyVendorCatalog)(nil),             // 8: api.catalog.v1.LegacyVendorCatalog
-	(*LegacyVendorCatalogVariant)(nil),      // 9: api.catalog.v1.LegacyVendorCatalogVariant
-	(*v1.Money)(nil),                        // 10: common.type.v1.Money
+	(*VendorCatalogSupportedPrintType)(nil), // 2: api.catalog.v1.VendorCatalogSupportedPrintType
+	(*VendorCatalogVariant)(nil),            // 3: api.catalog.v1.VendorCatalogVariant
+	(*VendorCatalogShippingFee)(nil),        // 4: api.catalog.v1.VendorCatalogShippingFee
+	(*VendorCatalogShippingFeeService)(nil), // 5: api.catalog.v1.VendorCatalogShippingFeeService
+	(*VendorCatalogPrintLocation)(nil),      // 6: api.catalog.v1.VendorCatalogPrintLocation
+	(*VendorCatalogFilter)(nil),             // 7: api.catalog.v1.VendorCatalogFilter
+	(*VendorCatalogVariantFilter)(nil),      // 8: api.catalog.v1.VendorCatalogVariantFilter
+	(*LegacyVendorCatalog)(nil),             // 9: api.catalog.v1.LegacyVendorCatalog
+	(*LegacyVendorCatalogVariant)(nil),      // 10: api.catalog.v1.LegacyVendorCatalogVariant
+	(*v1.Money)(nil),                        // 11: common.type.v1.Money
 }
 var file_api_catalog_v1_data_vendor_catalog_proto_depIdxs = []int32{
-	5,  // 0: api.catalog.v1.VendorCatalog.print_locations:type_name -> api.catalog.v1.VendorCatalogPrintLocation
-	2,  // 1: api.catalog.v1.VendorCatalog.variants:type_name -> api.catalog.v1.VendorCatalogVariant
-	10, // 2: api.catalog.v1.VendorCatalogVariant.price:type_name -> common.type.v1.Money
-	10, // 3: api.catalog.v1.VendorCatalogVariant.recommended_price:type_name -> common.type.v1.Money
-	10, // 4: api.catalog.v1.VendorCatalogVariant.extra_price:type_name -> common.type.v1.Money
-	10, // 5: api.catalog.v1.VendorCatalogVariant.net_price:type_name -> common.type.v1.Money
-	0,  // 6: api.catalog.v1.VendorCatalogVariant.stock_label:type_name -> api.catalog.v1.VendorCatalogVariantStockLabel
-	1,  // 7: api.catalog.v1.VendorCatalogVariant.product:type_name -> api.catalog.v1.VendorCatalog
-	4,  // 8: api.catalog.v1.VendorCatalogShippingFee.shipping_services:type_name -> api.catalog.v1.VendorCatalogShippingFeeService
-	10, // 9: api.catalog.v1.VendorCatalogShippingFeeService.fee_amount:type_name -> common.type.v1.Money
-	10, // 10: api.catalog.v1.VendorCatalogShippingFeeService.additional_item:type_name -> common.type.v1.Money
-	0,  // 11: api.catalog.v1.VendorCatalogVariantFilter.stock_labels:type_name -> api.catalog.v1.VendorCatalogVariantStockLabel
-	9,  // 12: api.catalog.v1.LegacyVendorCatalog.variants:type_name -> api.catalog.v1.LegacyVendorCatalogVariant
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	6,  // 0: api.catalog.v1.VendorCatalog.print_locations:type_name -> api.catalog.v1.VendorCatalogPrintLocation
+	3,  // 1: api.catalog.v1.VendorCatalog.variants:type_name -> api.catalog.v1.VendorCatalogVariant
+	2,  // 2: api.catalog.v1.VendorCatalog.supported_print_types:type_name -> api.catalog.v1.VendorCatalogSupportedPrintType
+	11, // 3: api.catalog.v1.VendorCatalogVariant.price:type_name -> common.type.v1.Money
+	11, // 4: api.catalog.v1.VendorCatalogVariant.recommended_price:type_name -> common.type.v1.Money
+	11, // 5: api.catalog.v1.VendorCatalogVariant.extra_price:type_name -> common.type.v1.Money
+	11, // 6: api.catalog.v1.VendorCatalogVariant.net_price:type_name -> common.type.v1.Money
+	0,  // 7: api.catalog.v1.VendorCatalogVariant.stock_label:type_name -> api.catalog.v1.VendorCatalogVariantStockLabel
+	1,  // 8: api.catalog.v1.VendorCatalogVariant.product:type_name -> api.catalog.v1.VendorCatalog
+	5,  // 9: api.catalog.v1.VendorCatalogShippingFee.shipping_services:type_name -> api.catalog.v1.VendorCatalogShippingFeeService
+	11, // 10: api.catalog.v1.VendorCatalogShippingFeeService.fee_amount:type_name -> common.type.v1.Money
+	11, // 11: api.catalog.v1.VendorCatalogShippingFeeService.additional_item:type_name -> common.type.v1.Money
+	0,  // 12: api.catalog.v1.VendorCatalogVariantFilter.stock_labels:type_name -> api.catalog.v1.VendorCatalogVariantStockLabel
+	10, // 13: api.catalog.v1.LegacyVendorCatalog.variants:type_name -> api.catalog.v1.LegacyVendorCatalogVariant
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_api_catalog_v1_data_vendor_catalog_proto_init() }
@@ -1317,7 +1396,7 @@ func file_api_catalog_v1_data_vendor_catalog_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_catalog_v1_data_vendor_catalog_proto_rawDesc), len(file_api_catalog_v1_data_vendor_catalog_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
