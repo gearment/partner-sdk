@@ -27,6 +27,8 @@ const (
 	VendorOrderAPI_VendorGetPriceQuote_FullMethodName             = "/api.order.v1.VendorOrderAPI/VendorGetPriceQuote"
 	VendorOrderAPI_VendorUpdateOrderDraftLineItems_FullMethodName = "/api.order.v1.VendorOrderAPI/VendorUpdateOrderDraftLineItems"
 	VendorOrderAPI_VendorGetOrder_FullMethodName                  = "/api.order.v1.VendorOrderAPI/VendorGetOrder"
+	VendorOrderAPI_VendorUpdateOrderAddress_FullMethodName        = "/api.order.v1.VendorOrderAPI/VendorUpdateOrderAddress"
+	VendorOrderAPI_VendorUpdateOrderDesign_FullMethodName         = "/api.order.v1.VendorOrderAPI/VendorUpdateOrderDesign"
 	VendorOrderAPI_VendorGetOrderDraft_FullMethodName             = "/api.order.v1.VendorOrderAPI/VendorGetOrderDraft"
 )
 
@@ -90,6 +92,7 @@ type VendorOrderAPIClient interface {
 	//   - order_subtotal: Product costs
 	//   - order_shipping_fee: Shipping cost
 	//   - order_tax: Tax amount
+	//   - fees: Fee-level breakdown, including applicable holiday surcharges
 	//
 	// Use cases:
 	//   - Show pricing to customers before checkout
@@ -121,6 +124,21 @@ type VendorOrderAPIClient interface {
 	//   - Get shipping/tracking info
 	//   - Customer support queries
 	VendorGetOrder(ctx context.Context, in *VendorGetOrderRequest, opts ...grpc.CallOption) (*VendorGetOrderResponse, error)
+	// Replace the shipping address of an active sales order.
+	//
+	// PUT /api/v3/orders/{order_id}/address
+	//
+	// The destination country cannot be changed. US orders cannot be moved to
+	// or from CA, AK, HI, PR, GU, or VI. International orders must retain their
+	// existing state/province.
+	VendorUpdateOrderAddress(ctx context.Context, in *VendorUpdateOrderAddressRequest, opts ...grpc.CallOption) (*VendorUpdateOrderAddressResponse, error)
+	// Replace designs at existing print locations on an active sales order.
+	//
+	// PUT /api/v3/orders/{order_id}/design
+	//
+	// Each line_item_id must belong to this order. This endpoint can replace a
+	// design only at a print location that already exists on the line item.
+	VendorUpdateOrderDesign(ctx context.Context, in *VendorUpdateOrderDesignRequest, opts ...grpc.CallOption) (*VendorUpdateOrderDesignResponse, error)
 	// Get details of a specific order draft
 	//
 	// GET /api/v3/orders/draft/{order_id}
@@ -219,6 +237,26 @@ func (c *vendorOrderAPIClient) VendorGetOrder(ctx context.Context, in *VendorGet
 	return out, nil
 }
 
+func (c *vendorOrderAPIClient) VendorUpdateOrderAddress(ctx context.Context, in *VendorUpdateOrderAddressRequest, opts ...grpc.CallOption) (*VendorUpdateOrderAddressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorUpdateOrderAddressResponse)
+	err := c.cc.Invoke(ctx, VendorOrderAPI_VendorUpdateOrderAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorOrderAPIClient) VendorUpdateOrderDesign(ctx context.Context, in *VendorUpdateOrderDesignRequest, opts ...grpc.CallOption) (*VendorUpdateOrderDesignResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorUpdateOrderDesignResponse)
+	err := c.cc.Invoke(ctx, VendorOrderAPI_VendorUpdateOrderDesign_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *vendorOrderAPIClient) VendorGetOrderDraft(ctx context.Context, in *VendorGetOrderDraftRequest, opts ...grpc.CallOption) (*VendorGetOrderDraftResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VendorGetOrderDraftResponse)
@@ -289,6 +327,7 @@ type VendorOrderAPIServer interface {
 	//   - order_subtotal: Product costs
 	//   - order_shipping_fee: Shipping cost
 	//   - order_tax: Tax amount
+	//   - fees: Fee-level breakdown, including applicable holiday surcharges
 	//
 	// Use cases:
 	//   - Show pricing to customers before checkout
@@ -320,6 +359,21 @@ type VendorOrderAPIServer interface {
 	//   - Get shipping/tracking info
 	//   - Customer support queries
 	VendorGetOrder(context.Context, *VendorGetOrderRequest) (*VendorGetOrderResponse, error)
+	// Replace the shipping address of an active sales order.
+	//
+	// PUT /api/v3/orders/{order_id}/address
+	//
+	// The destination country cannot be changed. US orders cannot be moved to
+	// or from CA, AK, HI, PR, GU, or VI. International orders must retain their
+	// existing state/province.
+	VendorUpdateOrderAddress(context.Context, *VendorUpdateOrderAddressRequest) (*VendorUpdateOrderAddressResponse, error)
+	// Replace designs at existing print locations on an active sales order.
+	//
+	// PUT /api/v3/orders/{order_id}/design
+	//
+	// Each line_item_id must belong to this order. This endpoint can replace a
+	// design only at a print location that already exists on the line item.
+	VendorUpdateOrderDesign(context.Context, *VendorUpdateOrderDesignRequest) (*VendorUpdateOrderDesignResponse, error)
 	// Get details of a specific order draft
 	//
 	// GET /api/v3/orders/draft/{order_id}
@@ -360,6 +414,12 @@ func (UnimplementedVendorOrderAPIServer) VendorUpdateOrderDraftLineItems(context
 }
 func (UnimplementedVendorOrderAPIServer) VendorGetOrder(context.Context, *VendorGetOrderRequest) (*VendorGetOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorGetOrder not implemented")
+}
+func (UnimplementedVendorOrderAPIServer) VendorUpdateOrderAddress(context.Context, *VendorUpdateOrderAddressRequest) (*VendorUpdateOrderAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorUpdateOrderAddress not implemented")
+}
+func (UnimplementedVendorOrderAPIServer) VendorUpdateOrderDesign(context.Context, *VendorUpdateOrderDesignRequest) (*VendorUpdateOrderDesignResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorUpdateOrderDesign not implemented")
 }
 func (UnimplementedVendorOrderAPIServer) VendorGetOrderDraft(context.Context, *VendorGetOrderDraftRequest) (*VendorGetOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VendorGetOrderDraft not implemented")
@@ -528,6 +588,42 @@ func _VendorOrderAPI_VendorGetOrder_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorOrderAPI_VendorUpdateOrderAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorUpdateOrderAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorOrderAPIServer).VendorUpdateOrderAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorOrderAPI_VendorUpdateOrderAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorOrderAPIServer).VendorUpdateOrderAddress(ctx, req.(*VendorUpdateOrderAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorOrderAPI_VendorUpdateOrderDesign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorUpdateOrderDesignRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorOrderAPIServer).VendorUpdateOrderDesign(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorOrderAPI_VendorUpdateOrderDesign_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorOrderAPIServer).VendorUpdateOrderDesign(ctx, req.(*VendorUpdateOrderDesignRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _VendorOrderAPI_VendorGetOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VendorGetOrderDraftRequest)
 	if err := dec(in); err != nil {
@@ -584,6 +680,14 @@ var VendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VendorGetOrder",
 			Handler:    _VendorOrderAPI_VendorGetOrder_Handler,
+		},
+		{
+			MethodName: "VendorUpdateOrderAddress",
+			Handler:    _VendorOrderAPI_VendorUpdateOrderAddress_Handler,
+		},
+		{
+			MethodName: "VendorUpdateOrderDesign",
+			Handler:    _VendorOrderAPI_VendorUpdateOrderDesign_Handler,
 		},
 		{
 			MethodName: "VendorGetOrderDraft",

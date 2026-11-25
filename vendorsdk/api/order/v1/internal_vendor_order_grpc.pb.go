@@ -27,6 +27,8 @@ const (
 	InternalVendorOrderAPI_InternalVendorGetPriceQuote_FullMethodName                                        = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetPriceQuote"
 	InternalVendorOrderAPI_InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs_FullMethodName = "/api.order.v1.InternalVendorOrderAPI/InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs"
 	InternalVendorOrderAPI_InternalVendorGetOrder_FullMethodName                                             = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetOrder"
+	InternalVendorOrderAPI_InternalVendorUpdateOrderAddress_FullMethodName                                   = "/api.order.v1.InternalVendorOrderAPI/InternalVendorUpdateOrderAddress"
+	InternalVendorOrderAPI_InternalVendorUpdateOrderDesign_FullMethodName                                    = "/api.order.v1.InternalVendorOrderAPI/InternalVendorUpdateOrderDesign"
 	InternalVendorOrderAPI_InternalVendorGetOrderDraft_FullMethodName                                        = "/api.order.v1.InternalVendorOrderAPI/InternalVendorGetOrderDraft"
 	InternalVendorOrderAPI_InternalVendorListOrderDraftForCheckout_FullMethodName                            = "/api.order.v1.InternalVendorOrderAPI/InternalVendorListOrderDraftForCheckout"
 )
@@ -43,6 +45,8 @@ type InternalVendorOrderAPIClient interface {
 	InternalVendorGetPriceQuote(ctx context.Context, in *InternalVendorGetPriceQuoteRequest, opts ...grpc.CallOption) (*VendorGetPriceQuoteResponse, error)
 	InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs(ctx context.Context, in *InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsResponse, error)
 	InternalVendorGetOrder(ctx context.Context, in *InternalVendorGetOrderRequest, opts ...grpc.CallOption) (*VendorGetOrderResponse, error)
+	InternalVendorUpdateOrderAddress(ctx context.Context, in *InternalVendorUpdateOrderAddressRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderAddressResponse, error)
+	InternalVendorUpdateOrderDesign(ctx context.Context, in *InternalVendorUpdateOrderDesignRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderDesignResponse, error)
 	InternalVendorGetOrderDraft(ctx context.Context, in *InternalVendorGetOrderDraftRequest, opts ...grpc.CallOption) (*VendorGetOrderDraftResponse, error)
 	InternalVendorListOrderDraftForCheckout(ctx context.Context, in *InternalVendorListOrderDraftForCheckoutRequest, opts ...grpc.CallOption) (*VendorListOrderDraftForCheckoutResponse, error)
 }
@@ -135,6 +139,26 @@ func (c *internalVendorOrderAPIClient) InternalVendorGetOrder(ctx context.Contex
 	return out, nil
 }
 
+func (c *internalVendorOrderAPIClient) InternalVendorUpdateOrderAddress(ctx context.Context, in *InternalVendorUpdateOrderAddressRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderAddressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalVendorUpdateOrderAddressResponse)
+	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalVendorUpdateOrderAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internalVendorOrderAPIClient) InternalVendorUpdateOrderDesign(ctx context.Context, in *InternalVendorUpdateOrderDesignRequest, opts ...grpc.CallOption) (*InternalVendorUpdateOrderDesignResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InternalVendorUpdateOrderDesignResponse)
+	err := c.cc.Invoke(ctx, InternalVendorOrderAPI_InternalVendorUpdateOrderDesign_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *internalVendorOrderAPIClient) InternalVendorGetOrderDraft(ctx context.Context, in *InternalVendorGetOrderDraftRequest, opts ...grpc.CallOption) (*VendorGetOrderDraftResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VendorGetOrderDraftResponse)
@@ -167,6 +191,8 @@ type InternalVendorOrderAPIServer interface {
 	InternalVendorGetPriceQuote(context.Context, *InternalVendorGetPriceQuoteRequest) (*VendorGetPriceQuoteResponse, error)
 	InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDs(context.Context, *InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsRequest) (*InternalVendorUpdateOrderDraftLineItemsByListDraftIDAndLineItemIDsResponse, error)
 	InternalVendorGetOrder(context.Context, *InternalVendorGetOrderRequest) (*VendorGetOrderResponse, error)
+	InternalVendorUpdateOrderAddress(context.Context, *InternalVendorUpdateOrderAddressRequest) (*InternalVendorUpdateOrderAddressResponse, error)
+	InternalVendorUpdateOrderDesign(context.Context, *InternalVendorUpdateOrderDesignRequest) (*InternalVendorUpdateOrderDesignResponse, error)
 	InternalVendorGetOrderDraft(context.Context, *InternalVendorGetOrderDraftRequest) (*VendorGetOrderDraftResponse, error)
 	InternalVendorListOrderDraftForCheckout(context.Context, *InternalVendorListOrderDraftForCheckoutRequest) (*VendorListOrderDraftForCheckoutResponse, error)
 }
@@ -201,6 +227,12 @@ func (UnimplementedInternalVendorOrderAPIServer) InternalVendorUpdateOrderDraftL
 }
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorGetOrder(context.Context, *InternalVendorGetOrderRequest) (*VendorGetOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorGetOrder not implemented")
+}
+func (UnimplementedInternalVendorOrderAPIServer) InternalVendorUpdateOrderAddress(context.Context, *InternalVendorUpdateOrderAddressRequest) (*InternalVendorUpdateOrderAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorUpdateOrderAddress not implemented")
+}
+func (UnimplementedInternalVendorOrderAPIServer) InternalVendorUpdateOrderDesign(context.Context, *InternalVendorUpdateOrderDesignRequest) (*InternalVendorUpdateOrderDesignResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorUpdateOrderDesign not implemented")
 }
 func (UnimplementedInternalVendorOrderAPIServer) InternalVendorGetOrderDraft(context.Context, *InternalVendorGetOrderDraftRequest) (*VendorGetOrderDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InternalVendorGetOrderDraft not implemented")
@@ -372,6 +404,42 @@ func _InternalVendorOrderAPI_InternalVendorGetOrder_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InternalVendorOrderAPI_InternalVendorUpdateOrderAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalVendorUpdateOrderAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalVendorOrderAPIServer).InternalVendorUpdateOrderAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalVendorOrderAPI_InternalVendorUpdateOrderAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalVendorOrderAPIServer).InternalVendorUpdateOrderAddress(ctx, req.(*InternalVendorUpdateOrderAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InternalVendorOrderAPI_InternalVendorUpdateOrderDesign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InternalVendorUpdateOrderDesignRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalVendorOrderAPIServer).InternalVendorUpdateOrderDesign(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InternalVendorOrderAPI_InternalVendorUpdateOrderDesign_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalVendorOrderAPIServer).InternalVendorUpdateOrderDesign(ctx, req.(*InternalVendorUpdateOrderDesignRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _InternalVendorOrderAPI_InternalVendorGetOrderDraft_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InternalVendorGetOrderDraftRequest)
 	if err := dec(in); err != nil {
@@ -446,6 +514,14 @@ var InternalVendorOrderAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InternalVendorGetOrder",
 			Handler:    _InternalVendorOrderAPI_InternalVendorGetOrder_Handler,
+		},
+		{
+			MethodName: "InternalVendorUpdateOrderAddress",
+			Handler:    _InternalVendorOrderAPI_InternalVendorUpdateOrderAddress_Handler,
+		},
+		{
+			MethodName: "InternalVendorUpdateOrderDesign",
+			Handler:    _InternalVendorOrderAPI_InternalVendorUpdateOrderDesign_Handler,
 		},
 		{
 			MethodName: "InternalVendorGetOrderDraft",
