@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CallLogIntegrationAPI_UserListOrderWebhookCallLog_FullMethodName    = "/api.integration.v1.CallLogIntegrationAPI/UserListOrderWebhookCallLog"
-	CallLogIntegrationAPI_UserResendOrderWebhookCallLog_FullMethodName  = "/api.integration.v1.CallLogIntegrationAPI/UserResendOrderWebhookCallLog"
-	CallLogIntegrationAPI_StaffListWebhookCallLog_FullMethodName        = "/api.integration.v1.CallLogIntegrationAPI/StaffListWebhookCallLog"
-	CallLogIntegrationAPI_StaffListOrderWebhookCallLog_FullMethodName   = "/api.integration.v1.CallLogIntegrationAPI/StaffListOrderWebhookCallLog"
-	CallLogIntegrationAPI_StaffResendOrderWebhookCallLog_FullMethodName = "/api.integration.v1.CallLogIntegrationAPI/StaffResendOrderWebhookCallLog"
-	CallLogIntegrationAPI_StaffListVendorAPICallLog_FullMethodName      = "/api.integration.v1.CallLogIntegrationAPI/StaffListVendorAPICallLog"
-	CallLogIntegrationAPI_StaffListFinanceAPICallLog_FullMethodName     = "/api.integration.v1.CallLogIntegrationAPI/StaffListFinanceAPICallLog"
-	CallLogIntegrationAPI_StaffListStoreAPICallLog_FullMethodName       = "/api.integration.v1.CallLogIntegrationAPI/StaffListStoreAPICallLog"
-	CallLogIntegrationAPI_StaffListStoreWebhookCallLog_FullMethodName   = "/api.integration.v1.CallLogIntegrationAPI/StaffListStoreWebhookCallLog"
+	CallLogIntegrationAPI_UserListOrderWebhookCallLog_FullMethodName      = "/api.integration.v1.CallLogIntegrationAPI/UserListOrderWebhookCallLog"
+	CallLogIntegrationAPI_UserResendOrderWebhookCallLog_FullMethodName    = "/api.integration.v1.CallLogIntegrationAPI/UserResendOrderWebhookCallLog"
+	CallLogIntegrationAPI_StaffListWebhookCallLog_FullMethodName          = "/api.integration.v1.CallLogIntegrationAPI/StaffListWebhookCallLog"
+	CallLogIntegrationAPI_StaffListOrderWebhookCallLog_FullMethodName     = "/api.integration.v1.CallLogIntegrationAPI/StaffListOrderWebhookCallLog"
+	CallLogIntegrationAPI_StaffResendOrderWebhookCallLog_FullMethodName   = "/api.integration.v1.CallLogIntegrationAPI/StaffResendOrderWebhookCallLog"
+	CallLogIntegrationAPI_StaffListVendorAPICallLog_FullMethodName        = "/api.integration.v1.CallLogIntegrationAPI/StaffListVendorAPICallLog"
+	CallLogIntegrationAPI_StaffGetVendorOrderCreatePayload_FullMethodName = "/api.integration.v1.CallLogIntegrationAPI/StaffGetVendorOrderCreatePayload"
+	CallLogIntegrationAPI_StaffListFinanceAPICallLog_FullMethodName       = "/api.integration.v1.CallLogIntegrationAPI/StaffListFinanceAPICallLog"
+	CallLogIntegrationAPI_StaffListStoreAPICallLog_FullMethodName         = "/api.integration.v1.CallLogIntegrationAPI/StaffListStoreAPICallLog"
+	CallLogIntegrationAPI_StaffListStoreWebhookCallLog_FullMethodName     = "/api.integration.v1.CallLogIntegrationAPI/StaffListStoreWebhookCallLog"
 )
 
 // CallLogIntegrationAPIClient is the client API for CallLogIntegrationAPI service.
@@ -40,6 +41,7 @@ type CallLogIntegrationAPIClient interface {
 	StaffListOrderWebhookCallLog(ctx context.Context, in *StaffListOrderWebhookCallLogRequest, opts ...grpc.CallOption) (*StaffListOrderWebhookCallLogResponse, error)
 	StaffResendOrderWebhookCallLog(ctx context.Context, in *StaffResendOrderWebhookCallLogRequest, opts ...grpc.CallOption) (*WebhookCallLog, error)
 	StaffListVendorAPICallLog(ctx context.Context, in *StaffListVendorAPICallLogRequest, opts ...grpc.CallOption) (*StaffListVendorAPICallLogResponse, error)
+	StaffGetVendorOrderCreatePayload(ctx context.Context, in *StaffGetVendorOrderCreatePayloadRequest, opts ...grpc.CallOption) (*StaffGetVendorOrderCreatePayloadResponse, error)
 	StaffListFinanceAPICallLog(ctx context.Context, in *StaffListFinanceAPICallLogRequest, opts ...grpc.CallOption) (*StaffListFinanceAPICallLogResponse, error)
 	StaffListStoreAPICallLog(ctx context.Context, in *StaffListStoreAPICallLogRequest, opts ...grpc.CallOption) (*StaffListStoreAPICallLogResponse, error)
 	StaffListStoreWebhookCallLog(ctx context.Context, in *StaffListStoreWebhookCallLogRequest, opts ...grpc.CallOption) (*StaffListStoreWebhookCallLogResponse, error)
@@ -113,6 +115,16 @@ func (c *callLogIntegrationAPIClient) StaffListVendorAPICallLog(ctx context.Cont
 	return out, nil
 }
 
+func (c *callLogIntegrationAPIClient) StaffGetVendorOrderCreatePayload(ctx context.Context, in *StaffGetVendorOrderCreatePayloadRequest, opts ...grpc.CallOption) (*StaffGetVendorOrderCreatePayloadResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StaffGetVendorOrderCreatePayloadResponse)
+	err := c.cc.Invoke(ctx, CallLogIntegrationAPI_StaffGetVendorOrderCreatePayload_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *callLogIntegrationAPIClient) StaffListFinanceAPICallLog(ctx context.Context, in *StaffListFinanceAPICallLogRequest, opts ...grpc.CallOption) (*StaffListFinanceAPICallLogResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StaffListFinanceAPICallLogResponse)
@@ -153,6 +165,7 @@ type CallLogIntegrationAPIServer interface {
 	StaffListOrderWebhookCallLog(context.Context, *StaffListOrderWebhookCallLogRequest) (*StaffListOrderWebhookCallLogResponse, error)
 	StaffResendOrderWebhookCallLog(context.Context, *StaffResendOrderWebhookCallLogRequest) (*WebhookCallLog, error)
 	StaffListVendorAPICallLog(context.Context, *StaffListVendorAPICallLogRequest) (*StaffListVendorAPICallLogResponse, error)
+	StaffGetVendorOrderCreatePayload(context.Context, *StaffGetVendorOrderCreatePayloadRequest) (*StaffGetVendorOrderCreatePayloadResponse, error)
 	StaffListFinanceAPICallLog(context.Context, *StaffListFinanceAPICallLogRequest) (*StaffListFinanceAPICallLogResponse, error)
 	StaffListStoreAPICallLog(context.Context, *StaffListStoreAPICallLogRequest) (*StaffListStoreAPICallLogResponse, error)
 	StaffListStoreWebhookCallLog(context.Context, *StaffListStoreWebhookCallLogRequest) (*StaffListStoreWebhookCallLogResponse, error)
@@ -182,6 +195,9 @@ func (UnimplementedCallLogIntegrationAPIServer) StaffResendOrderWebhookCallLog(c
 }
 func (UnimplementedCallLogIntegrationAPIServer) StaffListVendorAPICallLog(context.Context, *StaffListVendorAPICallLogRequest) (*StaffListVendorAPICallLogResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListVendorAPICallLog not implemented")
+}
+func (UnimplementedCallLogIntegrationAPIServer) StaffGetVendorOrderCreatePayload(context.Context, *StaffGetVendorOrderCreatePayloadRequest) (*StaffGetVendorOrderCreatePayloadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StaffGetVendorOrderCreatePayload not implemented")
 }
 func (UnimplementedCallLogIntegrationAPIServer) StaffListFinanceAPICallLog(context.Context, *StaffListFinanceAPICallLogRequest) (*StaffListFinanceAPICallLogResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StaffListFinanceAPICallLog not implemented")
@@ -320,6 +336,24 @@ func _CallLogIntegrationAPI_StaffListVendorAPICallLog_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CallLogIntegrationAPI_StaffGetVendorOrderCreatePayload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StaffGetVendorOrderCreatePayloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CallLogIntegrationAPIServer).StaffGetVendorOrderCreatePayload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CallLogIntegrationAPI_StaffGetVendorOrderCreatePayload_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CallLogIntegrationAPIServer).StaffGetVendorOrderCreatePayload(ctx, req.(*StaffGetVendorOrderCreatePayloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CallLogIntegrationAPI_StaffListFinanceAPICallLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StaffListFinanceAPICallLogRequest)
 	if err := dec(in); err != nil {
@@ -404,6 +438,10 @@ var CallLogIntegrationAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StaffListVendorAPICallLog",
 			Handler:    _CallLogIntegrationAPI_StaffListVendorAPICallLog_Handler,
+		},
+		{
+			MethodName: "StaffGetVendorOrderCreatePayload",
+			Handler:    _CallLogIntegrationAPI_StaffGetVendorOrderCreatePayload_Handler,
 		},
 		{
 			MethodName: "StaffListFinanceAPICallLog",
